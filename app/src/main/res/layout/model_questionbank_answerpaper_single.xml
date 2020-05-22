@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--    题库 做题设置 -->
+<RelativeLayout android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView
+        android:id="@+id/questionbank_answerpaper_single_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textSize="@dimen/textsize17"
+        android:textColor="#666666"
+        android:lineSpacingExtra="@dimen/dp_5"/>
+    <LinearLayout android:id="@+id/questionbank_answerpaper_content"
+        android:layout_below="@id/questionbank_answerpaper_single_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+    </LinearLayout>
+</RelativeLayout>
