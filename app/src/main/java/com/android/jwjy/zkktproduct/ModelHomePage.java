@@ -429,7 +429,7 @@ public class ModelHomePage extends Fragment{
     private void getHomePageDatas() {
         LoadingDialog.getInstance(mControlMainActivity).show();
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(ModelObservableInterface.urlHead)
+                .baseUrl(mControlMainActivity.mIpadress)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(ModelObservableInterface.client)

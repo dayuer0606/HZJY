@@ -624,7 +624,7 @@ public class ModelOrderDetails implements View.OnClickListener {
         LoadingDialog.getInstance(mControlMainActivity).show();
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(ModelObservableInterface.urlHead)
+                .baseUrl(mControlMainActivity.mIpadress)
                 .client(ModelObservableInterface.client)
                 .build();
         ModelObservableInterface modelObservableInterface = retrofit.create(ModelObservableInterface.class);
@@ -696,7 +696,7 @@ public class ModelOrderDetails implements View.OnClickListener {
         LoadingDialog.getInstance(mControlMainActivity).show();
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(ModelObservableInterface.urlHead)
+                .baseUrl(mControlMainActivity.mIpadress)
                 .client(ModelObservableInterface.client)
                 .build();
         ModelObservableInterface modelObservableInterface = retrofit.create(ModelObservableInterface.class);
@@ -961,7 +961,7 @@ public class ModelOrderDetails implements View.OnClickListener {
         }
         LoadingDialog.getInstance(mControlMainActivity).show();
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(ModelObservableInterface.urlHead)
+                .baseUrl(mControlMainActivity.mIpadress)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(ModelObservableInterface.client)
                 .build();
@@ -1130,7 +1130,7 @@ public class ModelOrderDetails implements View.OnClickListener {
         }
         LoadingDialog.getInstance(mControlMainActivity).show();
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(ModelObservableInterface.urlHead)
+                .baseUrl(mControlMainActivity.mIpadress)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(ModelObservableInterface.client)
                 .build();
@@ -1298,7 +1298,7 @@ public class ModelOrderDetails implements View.OnClickListener {
         }
         LoadingDialog.getInstance(mControlMainActivity).show();
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(ModelObservableInterface.urlHead)
+                .baseUrl(mControlMainActivity.mIpadress)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(ModelObservableInterface.client)
                 .build();
@@ -1584,7 +1584,7 @@ public class ModelOrderDetails implements View.OnClickListener {
     private void CheckBeforeExchangingCoupons(String coupon) {
         LoadingDialog.getInstance(mControlMainActivity).show();
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(ModelObservableInterface.urlHead)
+                .baseUrl(mControlMainActivity.mIpadress)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(ModelObservableInterface.client)
                 .build();
@@ -1652,7 +1652,7 @@ public class ModelOrderDetails implements View.OnClickListener {
     private void redeemCoupons(String coupon) {
         LoadingDialog.getInstance(mControlMainActivity).show();
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(ModelObservableInterface.urlHead)
+                .baseUrl(mControlMainActivity.mIpadress)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(ModelObservableInterface.client)
                 .build();

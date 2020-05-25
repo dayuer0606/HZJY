@@ -139,7 +139,7 @@ public class ModelNews extends Fragment implements View.OnClickListener {
         LoadingDialog.getInstance(mControlMainActivity).show();
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(ModelObservableInterface.urlHead)
+                .baseUrl(mControlMainActivity.mIpadress)
                 .client(ModelObservableInterface.client)
                 .build();
         ModelObservableInterface modelObservableInterface = retrofit.create(ModelObservableInterface.class);
@@ -232,7 +232,7 @@ public class ModelNews extends Fragment implements View.OnClickListener {
         news_content.removeAllViews();
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(ModelObservableInterface.urlHead)
+                .baseUrl(mControlMainActivity.mIpadress)
                 .client(ModelObservableInterface.client)
                 .build();
         ModelObservableInterface modelObservableInterface = retrofit.create(ModelObservableInterface.class);
@@ -378,7 +378,7 @@ public class ModelNews extends Fragment implements View.OnClickListener {
         LinearLayout news_content = mview.findViewById(R.id.news_content);
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(ModelObservableInterface.urlHead)
+                .baseUrl(mControlMainActivity.mIpadress)
                 .client(ModelObservableInterface.client)
                 .build();
         ModelObservableInterface modelObservableInterface = retrofit.create(ModelObservableInterface.class);

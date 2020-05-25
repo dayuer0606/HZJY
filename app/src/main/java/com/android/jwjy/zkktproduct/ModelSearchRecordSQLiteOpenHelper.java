@@ -196,6 +196,7 @@ public class ModelSearchRecordSQLiteOpenHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE IF NOT EXISTS `token_table` (\n" +
                 "  `token_id` integer NOT NULL primary key AUTOINCREMENT ,\n" +                       //表id
                 "  `token` varchar(200) DEFAULT NULL,\n" +                                       //token
+                "  `ipadress` varchar(200) DEFAULT NULL,\n" +                                       //访问地址
                 "  `stu_id` varchar(200) DEFAULT NULL" +                                            //学生id
                 ") ;");
     }

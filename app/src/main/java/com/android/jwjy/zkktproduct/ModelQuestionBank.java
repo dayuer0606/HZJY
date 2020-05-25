@@ -6083,7 +6083,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
         LoadingDialog.getInstance(mControlMainActivity).show();
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(ModelObservableInterface.urlHead)
+                .baseUrl(mControlMainActivity.mIpadress)
                 .client(ModelObservableInterface.client)
                 .build();
         ModelObservableInterface queryMyCourseList = retrofit.create(ModelObservableInterface.class);
@@ -6187,7 +6187,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
         LoadingDialog.getInstance(mControlMainActivity).show();
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(ModelObservableInterface.urlHead)
+                .baseUrl(mControlMainActivity.mIpadress)
                 .client(ModelObservableInterface.client)
                 .build();
         ModelObservableInterface queryMyCourseList = retrofit.create(ModelObservableInterface.class);
@@ -6408,7 +6408,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
         LoadingDialog.getInstance(mControlMainActivity).show();
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(ModelObservableInterface.urlHead)
+                .baseUrl(mControlMainActivity.mIpadress)
                 .client(ModelObservableInterface.client)
                 .build();
         ModelObservableInterface queryMyCourseList = retrofit.create(ModelObservableInterface.class);
@@ -6478,7 +6478,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
         LoadingDialog.getInstance(mControlMainActivity).show();
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(ModelObservableInterface.urlHead)
+                .baseUrl(mControlMainActivity.mIpadress)
                 .client(ModelObservableInterface.client)
                 .build();
         ModelObservableInterface queryMyCourseList = retrofit.create(ModelObservableInterface.class);
@@ -6564,7 +6564,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
         LoadingDialog.getInstance(mControlMainActivity).show();
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(ModelObservableInterface.urlHead)
+                .baseUrl(mControlMainActivity.mIpadress)
                 .client(ModelObservableInterface.client)
                 .build();
         ModelObservableInterface queryMyCourseList = retrofit.create(ModelObservableInterface.class);
@@ -6775,7 +6775,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
         LoadingDialog.getInstance(mControlMainActivity).show();
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(ModelObservableInterface.urlHead)
+                .baseUrl(mControlMainActivity.mIpadress)
                 .client(ModelObservableInterface.client)
                 .build();
         ModelObservableInterface queryMyCourseList = retrofit.create(ModelObservableInterface.class);
@@ -6835,7 +6835,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
         LoadingDialog.getInstance(mControlMainActivity).show();
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(ModelObservableInterface.urlHead)
+                .baseUrl(mControlMainActivity.mIpadress)
                 .client(ModelObservableInterface.client)
                 .build();
         ModelObservableInterface queryMyCourseList = retrofit.create(ModelObservableInterface.class);
@@ -6894,7 +6894,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
         LoadingDialog.getInstance(mControlMainActivity).show();
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(ModelObservableInterface.urlHead)
+                .baseUrl(mControlMainActivity.mIpadress)
                 .client(ModelObservableInterface.client)
                 .build();
         ModelObservableInterface queryMyCourseList = retrofit.create(ModelObservableInterface.class);
@@ -7021,7 +7021,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
         LoadingDialog.getInstance(mControlMainActivity).show();
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(ModelObservableInterface.urlHead)
+                .baseUrl(mControlMainActivity.mIpadress)
                 .client(ModelObservableInterface.client)
                 .build();
         ModelObservableInterface queryMyCourseList = retrofit.create(ModelObservableInterface.class);
@@ -7264,7 +7264,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
         }
         LoadingDialog.getInstance(mControlMainActivity).show();
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(ModelObservableInterface.urlHead)
+                .baseUrl(mControlMainActivity.mIpadress)
                 .client(ModelObservableInterface.client)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
@@ -7348,7 +7348,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
         questionbank_sub_details_content.removeAllViews();
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(ModelObservableInterface.urlHead)
+                .baseUrl(mControlMainActivity.mIpadress)
                 .client(ModelObservableInterface.client)
                 .build();
         ModelObservableInterface queryMyCourseList = retrofit.create(ModelObservableInterface.class);
@@ -7501,7 +7501,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
         LoadingDialog.getInstance(mControlMainActivity).show();
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(ModelObservableInterface.urlHead)
+                .baseUrl(mControlMainActivity.mIpadress)
                 .client(ModelObservableInterface.client)
                 .build();
         ModelObservableInterface modelObservableInterface = retrofit.create(ModelObservableInterface.class);
@@ -7737,7 +7737,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
         }
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(ModelObservableInterface.urlHead)
+                .baseUrl(mControlMainActivity.mIpadress)
                 .client(ModelObservableInterface.client)
                 .build();
         ModelObservableInterface queryMyCourseList = retrofit.create(ModelObservableInterface.class);
@@ -8073,7 +8073,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
         }
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(ModelObservableInterface.urlHead)
+                .baseUrl(mControlMainActivity.mIpadress)
                 .client(ModelObservableInterface.client)
                 .build();
         ModelObservableInterface queryMyCourseList = retrofit.create(ModelObservableInterface.class);
@@ -8199,7 +8199,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
         }
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(ModelObservableInterface.urlHead)
+                .baseUrl(mControlMainActivity.mIpadress)
                 .client(ModelObservableInterface.client)
                 .build();
         ModelObservableInterface queryMyCourseList = retrofit.create(ModelObservableInterface.class);
@@ -8699,7 +8699,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
         LoadingDialog.getInstance(mControlMainActivity).show();
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(ModelObservableInterface.urlHead)
+                .baseUrl(mControlMainActivity.mIpadress)
                 .client(ModelObservableInterface.client)
                 .build();
         ModelObservableInterface modelObservableInterface = retrofit.create(ModelObservableInterface.class);
@@ -8805,7 +8805,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
         LoadingDialog.getInstance(mControlMainActivity).show();
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(ModelObservableInterface.urlHead)
+                .baseUrl(mControlMainActivity.mIpadress)
                 .client(ModelObservableInterface.client)
                 .build();
         ModelObservableInterface modelObservableInterface = retrofit.create(ModelObservableInterface.class);
@@ -8911,7 +8911,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
         LoadingDialog.getInstance(mControlMainActivity).show();
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(ModelObservableInterface.urlHead)
+                .baseUrl(mControlMainActivity.mIpadress)
                 .client(ModelObservableInterface.client)
                 .build();
         ModelObservableInterface modelObservableInterface = retrofit.create(ModelObservableInterface.class);
@@ -8986,7 +8986,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
         LoadingDialog.getInstance(mControlMainActivity).show();
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(ModelObservableInterface.urlHead)
+                .baseUrl(mControlMainActivity.mIpadress)
                 .client(ModelObservableInterface.client)
                 .build();
         ModelObservableInterface modelObservableInterface = retrofit.create(ModelObservableInterface.class);
@@ -9066,7 +9066,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
         questionbank_sub_details_content.removeAllViews();
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(ModelObservableInterface.urlHead)
+                .baseUrl(mControlMainActivity.mIpadress)
                 .client(ModelObservableInterface.client)
                 .build();
         ModelObservableInterface queryMyCourseList = retrofit.create(ModelObservableInterface.class);
@@ -9188,7 +9188,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
         mIsMore = false;
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(ModelObservableInterface.urlHead)
+                .baseUrl(mControlMainActivity.mIpadress)
                 .client(ModelObservableInterface.client)
                 .build();
         ModelObservableInterface queryMyCourseList = retrofit.create(ModelObservableInterface.class);
@@ -9307,7 +9307,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
         mIsMore = false;
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(ModelObservableInterface.urlHead)
+                .baseUrl(mControlMainActivity.mIpadress)
                 .client(ModelObservableInterface.client)
                 .build();
         ModelObservableInterface modelObservableInterface = retrofit.create(ModelObservableInterface.class);

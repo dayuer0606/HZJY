@@ -828,7 +828,7 @@ public class ModelCourse extends Fragment implements ModelCourseCover.ModelCours
         LinearLayout course_end = mview.findViewById(R.id.course_end);
         course_end.setVisibility(View.INVISIBLE);
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(ModelObservableInterface.urlHead)
+                .baseUrl(mControlMainActivity.mIpadress)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(ModelObservableInterface.client)
                 .build();
@@ -945,7 +945,7 @@ public class ModelCourse extends Fragment implements ModelCourseCover.ModelCours
     private void getCourseDatasMore(String course_name,String project_id,String subject_id,String hour,String fever,String course_type) {
         LoadingDialog.getInstance(mControlMainActivity).show();
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(ModelObservableInterface.urlHead)
+                .baseUrl(mControlMainActivity.mIpadress)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(ModelObservableInterface.client)
                 .build();
@@ -1059,7 +1059,7 @@ public class ModelCourse extends Fragment implements ModelCourseCover.ModelCours
     private void getAllProject(View popupWindowView) {
         LoadingDialog.getInstance(mControlMainActivity).show();
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(ModelObservableInterface.urlHead)
+                .baseUrl(mControlMainActivity.mIpadress)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(ModelObservableInterface.client)
                 .build();
@@ -1150,7 +1150,7 @@ public class ModelCourse extends Fragment implements ModelCourseCover.ModelCours
     private void getAllSubjectFromOneProject(View popupWindowView,int project_id) {
         LoadingDialog.getInstance(mControlMainActivity).show();
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(ModelObservableInterface.urlHead)
+                .baseUrl(mControlMainActivity.mIpadress)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(ModelObservableInterface.client)
                 .build();

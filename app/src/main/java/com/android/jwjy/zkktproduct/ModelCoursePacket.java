@@ -559,7 +559,7 @@ public class ModelCoursePacket extends Fragment implements ModelCoursePacketCove
         LinearLayout coursepacket_end = mView.findViewById(R.id.coursepacket_end);
         coursepacket_end.setVisibility(View.INVISIBLE);
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(ModelObservableInterface.urlHead)
+                .baseUrl(mControlMainActivity.mIpadress)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(ModelObservableInterface.client)
                 .build();
@@ -674,7 +674,7 @@ public class ModelCoursePacket extends Fragment implements ModelCoursePacketCove
         LinearLayout coursepacket_end = mView.findViewById(R.id.coursepacket_end);
         coursepacket_end.setVisibility(View.INVISIBLE);
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(ModelObservableInterface.urlHead)
+                .baseUrl(mControlMainActivity.mIpadress)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(ModelObservableInterface.client)
                 .build();
@@ -788,7 +788,7 @@ public class ModelCoursePacket extends Fragment implements ModelCoursePacketCove
         LinearLayout coursepacket_end = mView.findViewById(R.id.coursepacket_end);
         coursepacket_end.setVisibility(View.INVISIBLE);
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(ModelObservableInterface.urlHead)
+                .baseUrl(mControlMainActivity.mIpadress)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(ModelObservableInterface.client)
                 .build();
@@ -904,7 +904,7 @@ public class ModelCoursePacket extends Fragment implements ModelCoursePacketCove
         LinearLayout coursepacket_end = mView.findViewById(R.id.coursepacket_end);
         coursepacket_end.setVisibility(View.INVISIBLE);
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(ModelObservableInterface.urlHead)
+                .baseUrl(mControlMainActivity.mIpadress)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(ModelObservableInterface.client)
                 .build();
@@ -1014,7 +1014,7 @@ public class ModelCoursePacket extends Fragment implements ModelCoursePacketCove
         LinearLayout coursepacket_end = mView.findViewById(R.id.coursepacket_end);
         coursepacket_end.setVisibility(View.INVISIBLE);
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(ModelObservableInterface.urlHead)
+                .baseUrl(mControlMainActivity.mIpadress)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(ModelObservableInterface.client)
                 .build();
@@ -1120,7 +1120,7 @@ public class ModelCoursePacket extends Fragment implements ModelCoursePacketCove
     private void getAllProject(View popupWindowView) {
         LoadingDialog.getInstance(mControlMainActivity).show();
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(ModelObservableInterface.urlHead)
+                .baseUrl(mControlMainActivity.mIpadress)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(ModelObservableInterface.client)
                 .build();

@@ -274,7 +274,7 @@ public class ModelOpenClass extends Fragment implements View.OnClickListener {
        openclass_content.removeAllViews();
        Retrofit retrofit = new Retrofit.Builder()
                .addConverterFactory(GsonConverterFactory.create())
-               .baseUrl(ModelObservableInterface.urlHead)
+               .baseUrl(mControlMainActivity.mIpadress)
                .client(ModelObservableInterface.client)
                .build();
        ModelObservableInterface modelObservableInterface = retrofit.create(ModelObservableInterface.class);
@@ -448,7 +448,7 @@ public class ModelOpenClass extends Fragment implements View.OnClickListener {
         LinearLayout openclass_content = mview.findViewById(R.id.openclass_content);
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(ModelObservableInterface.urlHead)
+                .baseUrl(mControlMainActivity.mIpadress)
                 .client(ModelObservableInterface.client)
                 .build();
         ModelObservableInterface modelObservableInterface = retrofit.create(ModelObservableInterface.class);

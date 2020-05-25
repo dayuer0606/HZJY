@@ -22,6 +22,7 @@ import android.provider.MediaStore;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.bottomnavigation.LabelVisibilityMode;
 import android.support.design.widget.BottomNavigationView;
 import android.app.Fragment;
@@ -42,7 +43,12 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.Toast;
@@ -130,8 +136,6 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import static com.android.jwjy.zkktproduct.ModelObservableInterface.urlHead;
-
 /**
  * Created by dayuer on 19/7/2.
  * 主程序
@@ -155,6 +159,7 @@ public class ControlMainActivity extends AppCompatActivity  implements EasyPermi
     private ModelOrderDetails modelOrderDetails = null;
     //token
     public String mToken = "";
+    public String mIpadress = "http://wangxiao.jianweijiaoyu.com/";
     public String mStuId = "";
 
     private class MenuItemInfo {
@@ -198,6 +203,8 @@ public class ControlMainActivity extends AppCompatActivity  implements EasyPermi
             while (cursor.moveToNext()) {
                 int tokenIndex = cursor.getColumnIndex("token");
                 int stu_idIndex = cursor.getColumnIndex("stu_id");
+                int ipadressIndex = cursor.getColumnIndex("ipadress");
+                mIpadress = cursor.getString(ipadressIndex);
                 mToken = cursor.getString(tokenIndex);
                 mStuId = cursor.getString(stu_idIndex);
                 HeaderInterceptor.stuId = mStuId;
@@ -292,6 +299,60 @@ public class ControlMainActivity extends AppCompatActivity  implements EasyPermi
                 }
                 return false;
             });
+        }
+        //添加职考课堂逻辑（如果没有登录，请游客先选择是健康项目还是消防项目）
+        if (mStuId.equals("") ||  mIpadress.equals("")){
+            //将网校系统选项界面显示，隐藏主页
+            RelativeLayout main_view_choice = findViewById(R.id.main_view_choice);
+            main_view_choice.setVisibility(View.VISIBLE);
+            ConstraintLayout main_view1 = findViewById(R.id.main_view1);
+            main_view1.setVisibility(View.INVISIBLE);
+            LinearLayout jiankang_layout =  findViewById(R.id.jiankang_layout);
+            ImageView jiankang = findViewById(R.id.jiankang);
+            jiankang.setBackground(getResources().getDrawable(R.drawable.icon_green));
+            jiankang_layout.setOnClickListener(v->{
+//                ImageView jiankang = findViewById(R.id.jiankang);
+                ImageView xiaofang = findViewById(R.id.xiaofang);
+                xiaofang.setBackground(getResources().getDrawable(R.drawable.icon_null));
+                jiankang.setBackground(getResources().getDrawable(R.drawable.icon_green));
+                mIpadress = "http://wangxiao.jianweijiaoyu.com/";
+            });
+            LinearLayout xiaofang_layout =  findViewById(R.id.xiaofang_layout);
+            xiaofang_layout.setOnClickListener(v->{
+                ImageView xiaofang = findViewById(R.id.xiaofang);
+                xiaofang.setBackground(getResources().getDrawable(R.drawable.icon_orange));
+                jiankang.setBackground(getResources().getDrawable(R.drawable.icon_null));
+                mIpadress = "http://wangxiao.yixiaojiaoyu.com/";
+            });
+            Button button_next = findViewById(R.id.button_next);
+            button_next.setOnClickListener(v->{
+                //将网校系统选项界面隐藏，显示出主页
+                RelativeLayout main_view_choice1 = findViewById(R.id.main_view_choice);
+                main_view_choice1.setVisibility(View.INVISIBLE);
+                ConstraintLayout main_view11 = findViewById(R.id.main_view1);
+                main_view11.setVisibility(View.VISIBLE);
+                //选择好网校系统以后，初始化首页
+                Menu menu = mBottomNavigationView.getMenu();
+                if (menu != null) {
+                    MenuItem MenuItem = menu.getItem(0);
+                    if (MenuItem != null) {
+                        //初次进入app 默认显示menuItemList中的第一个
+                        if (MenuItem.getItemId() == 1) { //首页
+                            Page_HomePage();
+                        } else if (MenuItem.getItemId() == 2) {//课程包
+                            Page_MoreCoursePacket();
+                        } else if (MenuItem.getItemId() == 3) {//课程表
+                            Page_ClassCheduleCard();
+                        } else if (MenuItem.getItemId() == 4) {//我的
+                            Page_My();
+                        }
+                    }
+                }
+                //获取应用权限
+                getPermission();
+                getAndroidVersion(mThis);//查询是否为最新版本,若不是最新版本弹出对话框
+            });
+            return;
         }
         Menu menu = mBottomNavigationView.getMenu();
         if (menu != null) {
@@ -627,7 +688,7 @@ public class ControlMainActivity extends AppCompatActivity  implements EasyPermi
         HeaderInterceptor.permissioncode = mToken;
         JPushInterface.setAlias(this.getApplicationContext(),1,mStuId);
         ModelSearchRecordSQLiteOpenHelper.getWritableDatabase(this).execSQL("delete from token_table");
-        ModelSearchRecordSQLiteOpenHelper.getWritableDatabase(this).execSQL("insert into token_table(token,stu_id) values('" + token + "','" + stu_id + "')");
+        ModelSearchRecordSQLiteOpenHelper.getWritableDatabase(this).execSQL("insert into token_table(token,ipadress,stu_id) values('" + token + "','" + mIpadress + "','" + stu_id + "')");
         Page_My();
     }
 
@@ -2829,7 +2890,7 @@ public class ControlMainActivity extends AppCompatActivity  implements EasyPermi
         }
         params = params + "\"is_public\":" + is_public + "}";
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(ModelObservableInterface.urlHead)
+                .baseUrl(mIpadress)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(ModelObservableInterface.client)
                 .build();
@@ -2949,7 +3010,7 @@ public class ControlMainActivity extends AppCompatActivity  implements EasyPermi
     private void getAndroidVersion(Context context) {
         LoadingDialog.getInstance(context).show();
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(urlHead)
+                .baseUrl(mIpadress)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(ModelObservableInterface.client)
@@ -3841,7 +3902,7 @@ public class ControlMainActivity extends AppCompatActivity  implements EasyPermi
         }
         LoadingDialog.getInstance(mThis).show();
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(ModelObservableInterface.urlHead)
+                .baseUrl(mIpadress)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(ModelObservableInterface.client)
                 .build();
