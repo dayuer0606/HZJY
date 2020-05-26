@@ -21,7 +21,10 @@ import retrofit2.http.POST;
 import retrofit2.http.PartMap;
 import retrofit2.http.Query;
 //import retrofit2.http.QueryMap;
-
+/**
+ * Created by dayuer on 19/7/2.
+ * 接口文件
+ */
 //当POST请求时，@FormUrlEncoded和@Field简单的表单键值对。两个需要结合使用，否则会报错
 public interface ModelObservableInterface {
 //   String urlHead = "http://wangxiaojk.16hz.net/";

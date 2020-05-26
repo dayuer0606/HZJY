@@ -38,6 +38,7 @@
                 <ImageView
                     android:layout_width="@dimen/dp_13"
                     android:layout_height="@dimen/dp17"
+                    android:layout_marginLeft="@dimen/dp4"
                     android:background="@drawable/icon_healthy"
                     android:layout_gravity="center"/>
                 <TextView
@@ -57,14 +58,19 @@
                     android:background="@drawable/icon_null"
                     android:layout_gravity="center"/>
             </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp1"
+                android:background="@color/grayeceef0"
+                android:layout_marginTop="@dimen/dp30"/>
             <LinearLayout
                 android:id="@+id/xiaofang_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp30">
                 <ImageView
-                    android:layout_width="@dimen/dp_13"
-                    android:layout_height="@dimen/dp17"
+                    android:layout_width="@dimen/dp23"
+                    android:layout_height="@dimen/dp23"
                     android:background="@drawable/icon_firecontrol"
                     android:layout_gravity="center"/>
                 <TextView

@@ -5,7 +5,10 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 
 import in.srain.cube.views.ptr.PtrFrameLayout;
-
+/**
+ * Created by dayuer on 19/7/2.
+ * 下拉刷新
+ */
 public class ModelPtrFrameLayout extends PtrFrameLayout {
     private float mDownX;
     private float mDownY;

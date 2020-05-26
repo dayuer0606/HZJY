@@ -31,12 +31,6 @@
         </attr>
     </declare-styleable>
 
-    <!-- 为DropDownMenuView添加自定义属性 -->
-    <declare-styleable name="ModelDropDownMenu">
-        <attr name="mask_view_color" format="color"/>
-        <attr name="duration" format="integer"/>
-    </declare-styleable>
-
     <declare-styleable name="ControllerRoundProgressBar">
         <attr name="roundColor" format="color"/>
         <attr name="roundProgressColor" format="color"/>

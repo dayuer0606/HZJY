@@ -89,6 +89,7 @@ public class ModelHomePage extends Fragment{
         return;
     }
 
+    //首页展示
     public void HomePageShow(){
         if (mView == null){
             return;
@@ -426,6 +427,7 @@ public class ModelHomePage extends Fragment{
         return;
     }
 
+    //获取首页数据
     private void getHomePageDatas() {
         LoadingDialog.getInstance(mControlMainActivity).show();
         Retrofit retrofit = new Retrofit.Builder()

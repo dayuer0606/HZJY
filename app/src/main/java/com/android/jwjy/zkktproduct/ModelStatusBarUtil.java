@@ -12,7 +12,10 @@ import com.readystatesoftware.systembartint.SystemBarTintManager;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-
+/**
+ * Created by dayuer on 19/7/2.
+ * 状态栏管理工具类
+ */
 public class ModelStatusBarUtil {
     /**
      * 修改状态栏为全透明

@@ -40,7 +40,10 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-
+/**
+ * Created by dayuer on 19/7/2.
+ * 新闻模块
+ */
 public class ModelNews extends Fragment implements View.OnClickListener {
     private static ControlMainActivity mControlMainActivity;
     private static String mContext = "xxxxxxxxxxxxx";
@@ -79,6 +82,7 @@ public class ModelNews extends Fragment implements View.OnClickListener {
         initSmartRefresh();
         return mview;
     }
+    //初始化刷新模块
     private void initSmartRefresh() {
         mSmart_new_layout = mview.findViewById(R.id.Smart_new_layout);
         mSmart_new_layout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
@@ -108,6 +112,7 @@ public class ModelNews extends Fragment implements View.OnClickListener {
         });
     }
 
+    //新闻主界面展示
     public void NewsMainShow() {
         if (mview == null) {
             return;

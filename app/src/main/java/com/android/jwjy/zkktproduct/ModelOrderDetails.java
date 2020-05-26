@@ -45,8 +45,10 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-
-//订单支付功能
+/**
+ * Created by dayuer on 19/7/2.
+ * 订单支付功能
+ */
 public class ModelOrderDetails implements View.OnClickListener {
     private View mOrderBuyView,mOrderBankCardView,mOrderResultView,mOrderCouponChooseView;
     private ControlMainActivity mControlMainActivity = null;
@@ -294,6 +296,7 @@ public class ModelOrderDetails implements View.OnClickListener {
                 break;
         }
     }
+    //购买详情界面初始化
     private void CourseDetailsBuyInit(){
         mPage = "OrderDetailsBuy";
         HideAllLayout();

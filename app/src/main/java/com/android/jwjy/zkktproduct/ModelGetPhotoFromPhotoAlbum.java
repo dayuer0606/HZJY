@@ -8,7 +8,10 @@ import android.net.Uri;
 import android.os.Build;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
-
+/**
+ * Created by dayuer on 19/7/2.
+ * 获取图片文件的路径
+ */
 public class ModelGetPhotoFromPhotoAlbum {/**
  * 根据Uri获取图片的绝对路径
  *

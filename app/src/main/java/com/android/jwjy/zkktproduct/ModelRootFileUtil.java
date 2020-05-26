@@ -5,7 +5,10 @@ import android.text.TextUtils;
 
 import java.io.File;
 import java.io.IOException;
-
+/**
+ * Created by dayuer on 19/7/2.
+ * 文件管理工具
+ */
 public class ModelRootFileUtil {
     public static String mRecordVideoFileDownloadDir = "com.huozhongedu/download/videodownload";
     /**
@@ -39,6 +42,7 @@ public class ModelRootFileUtil {
         return true;
     }
 
+    //创建文件
     public static File createFile(String path, String filename) {
         if (!createDir(path)) {
             return null;

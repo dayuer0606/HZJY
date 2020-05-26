@@ -11,11 +11,11 @@ import net.sqlcipher.database.SQLiteOpenHelper;
 // 继承自SQLiteOpenHelper数据库类的子类
 public class ModelSearchRecordSQLiteOpenHelper extends SQLiteOpenHelper {
 
-    private static String DB_NAME  = "zhikaoketangedu_db";
+    private static String DB_NAME  = "zhikaowangxiaoedu_db";
     private static Integer DB_VERSION  = 1;
     private static ModelSearchRecordSQLiteOpenHelper instance = null;
     private static SQLiteDatabase db = null;
-    private static String SECRET_KEY = "zhikaoketangedu19920807";
+    private static String SECRET_KEY = "zhikaowangxiaoedu19920807";
     private static ControlMainActivity mControlMainActivity = null;
 
     private ModelSearchRecordSQLiteOpenHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {

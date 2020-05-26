@@ -1,5 +1,5 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="app_name">职考课堂</string>
+    <string name="app_name">职考网校</string>
     <string name="title_homepage">HomePage</string>
     <string name="title_course">Course</string>
     <string name="title_openclass">OpenClass</string>

@@ -33,7 +33,10 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-
+/**
+ * Created by dayuer on 19/7/2.
+ * 课程包
+ */
 public class ModelCoursePacket extends Fragment implements ModelCoursePacketCover.ModelCoursePacketCoverOnClickListener {
     private static ControlMainActivity mControlMainActivity;
     private static String mContext = "xxxxxxxxxxxxx";
@@ -56,9 +59,6 @@ public class ModelCoursePacket extends Fragment implements ModelCoursePacketCove
     private String mCoursePacketSelectSortTemp = "-1";
     private String mCoursePacketSelectSort = "-1";
     private static final String TAG = "ModelCoursePacket";
-
-    private List<CoursePacketBean.DataBean> dataBeans;
-    private List<CoursePacketBean.DataBean> coursePacketBeanData;
     private SmartRefreshLayout mSmart_fragment_coursepacket;
 
     //课程包列表分页查询
@@ -143,9 +143,6 @@ public class ModelCoursePacket extends Fragment implements ModelCoursePacketCove
 
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                if (dataBeans!=null){
-                    dataBeans.clear();
-                }
                 String project_id = "";
                 String subject_id = "";
                 String fever = "1";
@@ -171,6 +168,7 @@ public class ModelCoursePacket extends Fragment implements ModelCoursePacketCove
         super.onDestroy();
     }
 
+    //展示课程包主界面
     public void CoursePacketMainShow(int returnString) { // returnString:  0:显示返回按钮
         if (mView == null) {
             return;
@@ -229,6 +227,7 @@ public class ModelCoursePacket extends Fragment implements ModelCoursePacketCove
         getConditionQuery(project_id,Integer.valueOf(fever),Integer.valueOf(hour));
     }
 
+    //展示课程包搜索界面
     public void CoursePacketMainSearchShow() {
         if (mView == null) {
             return;
@@ -241,7 +240,7 @@ public class ModelCoursePacket extends Fragment implements ModelCoursePacketCove
         coursepacket_searchlayout.setLayoutParams(LP);
         coursepacket_searchlayout.setVisibility(View.VISIBLE);
     }
-
+    //展示课程包搜索条件界面
     public void CoursePacketMainSearchConditionShow() {
         initPopupWindow();
     }
@@ -1117,6 +1116,7 @@ public class ModelCoursePacket extends Fragment implements ModelCoursePacketCove
         });
     }
 
+    //获取所有一级目录
     private void getAllProject(View popupWindowView) {
         LoadingDialog.getInstance(mControlMainActivity).show();
         Retrofit retrofit = new Retrofit.Builder()

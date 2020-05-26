@@ -18,6 +18,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
+import android.os.PersistableBundle;
 import android.provider.MediaStore;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
@@ -183,7 +184,7 @@ public class ControlMainActivity extends AppCompatActivity  implements EasyPermi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //阿里视频播放下载，必须初始化的服务，必须放在最开始的位置
-        PrivateService.initService(getApplicationContext(), Environment.getExternalStorageDirectory().getAbsolutePath() + "/zhikaoketangedu/encryptedApp.dat");
+        PrivateService.initService(getApplicationContext(), Environment.getExternalStorageDirectory().getAbsolutePath() + "/zhikaowangxiaoedu/encryptedApp.dat");
         //拷贝encryptedApp.dat文件到所需位置
         copyAssets();
         //阿里云视频播放数据库初始化
@@ -300,7 +301,7 @@ public class ControlMainActivity extends AppCompatActivity  implements EasyPermi
                 return false;
             });
         }
-        //添加职考课堂逻辑（如果没有登录，请游客先选择是健康项目还是消防项目）
+        //添加职考网校逻辑（如果没有登录，请游客先选择是健康项目还是消防项目）
         if (mStuId.equals("") ||  mIpadress.equals("")){
             //将网校系统选项界面显示，隐藏主页
             RelativeLayout main_view_choice = findViewById(R.id.main_view_choice);
@@ -354,6 +355,11 @@ public class ControlMainActivity extends AppCompatActivity  implements EasyPermi
             });
             return;
         }
+        //将网校系统选项界面隐藏，显示出主页
+        RelativeLayout main_view_choice1 = findViewById(R.id.main_view_choice);
+        main_view_choice1.setVisibility(View.INVISIBLE);
+        ConstraintLayout main_view11 = findViewById(R.id.main_view1);
+        main_view11.setVisibility(View.VISIBLE);
         Menu menu = mBottomNavigationView.getMenu();
         if (menu != null) {
             MenuItem MenuItem = menu.getItem(0);
@@ -376,8 +382,11 @@ public class ControlMainActivity extends AppCompatActivity  implements EasyPermi
 //        //初始化播放器
 //        initAliyunPlayerView();
     }
-    //    public void FragmentAddCallback(View view,String context){
-//    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+//        super.onSaveInstanceState(outState, outPersistentState);//将这一行注释掉，阻止activity保存fragment的状态
+    }
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -4281,20 +4290,20 @@ public class ControlMainActivity extends AppCompatActivity  implements EasyPermi
 
     //拷贝encryptedApp.dat文件到所需位置
     private void copyAssets() {
-        commenUtils = Common.getInstance(getApplicationContext()).copyAssetsToSD("encrypt", "zhikaoketangedu");
+        commenUtils = Common.getInstance(getApplicationContext()).copyAssetsToSD("encrypt", "zhikaowangxiaoedu");
         commenUtils.setFileOperateCallback(
 
                 new Common.FileOperateCallback() {
                     @Override
                     public void onSuccess() {
-                        File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/zhikaoketangedu_save/");
+                        File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/zhikaowangxiaoedu_save/");
                         if (!file.exists()) {
                             file.mkdir();
                         }
 
                         // 获取AliyunDownloadManager对象
                         downloadManager = AliyunDownloadManager.getInstance(getApplicationContext());
-                        downloadManager.setEncryptFilePath(Environment.getExternalStorageDirectory().getAbsolutePath() + "/zhikaoketangedu/encryptedApp.dat");
+                        downloadManager.setEncryptFilePath(Environment.getExternalStorageDirectory().getAbsolutePath() + "/zhikaowangxiaoedu/encryptedApp.dat");
                         downloadManager.setDownloadDir(file.getAbsolutePath());
                         //设置同时下载个数
                         downloadManager.setMaxNum(4);

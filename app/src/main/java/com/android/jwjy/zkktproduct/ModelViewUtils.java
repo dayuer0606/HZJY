@@ -20,7 +20,10 @@ import android.widget.TextView;
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-
+/**
+ * Created by dayuer on 19/7/2.
+ * view视图管理工具类
+ */
 public class ModelViewUtils {
 
     /**

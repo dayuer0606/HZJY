@@ -17,7 +17,10 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-
+/**
+ * Created by dayuer on 19/7/2.
+ * 更新版本号
+ */
 public class UpdateVersionController {
     private Context context;
     private float versionCode;//当前版本号

@@ -50,7 +50,10 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
-
+/**
+ * Created by dayuer on 19/7/2.
+ * 设置模块
+ */
 public class ModelSetting extends Fragment {
     private static ControlMainActivity mControlMainActivity;
     private TextView mTextView;
@@ -169,6 +172,7 @@ public class ModelSetting extends Fragment {
         super.onDestroy();
     }
 
+    //展示设置主界面
     public void SettingMainShow(int returnString){ // returnString:  0:我的
         if (mview == null){
             return;
@@ -539,6 +543,7 @@ public class ModelSetting extends Fragment {
         });
     }
 
+    //照片选择对话框
     private void SetttingButtonDialogInit() {
         mCameraDialog = new Dialog(mControlMainActivity, R.style.BottomDialog);
         LinearLayout root = (LinearLayout) LayoutInflater.from(mControlMainActivity).inflate(
@@ -557,18 +562,20 @@ public class ModelSetting extends Fragment {
         lp.alpha = 9f; // 透明度
         dialogWindow.setAttributes(lp);
     }
+    //照片选择对话框展示
     public void SetttingButtonDialogShow(){
         if (mCameraDialog != null){
             mCameraDialog.show();
         }
     }
-
+    //照片选择对话框取消
     public void SetttingButtonDialogCancel(){
         if (mCameraDialog != null){
             mCameraDialog.cancel();
         }
     }
 
+    //设置界面-修改用户名
     private void SettingUserNameUpdateInit(){
         //修改名称的书写框
         EditText setting_usernameupdate_edittext = mview.findViewById(R.id.setting_usernameupdate_edittext);
@@ -586,6 +593,7 @@ public class ModelSetting extends Fragment {
         setting_usernameupdate_edittext.setSelection(setting_usernameupdate_edittext.getText().toString().length());
     }
 
+    //设置界面-修改用户名-清除
     public void SettingUserNameUpdateClear(){
         if (mview == null){
             return;
@@ -594,16 +602,19 @@ public class ModelSetting extends Fragment {
         setting_usernameupdate_edittext.setText("");
     }
 
+    //设置界面-获取用户名
     public String UserNameGet(){
         EditText setting_usernameupdate_edittext = mview.findViewById(R.id.setting_usernameupdate_edittext);
         return setting_usernameupdate_edittext.getText().toString();
     }
 
+    //设置界面-获取昵称
     public String UserNickGet(){
         EditText setting_usernickupdate_edittext = mview.findViewById(R.id.setting_usernickupdate_edittext);
         return setting_usernickupdate_edittext.getText().toString();
     }
 
+    //设置界面-修改昵称-清除
     public void SettingUserNickUpdateClear(){
         if (mview == null){
             return;
@@ -612,6 +623,7 @@ public class ModelSetting extends Fragment {
         setting_usernickupdate_edittext.setText("");
     }
 
+    //设置界面-个人说明初始化
     private void SettingPersonalStatementUpdateInit(){
         //修改个人说明的书写框
         EditText setting_personalstatementupdate_edittext = mview.findViewById(R.id.setting_personalstatementupdate_edittext);
@@ -635,6 +647,7 @@ public class ModelSetting extends Fragment {
         setting_personalstatementupdate_edittext.setSelection(setting_personalstatementupdate_edittext.getText().toString().length());
     }
 
+    //设置界面-获取个人说明
     public String PersonalStatementGet(){
         if (mview == null){
             return "";
@@ -643,6 +656,7 @@ public class ModelSetting extends Fragment {
         return setting_personalstatementupdate_edittext.getText().toString();
     }
 
+    //设置界面-修改邮箱
     private void SettingEmailUpdateInit(){
         //修改邮箱的书写框
         EditText setting_emailupdate_edittext = mview.findViewById(R.id.setting_emailupdate_edittext);
@@ -660,6 +674,7 @@ public class ModelSetting extends Fragment {
         setting_emailupdate_edittext.setSelection(setting_emailupdate_edittext.getText().toString().length());
     }
 
+    //设置界面-修改邮箱-清除
     public void SettingEmailUpdateClear(){
         if (mview == null){
             return;
@@ -668,6 +683,7 @@ public class ModelSetting extends Fragment {
         setting_emailupdate_edittext.setText("");
     }
 
+    //设置界面-获取邮箱
     public String EmailGet(){
         if (mview == null){
             return "";
@@ -676,6 +692,7 @@ public class ModelSetting extends Fragment {
         return setting_emailupdate_edittext.getText().toString();
     }
 
+    //设置界面-修改手机号
     private void SettingTelNumberUpdateInit(){
         //修改手机号的书写框
         EditText setting_telnumberupdate_edittext = mview.findViewById(R.id.setting_telnumberupdate_edittext);
@@ -693,6 +710,7 @@ public class ModelSetting extends Fragment {
         setting_telnumberupdate_edittext.setSelection(setting_telnumberupdate_edittext.getText().toString().length());
     }
 
+    //设置界面-修改手机号-清除
     public void SettingTelNumberUpdateClear(){
         if (mview == null){
             return;
@@ -701,6 +719,7 @@ public class ModelSetting extends Fragment {
         setting_telnumberupdate_edittext.setText("");
     }
 
+    //设置界面-获取手机号
     public String TelNumberGet(){
         if (mview == null){
             return "";
@@ -709,6 +728,7 @@ public class ModelSetting extends Fragment {
         return setting_telnumberupdate_edittext.getText().toString();
     }
 
+    //设置界面-修改证件号码
     private void SettingIdNumberUpdateInit(){
         //修改证件号码的书写框
         EditText setting_idnumberupdate_edittext = mview.findViewById(R.id.setting_idnumberupdate_edittext);
@@ -726,6 +746,7 @@ public class ModelSetting extends Fragment {
         setting_idnumberupdate_edittext.setSelection(setting_idnumberupdate_edittext.getText().toString().length());
     }
 
+    //设置界面-修改证件号码-清除
     public void SettingIdNumberUpdateClear(){
         if (mview == null){
             return;
@@ -734,6 +755,7 @@ public class ModelSetting extends Fragment {
         setting_idnumberupdate_edittext.setText("");
     }
 
+    //设置界面-获取证件号码
     public String IdNumberGet(){
         if (mview == null){
             return "";
@@ -742,6 +764,7 @@ public class ModelSetting extends Fragment {
         return setting_idnumberupdate_edittext.getText().toString();
     }
 
+    //设置界面-修改密码
     private void SettingPasswordUpdateInit(){
         //修改密码的书写框（旧密码）
         EditText setting_passwordupdateoldpassword_edittext = mview.findViewById(R.id.setting_passwordupdateoldpassword_edittext);
@@ -822,6 +845,7 @@ public class ModelSetting extends Fragment {
         });
     }
 
+    //设置界面-保存新密码
     public void NewPasswordSave(){ //返回值  -1：其他错误 1：原密码输入不正确 2：两次新密码不一致 0：保存新密码
         if (mview == null){
             return ;
@@ -853,6 +877,7 @@ public class ModelSetting extends Fragment {
         return "";
     }
 
+    //设置-关于我们界面初始化
     private void SettingAboutUsInit(){
         //主要参数
         int layoutheight = width / 10;
@@ -980,6 +1005,7 @@ public class ModelSetting extends Fragment {
         }
     }
 
+    //设置-更新个人信息
     public void UpdataPersonInfo(String type){
         if (type == null){
             return;
@@ -1012,6 +1038,8 @@ public class ModelSetting extends Fragment {
                 break;
         }
     }
+
+    //设置-获取个人信息
     private void getPersonalInfoDatas() {
         if (mControlMainActivity.mStuId.equals("")){
             return;
@@ -1109,6 +1137,7 @@ public class ModelSetting extends Fragment {
         });
     }
 
+    //设置-设置个人信息
     private void setPersonalInfoDatas(String nickname, String username, String user_sign, String phone, String email, String idCardNum) {
         LoadingDialog.getInstance(mControlMainActivity).show();
         Retrofit retrofit = new Retrofit.Builder()
@@ -1172,6 +1201,7 @@ public class ModelSetting extends Fragment {
         });
     }
 
+    //检测手机号是否可用
     private void checkModifyingTel(String phone) {
         if (mControlMainActivity.mStuId.equals("")){
             return;
@@ -1233,6 +1263,7 @@ public class ModelSetting extends Fragment {
         });
     }
 
+    //获取关于我们的数据
     private void getAboutUsInfoDatas() {
         //获取版本号，这个版本号为未更新的版本号
         String verCode = "-1";
@@ -1424,6 +1455,7 @@ public class ModelSetting extends Fragment {
         });
     }
 
+    //修改学员密码
     private void UpdateStuPass(String origin_stu_pass,String now_stu_pass) {
         if (mControlMainActivity.mStuId.equals("") ||origin_stu_pass.equals("") || now_stu_pass.equals("")){
             return;

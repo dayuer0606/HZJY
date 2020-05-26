@@ -31,7 +31,10 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-
+/**
+ * Created by dayuer on 19/7/2.
+ * 登录模块
+ */
 public class ModelLogIn extends Fragment {
     private static ControlMainActivity mControlMainActivity;
     //要显示的页面
@@ -79,6 +82,7 @@ public class ModelLogIn extends Fragment {
         super.onDestroy();
     }
 
+    //展示登录主界面
     public void LogInMainShow(){
         HideAllLayout();
         LinearLayout login_main = mview.findViewById(R.id.login_main);

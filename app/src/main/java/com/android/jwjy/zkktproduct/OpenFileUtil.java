@@ -9,7 +9,10 @@ import android.support.v4.content.FileProvider;
 import android.widget.Toast;
 
 import java.io.File;
-
+/**
+ * Created by dayuer on 19/7/2.
+ * 文件打开管理工具类
+ */
 public class OpenFileUtil {
     private static final String[][] MATCH_ARRAY={
             //{后缀名，    文件类型}

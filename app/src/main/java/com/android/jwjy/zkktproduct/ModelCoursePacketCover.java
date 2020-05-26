@@ -49,7 +49,10 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 import static io.agora.rtc.internal.AudioRoutingController.TAG;
-
+/**
+ * Created by dayuer on 19/7/2.
+ * 课程包详情
+ */
 public class ModelCoursePacketCover implements View.OnClickListener, ModelOrderDetailsInterface {
     private View modelCoursePacket, mListView, mDetailsView;
     private ControlMainActivity mControlMainActivity = null;
@@ -541,6 +544,7 @@ public class ModelCoursePacketCover implements View.OnClickListener, ModelOrderD
         }
     }
 
+    //课程包阶段课程初始化
     public void CoursePacketStageCourseInit(CoursePacketInfo coursePacketInfo) {
         LinearLayout coursepacket_coursestage_label_content_layout = mDetailsView.findViewById(R.id.coursepacket_coursestage_label_content_layout);
         //清空之前添加的阶段课程所有布局
@@ -722,9 +726,11 @@ public class ModelCoursePacketCover implements View.OnClickListener, ModelOrderD
             //教师name
             TextView teachers_content_name = view.findViewById(R.id.teachers_content_name);
             teachers_content_name.setText(teacherInfo.mTeacherName);
-            //教师message
-            TextView teachers_content_message = view.findViewById(R.id.teachers_content_message);
-            teachers_content_message.setText(teacherInfo.mTeacherMessage);
+            if (teacherInfo.mTeacherMessage != null) {
+                //教师message
+                TextView teachers_content_message = view.findViewById(R.id.teachers_content_message);
+                teachers_content_message.setText(teacherInfo.mTeacherMessage);
+            }
             coursepacket_teachers_label_content_layout.addView(view);
         }
     }
@@ -853,6 +859,10 @@ public class ModelCoursePacketCover implements View.OnClickListener, ModelOrderD
 
                     @Override
                     public void onNext(CourseTeacherBean value) {
+                        if (value == null){
+                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            return;
+                        }
                         //网络请求数据成功
                         int code = value.code;
                         if (!HeaderInterceptor.IsErrorCode(code,"")){
@@ -868,6 +878,9 @@ public class ModelCoursePacketCover implements View.OnClickListener, ModelOrderD
                             mCoursePacketInfo.mTeacherInfoList.clear();
                             for (int i = 0; i < dataBeans.size(); i++) {
                                 CourseTeacherBean.DataBean dataBean = dataBeans.get(i);
+                                if (dataBean == null){
+                                    continue;
+                                }
                                 String head = dataBean.getHead();//教师头像
                                 String introduction = dataBean.getIntroduction();//介绍
                                 String true_name = dataBean.getTrue_name();//真实名字
@@ -951,7 +964,7 @@ public class ModelCoursePacketCover implements View.OnClickListener, ModelOrderD
                             mCoursePacketInfo.mStageCourseInfoList.add(stageCourseInfo);
                         }
                         List<StageCourseListBean.DataBean.CourseListInfoBean> courseListInfo = data.getCourseListInfo();
-                        for (int i = 0; i < courseListInfo.size(); i++) {
+                        for (int i = 0; i < courseListInfo.size(); i ++) {
                             StageCourseListBean.DataBean.CourseListInfoBean stageListInfoBean = courseListInfo.get(i);
                             int course_id = stageListInfoBean.getCourse_id();
                             String course_name = stageListInfoBean.getCourse_name();

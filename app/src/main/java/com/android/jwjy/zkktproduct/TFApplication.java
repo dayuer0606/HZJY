@@ -23,7 +23,10 @@ import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
 
 import cn.jpush.android.api.JPushInterface;
-
+/**
+ * Created by dayuer on 19/7/2.
+ * 应用
+ */
 public class TFApplication extends Application {
 
     @Override

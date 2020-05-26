@@ -50,7 +50,10 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 import static com.talkfun.utils.HandlerUtil.runOnUiThread;
-
+/**
+ * Created by dayuer on 19/7/2.
+ * 题库模块
+ */
 public class ModelQuestionBank extends Fragment implements View.OnClickListener {
     private static ControlMainActivity mControlMainActivity;
     private static String mContext = "xxxxxxxxxxxxx";
@@ -1146,6 +1149,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
         coursedetails_handinpaper_accuracyrateprogress.setMax(questionBankAnswerSheetDataBeans.size());
     }
 
+    //题库详情展示（区分展示那种模式下的题库详情）
     public void QuestionBankDetailsQuestionModeShow() {
         if (mCurrentAnswerMode.equals("test")) {
             QuestionBankDetailsQuestionModeTestShow();

@@ -93,10 +93,10 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
     //    private Map<String, View> CourseQuestionViewMap = new HashMap<>();
 //    private Map<String, List<CourseQuestionInfo>> CourseQuestionDetailsViewMap = new HashMap<>();
     private String mPage = "Detail";
-    private boolean mQuestionPublishImage = false;
-    private boolean mQuestionPublishTitle = false;
-    private boolean mQuestionPublishContent = false;
-    private ControllerCenterDialog mMyDialog;
+    private boolean mQuestionPublishImage = false; //课程问答是否发布图片
+    private boolean mQuestionPublishTitle = false;//课程问答是否发布标题
+    private boolean mQuestionPublishContent = false;//课程问答是否发布内容
+    private ControllerCenterDialog mMyDialog; //居中的对话框
     private ControllerPopDialog mCourseDownloadDialog = null;
     private ControllerCustomDialog mCustomDialog = null;
 
@@ -109,6 +109,7 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
     private int mCourseQuestionCount = 10;
     private int mCourseQuestionSum = 0; //问答总数
 
+    //课程问答详情分页
     private int mCourseQuestionDetailsPage = 0;
     private int mCourseQuestionDetailsCount = 10;
     private int mCourseQuestionDetailsSum = 0; //问答详情总数
@@ -160,11 +161,15 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
             //课程阶段按钮
             TextView course_coursestage_label = mDetailsView.findViewById(R.id.course_coursestage_label);
             TextView course_coursestage_label1 = mDetailsView.findViewById(R.id.course_coursestage_label1);
+            //收藏课程
             LinearLayout course_details_bottomlayout_collect = mDetailsView.findViewById(R.id.course_details_bottomlayout_collect);
             LinearLayout course_details_bottomlayout_collect1 = mDetailsView.findViewById(R.id.course_details_bottomlayout_collect1);
+            //课程问答
             LinearLayout course_details_bottomlayout_question = mDetailsView.findViewById(R.id.course_details_bottomlayout_question);
+            //直播
             LinearLayout course_catalog_label_livemain = mDetailsView.findViewById(R.id.course_catalog_label_livemain);
             LinearLayout course_catalog_label_livemain1 = mDetailsView.findViewById(R.id.course_catalog_label_livemain1);
+            //录播
             LinearLayout course_catalog_label_recordmain = mDetailsView.findViewById(R.id.course_catalog_label_recordmain);
             LinearLayout course_catalog_label_recordmain1 = mDetailsView.findViewById(R.id.course_catalog_label_recordmain1);
             ImageView course_fl_layout_title_download = mDetailsView.findViewById(R.id.course_fl_layout_title_download);
@@ -189,15 +194,20 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
             course_catalog_label_recordmain.setOnClickListener(this);
             course_catalog_label_recordmain1.setOnClickListener(this);
         }
+        //隐藏所有布局
         HideAllLayout();
+        //初始化课程信息并显示
         CourseListInit(courseInfo);
         RelativeLayout course_main = modelCourse.findViewById(R.id.course_main);
         course_main.addView(mListView);
         return modelCourse;
     }
 
+    //展示课程详情
     public void CourseDetailsShow() {
+        //获取课程详情
         getSingleCourseDetails();
+        //获取课程目录
         getSingleCourseCatalog();
         if (modelCourse == null) {
             return;
@@ -260,6 +270,7 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
         }
     }
 
+    //展示课程问答界面
     public void CourseQuestionShow() {
         if (modelCourse == null) {
             return;
@@ -300,9 +311,11 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
         TextView course_question_layout_titletext = mQuestionView.findViewById(R.id.course_question_layout_titletext);
         course_question_layout_titletext.setText("精选问答(" + mCourseQuestionSum + ")");
         course_main.addView(mQuestionView);
+        //查询课程问答列表
         QueryStuCourseQuestion(course_question_layout_content);
     }
 
+    //隐藏所有布局
     public void HideAllLayout() {
         RelativeLayout course_main = modelCourse.findViewById(R.id.course_main);
         course_main.removeAllViews();
@@ -311,7 +324,7 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.course_details_label1:
+            case R.id.course_details_label1://点击课程详情
                 LinearLayout course_label = mDetailsView.findViewById(R.id.course_label);
                 if (course_label.getAlpha() == 0){
                     break;
@@ -358,7 +371,7 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                 mCurrentTab = "Details";
                 break;
             }
-            case R.id.course_coursestage_label1:
+            case R.id.course_coursestage_label1://点击课程目录
                 course_label = mDetailsView.findViewById(R.id.course_label);
                 if (course_label.getAlpha() == 0){
                     break;
@@ -402,12 +415,13 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                 mCurrentTab = "Catalog";
                 break;
             }
+            //点击课程收藏
             case R.id.course_details_bottomlayout_collect1:
             case R.id.course_details_bottomlayout_collect: {
                 CollectOrNotCollectCourses();
                 break;
             }
-            case R.id.course_question_add_layout_return_button1:{
+            case R.id.course_question_add_layout_return_button1:{ //点击添加课程问答的返回按钮
                 if (mIsPublish) {
                     //查询课程问答列表
                     CourseQuestionShow();
@@ -419,6 +433,7 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                 CourseQuestionShow();
                 break;
             }
+            //点击目录中的直播tab
             case R.id.course_catalog_label_livemain1:
                 LinearLayout course_catalog_label1 = mDetailsView.findViewById(R.id.course_catalog_label1);
                 if (course_catalog_label1.getAlpha() == 0){
@@ -448,6 +463,7 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                 mCurrentCatalogTab = "Live";
                 break;
             }
+            //点击目录中的录播tab
             case R.id.course_catalog_label_recordmain1:
                 course_catalog_label1 = mDetailsView.findViewById(R.id.course_catalog_label1);
                 if (course_catalog_label1.getAlpha() == 0){
@@ -477,10 +493,12 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                 mCurrentCatalogTab = "Record";
                 break;
             }
+            //点击课程问答的返回按钮
             case R.id.course_question_layout_return_button1: {
                 CourseDetailsShow();
                 break;
             }
+            //点击课程问答的添加按钮
             case R.id.course_question_layout_add_button1: {
                 CourseQuestionAddInit();
                 break;
@@ -516,6 +534,7 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
         }
     };
 
+    //课程信息初始化
     public void CourseListInit(CourseInfo courseInfo) {
         ControllerCustomRoundAngleImageView imageView = mListView.findViewById(R.id.coursecover);
         imageView.setImageDrawable(mControlMainActivity.getResources().getDrawable(R.drawable.modelcoursecover));//如果没有url，加载默认图片
@@ -766,7 +785,7 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
             Button course_details_buy_button1 = mDetailsView.findViewById(R.id.course_details_buy_button1);
             course_details_buy_button1.setText("继续学习");
         }
-        if (mCourseInfo.mCourseIsCollect.equals("1")){
+        if (mCourseInfo.mCourseIsCollect.equals("1")){ //修改为收藏状态
             ImageView course_details_bottomlayout_collectImage1 = mDetailsView.findViewById(R.id.course_details_bottomlayout_collectImage1);
             TextView course_details_bottomlayout_collectText1 = mDetailsView.findViewById(R.id.course_details_bottomlayout_collectText1);
             ImageView course_details_bottomlayout_collectImage = mDetailsView.findViewById(R.id.course_details_bottomlayout_collectImage);
@@ -787,6 +806,7 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
         }
     }
 
+    //课程目录录播界面初始化
     public void CourseCatalogRecordInit(CourseInfo courseInfo) {
         if (courseInfo == null) {
             return;
@@ -882,6 +902,7 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
         course_catalog_label_live1.setText("直播(" + liveCourseNum + ")");
     }
 
+    //课程目录录播界面章节初始化
     public void CourseCatalogRecordSectionsInit(LinearLayout course_catalog_label_content, String id) {
         if (mCourseInfo == null) {
             return;
@@ -956,6 +977,7 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
         }
     }
 
+    //课程目录直播界面初始化
     public void CourseCatalogLiveInit(CourseInfo courseInfo) {
         if (courseInfo == null) {
             return;
@@ -1153,6 +1175,7 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
         course_catalog_label_live1.setText("直播(" + liveCourseNum + ")");
     }
 
+    //课程目录直播界面课次初始化
     private void CourseCatalogLiveClassTimeInit(LinearLayout course_catalog_label_content, String type) {
         if (mCourseInfo == null || type == null) {
             return;
@@ -1341,6 +1364,7 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
         }
     }
 
+    //课程问答添加界面初始化
     private void CourseQuestionAddInit() {
         mPage = "QuestionAdd";
         HideAllLayout();
@@ -1484,6 +1508,7 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
         course_main.addView(mQuestionViewAdd);
     }
 
+    //课程问答添加界面-添加图片
     public void ModelCourseCoverQuestionPictureAdd(Intent data) {
         //添加图片，发布按钮改为蓝色
         mQuestionPublishImage = true;
@@ -1540,6 +1565,7 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
         }
     }
 
+    //课程问答-问答详情界面初始化
     private void CourseQuestionDetailsInit(Integer questions_id) {
         if (modelCourse == null) {
             return;
@@ -1580,6 +1606,7 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
         QueryStuCourseQuestionDetails(questions_id);
     }
 
+    //课程-下载初始化
     public void CourseDownloadInit() {
         if (mCourseDownloadDialog != null) {
             mCourseDownloadDialog.dismiss();
@@ -1772,6 +1799,7 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
         });
     }
 
+    //课程-下载管理界面初始化
     private void CourseDownloadManagerInit() {
         if (modelCourse == null) {
             return;

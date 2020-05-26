@@ -8,7 +8,10 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-
+/**
+ * Created by dayuer on 19/7/2.
+ * 可展开收起视图
+ */
 public class ModelExpandView extends FrameLayout {
 
 

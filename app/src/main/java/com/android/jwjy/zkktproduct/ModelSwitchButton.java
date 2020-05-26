@@ -16,7 +16,10 @@ import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Checkable;
-
+/**
+ * Created by dayuer on 19/7/2.
+ * 开关按钮
+ */
 public class ModelSwitchButton extends View implements Checkable {
     private static final int DEFAULT_WIDTH = dp2pxInt(58);
     private static final int DEFAULT_HEIGHT = dp2pxInt(36);

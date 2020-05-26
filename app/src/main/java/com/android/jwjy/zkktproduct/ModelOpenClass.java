@@ -41,7 +41,10 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-
+/**
+ * Created by dayuer on 19/7/2.
+ * 公开课模块
+ */
 public class ModelOpenClass extends Fragment implements View.OnClickListener {
     private static ControlMainActivity mControlMainActivity;
     private static String mContext="xxxxxxxxxxxxx";
@@ -126,6 +129,7 @@ public class ModelOpenClass extends Fragment implements View.OnClickListener {
     public void onDestroy() {
         super.onDestroy();
     }
+    //公开课主界面展示
     public void CourseMainShow() {
         if (mview == null) {
             return;

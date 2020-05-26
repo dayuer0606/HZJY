@@ -12,7 +12,10 @@ import android.widget.TextView;
 
 import java.io.IOException;
 import java.net.URL;
-
+/**
+ * Created by dayuer on 19/7/2.
+ * 加载网络图片
+ */
 public class ModelHtmlUtils {
 //    private static ModelHtmlUtils instance;
     private Activity activity;

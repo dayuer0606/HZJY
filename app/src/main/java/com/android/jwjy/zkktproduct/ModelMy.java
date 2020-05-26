@@ -59,7 +59,10 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-
+/**
+ * Created by dayuer on 19/7/2.
+ * 我的模块
+ */
 public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
     private static ControlMainActivity mControlMainActivity;
     private static String mContext = "xxxxxxxxxxxxx";
@@ -69,14 +72,18 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
             mMyOrderView, mMyOrderDetailsView, mMyCouponView, mMyMessageView, mMyMessageView0, mMyAnswerView, mMyAnswerDetailsView,
             mAnswerDetailsView;
     private int width = 720;
+    //我的收藏当前显示tab，默认为课程
     private int mMyCollectLastTabIndex = 1;
     private String mMyCollectCurrentTab = "course";
+    //我的订单当前显示tab，默认为全部
     private int mMyOrderLastTabIndex = 1;
     private String mMyOrderCurrentTab = "all";
+    //我的优惠券当前显示tab，默认为未使用
     private int mMyCouponLastTabIndex = 1;
     private String mMyCouponCurrentTab = "notused";
+    //我的问答当前显示tab，默认为我的提问
     private int mMyAnswerLastTabIndex = 1;
-    private String mMyAnswerCurrentTab = "course";
+    private String mMyAnswerCurrentTab = "question";
     private ControllerCenterDialog mMyDialog, mMyCouponDialog;
     private ControllerMyMessage1Adapter adapter;
     private static final String TAG = "ModelMy";
@@ -100,7 +107,6 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
     private SmartRefreshLayout mSmart_model_my_mymessage;
     private SmartRefreshLayout mSmart_model_my_myanswer;
     private SmartRefreshLayout mSmart_model_my_myanswerdetails;
-    private SmartRefreshLayout mSmart_model_my_mycache;
     private SmartRefreshLayout mSmart_model_my_mycoupon;
     //我的课程列表分页查询
     private int mMyCourseCurrentPage = 0;
@@ -165,6 +171,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
         my_layout_main.removeAllViews();
     }
 
+    //我的界面初始化
     public void ModelMyInit() {
         if (mview == null) {
             return;
@@ -884,6 +891,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
         });
     }
 
+    //获取可用内存大小
     private long getAvailaleSize() {
 
         File path = Environment.getExternalStorageDirectory(); //取得sdcard文件路径
@@ -1406,6 +1414,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
         getMyCouponList("未使用");
     }
 
+    //展示我的优惠券-优惠券列表
     private void MyCouponShow_MyCoupon(LinearLayout modelmy_myorder_main_content,MyCoupon.DataBean.ListBean listBean) {
         View view = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_my_mycoupon1, null);
         modelmy_myorder_main_content.addView(view);
@@ -5898,6 +5907,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                 });
     }
 
+    //我的消息列表-全部已读
     public void ReadMyNewsAll(){
         if (mControlMainActivity.mStuId.equals("")){
             Toast.makeText(mControlMainActivity,"读取失败！",Toast.LENGTH_SHORT).show();
