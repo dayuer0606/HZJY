@@ -37,46 +37,6 @@
                         android:rowCount="3"></GridLayout>
 
                     <RelativeLayout
-                        android:id="@+id/morecourse"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="left"
-                            android:gravity="left"
-                            android:text="@string/title_recommendcourse"
-                            android:textColor="#000000"
-                            android:textSize="@dimen/textsize18"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="right"
-                            android:clickable="true"
-                            android:gravity="right"
-                            android:onClick="onClickMoreCourse"
-                            android:text="@string/title_more"
-                            android:textColor="@color/gray" />
-                    </RelativeLayout>
-
-                    <LinearLayout
-                        android:id="@+id/coursemodel"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical" />
-
-                    <View
-                        android:id="@+id/courseline"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/dp1"
-                        android:layout_marginTop="@dimen/dp_3"
-                        android:background="#ececec" />
-
-                    <RelativeLayout
                         android:id="@+id/morecoursepacket"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -105,6 +65,46 @@
 
                     <LinearLayout
                         android:id="@+id/coursepacketmodel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical" />
+
+                    <View
+                        android:id="@+id/courseline"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp1"
+                        android:layout_marginTop="@dimen/dp_3"
+                        android:background="#ececec" />
+
+                    <RelativeLayout
+                        android:id="@+id/morecourse"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="left"
+                            android:gravity="left"
+                            android:text="@string/title_recommendcourse"
+                            android:textColor="#000000"
+                            android:textSize="@dimen/textsize18"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="right"
+                            android:clickable="true"
+                            android:gravity="right"
+                            android:onClick="onClickMoreCourse"
+                            android:text="@string/title_more"
+                            android:textColor="@color/gray" />
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:id="@+id/coursemodel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="vertical" />

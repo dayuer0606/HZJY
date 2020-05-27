@@ -49,15 +49,6 @@
         <!--是否模糊-->
         <item name="android:backgroundDimEnabled">true</item>
     </style>
-    <style name="softRadioButton_style" >
-        <item name="textSize">15sp</item> 字体大小
-        <item name="textColorChecked">#FF3700</item> 选中字体颜色
-        <item name="textColor">#232323 </item>字体颜色
-        <item name="upImage">@drawable/button_up_gray</item>指示器向上的图
-        <item name="downImage">@drawable/button_down_gray</item>指示器向下的图
-        <item name="upImageChecked">@drawable/button_up_red</item> 指示器向上选中的图
-        <item name="downImageChecked">@drawable/button_down_red</item>指示器向下选中的图
-    </style>
     <style name="customdialogstyle">
         <item name="android:windowBackground">@color/white</item>
         <item name="android:windowFrame">@null</item>

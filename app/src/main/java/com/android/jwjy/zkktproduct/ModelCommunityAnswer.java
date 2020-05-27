@@ -911,6 +911,8 @@ public class ModelCommunityAnswer extends Fragment{
         }
         RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json;charset=UTF-8"), strEntity);
         queryMyCourseList.queryAllCoursePackageCommunity(body)
+
+
                 .enqueue(new Callback<CommunityBean>() {
                     @Override
                     public void onResponse(Call<CommunityBean> call, Response<CommunityBean> response) {

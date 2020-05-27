@@ -271,7 +271,7 @@ public class ModelImageSlideshow extends FrameLayout {
                         Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                         context.startActivity(intent);
                     } catch (Exception e){
-                        Toast.makeText(context,"图片链接：" + imageTitleBeanList.get(position).imageSkipUrl + "，图片链接不正确！",Toast.LENGTH_LONG).show();
+//                        Toast.makeText(context,"图片链接：" + imageTitleBeanList.get(position).imageSkipUrl + "，图片链接不正确！",Toast.LENGTH_LONG).show();
                     }
                 } else if ((position - 1) < imageTitleBeanList.size() && (position - 1) >= 0){ //大于一张图片的时候
                     try {
@@ -282,7 +282,7 @@ public class ModelImageSlideshow extends FrameLayout {
                         Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                         context.startActivity(intent);
                     } catch (Exception e){
-                        Toast.makeText(context,"图片链接：" + imageTitleBeanList.get(position).imageSkipUrl + "，图片链接不正确！",Toast.LENGTH_LONG).show();
+//                        Toast.makeText(context,"图片链接：" + imageTitleBeanList.get(position).imageSkipUrl + "，图片链接不正确！",Toast.LENGTH_LONG).show();
                     }
                 }
             });

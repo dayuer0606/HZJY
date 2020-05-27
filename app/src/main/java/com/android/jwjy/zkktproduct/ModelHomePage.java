@@ -287,9 +287,9 @@ public class ModelHomePage extends Fragment{
             if (homePageRotationChartInfoBean == null){
                 continue;
             }
-            if (!homePageRotationChartInfoBean.link_type.equals("外部链接")){//暂只处理外部链接数据
-                continue;
-            }
+//            if (!homePageRotationChartInfoBean.link_type.equals("外部链接")){//暂只处理外部链接数据
+//                continue;
+//            }
             if (homePageRotationChartInfoBean.server_address == null){ //没有轮播图链接
                 continue;
             }

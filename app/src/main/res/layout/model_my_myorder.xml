@@ -23,7 +23,7 @@
                 android:layout_gravity="center"
                 android:background="@drawable/button_return_right_black"
                 android:clickable="true"
-                android:onClick="oonClickOrderBuyReturn" />
+                android:onClick="onClickOrderBuyReturn" />
 <!--                android:onClick="onClickMyOrderReturn" />-->
 
             <TextView
