@@ -97,9 +97,9 @@ public class ModelClassCheduleCard extends Fragment implements
         }
         //获取当天日期和时间
         Date dateOld = new Date(System.currentTimeMillis()); // 根据long类型的毫秒数生命一个date类型的时间
-        final android.icu.util.Calendar c = android.icu.util.Calendar.getInstance();
+        final java.util.Calendar c = java.util.Calendar.getInstance();
         String format1 = new SimpleDateFormat("yyyy-MM-dd").format(dateOld);
-        int mWay = c.get(android.icu.util.Calendar.DAY_OF_WEEK);
+        int mWay = c.get(java.util.Calendar.DAY_OF_WEEK);
         String classchedulecard_week = "";
         if (mWay == 1){
             classchedulecard_week = "星期日";
@@ -158,39 +158,39 @@ public class ModelClassCheduleCard extends Fragment implements
         } else {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd"); //设置时间格式
             SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd"); //设置时间格式
-            android.icu.util.Calendar cal = android.icu.util.Calendar.getInstance();
+            java.util.Calendar cal = java.util.Calendar.getInstance();
             String data = calendar.toString();
             try {
                 Date date = sdf.parse(data);
                 cal.setTime(date);
                 //判断要计算的日期是否是周日，如果是则减一天计算周六的，否则会出问题，计算到下一周去了
-                int dayWeek = cal.get(android.icu.util.Calendar.DAY_OF_WEEK);//获得传入日期是一个星期的第几天
+                int dayWeek = cal.get(java.util.Calendar.DAY_OF_WEEK);//获得传入日期是一个星期的第几天
                 if (1 == dayWeek) {
-                    cal.add(android.icu.util.Calendar.DAY_OF_MONTH, -1);
+                    cal.add(java.util.Calendar.DAY_OF_MONTH, -1);
                 }
-                cal.setFirstDayOfWeek(android.icu.util.Calendar.MONDAY);//设置一个星期的第一天，按中国的习惯一个星期的第一天是星期一
-                int day = cal.get(android.icu.util.Calendar.DAY_OF_WEEK);//获得传入日期是一个星期的第几天
-                cal.add(android.icu.util.Calendar.DATE, cal.getFirstDayOfWeek() - day);//根据日历的规则，给传入日期减去星期几与一个星期第一天的差值
+                cal.setFirstDayOfWeek(java.util.Calendar.MONDAY);//设置一个星期的第一天，按中国的习惯一个星期的第一天是星期一
+                int day = cal.get(java.util.Calendar.DAY_OF_WEEK);//获得传入日期是一个星期的第几天
+                cal.add(java.util.Calendar.DATE, cal.getFirstDayOfWeek() - day);//根据日历的规则，给传入日期减去星期几与一个星期第一天的差值
                 LinkedHashMap<String, List<ClassBean>> map  = new LinkedHashMap<>();
                 String Monday = sdf1.format(cal.getTime());
                 System.out.println("所在周星期一的日期：" + Monday);
                 map.put(Monday,null);
-                cal.add(android.icu.util.Calendar.DATE, 1);
+                cal.add(java.util.Calendar.DATE, 1);
                 String two = sdf1.format(cal.getTime());
                 map.put(two,null);
-                cal.add(android.icu.util.Calendar.DATE, 1);
+                cal.add(java.util.Calendar.DATE, 1);
                 String three = sdf1.format(cal.getTime());
                 map.put(three,null);
-                cal.add(android.icu.util.Calendar.DATE, 1);
+                cal.add(java.util.Calendar.DATE, 1);
                 String four = sdf1.format(cal.getTime());
                 map.put(four,null);
-                cal.add(android.icu.util.Calendar.DATE, 1);
+                cal.add(java.util.Calendar.DATE, 1);
                 String five = sdf1.format(cal.getTime());
                 map.put(five,null);
-                cal.add(android.icu.util.Calendar.DATE, 1);
+                cal.add(java.util.Calendar.DATE, 1);
                 String six = sdf1.format(cal.getTime());
                 map.put(six,null);
-                cal.add(android.icu.util.Calendar.DATE, 1);
+                cal.add(java.util.Calendar.DATE, 1);
                 String Sunday = sdf1.format(cal.getTime());
                 System.out.println("所在周星期日的日期：" + Sunday);
                 map.put(Sunday,null);
@@ -352,7 +352,7 @@ public class ModelClassCheduleCard extends Fragment implements
                             } else if (item.getStatus().equals("已结束")) {
                                 mControlMainActivity.LoginLiveOrPlayback(item.getCourse_times_id(), 2, PlayType.PLAYBACK);
                             } else {
-                                Toast.makeText(mControlMainActivity,"此课程还未开始",Toast.LENGTH_SHORT).show();
+                                mControlMainActivity.LoginLiveOrPlayback(item.getCourse_times_id(), 2, PlayType.LIVE);
                             }
                         });
                         recyclerView.setAdapter( modelClassAdapter);

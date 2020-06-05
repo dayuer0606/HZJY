@@ -23,6 +23,8 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 
 import okhttp3.RequestBody;
@@ -749,9 +751,31 @@ public class ModelLogIn extends Fragment {
             login_register_repeatpassword_edittext.setSelection(login_register_repeatpassword_edittext.getText().toString().length());
         });
     }
+    //将用户登录密码做md5加密
+    public static String getMd5Value(String sSecret) {
+        try {
+            MessageDigest bmd5 = MessageDigest.getInstance("MD5");
+            bmd5.update(sSecret.getBytes());
+            int i;
+            StringBuffer buf = new StringBuffer();
+            byte[] b = bmd5.digest();// 加密
+            for (int offset = 0; offset < b.length; offset++) {
+                i = b[offset];
+                if (i < 0)
+                    i += 256;
+                if (i < 16)
+                    buf.append("0");
+                buf.append(Integer.toHexString(i));
+            }
+            return buf.toString();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
     //登录
     public void LogIn(String username,String password){
-        if (password.length()<6){
+        if (password.length() < 6){
             Toast.makeText(mControlMainActivity,"密码不能少于6位",Toast.LENGTH_LONG).show();
             return;
         }
@@ -768,7 +792,8 @@ public class ModelLogIn extends Fragment {
 
         HashMap<String,String> paramsMap= new HashMap<>();
         paramsMap.put("tel",username);
-        paramsMap.put("stu_pass",password);
+        paramsMap.put("stu_pass",getMd5Value(password));
+//        paramsMap.put("stu_pass",password);
         String strEntity = gson.toJson(paramsMap);
         RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json;charset=UTF-8"),strEntity);
         Call<ModelObservableInterface.BaseBean> call = modelObservableInterface.PasswordLogin(body);

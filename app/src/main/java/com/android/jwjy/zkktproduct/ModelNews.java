@@ -16,7 +16,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import android.icu.text.DateFormat;
-import android.icu.text.SimpleDateFormat;
+//import android.icu.text.SimpleDateFormat;
+import java.text.SimpleDateFormat;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
@@ -186,27 +187,24 @@ public class ModelNews extends Fragment implements View.OnClickListener {
                         new ModelHtmlUtils(mControlMainActivity, news2_news).setHtmlWithPic(data.news_content);
                         TextView news2_newsdata = newsView.findViewById(R.id.news2_newsdata);
                         Date date = null;
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                            DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+                        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+                        try {
+                            date = df.parse(data.create_time);
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                        if (date != null) {
+                            SimpleDateFormat df1 = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", Locale.UK);
+                            Date date1 = null;
                             try {
-                                date = df.parse(data.create_time);
+                                date1 = df1.parse(date.toString());
                             } catch (ParseException e) {
                                 e.printStackTrace();
                             }
-                            if (date != null) {
-                                SimpleDateFormat df1 = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", Locale.UK);
-                                Date date1 = null;
-                                try {
-                                    date1 = df1.parse(date.toString());
-                                } catch (ParseException e) {
-                                    e.printStackTrace();
-                                }
-                                if (date1 != null) {
-                                    DateFormat df2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                                    data.create_time = df2.format(date1).toString();
-                                }
+                            if (date1 != null) {
+                                SimpleDateFormat df2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                                data.create_time = df2.format(date1).toString();
                             }
-
                         }
                         news2_newsdata.setText(data.create_time);
                         TextView news2_looknum = newsView.findViewById(R.id.news2_looknum);
@@ -319,27 +317,24 @@ public class ModelNews extends Fragment implements View.OnClickListener {
                                 //新闻发布时间
                                 TextView news1_data1 = view.findViewById(R.id.news1_data);
                                 //时间格式转码
-                                DateFormat df = null;
                                 Date date = null;
-                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                                    df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+                                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+                                try {
+                                    date = df.parse(listBean.create_time);
+                                } catch (ParseException e) {
+                                    e.printStackTrace();
+                                }
+                                if (date != null) {
+                                    SimpleDateFormat df1 = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", Locale.UK);
+                                    Date date1 = null;
                                     try {
-                                        date = df.parse(listBean.create_time);
+                                        date1 = df1.parse(date.toString());
                                     } catch (ParseException e) {
                                         e.printStackTrace();
                                     }
-                                    if (date != null) {
-                                        SimpleDateFormat df1 = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", Locale.UK);
-                                        Date date1 = null;
-                                        try {
-                                            date1 = df1.parse(date.toString());
-                                        } catch (ParseException e) {
-                                            e.printStackTrace();
-                                        }
-                                        if (date1 != null) {
-                                            DateFormat df2 = new SimpleDateFormat("yyyy-MM-dd");
-                                            listBean.create_time = df2.format(date1);
-                                        }
+                                    if (date1 != null) {
+                                        SimpleDateFormat df2 = new SimpleDateFormat("yyyy-MM-dd");
+                                        listBean.create_time = df2.format(date1);
                                     }
                                 }
                                 news1_data1.setText(listBean.create_time);
@@ -465,27 +460,24 @@ public class ModelNews extends Fragment implements View.OnClickListener {
                                 //新闻发布时间
                                 TextView news1_data1 = view.findViewById(R.id.news1_data);
                                 //时间格式转码
-                                DateFormat df = null;
                                 Date date = null;
-                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                                    df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+                                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+                                try {
+                                    date = df.parse(listBean.create_time);
+                                } catch (ParseException e) {
+                                    e.printStackTrace();
+                                }
+                                if (date != null) {
+                                    SimpleDateFormat df1 = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", Locale.UK);
+                                    Date date1 = null;
                                     try {
-                                        date = df.parse(listBean.create_time);
+                                        date1 = df1.parse(date.toString());
                                     } catch (ParseException e) {
                                         e.printStackTrace();
                                     }
-                                    if (date != null) {
-                                        SimpleDateFormat df1 = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", Locale.UK);
-                                        Date date1 = null;
-                                        try {
-                                            date1 = df1.parse(date.toString());
-                                        } catch (ParseException e) {
-                                            e.printStackTrace();
-                                        }
-                                        if (date1 != null) {
-                                            DateFormat df2 = new SimpleDateFormat("yyyy-MM-dd");
-                                            listBean.create_time = df2.format(date1);
-                                        }
+                                    if (date1 != null) {
+                                        SimpleDateFormat df2 = new SimpleDateFormat("yyyy-MM-dd");
+                                        listBean.create_time = df2.format(date1);
                                     }
                                 }
                                 news1_data1.setText(listBean.create_time);

@@ -969,7 +969,7 @@ public class ModelCoursePacketCover implements View.OnClickListener, ModelOrderD
                             int course_id = stageListInfoBean.getCourse_id();
                             String course_name = stageListInfoBean.getCourse_name();
                             int sort_of_course = stageListInfoBean.getSort_of_course();
-                            int special_price = stageListInfoBean.getSpecial_price();
+                            float special_price = stageListInfoBean.getSpecial_price();
                             int price = stageListInfoBean.getPrice();
                             int stage_id = stageListInfoBean.getStage_id();
                             for (int num = 0; num < mCoursePacketInfo.mStageCourseInfoList.size(); num ++ ){
@@ -1097,7 +1097,6 @@ public class ModelCoursePacketCover implements View.OnClickListener, ModelOrderD
          * code : 200
          * data : [{"head":"http://thirdwx.qlogo.cn/mmopen/vi_32/0RPnUdGTLGxHQdUVDm5qfOKac2TYwS4JEWu5dQx2E06PocsIWKsNTvXY0VSTFETa2GUa7sy2rmZQnqKHp77pGQ/132","user_id":1,"true_name":"秦羽","introduction":"1"}]
          */
-
         private int code;
         private List<DataBean> data;
 
@@ -1221,7 +1220,7 @@ public class ModelCoursePacketCover implements View.OnClickListener, ModelOrderD
                  */
 
                 private int course_id;
-                private int special_price;
+                private float special_price;
                 private String course_name;
                 private int stage_id;
                 private int sort_of_course;
@@ -1237,7 +1236,7 @@ public class ModelCoursePacketCover implements View.OnClickListener, ModelOrderD
                     this.course_id = course_id;
                 }
 
-                public int getSpecial_price() {
+                public float getSpecial_price() {
                     return special_price;
                 }
 

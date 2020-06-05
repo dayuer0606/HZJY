@@ -3,7 +3,8 @@ package com.android.jwjy.zkktproduct;
 import android.app.Fragment;
 import android.graphics.drawable.Drawable;
 import android.icu.text.DateFormat;
-import android.icu.text.SimpleDateFormat;
+//import android.icu.text.SimpleDateFormat;
+import java.text.SimpleDateFormat;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -365,44 +366,42 @@ public class ModelOpenClass extends Fragment implements View.OnClickListener {
                         //公开课的开始和结束时间
                         TextView openclass1_time = view.findViewById(R.id.openclass1_time);
                         Date date = null;
-                        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-                            DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+                        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+                        try {
+                            date = df.parse(listBean.begin_time);
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                        if (date != null) {
+                            SimpleDateFormat df1 = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", Locale.UK);
+                            Date date1 = null;
                             try {
-                                date = df.parse(listBean.begin_time);
+                                date1 = df1.parse(date.toString());
                             } catch (ParseException e) {
                                 e.printStackTrace();
                             }
-                            if (date != null) {
-                                SimpleDateFormat df1 = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", Locale.UK);
-                                Date date1 = null;
-                                try {
-                                    date1 = df1.parse(date.toString());
-                                } catch (ParseException e) {
-                                    e.printStackTrace();
-                                }
-                                if (date1 != null) {
-                                    DateFormat df2 = new SimpleDateFormat("yyyy-MM-dd");
-                                    listBean.begin_time = df2.format(date1).toString();
-                                }
+                            if (date1 != null) {
+                                SimpleDateFormat df2 = new SimpleDateFormat("yyyy-MM-dd");
+                                listBean.begin_time = df2.format(date1).toString();
                             }
-                            df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+                        }
+                        df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+                        try {
+                            date = df.parse(listBean.end_time);
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                        if (date != null) {
+                            SimpleDateFormat df1 = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", Locale.UK);
+                            Date date1 = null;
                             try {
-                                date = df.parse(listBean.end_time);
+                                date1 = df1.parse(date.toString());
                             } catch (ParseException e) {
                                 e.printStackTrace();
                             }
-                            if (date != null) {
-                                SimpleDateFormat df1 = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", Locale.UK);
-                                Date date1 = null;
-                                try {
-                                    date1 = df1.parse(date.toString());
-                                } catch (ParseException e) {
-                                    e.printStackTrace();
-                                }
-                                if (date1 != null) {
-                                    DateFormat df2 = new SimpleDateFormat("yyyy-MM-dd");
-                                    listBean.end_time = df2.format(date1).toString();
-                                }
+                            if (date1 != null) {
+                                SimpleDateFormat df2 = new SimpleDateFormat("yyyy-MM-dd");
+                                listBean.end_time = df2.format(date1).toString();
                             }
                         }
                         openclass1_time.setText(listBean.getBegin_time() + " " + listBean.getEnd_time());
@@ -539,44 +538,42 @@ public class ModelOpenClass extends Fragment implements View.OnClickListener {
                             //公开课的开始和结束时间
                             TextView openclass1_time = view.findViewById(R.id.openclass1_time);
                             Date date = null;
-                            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-                                DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+                            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+                            try {
+                                date = df.parse(listBean.begin_time);
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+                            if (date != null) {
+                                SimpleDateFormat df1 = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", Locale.UK);
+                                Date date1 = null;
                                 try {
-                                    date = df.parse(listBean.begin_time);
+                                    date1 = df1.parse(date.toString());
                                 } catch (ParseException e) {
                                     e.printStackTrace();
                                 }
-                                if (date != null) {
-                                    SimpleDateFormat df1 = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", Locale.UK);
-                                    Date date1 = null;
-                                    try {
-                                        date1 = df1.parse(date.toString());
-                                    } catch (ParseException e) {
-                                        e.printStackTrace();
-                                    }
-                                    if (date1 != null) {
-                                        DateFormat df2 = new SimpleDateFormat("yyyy-MM-dd");
-                                        listBean.begin_time = df2.format(date1).toString();
-                                    }
+                                if (date1 != null) {
+                                    SimpleDateFormat df2 = new SimpleDateFormat("yyyy-MM-dd");
+                                    listBean.begin_time = df2.format(date1).toString();
                                 }
-                                df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+                            }
+                            df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+                            try {
+                                date = df.parse(listBean.end_time);
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+                            if (date != null) {
+                                SimpleDateFormat df1 = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", Locale.UK);
+                                Date date1 = null;
                                 try {
-                                    date = df.parse(listBean.end_time);
+                                    date1 = df1.parse(date.toString());
                                 } catch (ParseException e) {
                                     e.printStackTrace();
                                 }
-                                if (date != null) {
-                                    SimpleDateFormat df1 = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", Locale.UK);
-                                    Date date1 = null;
-                                    try {
-                                        date1 = df1.parse(date.toString());
-                                    } catch (ParseException e) {
-                                        e.printStackTrace();
-                                    }
-                                    if (date1 != null) {
-                                        DateFormat df2 = new SimpleDateFormat("yyyy-MM-dd");
-                                        listBean.end_time = df2.format(date1).toString();
-                                    }
+                                if (date1 != null) {
+                                    SimpleDateFormat df2 = new SimpleDateFormat("yyyy-MM-dd");
+                                    listBean.end_time = df2.format(date1).toString();
                                 }
                             }
                             openclass1_time.setText(listBean.getBegin_time() + " " + listBean.getEnd_time());

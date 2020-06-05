@@ -8,8 +8,10 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.icu.text.DateFormat;
-import android.icu.text.SimpleDateFormat;
-import android.icu.util.TimeZone;
+////import android.icu.text.SimpleDateFormat;
+import java.text.SimpleDateFormat;
+//import android.icu.util.TimeZone;
+import java.util.TimeZone;
 import android.os.Build;
 import android.os.Environment;
 import android.os.StatFs;
@@ -510,7 +512,12 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                 break;
             }
             case R.id.course_details_buy_button: { //课程详情购买
-                Toast.makeText(mControlMainActivity,"此功能还在完善，敬请期待！",Toast.LENGTH_SHORT).show();
+                //如果是免费的课程直接购买
+//                if (mCourseInfo.mCoursePrice.equals("0") || mCourseInfo.mCoursePrice.equals("0.0") || mCourseInfo.mCoursePrice.equals("免费")){
+//
+//                } else {
+                    Toast.makeText(mControlMainActivity, "此功能还在完善，敬请期待！", Toast.LENGTH_SHORT).show();
+//                }
 //                HideAllLayout();
 //                RelativeLayout course_main = modelCourse.findViewById(R.id.course_main);
 //                View view = mControlMainActivity.Page_OrderDetails(this,mCourseInfo,null,null);
@@ -660,25 +667,23 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
         TextView course_details_periodofvalidity = mDetailsView.findViewById(R.id.course_details_periodofvalidity);
         Date date = null;
         String invalid_date_date = "";
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        try {
+            date = df.parse(courseInfo.mCourseValidityPeriod);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        if (date != null) {
+            SimpleDateFormat df1 = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", Locale.UK);
+            Date date1 = null;
             try {
-                date = df.parse(courseInfo.mCourseValidityPeriod);
+                date1 = df1.parse(date.toString());
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-            if (date != null) {
-                SimpleDateFormat df1 = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", Locale.UK);
-                Date date1 = null;
-                try {
-                    date1 = df1.parse(date.toString());
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-                if (date1 != null) {
-                    DateFormat df2 = new SimpleDateFormat("yyyy-MM-dd");
-                    invalid_date_date = df2.format(date1).toString();
-                }
+            if (date1 != null) {
+                SimpleDateFormat df2 = new SimpleDateFormat("yyyy-MM-dd");
+                invalid_date_date = df2.format(date1).toString();
             }
         }
         course_details_periodofvalidity.setText("有效期至：" +  invalid_date_date);
@@ -943,17 +948,15 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                 if (!mCourseInfo.mCourseValidityPeriod.equals("")){
                     long CourseValidityPeriod = 0;
                     long currentTime = System.currentTimeMillis();
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                        Date date = null;
-                        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
-                        try {
-                            date = df.parse(mCourseInfo.mCourseValidityPeriod);
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                        }
-                        if (date != null) {
-                            CourseValidityPeriod = date.getTime();
-                        }
+                    Date date = null;
+                    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+                    try {
+                        date = df.parse(mCourseInfo.mCourseValidityPeriod);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    if (date != null) {
+                        CourseValidityPeriod = date.getTime();
                     }
                     if (CourseValidityPeriod != 0 && CourseValidityPeriod < currentTime){
                         Toast.makeText(mControlMainActivity,"您购买的课程已过期",Toast.LENGTH_SHORT).show();
@@ -1218,24 +1221,22 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                     if (!mCourseInfo.mCourseValidityPeriod.equals("")){
                         long CourseValidityPeriod = 0;
                         long currentTime = System.currentTimeMillis();
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                            Date date = null;
-                            DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
-                            try {
-                                date = df.parse(mCourseInfo.mCourseValidityPeriod);
-                            } catch (ParseException e) {
-                                e.printStackTrace();
-                            }
-                            if (date != null) {
-                                CourseValidityPeriod = date.getTime();
-                            }
+                        Date date = null;
+                        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+                        try {
+                            date = df.parse(mCourseInfo.mCourseValidityPeriod);
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                        if (date != null) {
+                            CourseValidityPeriod = date.getTime();
                         }
                         if (CourseValidityPeriod != 0 && CourseValidityPeriod < currentTime){
                             Toast.makeText(mControlMainActivity,"您购买的课程已过期",Toast.LENGTH_SHORT).show();
                             return;
                         }
                     }
-                    if (finalCourseClassTimeInfo.liveStatus == 2 || finalCourseClassTimeInfo.liveStatus == 1){
+                    if (finalCourseClassTimeInfo.liveStatus == 2 || finalCourseClassTimeInfo.liveStatus == 1|| finalCourseClassTimeInfo.liveStatus == 0){
                         mControlMainActivity.LoginLiveOrPlayback(Integer.parseInt(finalCourseClassTimeInfo.mCourseClassTimeId),2, PlayType.LIVE);
                     } else if (finalCourseClassTimeInfo.liveStatus == 3) {
                         mControlMainActivity.LoginLiveOrPlayback(Integer.parseInt(finalCourseClassTimeInfo.mCourseClassTimeId), 2, PlayType.PLAYBACK);
@@ -1280,24 +1281,22 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                     if (!mCourseInfo.mCourseValidityPeriod.equals("")){
                         long CourseValidityPeriod = 0;
                         long currentTime = System.currentTimeMillis();
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                            Date date = null;
-                            DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
-                            try {
-                                date = df.parse(mCourseInfo.mCourseValidityPeriod);
-                            } catch (ParseException e) {
-                                e.printStackTrace();
-                            }
-                            if (date != null) {
-                                CourseValidityPeriod = date.getTime();
-                            }
+                        Date date = null;
+                        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+                        try {
+                            date = df.parse(mCourseInfo.mCourseValidityPeriod);
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                        if (date != null) {
+                            CourseValidityPeriod = date.getTime();
                         }
                         if (CourseValidityPeriod != 0 && CourseValidityPeriod < currentTime){
                             Toast.makeText(mControlMainActivity,"您购买的课程已过期",Toast.LENGTH_SHORT).show();
                             return;
                         }
                     }
-                    if (finalCourseClassTimeInfo.liveStatus == 2 || finalCourseClassTimeInfo.liveStatus == 1){
+                    if (finalCourseClassTimeInfo.liveStatus == 2 || finalCourseClassTimeInfo.liveStatus == 1|| finalCourseClassTimeInfo.liveStatus == 0){
                         mControlMainActivity.LoginLiveOrPlayback(Integer.parseInt(finalCourseClassTimeInfo.mCourseClassTimeId),2, PlayType.LIVE);
                     } else if (finalCourseClassTimeInfo.liveStatus == 3) {
                         mControlMainActivity.LoginLiveOrPlayback(Integer.parseInt(finalCourseClassTimeInfo.mCourseClassTimeId), 2, PlayType.PLAYBACK);
@@ -1341,17 +1340,15 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                     if (!mCourseInfo.mCourseValidityPeriod.equals("")){
                         long CourseValidityPeriod = 0;
                         long currentTime = System.currentTimeMillis();
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                            Date date = null;
-                            DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
-                            try {
-                                date = df.parse(mCourseInfo.mCourseValidityPeriod);
-                            } catch (ParseException e) {
-                                e.printStackTrace();
-                            }
-                            if (date != null) {
-                                CourseValidityPeriod = date.getTime();
-                            }
+                        Date date = null;
+                        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+                        try {
+                            date = df.parse(mCourseInfo.mCourseValidityPeriod);
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                        if (date != null) {
+                            CourseValidityPeriod = date.getTime();
                         }
                         if (CourseValidityPeriod != 0 && CourseValidityPeriod < currentTime){
                             Toast.makeText(mControlMainActivity,"您购买的课程已过期",Toast.LENGTH_SHORT).show();
@@ -1648,14 +1645,14 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                         ll.width = 0;
                         coursedetails_download1_image.setLayoutParams(ll);
                         int progress = 0;
-                        try {
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) { //计算下载进度
-//                                progress = Math.toIntExact(Long.valueOf(courseRecordPlayDownloadInfo.mCourseSectionsDownloadSize)
-//                                        / video_len);
-                            }
-                        } catch (Exception e){
-
-                        }
+//                        try {
+//                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) { //计算下载进度
+////                                progress = Math.toIntExact(Long.valueOf(courseRecordPlayDownloadInfo.mCourseSectionsDownloadSize)
+////                                        / video_len);
+//                            }
+//                        } catch (Exception e){
+//
+//                        }
                         coursedetails_download1_downloadprogress.setProgress(progress);
                         if (progress == 100) {
                             coursedetails_download1_downloadprogress = view.findViewById(R.id.coursedetails_download1_downloadprogress);
@@ -1856,14 +1853,14 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                 course_downloadmanager_child1_name.setHint(courseSectionsInfo.mCourseSectionsId);
                 ProgressBar progress_bar_healthy = view1.findViewById(R.id.progress_bar_healthy);
                 int progress = 0;
-                try {
-//                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) { //计算下载进度
-//                        progress = Math.toIntExact(Long.valueOf(info.mCourseSectionsDownloadSize)
-//                                / video_len);
-//                    }
-                } catch (Exception e){
-
-                }
+//                try {
+////                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) { //计算下载进度
+////                        progress = Math.toIntExact(Long.valueOf(info.mCourseSectionsDownloadSize)
+////                                / video_len);
+////                    }
+//                } catch (Exception e){
+//
+//                }
                 progress_bar_healthy.setProgress(progress);
                 ImageView course_downloadmanager_child1_function = view1.findViewById(R.id.course_downloadmanager_child1_function);
                 TextView course_downloadmanager_child_state = view1.findViewById(R.id.course_downloadmanager_child_state);
@@ -1924,7 +1921,7 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                 View view = course_downloadmanager_layout_content.getChildAt(i);
                 LinearLayout course_downloadmanager_child_content = view.findViewById(R.id.course_downloadmanager_child_content);
                 int childCount = course_downloadmanager_child_content.getChildCount();
-                for (int j = 0; j < childCount; j++) {
+                for (int j = 0; j < childCount; j ++) {
                     View childView = course_downloadmanager_child_content.getChildAt(j);
                     ImageView course_downloadmanager_child1_function = childView.findViewById(R.id.course_downloadmanager_child1_function);
                     TextView course_downloadmanager_child_state = childView.findViewById(R.id.course_downloadmanager_child_state);
@@ -2455,38 +2452,34 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                         long today_end_time = 0;
                         String today_end_time1 ;
                         long currentTime = System.currentTimeMillis();
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                            Date date = null;
-                            Date date1 = null;
-                            Date date2 = null;
-                            DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
-                            DateFormat df1 = new SimpleDateFormat("yyyy-MM-dd  23:59:59");
-                            DateFormat df2 = new SimpleDateFormat("yyyy-MM-dd  HH:mm:ss");
-                            try {
-                                date = df.parse(courseCatalogLiveDataBean.begin_class_date);
-                                date1 = df.parse(courseCatalogLiveDataBean.end_time_datess);
-                                today_end_time1 = df1.format(new Date(currentTime));
-                                date2 = df2.parse(today_end_time1);
-                            } catch (ParseException e) {
-                                e.printStackTrace();
-                            }
-                            if (date != null && date1 != null) {
-                                begin_class_date = date.getTime();
-                                end_time_datess = date1.getTime();
-                            }
-                            if (date2 != null){
-                                today_end_time =  date2.getTime();
-                            }
+                        Date date = null;
+                        Date date1 = null;
+                        Date date2 = null;
+                        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+                        SimpleDateFormat df1 = new SimpleDateFormat("yyyy-MM-dd  23:59:59");
+                        SimpleDateFormat df2 = new SimpleDateFormat("yyyy-MM-dd  HH:mm:ss");
+                        try {
+                            date = df.parse(courseCatalogLiveDataBean.begin_class_date);
+                            date1 = df.parse(courseCatalogLiveDataBean.end_time_datess);
+                            today_end_time1 = df1.format(new Date(currentTime));
+                            date2 = df2.parse(today_end_time1);
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                        if (date != null && date1 != null) {
+                            begin_class_date = date.getTime();
+                            end_time_datess = date1.getTime();
+                        }
+                        if (date2 != null){
+                            today_end_time =  date2.getTime();
                         }
                         CourseClassTimeInfo info = new CourseClassTimeInfo();
                         info.mCourseClassTimeId = String.valueOf(courseCatalogLiveDataBean.course_times_id);
                         info.mCourseClassTimeName = courseCatalogLiveDataBean.ct_name;
                         info.liveStatus = courseCatalogLiveDataBean.liveStatus;
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                            DateFormat df = new SimpleDateFormat("yyyy-MM-dd  HH:mm:ss");
-                            DateFormat df1 = new SimpleDateFormat("HH:mm:ss");
-                            info.mCourseClassTimeStartTime = df.format(new Date(begin_class_date)) + "~" + df1.format(new Date(end_time_datess));
-                        }
+                        df = new SimpleDateFormat("yyyy-MM-dd  HH:mm:ss");
+                        df1 = new SimpleDateFormat("HH:mm:ss");
+                        info.mCourseClassTimeStartTime = df.format(new Date(begin_class_date)) + "~" + df1.format(new Date(end_time_datess));
                         if (end_time_datess < currentTime ){ //历史课程
                             mCourseInfo.mCourseClassTimeInfoBeforeList.add(info);
                         } else if (begin_class_date > today_end_time){ //后续课程
@@ -2793,17 +2786,15 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                         continue;
                     }
                     Date date = null;
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
-                        try {
-                            date = df.parse(listDataBean.getCreation_time());
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                        }
-                        if (date != null) {
-                            DateFormat df2 = new SimpleDateFormat("yyyy-MM-dd  HH:mm:ss");
-                            listDataBean.setCreation_time(df2.format(date));
-                        }
+                    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+                    try {
+                        date = df.parse(listDataBean.getCreation_time());
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    if (date != null) {
+                        SimpleDateFormat df2 = new SimpleDateFormat("yyyy-MM-dd  HH:mm:ss");
+                        listDataBean.setCreation_time(df2.format(date));
                     }
                     View view = LayoutInflater.from(mControlMainActivity).inflate(R.layout.modelcoursedetails_question_child, null);
                     //添加头像
@@ -3007,17 +2998,15 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                         continue;
                     }
                     Date date = null;
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
-                        try {
-                            date = df.parse(listDataBean.getCreation_time());
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                        }
-                        if (date != null) {
-                            DateFormat df2 = new SimpleDateFormat("yyyy-MM-dd  HH:mm:ss");
-                            listDataBean.setCreation_time(df2.format(date));
-                        }
+                    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+                    try {
+                        date = df.parse(listDataBean.getCreation_time());
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    if (date != null) {
+                        SimpleDateFormat df2 = new SimpleDateFormat("yyyy-MM-dd  HH:mm:ss");
+                        listDataBean.setCreation_time(df2.format(date));
                     }
                     View view = LayoutInflater.from(mControlMainActivity).inflate(R.layout.modelcoursedetails_question_child, null);
                     //添加头像
@@ -3239,17 +3228,15 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                 //时间
                 {
                     Date date = null;
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
-                        try {
-                            date = df.parse(communityDetilsDataBean.getCreation_time());
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                        }
-                        if (date != null) {
-                            DateFormat df2 = new SimpleDateFormat("yyyy-MM-dd  HH:mm:ss");
-                            communityDetilsDataBean.setCreation_time(df2.format(date));
-                        }
+                    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+                    try {
+                        date = df.parse(communityDetilsDataBean.getCreation_time());
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    if (date != null) {
+                        SimpleDateFormat df2 = new SimpleDateFormat("yyyy-MM-dd  HH:mm:ss");
+                        communityDetilsDataBean.setCreation_time(df2.format(date));
                     }
                     TextView course_questiondetails_child_time = mQuestionDetailsView.findViewById(R.id.course_questiondetails_child_time);
                     course_questiondetails_child_time.setText(communityDetilsDataBean.getCreation_time());
@@ -3318,17 +3305,15 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                     course_questiondetails1_child_name.setHint(communityDetilsAnswerDataBeanList.getQ_publisher() + "");
                     TextView course_questiondetails1_child_time = view.findViewById(R.id.course_questiondetails1_child_time);
                     Date date = null;
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
-                        try {
-                            date = df.parse(communityDetilsAnswerDataBeanList.getCreation_time());
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                        }
-                        if (date != null) {
-                            DateFormat df2 = new SimpleDateFormat("yyyy-MM-dd  HH:mm:ss");
-                            communityDetilsAnswerDataBeanList.setCreation_time(df2.format(date));
-                        }
+                    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+                    try {
+                        date = df.parse(communityDetilsAnswerDataBeanList.getCreation_time());
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    if (date != null) {
+                        SimpleDateFormat df2 = new SimpleDateFormat("yyyy-MM-dd  HH:mm:ss");
+                        communityDetilsAnswerDataBeanList.setCreation_time(df2.format(date));
                     }
                     course_questiondetails1_child_time.setText(communityDetilsAnswerDataBeanList.getCreation_time());
                     TextView course_questiondetails1_child_message = view.findViewById(R.id.course_questiondetails1_child_message);
@@ -3470,17 +3455,15 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                     course_questiondetails1_child_name.setHint(communityDetilsAnswerDataBeanList.getQ_publisher() + "");
                     TextView course_questiondetails1_child_time = view.findViewById(R.id.course_questiondetails1_child_time);
                     Date date = null;
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
-                        try {
-                            date = df.parse(communityDetilsAnswerDataBeanList.getCreation_time());
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                        }
-                        if (date != null) {
-                            DateFormat df2 = new SimpleDateFormat("yyyy-MM-dd  HH:mm:ss");
-                            communityDetilsAnswerDataBeanList.setCreation_time(df2.format(date));
-                        }
+                    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+                    try {
+                        date = df.parse(communityDetilsAnswerDataBeanList.getCreation_time());
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    if (date != null) {
+                        SimpleDateFormat df2 = new SimpleDateFormat("yyyy-MM-dd  HH:mm:ss");
+                        communityDetilsAnswerDataBeanList.setCreation_time(df2.format(date));
                     }
                     course_questiondetails1_child_time.setText(communityDetilsAnswerDataBeanList.getCreation_time());
                     TextView course_questiondetails1_child_message = view.findViewById(R.id.course_questiondetails1_child_message);

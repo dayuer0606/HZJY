@@ -6,7 +6,8 @@ import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.icu.text.DateFormat;
-import android.icu.text.SimpleDateFormat;
+//import android.icu.text.SimpleDateFormat;
+import java.text.SimpleDateFormat;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -984,27 +985,24 @@ public class ModelCommunityAnswer extends Fragment{
                             }).error(mControlMainActivity.getResources().getDrawable(R.drawable.modelmy_myheaddefault)).into(communityanswer_child_headportrait);
                             //社区列表时间
                             Date date = null;
-                            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-                                DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+                            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+                            try {
+                                date = df.parse(listDataBean.creation_time);
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+                            if (date != null) {
+                                SimpleDateFormat df1 = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", Locale.UK);
+                                Date date1 = null;
                                 try {
-                                    date = df.parse(listDataBean.creation_time);
+                                    date1 = df1.parse(date.toString());
                                 } catch (ParseException e) {
                                     e.printStackTrace();
                                 }
-                                if (date != null) {
-                                    SimpleDateFormat df1 = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", Locale.UK);
-                                    Date date1 = null;
-                                    try {
-                                        date1 = df1.parse(date.toString());
-                                    } catch (ParseException e) {
-                                        e.printStackTrace();
-                                    }
-                                    if (date1 != null) {
-                                        DateFormat df2 = new SimpleDateFormat("yyyy-MM-dd");
-                                        listDataBean.creation_time = df2.format(date1).toString();
-                                    }
+                                if (date1 != null) {
+                                    SimpleDateFormat df2 = new SimpleDateFormat("yyyy-MM-dd");
+                                    listDataBean.creation_time = df2.format(date1).toString();
                                 }
-
                             }
                             TextView communityanswer_child_time = model_communityanswer_child_view1.findViewById(R.id.communityanswer_child_time);
                             communityanswer_child_time.setText(listDataBean.creation_time);
@@ -1329,27 +1327,24 @@ public class ModelCommunityAnswer extends Fragment{
                             }).error(mControlMainActivity.getResources().getDrawable(R.drawable.modelmy_myheaddefault)).into(communityanswer_child_headportrait);
                             //社区列表时间
                             Date date = null;
-                            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-                                DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+                            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+                            try {
+                                date = df.parse(listDataBean.creation_time);
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+                            if (date != null) {
+                                SimpleDateFormat df1 = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", Locale.UK);
+                                Date date1 = null;
                                 try {
-                                    date = df.parse(listDataBean.creation_time);
+                                    date1 = df1.parse(date.toString());
                                 } catch (ParseException e) {
                                     e.printStackTrace();
                                 }
-                                if (date != null) {
-                                    SimpleDateFormat df1 = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", Locale.UK);
-                                    Date date1 = null;
-                                    try {
-                                        date1 = df1.parse(date.toString());
-                                    } catch (ParseException e) {
-                                        e.printStackTrace();
-                                    }
-                                    if (date1 != null) {
-                                        DateFormat df2 = new SimpleDateFormat("yyyy-MM-dd");
-                                        listDataBean.creation_time = df2.format(date1).toString();
-                                    }
+                                if (date1 != null) {
+                                    SimpleDateFormat df2 = new SimpleDateFormat("yyyy-MM-dd");
+                                    listDataBean.creation_time = df2.format(date1).toString();
                                 }
-
                             }
                             TextView communityanswer_child_time = model_communityanswer_child_view1.findViewById(R.id.communityanswer_child_time);
                             communityanswer_child_time.setText(listDataBean.creation_time);
@@ -1645,27 +1640,24 @@ public class ModelCommunityAnswer extends Fragment{
                         //学员的时间
                         TextView communityanswer_datails_time = mCommunityAnswerDetailsView.findViewById(R.id.communityanswer_datails_time);
                         Date date = null;
-                        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-                            DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+                        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+                        try {
+                            date = df.parse(communityDetilsDataBean.getCreation_time());
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                        if (date != null) {
+                            SimpleDateFormat df1 = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", Locale.UK);
+                            Date date1 = null;
                             try {
-                                date = df.parse(communityDetilsDataBean.getCreation_time());
+                                date1 = df1.parse(date.toString());
                             } catch (ParseException e) {
                                 e.printStackTrace();
                             }
-                            if (date != null) {
-                                SimpleDateFormat df1 = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", Locale.UK);
-                                Date date1 = null;
-                                try {
-                                    date1 = df1.parse(date.toString());
-                                } catch (ParseException e) {
-                                    e.printStackTrace();
-                                }
-                                if (date1 != null) {
-                                    DateFormat df2 = new SimpleDateFormat("yyyy-MM-dd");
-                                    communityDetilsDataBean.setCreation_time(df2.format(date1).toString());
-                                }
+                            if (date1 != null) {
+                                SimpleDateFormat df2 = new SimpleDateFormat("yyyy-MM-dd");
+                                communityDetilsDataBean.setCreation_time(df2.format(date1).toString());
                             }
-
                         }
                         communityanswer_datails_time.setText(communityDetilsDataBean.getCreation_time());
                         //点击回复问题
@@ -1777,27 +1769,24 @@ public class ModelCommunityAnswer extends Fragment{
                                     communityanswer_datails1_name.setHint(communityDetilsDataBean.huida.list.get(i).qID + "");
                                     //时间
                                     TextView communityanswer_datails1_time = view.findViewById(R.id.communityanswer_datails1_time);
-                                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-                                        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+                                    df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+                                    try {
+                                        date = df.parse(communityDetilsDataBean.huida.list.get(i).creation_time);
+                                    } catch (ParseException e) {
+                                        e.printStackTrace();
+                                    }
+                                    if (date != null) {
+                                        SimpleDateFormat df1 = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", Locale.UK);
+                                        Date date1 = null;
                                         try {
-                                            date = df.parse(communityDetilsDataBean.huida.list.get(i).creation_time);
+                                            date1 = df1.parse(date.toString());
                                         } catch (ParseException e) {
                                             e.printStackTrace();
                                         }
-                                        if (date != null) {
-                                            SimpleDateFormat df1 = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", Locale.UK);
-                                            Date date1 = null;
-                                            try {
-                                                date1 = df1.parse(date.toString());
-                                            } catch (ParseException e) {
-                                                e.printStackTrace();
-                                            }
-                                            if (date1 != null) {
-                                                DateFormat df2 = new SimpleDateFormat("yyyy-MM-dd");
-                                                communityDetilsDataBean.huida.list.get(i).creation_time = df2.format(date1).toString();
-                                            }
+                                        if (date1 != null) {
+                                            SimpleDateFormat df2 = new SimpleDateFormat("yyyy-MM-dd");
+                                            communityDetilsDataBean.huida.list.get(i).creation_time = df2.format(date1).toString();
                                         }
-
                                     }
                                     communityanswer_datails1_time.setText(communityDetilsDataBean.huida.list.get(i).creation_time);
                                     //内容
@@ -1914,27 +1903,24 @@ public class ModelCommunityAnswer extends Fragment{
                         //学员的时间
                         TextView communityanswer_datails_time = mCommunityAnswerDetailsView.findViewById(R.id.communityanswer_datails_time);
                         Date date = null;
-                        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-                            DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+                        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+                        try {
+                            date = df.parse(communityDetilsDataBean.getCreation_time());
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                        if (date != null) {
+                            SimpleDateFormat df1 = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", Locale.UK);
+                            Date date1 = null;
                             try {
-                                date = df.parse(communityDetilsDataBean.getCreation_time());
+                                date1 = df1.parse(date.toString());
                             } catch (ParseException e) {
                                 e.printStackTrace();
                             }
-                            if (date != null) {
-                                SimpleDateFormat df1 = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", Locale.UK);
-                                Date date1 = null;
-                                try {
-                                    date1 = df1.parse(date.toString());
-                                } catch (ParseException e) {
-                                    e.printStackTrace();
-                                }
-                                if (date1 != null) {
-                                    DateFormat df2 = new SimpleDateFormat("yyyy-MM-dd");
-                                    communityDetilsDataBean.setCreation_time(df2.format(date1).toString());
-                                }
+                            if (date1 != null) {
+                                SimpleDateFormat df2 = new SimpleDateFormat("yyyy-MM-dd");
+                                communityDetilsDataBean.setCreation_time(df2.format(date1).toString());
                             }
-
                         }
                         communityanswer_datails_time.setText(communityDetilsDataBean.getCreation_time());
                         //点击回复问题
@@ -2047,27 +2033,24 @@ public class ModelCommunityAnswer extends Fragment{
                                     communityanswer_datails1_name.setHint(communityDetilsDataBean.huida.list.get(i).qID + "");
                                     //时间
                                     TextView communityanswer_datails1_time = view.findViewById(R.id.communityanswer_datails1_time);
-                                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-                                        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+                                    df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+                                    try {
+                                        date = df.parse(communityDetilsDataBean.huida.list.get(i).creation_time);
+                                    } catch (ParseException e) {
+                                        e.printStackTrace();
+                                    }
+                                    if (date != null) {
+                                        SimpleDateFormat df1 = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", Locale.UK);
+                                        Date date1 = null;
                                         try {
-                                            date = df.parse(communityDetilsDataBean.huida.list.get(i).creation_time);
+                                            date1 = df1.parse(date.toString());
                                         } catch (ParseException e) {
                                             e.printStackTrace();
                                         }
-                                        if (date != null) {
-                                            SimpleDateFormat df1 = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", Locale.UK);
-                                            Date date1 = null;
-                                            try {
-                                                date1 = df1.parse(date.toString());
-                                            } catch (ParseException e) {
-                                                e.printStackTrace();
-                                            }
-                                            if (date1 != null) {
-                                                DateFormat df2 = new SimpleDateFormat("yyyy-MM-dd");
-                                                communityDetilsDataBean.huida.list.get(i).creation_time = df2.format(date1).toString();
-                                            }
+                                        if (date1 != null) {
+                                            SimpleDateFormat df2 = new SimpleDateFormat("yyyy-MM-dd");
+                                            communityDetilsDataBean.huida.list.get(i).creation_time = df2.format(date1).toString();
                                         }
-
                                     }
                                     communityanswer_datails1_time.setText(communityDetilsDataBean.huida.list.get(i).creation_time);
                                     //内容

@@ -56,14 +56,14 @@
             android:id="@+id/questionbank_handin_analysis_questiontitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="建筑防火案例分析"
+            android:text=""
             android:textSize="@dimen/textsize18"
             android:textColor="#649cf0"/>
         <TextView
             android:id="@+id/questionbank_handin_analysis_questiontype"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="[单选题]"
+            android:text=""
             android:layout_marginLeft="@dimen/dp10"
             android:textSize="@dimen/textsize15"
             android:textColor="#999999"/>

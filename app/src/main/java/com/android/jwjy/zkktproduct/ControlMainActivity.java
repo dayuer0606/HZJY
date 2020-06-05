@@ -107,6 +107,8 @@ import net.sqlcipher.Cursor;
 
 import java.io.File;
 import java.lang.ref.WeakReference;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -147,7 +149,7 @@ public class ControlMainActivity extends AppCompatActivity  implements EasyPermi
             ,mModelQuestionBank,mModelNews,mModelCommunityAnswer;
     private String mPage = ""; //当前显示页面
     private String mBeforePage = ""; //上一个显示界面
-    private ControlMainActivity mThis;
+    private static ControlMainActivity mThis;
     private BottomNavigationView mBottomNavigationView;  //底部菜单
     /**
      * 6.0版本检测并申请开启摄像头、音频录制、扩展卡读写等权限*/
@@ -161,6 +163,7 @@ public class ControlMainActivity extends AppCompatActivity  implements EasyPermi
     //token
     public String mToken = "";
     public String mIpadress = "http://wangxiao.jianweijiaoyu.com/";
+//    public String mIpadress = "http://192.168.20.16:8081/";
     public String mStuId = "";
 
     private class MenuItemInfo {
@@ -279,13 +282,13 @@ public class ControlMainActivity extends AppCompatActivity  implements EasyPermi
             menu.add(0, menuItemInfo.mItemId, menuItemInfo.mOrder, menuItemInfo.mName);//设置菜单标题(0,编号,顺序,名称)
             MenuItem item = menu.findItem(menuItemInfo.mItemId);
             if (menuItemInfo.mItemId == 1){ //使用首页的图标
-                item.setIcon(R.drawable.bottom_menu_homepage);//设置菜单图片
+                item.setIcon(R.drawable.button_homepage);//设置菜单图片
             } else if (menuItemInfo.mItemId == 2){ //使用课程包的图标
-                item.setIcon(R.drawable.bottom_menu_coursepacket);//设置菜单图片
+                item.setIcon(R.drawable.button_coursepacket);//设置菜单图片
             } else if (menuItemInfo.mItemId == 3){ //使用课程表的图标
-                item.setIcon(R.drawable.bottom_menu_classschedulecard);//设置菜单图片
+                item.setIcon(R.drawable.button_coursetable);//设置菜单图片
             } else if (menuItemInfo.mItemId == 4){ //使用我的图标
-                item.setIcon(R.drawable.bottom_menu_my);//设置菜单图片
+                item.setIcon(R.drawable.button_my);//设置菜单图片
             }
             item.setOnMenuItemClickListener(item1 -> {
                 Log.d("123", "onNavigationItemSelected is click: ");
@@ -317,13 +320,14 @@ public class ControlMainActivity extends AppCompatActivity  implements EasyPermi
                 xiaofang.setBackground(getResources().getDrawable(R.drawable.icon_null));
                 jiankang.setBackground(getResources().getDrawable(R.drawable.icon_green));
                 mIpadress = "http://wangxiao.jianweijiaoyu.com/";
+//                mIpadress = "http://192.168.20.16:8081/";
             });
             LinearLayout xiaofang_layout =  findViewById(R.id.xiaofang_layout);
             xiaofang_layout.setOnClickListener(v->{
                 ImageView xiaofang = findViewById(R.id.xiaofang);
                 xiaofang.setBackground(getResources().getDrawable(R.drawable.icon_orange));
                 jiankang.setBackground(getResources().getDrawable(R.drawable.icon_null));
-                mIpadress = "http://wangxiao.yixiaojiaoyu.com/";
+                mIpadress = "http://wangxiao.16zige.com/";
             });
             Button button_next = findViewById(R.id.button_next);
             button_next.setOnClickListener(v->{
@@ -1220,6 +1224,15 @@ public class ControlMainActivity extends AppCompatActivity  implements EasyPermi
         JPushInterface.setAlias(this.getApplicationContext(),1,"0");
         ModelSearchRecordSQLiteOpenHelper.getWritableDatabase(this).execSQL("delete from token_table");
         Page_My();
+    }
+
+    public static void onClickLogout() {
+        mThis.mToken = "";
+        mThis.mStuId = "";
+        HeaderInterceptor.stuId = null;
+        HeaderInterceptor.permissioncode = null;
+        JPushInterface.setAlias(mThis.getApplicationContext(),1,"0");
+        ModelSearchRecordSQLiteOpenHelper.getWritableDatabase(mThis).execSQL("delete from token_table");
     }
 
     //点击打开照相机

@@ -59,6 +59,7 @@ public class HeaderInterceptor implements Interceptor {
             return true;
         }
         if (code == 401){
+            context.onClickLogout();
             ToastUtil.show(context, "由于账号异端登录，您已被迫下线。请重新登录。", Toast.LENGTH_SHORT);
             return false;
         }

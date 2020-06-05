@@ -8,7 +8,8 @@ import android.content.Intent;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.icu.text.DateFormat;
-import android.icu.text.SimpleDateFormat;
+//import android.icu.text.SimpleDateFormat;
+import java.text.SimpleDateFormat;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -1219,25 +1220,23 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
         //下单时间
         TextView modelmy_myorderdetails_ordertime = mMyOrderDetailsView.findViewById(R.id.modelmy_myorderdetails_ordertime);
         Date date = null;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        try {
+            date = df.parse(dataBean.order_time);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        if (date != null) {
+            SimpleDateFormat df1 = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", Locale.UK);
+            Date date1 = null;
             try {
-                date = df.parse(dataBean.order_time);
+                date1 = df1.parse(date.toString());
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-            if (date != null) {
-                SimpleDateFormat df1 = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", Locale.UK);
-                Date date1 = null;
-                try {
-                    date1 = df1.parse(date.toString());
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-                if (date1 != null) {
-                    DateFormat df2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                    dataBean.order_time = df2.format(date1).toString();
-                }
+            if (date1 != null) {
+                SimpleDateFormat df2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                dataBean.order_time = df2.format(date1).toString();
             }
         }
         modelmy_myorderdetails_ordertime.setText(dataBean.order_time);
@@ -3253,27 +3252,24 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                            message.modelmy_mymessage1_message = listBean.content;//我的消息message
                            message.modelmy_mymessage1_Id = listBean.student_information_id;
                            Date date = null;
-                           if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                               DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+                           SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+                           try {
+                               date = df.parse(listBean.time);
+                           } catch (ParseException e) {
+                               e.printStackTrace();
+                           }
+                           if (date != null) {
+                               SimpleDateFormat df1 = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", Locale.UK);
+                               Date date1 = null;
                                try {
-                                   date = df.parse(listBean.time);
+                                   date1 = df1.parse(date.toString());
                                } catch (ParseException e) {
                                    e.printStackTrace();
                                }
-                               if (date != null) {
-                                   SimpleDateFormat df1 = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", Locale.UK);
-                                   Date date1 = null;
-                                   try {
-                                       date1 = df1.parse(date.toString());
-                                   } catch (ParseException e) {
-                                       e.printStackTrace();
-                                   }
-                                   if (date1 != null) {
-                                       DateFormat df2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                                       listBean.time = df2.format(date1).toString();
-                                   }
+                               if (date1 != null) {
+                                   SimpleDateFormat df2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                                   listBean.time = df2.format(date1).toString();
                                }
-
                            }
                            message.modelmy_mymessage1_time = listBean.time;//我的消息时间
                            list.add(message);
@@ -3419,28 +3415,26 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                             message.modelmy_mymessage1_message = listBean.content;//我的消息message
                             message.modelmy_mymessage1_Id = listBean.student_information_id;
                             Date date = null;
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                                DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+                            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+                            try {
+                                date = df.parse(listBean.time);
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+                            if (date != null) {
+                                SimpleDateFormat df1 = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", Locale.UK);
+                                Date date1 = null;
                                 try {
-                                    date = df.parse(listBean.time);
+                                    date1 = df1.parse(date.toString());
                                 } catch (ParseException e) {
                                     e.printStackTrace();
                                 }
-                                if (date != null) {
-                                    SimpleDateFormat df1 = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", Locale.UK);
-                                    Date date1 = null;
-                                    try {
-                                        date1 = df1.parse(date.toString());
-                                    } catch (ParseException e) {
-                                        e.printStackTrace();
-                                    }
-                                    if (date1 != null) {
-                                        DateFormat df2 = new SimpleDateFormat("yyyy-MM-dd");
-                                        listBean.time = df2.format(date1).toString();
-                                    }
+                                if (date1 != null) {
+                                    SimpleDateFormat df2 = new SimpleDateFormat("yyyy-MM-dd");
+                                    listBean.time = df2.format(date1).toString();
                                 }
-
                             }
+
                             message.modelmy_mymessage1_time = listBean.time;//我的消息时间
                             list.add(message);
                         }
@@ -3604,27 +3598,24 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                            new ModelHtmlUtils(mControlMainActivity, modelmy_myanswer1_content).setHtmlWithPic(listBean.content);
                            TextView modelmy_myanswer1_time = view.findViewById(R.id.modelmy_myanswer1_time);
                            Date date = null;
-                           if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                               DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+                           SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+                           try {
+                               date = df.parse(listBean.creation_time);
+                           } catch (ParseException e) {
+                               e.printStackTrace();
+                           }
+                           if (date != null) {
+                               SimpleDateFormat df1 = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", Locale.UK);
+                               Date date1 = null;
                                try {
-                                   date = df.parse(listBean.creation_time);
+                                   date1 = df1.parse(date.toString());
                                } catch (ParseException e) {
                                    e.printStackTrace();
                                }
-                               if (date != null) {
-                                   SimpleDateFormat df1 = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", Locale.UK);
-                                   Date date1 = null;
-                                   try {
-                                       date1 = df1.parse(date.toString());
-                                   } catch (ParseException e) {
-                                       e.printStackTrace();
-                                   }
-                                   if (date1 != null) {
-                                       DateFormat df2 = new SimpleDateFormat("yyyy-MM-dd");
-                                       listBean.creation_time = df2.format(date1).toString();
-                                   }
+                               if (date1 != null) {
+                                   SimpleDateFormat df2 = new SimpleDateFormat("yyyy-MM-dd");
+                                   listBean.creation_time = df2.format(date1).toString();
                                }
-
                            }
                            modelmy_myanswer1_time.setText(listBean.creation_time);
                            modelmy_myanswer_main_content.addView(view);
@@ -3746,25 +3737,23 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                             new ModelHtmlUtils(mControlMainActivity, modelmy_myanswer1_content).setHtmlWithPic(listBean.content);
                             TextView modelmy_myanswer1_time = view.findViewById(R.id.modelmy_myanswer1_time);
                             Date date = null;
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                                DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+                            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+                            try {
+                                date = df.parse(listBean.creation_time);
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+                            if (date != null) {
+                                SimpleDateFormat df1 = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", Locale.UK);
+                                Date date1 = null;
                                 try {
-                                    date = df.parse(listBean.creation_time);
+                                    date1 = df1.parse(date.toString());
                                 } catch (ParseException e) {
                                     e.printStackTrace();
                                 }
-                                if (date != null) {
-                                    SimpleDateFormat df1 = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", Locale.UK);
-                                    Date date1 = null;
-                                    try {
-                                        date1 = df1.parse(date.toString());
-                                    } catch (ParseException e) {
-                                        e.printStackTrace();
-                                    }
-                                    if (date1 != null) {
-                                        DateFormat df2 = new SimpleDateFormat("yyyy-MM-dd");
-                                        listBean.creation_time = df2.format(date1).toString();
-                                    }
+                                if (date1 != null) {
+                                    SimpleDateFormat df2 = new SimpleDateFormat("yyyy-MM-dd");
+                                    listBean.creation_time = df2.format(date1).toString();
                                 }
                             }
                             modelmy_myanswer1_time.setText(listBean.creation_time);
@@ -3889,25 +3878,23 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                             new ModelHtmlUtils(mControlMainActivity, modelmy_myanswer1_content).setHtmlWithPic(listBean.content);
                             TextView modelmy_myanswer1_time = view.findViewById(R.id.modelmy_myanswer1_time);
                             Date date = null;
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                                DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+                            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+                            try {
+                                date = df.parse(listBean.creation_time);
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+                            if (date != null) {
+                                SimpleDateFormat df1 = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", Locale.UK);
+                                Date date1 = null;
                                 try {
-                                    date = df.parse(listBean.creation_time);
+                                    date1 = df1.parse(date.toString());
                                 } catch (ParseException e) {
                                     e.printStackTrace();
                                 }
-                                if (date != null) {
-                                    SimpleDateFormat df1 = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", Locale.UK);
-                                    Date date1 = null;
-                                    try {
-                                        date1 = df1.parse(date.toString());
-                                    } catch (ParseException e) {
-                                        e.printStackTrace();
-                                    }
-                                    if (date1 != null) {
-                                        DateFormat df2 = new SimpleDateFormat("yyyy-MM-dd");
-                                        listBean.creation_time = df2.format(date1).toString();
-                                    }
+                                if (date1 != null) {
+                                    SimpleDateFormat df2 = new SimpleDateFormat("yyyy-MM-dd");
+                                    listBean.creation_time = df2.format(date1).toString();
                                 }
                             }
                             modelmy_myanswer1_time.setText(listBean.creation_time);
@@ -4031,25 +4018,23 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                             new ModelHtmlUtils(mControlMainActivity, modelmy_myanswer1_content).setHtmlWithPic(listBean.content);
                             TextView modelmy_myanswer1_time = view.findViewById(R.id.modelmy_myanswer1_time);
                             Date date = null;
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                                DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+                            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+                            try {
+                                date = df.parse(listBean.creation_time);
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+                            if (date != null) {
+                                SimpleDateFormat df1 = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", Locale.UK);
+                                Date date1 = null;
                                 try {
-                                    date = df.parse(listBean.creation_time);
+                                    date1 = df1.parse(date.toString());
                                 } catch (ParseException e) {
                                     e.printStackTrace();
                                 }
-                                if (date != null) {
-                                    SimpleDateFormat df1 = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", Locale.UK);
-                                    Date date1 = null;
-                                    try {
-                                        date1 = df1.parse(date.toString());
-                                    } catch (ParseException e) {
-                                        e.printStackTrace();
-                                    }
-                                    if (date1 != null) {
-                                        DateFormat df2 = new SimpleDateFormat("yyyy-MM-dd");
-                                        listBean.creation_time = df2.format(date1).toString();
-                                    }
+                                if (date1 != null) {
+                                    SimpleDateFormat df2 = new SimpleDateFormat("yyyy-MM-dd");
+                                    listBean.creation_time = df2.format(date1).toString();
                                 }
                             }
                             modelmy_myanswer1_time.setText(listBean.creation_time);
@@ -4192,25 +4177,23 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                         answerdetails_name.setText(communityDetilsDataBean.getNicename());
                         TextView answerdetails_time = mAnswerDetailsView.findViewById(R.id.answerdetails_time);
                         Date date = null;
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                            DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+                        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+                        try {
+                            date = df.parse(communityDetilsDataBean.getCreation_time());
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                        if (date != null) {
+                            SimpleDateFormat df1 = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", Locale.UK);
+                            Date date1 = null;
                             try {
-                                date = df.parse(communityDetilsDataBean.getCreation_time());
+                                date1 = df1.parse(date.toString());
                             } catch (ParseException e) {
                                 e.printStackTrace();
                             }
-                            if (date != null) {
-                                SimpleDateFormat df1 = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", Locale.UK);
-                                Date date1 = null;
-                                try {
-                                    date1 = df1.parse(date.toString());
-                                } catch (ParseException e) {
-                                    e.printStackTrace();
-                                }
-                                if (date1 != null) {
-                                    DateFormat df2 = new SimpleDateFormat("yyyy-MM-dd");
-                                    communityDetilsDataBean.setCreation_time(df2.format(date1).toString());
-                                }
+                            if (date1 != null) {
+                                SimpleDateFormat df2 = new SimpleDateFormat("yyyy-MM-dd");
+                                communityDetilsDataBean.setCreation_time(df2.format(date1).toString());
                             }
                         }
                         answerdetails_time.setText(communityDetilsDataBean.getCreation_time());
@@ -4307,25 +4290,23 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                             answerdetails_child_name.setText(listBean.getQ_nicename());
                             //学员的时间
                             TextView manswerdetails_child_time = view.findViewById(R.id.answerdetails_child_time);
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                                DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+                            df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+                            try {
+                                date = df.parse(listBean.getCreation_time());
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+                            if (date != null) {
+                                SimpleDateFormat df1 = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", Locale.UK);
+                                Date date1 = null;
                                 try {
-                                    date = df.parse(listBean.getCreation_time());
+                                    date1 = df1.parse(date.toString());
                                 } catch (ParseException e) {
                                     e.printStackTrace();
                                 }
-                                if (date != null) {
-                                    SimpleDateFormat df1 = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", Locale.UK);
-                                    Date date1 = null;
-                                    try {
-                                        date1 = df1.parse(date.toString());
-                                    } catch (ParseException e) {
-                                        e.printStackTrace();
-                                    }
-                                    if (date1 != null) {
-                                        DateFormat df2 = new SimpleDateFormat("yyyy-MM-dd");
-                                        listBean.setCreation_time(df2.format(date1).toString());
-                                    }
+                                if (date1 != null) {
+                                    SimpleDateFormat df2 = new SimpleDateFormat("yyyy-MM-dd");
+                                    listBean.setCreation_time(df2.format(date1).toString());
                                 }
                             }
                             manswerdetails_child_time.setText(listBean.getCreation_time());
@@ -4433,25 +4414,23 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                         answerdetails_name.setText(communityDetilsDataBean.getNicename());
                         TextView answerdetails_time = mAnswerDetailsView.findViewById(R.id.answerdetails_time);
                         Date date = null;
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                            DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+                        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+                        try {
+                            date = df.parse(communityDetilsDataBean.getCreation_time());
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                        if (date != null) {
+                            SimpleDateFormat df1 = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", Locale.UK);
+                            Date date1 = null;
                             try {
-                                date = df.parse(communityDetilsDataBean.getCreation_time());
+                                date1 = df1.parse(date.toString());
                             } catch (ParseException e) {
                                 e.printStackTrace();
                             }
-                            if (date != null) {
-                                SimpleDateFormat df1 = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", Locale.UK);
-                                Date date1 = null;
-                                try {
-                                    date1 = df1.parse(date.toString());
-                                } catch (ParseException e) {
-                                    e.printStackTrace();
-                                }
-                                if (date1 != null) {
-                                    DateFormat df2 = new SimpleDateFormat("yyyy-MM-dd");
-                                    communityDetilsDataBean.setCreation_time(df2.format(date1).toString());
-                                }
+                            if (date1 != null) {
+                                SimpleDateFormat df2 = new SimpleDateFormat("yyyy-MM-dd");
+                                communityDetilsDataBean.setCreation_time(df2.format(date1).toString());
                             }
                         }
                         answerdetails_time.setText(communityDetilsDataBean.getCreation_time());
@@ -4516,25 +4495,23 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                             answerdetails_child_name.setText(listBean.getQ_nicename());
                             //学员的时间
                             TextView manswerdetails_child_time = view.findViewById(R.id.answerdetails_child_time);
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                                DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+                            df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+                            try {
+                                date = df.parse(listBean.getCreation_time());
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+                            if (date != null) {
+                                SimpleDateFormat df1 = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", Locale.UK);
+                                Date date1 = null;
                                 try {
-                                    date = df.parse(listBean.getCreation_time());
+                                    date1 = df1.parse(date.toString());
                                 } catch (ParseException e) {
                                     e.printStackTrace();
                                 }
-                                if (date != null) {
-                                    SimpleDateFormat df1 = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", Locale.UK);
-                                    Date date1 = null;
-                                    try {
-                                        date1 = df1.parse(date.toString());
-                                    } catch (ParseException e) {
-                                        e.printStackTrace();
-                                    }
-                                    if (date1 != null) {
-                                        DateFormat df2 = new SimpleDateFormat("yyyy-MM-dd");
-                                        listBean.setCreation_time(df2.format(date1).toString());
-                                    }
+                                if (date1 != null) {
+                                    SimpleDateFormat df2 = new SimpleDateFormat("yyyy-MM-dd");
+                                    listBean.setCreation_time(df2.format(date1).toString());
                                 }
                             }
                             manswerdetails_child_time.setText(listBean.getCreation_time());

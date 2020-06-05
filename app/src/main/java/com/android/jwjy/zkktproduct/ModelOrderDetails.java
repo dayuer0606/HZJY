@@ -3,7 +3,8 @@ package com.android.jwjy.zkktproduct;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.icu.text.DateFormat;
-import android.icu.text.SimpleDateFormat;
+//import android.icu.text.SimpleDateFormat;
+import java.text.SimpleDateFormat;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
@@ -132,18 +133,16 @@ public class ModelOrderDetails implements View.OnClickListener {
         width = dm.widthPixels;
         modelOrderDetailsView = LayoutInflater.from(context).inflate(R.layout.modelorderdetails, null);
         if (mMyOrderListBean != null){
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-                DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
-                Date startTime = null;
-                try {
-                    startTime = df.parse(mMyOrderListBean.getOrder_time());
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-                Date endTime = new Date(System.currentTimeMillis());
-                long diff = startTime.getTime() - endTime.getTime();
-                mOrderTimeL = diff / 1000;
+            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+            Date startTime = null;
+            try {
+                startTime = df.parse(mMyOrderListBean.getOrder_time());
+            } catch (ParseException e) {
+                e.printStackTrace();
             }
+            Date endTime = new Date(System.currentTimeMillis());
+            long diff = startTime.getTime() - endTime.getTime();
+            mOrderTimeL = diff / 1000;
             mOrderNum = mMyOrderListBean.getOrder_num();
         }
         mCouponDataListBean = null;

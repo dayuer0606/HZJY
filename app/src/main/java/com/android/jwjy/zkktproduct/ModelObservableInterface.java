@@ -532,6 +532,13 @@ public interface ModelObservableInterface {
     @POST("Ex/upload")
     Call<BaseBean> upLoadImage(@PartMap Map<String, RequestBody> params);
 
+    /**
+     * 上传崩溃日志
+     **/
+    @POST("app/setup/getAPPlog")
+    @Headers("Content-Type:application/json;charset=UTF-8")
+    Call<BaseBean> UploadUncaughtException(@Body RequestBody body);
+
     class BaseBean {
         private Map<String, Object> data;
         private int code;

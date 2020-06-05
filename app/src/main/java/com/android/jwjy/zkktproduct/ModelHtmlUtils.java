@@ -2,6 +2,8 @@ package com.android.jwjy.zkktproduct;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.text.Html;
@@ -11,7 +13,12 @@ import android.view.WindowManager;
 import android.widget.TextView;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
+import java.util.HashMap;
+
+import cn.jpush.android.helper.Logger;
+
 /**
  * Created by dayuer on 19/7/2.
  * 加载网络图片
@@ -22,16 +29,18 @@ public class ModelHtmlUtils {
     private TextView text;
     private Drawable pic;
     private String resource;
+    private static ModelHtmlUtils mInstance;
     public ModelHtmlUtils(Activity activity,TextView text){
         this.activity =activity;
         this.text = text;
     }
-//    public static ModelHtmlUtils getInstance(Activity activity,TextView text){
-//        if (instance == null){
-//            instance = new ModelHtmlUtils(activity,text);
-//        }
-//        return instance;
-//    }
+    public static ModelHtmlUtils getInstance(Activity activity,TextView text){
+        if (mInstance == null){
+//            mInstance = new ModelHtmlUtils(activity,text);
+            mInstance = new ModelHtmlUtils(activity,text);
+        }
+        return mInstance;
+    }
 
     public void setHtmlWithPic(String resource){
         this.resource = resource;
@@ -55,7 +64,6 @@ public class ModelHtmlUtils {
             return null;
         }
     };
-
     /**
      * 加载网络图片
      * @param s
@@ -83,6 +91,16 @@ public class ModelHtmlUtils {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-            }).start();
+            });
+    }
+
+    public static Bitmap readBitMap(Context context, int resId) {
+        BitmapFactory.Options opt = new BitmapFactory.Options();
+        opt.inPreferredConfig = Bitmap.Config.RGB_565;
+        opt.inPurgeable = true;
+        opt.inInputShareable = true;
+        //获取资源图片
+        InputStream is = context.getResources().openRawResource(resId);
+        return BitmapFactory.decodeStream(is, null, opt);
     }
 }
