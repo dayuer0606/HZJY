@@ -5,7 +5,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
-import android.icu.text.DateFormat;
 //import android.icu.text.SimpleDateFormat;
 import java.text.SimpleDateFormat;
 import android.os.Bundle;

@@ -494,7 +494,7 @@ public class ModelCoursePacketCover implements View.OnClickListener, ModelOrderD
         if (coursePacketInfo.mCoursePacketIsHave.equals("1")) {
             Button coursepacket_details_buy_button = mDetailsView.findViewById(R.id.coursepacket_details_buy_button);
             coursepacket_details_buy_button.setBackground(mDetailsView.getResources().getDrawable(R.drawable.button_style4));
-            coursepacket_details_buy_button.setText("立即学习");
+            coursepacket_details_buy_button.setText("已购买");
         }
         mAppBarLayout.addOnOffsetChangedListener((appBarLayout, verticalOffset) -> {
             float percent = Float.valueOf(Math.abs(verticalOffset)) / Float.valueOf(appBarLayout.getTotalScrollRange());

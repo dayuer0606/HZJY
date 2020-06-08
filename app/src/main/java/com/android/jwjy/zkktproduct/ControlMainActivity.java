@@ -313,20 +313,33 @@ public class ControlMainActivity extends AppCompatActivity  implements EasyPermi
             main_view1.setVisibility(View.INVISIBLE);
             LinearLayout jiankang_layout =  findViewById(R.id.jiankang_layout);
             ImageView jiankang = findViewById(R.id.jiankang);
-            jiankang.setBackground(getResources().getDrawable(R.drawable.icon_green));
+            jiankang.setBackground(getResources().getDrawable(R.drawable.icon_black));
             jiankang_layout.setOnClickListener(v->{
 //                ImageView jiankang = findViewById(R.id.jiankang);
                 ImageView xiaofang = findViewById(R.id.xiaofang);
+                ImageView xiaofangsetting = findViewById(R.id.xiaofangsetting);
                 xiaofang.setBackground(getResources().getDrawable(R.drawable.icon_null));
-                jiankang.setBackground(getResources().getDrawable(R.drawable.icon_green));
+                xiaofangsetting.setBackground(getResources().getDrawable(R.drawable.icon_null));
+                jiankang.setBackground(getResources().getDrawable(R.drawable.icon_black));
                 mIpadress = "http://wangxiao.jianweijiaoyu.com/";
 //                mIpadress = "http://192.168.20.16:8081/";
             });
             LinearLayout xiaofang_layout =  findViewById(R.id.xiaofang_layout);
             xiaofang_layout.setOnClickListener(v->{
                 ImageView xiaofang = findViewById(R.id.xiaofang);
-                xiaofang.setBackground(getResources().getDrawable(R.drawable.icon_orange));
+                ImageView xiaofangsetting = findViewById(R.id.xiaofangsetting);
+                xiaofang.setBackground(getResources().getDrawable(R.drawable.icon_black));
                 jiankang.setBackground(getResources().getDrawable(R.drawable.icon_null));
+                xiaofangsetting.setBackground(getResources().getDrawable(R.drawable.icon_null));
+                mIpadress = "http://wangxiao.16zige.com/";
+            });
+            LinearLayout xiaofangsetting_layout =  findViewById(R.id.xiaofangsetting_layout);
+            xiaofangsetting_layout.setOnClickListener(v->{
+                ImageView xiaofang = findViewById(R.id.xiaofang);
+                ImageView xiaofangsetting = findViewById(R.id.xiaofangsetting);
+                xiaofangsetting.setBackground(getResources().getDrawable(R.drawable.icon_black));
+                jiankang.setBackground(getResources().getDrawable(R.drawable.icon_null));
+                xiaofang.setBackground(getResources().getDrawable(R.drawable.icon_null));
                 mIpadress = "http://wangxiao.16zige.com/";
             });
             Button button_next = findViewById(R.id.button_next);

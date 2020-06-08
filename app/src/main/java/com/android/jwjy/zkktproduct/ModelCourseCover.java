@@ -788,7 +788,7 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
         }
         if (courseInfo.mCourseIsStartLearn.equals("1")){
             Button course_details_buy_button1 = mDetailsView.findViewById(R.id.course_details_buy_button1);
-            course_details_buy_button1.setText("继续学习");
+            course_details_buy_button1.setText("已购买");
         }
         if (mCourseInfo.mCourseIsCollect.equals("1")){ //修改为收藏状态
             ImageView course_details_bottomlayout_collectImage1 = mDetailsView.findViewById(R.id.course_details_bottomlayout_collectImage1);
