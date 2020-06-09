@@ -383,7 +383,9 @@ public class ModelCoursePacketCover implements View.OnClickListener, ModelOrderD
                 break;
             }
             case R.id.coursepacket_details_buy_button: {
-                Toast.makeText(mControlMainActivity,"此功能还在完善，敬请期待！",Toast.LENGTH_SHORT).show();
+                if (!mCoursePacketInfo.mCoursePacketIsHave.equals("1")){
+                    Toast.makeText(mControlMainActivity,"此功能还在完善，敬请期待！",Toast.LENGTH_SHORT).show();
+                }
 //                HideAllLayout();
 //                RelativeLayout coursepacket_main = modelCoursePacket.findViewById(R.id.coursepacket_main);
 //                View view = mControlMainActivity.Page_OrderDetails(this,null,mCoursePacketInfo,null);

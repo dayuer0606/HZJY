@@ -513,11 +513,9 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
             }
             case R.id.course_details_buy_button: { //课程详情购买
                 //如果是免费的课程直接购买
-//                if (mCourseInfo.mCoursePrice.equals("0") || mCourseInfo.mCoursePrice.equals("0.0") || mCourseInfo.mCoursePrice.equals("免费")){
-//
-//                } else {
+                if (!mCourseInfo.mCourseIsHave.equals("1")){
                     Toast.makeText(mControlMainActivity, "此功能还在完善，敬请期待！", Toast.LENGTH_SHORT).show();
-//                }
+                }
 //                HideAllLayout();
 //                RelativeLayout course_main = modelCourse.findViewById(R.id.course_main);
 //                View view = mControlMainActivity.Page_OrderDetails(this,mCourseInfo,null,null);

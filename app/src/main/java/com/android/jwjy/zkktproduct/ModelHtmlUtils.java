@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.text.Html;
+import android.text.Spanned;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.WindowManager;
@@ -16,6 +17,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import cn.jpush.android.helper.Logger;
 
@@ -42,13 +45,23 @@ public class ModelHtmlUtils {
         return mInstance;
     }
 
-    public void setHtmlWithPic(String resource){
+    public void setHtmlWithPic(String resource) {
         this.resource = resource;
-        if (Build.VERSION.SDK_INT >= 24)
-            text.setText(Html.fromHtml(resource,Html.FROM_HTML_MODE_COMPACT,imageGetter,null));
-        else
-            text.setText(Html.fromHtml(resource,imageGetter,null));
-
+        if (Build.VERSION.SDK_INT >= 24) {
+            Spanned span = Html.fromHtml(resource, Html.FROM_HTML_MODE_COMPACT, imageGetter, null);
+            if (span.toString().equals("")){
+                text.setText(resource);
+                return;
+            }
+            text.setText(Html.fromHtml(resource, Html.FROM_HTML_MODE_COMPACT, imageGetter, null));
+        } else {
+            Spanned span = Html.fromHtml(resource, imageGetter, null);
+            if (span.toString().equals("")){
+                text.setText(resource);
+                return;
+            }
+            text.setText(Html.fromHtml(resource, imageGetter, null));
+        }
     }
     Html.ImageGetter imageGetter = new Html.ImageGetter() {
         @Override
@@ -82,10 +95,21 @@ public class ModelHtmlUtils {
                                 int width = outMetrics.widthPixels;
                                 drawable.setBounds(0,0,(int)picW,(int)picH);
                                 pic = drawable;
-                                if (Build.VERSION.SDK_INT >= 24)
-                                    text.setText(Html.fromHtml(resource,Html.FROM_HTML_MODE_COMPACT,imageGetter,null));
-                                else
-                                    text.setText(Html.fromHtml(resource,imageGetter,null));
+                                if (Build.VERSION.SDK_INT >= 24) {
+                                    Spanned span = Html.fromHtml(resource, Html.FROM_HTML_MODE_COMPACT, imageGetter, null);
+                                    if (span.toString().equals("")){
+                                        text.setText(resource);
+                                        return;
+                                    }
+                                    text.setText(Html.fromHtml(resource, Html.FROM_HTML_MODE_COMPACT, imageGetter, null));
+                                } else {
+                                    Spanned span = Html.fromHtml(resource, imageGetter, null);
+                                    if (span.toString().equals("")){
+                                        text.setText(resource);
+                                        return;
+                                    }
+                                    text.setText(Html.fromHtml(resource, imageGetter, null));
+                                }
                             }
                         });
                 } catch (IOException e) {
