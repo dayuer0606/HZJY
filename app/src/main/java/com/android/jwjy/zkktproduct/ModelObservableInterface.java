@@ -470,6 +470,27 @@ public interface ModelObservableInterface {
     Call<ModelCourseCover.CourseCatalogBean> findSingleCourseCatalog(@Body RequestBody body);
 
     /**
+     * 查询课程目录new;2020.06.10 对课程目录进行改版，改为分页查询，每个章节最多显示3节课程
+     **/
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST("app/course/queryCourseREC")
+    Call<ModelCourseCover.CourseCatalogBeanNew> findSingleCourseCatalogRecNew(@Body RequestBody body);
+
+    /**
+     * 查询课程目录new;2020.06.10 对课程目录进行改版，改为分页查询，获取更多节信息
+     **/
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST("app/course/queryCourseRECSection")
+    Call<ModelCourseCover.CourseCatalogSectionBeanNew> findSingleCourseCatalogRecSection(@Body RequestBody body);
+
+    /**
+     * 查询课程目录new;2020.06.10 对课程目录进行改版，改为分页查询，获取直播课程
+     **/
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST("app/course/queryCourseLive")
+    Call<ModelCourseCover.CourseCatalogLiveBeanNew> findSingleCourseCatalogLive(@Body RequestBody body);
+
+    /**
      * 收藏或取消收藏课程
      **/
     @Headers({"Content-type:application/json;charset=UTF-8"})

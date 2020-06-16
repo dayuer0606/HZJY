@@ -24,6 +24,9 @@ public class CourseInfo {
     String mCourseTotalHours = "";//课程-总课时
     List<CourseChaptersInfo> mCourseChaptersInfoList = new ArrayList<>();//课程章
     List<CourseUnitInfo> mCourseUnitInfoList = new ArrayList<>();//课程单元
+    Integer mTodayLiveSum = 0; //今天直播课总数
+    Integer mBeforeLiveSum = 0; //历史直播课总数
+    Integer mAfterLiveSum = 0; //后续直播课总数
     List<CourseClassTimeInfo> mCourseClassTimeInfoTodayList = new ArrayList<>();//课次(今日)
     List<CourseClassTimeInfo> mCourseClassTimeInfoBeforeList = new ArrayList<>();//课次(历史)
     List<CourseClassTimeInfo> mCourseClassTimeInfoAfterList = new ArrayList<>();//课次(后续)

@@ -52,6 +52,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 import me.iwf.photopicker.PhotoPicker;
 import me.iwf.photopicker.fragment.NewImagePagerDialogFragment;
@@ -332,19 +333,6 @@ public class ModelCommunityAnswer extends Fragment{
                 Toast.makeText(mControlMainActivity,"正在发布问题，请稍后！",Toast.LENGTH_LONG).show();
                 return;
             }
-            mControlMainActivity.setmState("发布问答");
-            mIsPublish = false;
-            //communityanswer_add_layout_contentetitledittext    communityanswer_add_layout_contentedittext
-            String name = communityanswer_add_layout_contentetitledittext.getText().toString();
-            String context = communityanswer_add_layout_contentetitledittext.getText().toString();
-            //点击发布问题
-            if (selPhotosPath.size() == 0 ){ //如果没有图片直接发送内容
-                mControlMainActivity.setmState("");
-                mIsPublish = true;
-               //不要图片   加载网络请求
-            } else if (selPhotosPath != null) {//如果有图片先上传图片在加载网络请求
-                upLoadAnswerImage(name,context);
-            }
             //点击下一步选择标签
             CommunityAnswerChooseSign();
         });
@@ -569,8 +557,19 @@ public class ModelCommunityAnswer extends Fragment{
         communityanswer_choosesign_layout_commit_button1.setOnClickListener(v->{
             //点击发表问答，先判断是否有选择标签，如果没有选择标签，不做处理
             if (mCommunityAnswerChooseSignList.size() != 0){
-                //发表标签的网络请求
-                getCommunityissue();
+                mControlMainActivity.setmState("发布问答");
+                mIsPublish = false;
+                //communityanswer_add_layout_contentetitledittext    communityanswer_add_layout_contentedittext
+                String name = communityanswer_add_layout_contentetitledittext.getText().toString();
+                String context = communityanswer_add_layout_contentetitledittext.getText().toString();
+                //点击发布问题
+                if (selPhotosPath.size() == 0 ){ //如果没有图片直接发送内容
+                    mControlMainActivity.setmState("");
+                    mIsPublish = true;
+                    //不要图片   加载网络请求
+                } else if (selPhotosPath != null) {//如果有图片先上传图片在加载网络请求
+                    upLoadAnswerImage(name,context);
+                }
             }
         });
         //选中的标签个数
@@ -806,6 +805,7 @@ public class ModelCommunityAnswer extends Fragment{
             Toast.makeText(mControlMainActivity,"请先登录再发表问题",Toast.LENGTH_SHORT).show();
             mIsPublish = true;
             mControlMainActivity.setmState("");
+            LoadingDialog.getInstance(mControlMainActivity).dismiss();
             return;
         }
         Retrofit retrofit = new Retrofit.Builder()
@@ -842,6 +842,7 @@ public class ModelCommunityAnswer extends Fragment{
                             Toast.makeText(mControlMainActivity,"发表问题失败",Toast.LENGTH_SHORT).show();
                             mIsPublish = true;
                             mControlMainActivity.setmState("");
+                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
                             return;
                         }
                         if (!HeaderInterceptor.IsErrorCode(baseBean.getErrorCode(),baseBean.getErrorMsg())){
@@ -853,6 +854,7 @@ public class ModelCommunityAnswer extends Fragment{
                             Toast.makeText(mControlMainActivity,"发表问题失败",Toast.LENGTH_SHORT).show();
                             mIsPublish = true;
                             mControlMainActivity.setmState("");
+                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
                             return;
                         }
                         //发表，清空草稿箱中的文字，并返回到问答首页
@@ -862,6 +864,7 @@ public class ModelCommunityAnswer extends Fragment{
                         mIsPublish = true;
                         selPhotosPath.clear();
                         mControlMainActivity.setmState("");
+                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
                     }
 
                     @Override
@@ -870,6 +873,7 @@ public class ModelCommunityAnswer extends Fragment{
                         Toast.makeText(mControlMainActivity,"发表问题失败",Toast.LENGTH_SHORT).show();
                         mIsPublish = true;
                         mControlMainActivity.setmState("");
+                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
                         return;
                     }
                 });
@@ -2425,6 +2429,7 @@ public class ModelCommunityAnswer extends Fragment{
             Toast.makeText(mControlMainActivity, "问题发布失败!", Toast.LENGTH_SHORT).show();
             return;
         }
+        LoadingDialog.getInstance(mControlMainActivity).show();
         OkHttpClient httpClient = new OkHttpClient.Builder()
                 .addInterceptor(chain -> {
                     String uu = UUID.randomUUID().toString();
@@ -2433,7 +2438,11 @@ public class ModelCommunityAnswer extends Fragment{
                             .addHeader("Content-Type", "multipart/form-data; boundary=" + uu)
                             .build();
                     return chain.proceed(request);
-                }).build();
+                })
+                .connectTimeout(3600, TimeUnit.SECONDS)
+                .writeTimeout(3600, TimeUnit.SECONDS)
+                .readTimeout(3600, TimeUnit.SECONDS)
+                .build();
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(mControlMainActivity.mIpadress)
@@ -2447,24 +2456,58 @@ public class ModelCommunityAnswer extends Fragment{
             RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"),file);
             params.put("file\"; filename=\""+ i + "#" + file.getName(), requestBody);
         }
-        retrofit2.Call call = modelObservableInterface.upLoadImage(params);
-        call.enqueue(new retrofit2.Callback() {
+        Call<ModelObservableInterface.BaseBean> call = modelObservableInterface.upLoadImage(params);
+        call.enqueue(new Callback<ModelObservableInterface.BaseBean> () {
             @Override
-            public void onResponse(retrofit2.Call call, retrofit2.Response response) {
-//                String imgs = "";
-//                if (imgs.isEmpty()){
-//                    //加载网络请求
-//
-//                }
+            public void onResponse(Call<ModelObservableInterface.BaseBean> call, Response<ModelObservableInterface.BaseBean> response) {
+                if (response == null){
+                    mControlMainActivity.setmState("");
+                    mIsPublish = true;
+                    Toast.makeText(mControlMainActivity, "问题发布时上传图像失败!", Toast.LENGTH_SHORT).show();
+                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    return;
+                }
+                if (response.body() == null){
+                    mControlMainActivity.setmState("");
+                    mIsPublish = true;
+                    Toast.makeText(mControlMainActivity, "问题发布时上传图像失败!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (response.body().getErrorCode() != 200){
+                    mControlMainActivity.setmState("");
+                    mIsPublish = true;
+                    Toast.makeText(mControlMainActivity, "问题发布时上传图像失败!", Toast.LENGTH_SHORT).show();
+                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    return;
+                }
+                if (response.body().getData() == null){
+                    mControlMainActivity.setmState("");
+                    mIsPublish = true;
+                    Toast.makeText(mControlMainActivity, "问题发布时上传图像失败!", Toast.LENGTH_SHORT).show();
+                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    return;
+                }
+                if (selPhotosPath.size() == response.body().getData().size()){
+                    selPhotosPath.clear();
+                }
+                for (int i = 0; i < response.body().getData().size(); i ++){
+                    String path = (String) response.body().getData().get(String.valueOf(i));
+                    selPhotosPath.add(path);
+                }
                 mControlMainActivity.setmState("");
                 mIsPublish = true;
+                //发表标签的网络请求
+                getCommunityissue();
             }
             //图片上传失败
             @Override
-            public void onFailure(retrofit2.Call call, Throwable t) {
-                Log.d("Tag",t.getMessage().toString());
+            public void onFailure(Call<ModelObservableInterface.BaseBean> call, Throwable t) {
+                if (t.getMessage() != null) {
+                    Log.d("Tag", t.getMessage().toString());
+                }
                 mControlMainActivity.setmState("");
                 mIsPublish = true;
+                LoadingDialog.getInstance(mControlMainActivity).dismiss();
                 Toast.makeText(mControlMainActivity, "问题发布时上传图像失败!", Toast.LENGTH_SHORT).show();
             }
         });

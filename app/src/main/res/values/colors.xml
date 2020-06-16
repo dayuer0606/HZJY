@@ -128,4 +128,5 @@
     <color name="activity_playback_ad_icon_bg">#B3112B44</color>
     <color name="green1">#0fca79</color>
     <color name="graybcbcbc">#bcbcbc</color>
+    <color name="graycc999999">#cc999999</color>
 </resources>

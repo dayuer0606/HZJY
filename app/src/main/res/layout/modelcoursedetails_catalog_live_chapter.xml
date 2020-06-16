@@ -67,10 +67,25 @@
         android:layout_below="@+id/course_catalog_live_label_namelayout"
         android:clickable="true">
         <LinearLayout
-            android:id="@+id/course_catalog_live_label_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"/>
+            android:orientation="vertical">
+            <LinearLayout
+                android:id="@+id/course_catalog_live_label_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"/>
+            <TextView
+                android:id="@+id/course_catalog_live_more"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:gravity="center"
+                android:text="点击此处加载更多"
+                android:textColor="@color/blue649cf0"
+                android:textSize="@dimen/sp_15"
+                android:layout_marginLeft="@dimen/dp13"
+                android:layout_marginRight="@dimen/dp13"/>
+        </LinearLayout>
     </com.android.jwjy.zkktproduct.ModelExpandView>
     <View
         android:id="@+id/coursepacket_details_live_line2"
@@ -142,10 +157,25 @@
         android:layout_below="@+id/course_catalog_live_label_namelayout1"
         android:clickable="true">
         <LinearLayout
-            android:id="@+id/course_catalog_live_label_content1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"/>
+            android:orientation="vertical">
+            <LinearLayout
+                android:id="@+id/course_catalog_live_label_content1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"/>
+            <TextView
+                android:id="@+id/course_catalog_live_more1"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:gravity="center"
+                android:text="点击此处加载更多"
+                android:textColor="@color/blue649cf0"
+                android:textSize="@dimen/sp_15"
+                android:layout_marginLeft="@dimen/dp13"
+                android:layout_marginRight="@dimen/dp13"/>
+        </LinearLayout>
     </com.android.jwjy.zkktproduct.ModelExpandView>
     <View
         android:id="@+id/coursepacket_details_live_line1"
@@ -217,10 +247,25 @@
         android:layout_below="@+id/course_catalog_live_label_namelayout2"
         android:clickable="true">
         <LinearLayout
-            android:id="@+id/course_catalog_live_label_content2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"/>
+            android:orientation="vertical">
+            <LinearLayout
+                android:id="@+id/course_catalog_live_label_content2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"/>
+            <TextView
+                android:id="@+id/course_catalog_live_more2"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:gravity="center"
+                android:text="点击此处加载更多"
+                android:textColor="@color/blue649cf0"
+                android:textSize="@dimen/sp_15"
+                android:layout_marginLeft="@dimen/dp13"
+                android:layout_marginRight="@dimen/dp13"/>
+        </LinearLayout>
     </com.android.jwjy.zkktproduct.ModelExpandView>
 <!--    <View-->
 <!--        android:id="@+id/coursepacket_details_line3"-->

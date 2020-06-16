@@ -45,7 +45,6 @@ public class ScreenSwitchUtils {
 
                     } else if (orientation > 225 && orientation < 315) {
                         if (activity != null && isPortrait && DimensionUtils.isPad(activity) && mIsOpenSwitchAuto) {
-                            //  Log.e(test, 切换成横屏);
                             isPortrait = false;
                             mIsSensorSwitch = true;
                             mIsFullScreen = false;
@@ -56,7 +55,6 @@ public class ScreenSwitchUtils {
                         }
                     } else if ((orientation > 315 && orientation < 360) || (orientation > 0 && orientation < 45)) {
                         if (!isPortrait && mIsOpenSwitchAuto) {
-                            //  Log.e(test,切换成竖屏);
                             isPortrait = true;
                             mIsSensorSwitch = false;
                             mIsFullScreen = false;

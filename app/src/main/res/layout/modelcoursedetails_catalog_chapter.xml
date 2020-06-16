@@ -74,9 +74,24 @@
         android:layout_below="@+id/course_catalog_label_line1"
         android:clickable="true">
         <LinearLayout
-            android:id="@+id/course_catalog_label_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"/>
+            android:orientation="vertical">
+            <LinearLayout
+                android:id="@+id/course_catalog_label_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"/>
+            <TextView
+                android:id="@+id/course_catalog_more"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:gravity="center"
+                android:text="点击此处加载更多小节"
+                android:textColor="@color/blue649cf0"
+                android:textSize="@dimen/sp_15"
+                android:layout_marginLeft="@dimen/dp13"
+                android:layout_marginRight="@dimen/dp13"/>
+        </LinearLayout>
     </com.android.jwjy.zkktproduct.ModelExpandView>
 </RelativeLayout>

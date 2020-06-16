@@ -8691,7 +8691,11 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                 }
                 AnswerInfo answerInfo = mMyQuestionBankExercisesAnswerMap.get(mMyQuestionBankExercisesBean.danxuantiQuestion.get(num).question_id);
                 if (answerInfo != null) {
-                    error_num = error_num + "#" + mMyQuestionBankExercisesBean.danxuantiQuestion.get(num).question_id + "#" + answerInfo.result + "#" + answerInfo.answer + ";";
+                    String result = answerInfo.result + "#";
+                    if (answerInfo.result.equals("错") && answerInfo.answer.equals("")){
+                        result = result + " ";
+                    }
+                    error_num = error_num + "#" + mMyQuestionBankExercisesBean.danxuantiQuestion.get(num).question_id + "#" + result + answerInfo.answer + ";";
                 } else {
                     error_num = error_num + "#" + mMyQuestionBankExercisesBean.danxuantiQuestion.get(num).question_id + "#错# ;";
                 }
@@ -8707,7 +8711,11 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                 }
                 AnswerInfo answerInfo = mMyQuestionBankExercisesAnswerMap.get(mMyQuestionBankExercisesBean.duoxuantiQuestion.get(num).question_id);
                 if (answerInfo != null) {
-                    error_num = error_num + "#" + mMyQuestionBankExercisesBean.duoxuantiQuestion.get(num).question_id + "#" + answerInfo.result + "#" + answerInfo.answer + ";";
+                    String result = answerInfo.result + "#";
+                    if (answerInfo.result.equals("错") && answerInfo.answer.equals("")){
+                        result = result + " ";
+                    }
+                    error_num = error_num + "#" + mMyQuestionBankExercisesBean.duoxuantiQuestion.get(num).question_id + "#" + result + answerInfo.answer + ";";
                 } else {
                     error_num = error_num + "#" + mMyQuestionBankExercisesBean.duoxuantiQuestion.get(num).question_id + "#错# ;";
                 }
@@ -8723,7 +8731,11 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                 }
                 AnswerInfo answerInfo = mMyQuestionBankExercisesAnswerMap.get(mMyQuestionBankExercisesBean.jinadatitiQuestion.get(num).question_id);
                 if (answerInfo != null) {
-                    error_num = error_num + "#" + mMyQuestionBankExercisesBean.jinadatitiQuestion.get(num).question_id + "#" + answerInfo.result + "#" + answerInfo.answer + ";";
+                    String result = answerInfo.result + "#";
+                    if (answerInfo.result.equals("错") && answerInfo.answer.equals("")){
+                        result = result + " ";
+                    }
+                    error_num = error_num + "#" + mMyQuestionBankExercisesBean.jinadatitiQuestion.get(num).question_id + "#" + result + answerInfo.answer + ";";
                 } else {
                     error_num = error_num + "#" + mMyQuestionBankExercisesBean.jinadatitiQuestion.get(num).question_id + "#错# ;";
                 }
@@ -8877,7 +8889,11 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                 if (myTestPageIssueDataBean.question_id_group1 == null){
                     AnswerInfo answerInfo = mMyQuestionBankExercisesAnswerMap.get(myTestPageIssueDataBean.question_id);
                     if (answerInfo != null) {
-                        error_num = error_num + "#" + myTestPageIssueDataBean.question_id + "#" + answerInfo.result + "#" + answerInfo.answer + ";";
+                        String result = answerInfo.result + "#";
+                        if (answerInfo.result.equals("错") && answerInfo.answer.equals("")){
+                            result = result + " ";
+                        }
+                        error_num = error_num + "#" + myTestPageIssueDataBean.question_id + "#" + result + answerInfo.answer + ";";
                     } else {
                         error_num = error_num + "#" + myTestPageIssueDataBean.question_id + "#错# ;";
                     }

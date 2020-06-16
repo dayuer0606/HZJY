@@ -11,14 +11,25 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <TextView
+            android:id="@+id/main_view_choicetitle1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textColor="#ff2e2f32"
+            android:layout_marginTop="@dimen/dp_129"
+            android:layout_marginRight="@dimen/dp23"
+            android:layout_marginLeft="@dimen/dp23"
+            android:textSize="@dimen/sp_22"
+        />
+        <TextView
             android:id="@+id/main_view_choicetitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="请选择您想学习的课程："
             android:textColor="#ff2e2f32"
-            android:layout_marginTop="@dimen/dp_129"
             android:layout_marginRight="@dimen/dp23"
             android:layout_marginLeft="@dimen/dp23"
+            android:layout_below="@id/main_view_choicetitle1"
             android:textSize="@dimen/sp_22"
             />
         <LinearLayout

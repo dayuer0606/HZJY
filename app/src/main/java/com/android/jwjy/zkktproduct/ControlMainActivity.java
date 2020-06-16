@@ -164,7 +164,7 @@ public class ControlMainActivity extends AppCompatActivity  implements EasyPermi
     //token
     public String mToken = "";
     public String mIpadress = "http://wangxiao.jianweijiaoyu.com/";
-//    public String mIpadress = "http://192.168.20.16:8081/";
+//    public String mIpadress = "http://192.168.2.127:8080/";
     public String mStuId = "";
 
     private class MenuItemInfo {
@@ -172,6 +172,7 @@ public class ControlMainActivity extends AppCompatActivity  implements EasyPermi
         int mItemId;   //按钮标识（1：首页 2：课程包 3：课程表 4：我的）
         int mOrder;    //按钮排序
     }
+
 
     private final        int CUPREQUEST        = 50;
     private final        int CAMERA            = 10;
@@ -307,6 +308,28 @@ public class ControlMainActivity extends AppCompatActivity  implements EasyPermi
         }
         //添加职考网校逻辑（如果没有登录，请游客先选择是健康项目还是消防项目）
         if (mStuId.equals("") ||  mIpadress.equals("")){
+            //
+            TextView main_view_choicetitle1 = findViewById(R.id.main_view_choicetitle1);
+            main_view_choicetitle1.setOnLongClickListener(v -> {
+                View view = mThis.getLayoutInflater().inflate(R.layout.dialog_sure_cancel1, null);
+                ControllerCenterDialog mMyCouponDialog = new ControllerCenterDialog(mThis, 0, 0, view, R.style.DialogTheme);
+                mMyCouponDialog.setCancelable(true);
+                mMyCouponDialog.show();
+                TextView button_cancel = view.findViewById(R.id.button_cancel);
+                button_cancel.setOnClickListener(View->{
+                    mMyCouponDialog.cancel();
+                });
+                TextView button_sure = view.findViewById(R.id.button_sure);
+                button_sure.setOnClickListener(View->{
+                    EditText dialog_content = view.findViewById(R.id.dialog_content);
+                    if (dialog_content.getText().toString().equals("")){
+                        return;
+                    }
+                    mIpadress = "http://" + dialog_content.getText().toString() + "/";
+                    mMyCouponDialog.cancel();
+                });
+                return false;
+            });
             //将网校系统选项界面显示，隐藏主页
             RelativeLayout main_view_choice = findViewById(R.id.main_view_choice);
             main_view_choice.setVisibility(View.VISIBLE);
@@ -323,7 +346,7 @@ public class ControlMainActivity extends AppCompatActivity  implements EasyPermi
                 xiaofangsetting.setBackground(getResources().getDrawable(R.drawable.icon_null));
                 jiankang.setBackground(getResources().getDrawable(R.drawable.icon_black));
                 mIpadress = "http://wangxiao.jianweijiaoyu.com/";
-//                mIpadress = "http://192.168.20.16:8081/";
+//                mIpadress = "http://192.168.2.127:8080/";
             });
             LinearLayout xiaofang_layout =  findViewById(R.id.xiaofang_layout);
             xiaofang_layout.setOnClickListener(v->{
@@ -2500,7 +2523,7 @@ public class ControlMainActivity extends AppCompatActivity  implements EasyPermi
     public static boolean isTelNumber(String telNumber){
         if (null == telNumber || "".equals(telNumber))
             return false;
-        Pattern p = Pattern.compile("^((13[0-9])|(15[^4,\\D])|(18[0,5-9]))\\d{8}$");
+        Pattern p = Pattern.compile("^((19[0-9])|(17[0-9])|(13[0-9])|(15[^4,\\D])|(18[0,5-9]))\\d{8}$");
         Matcher m = p.matcher(telNumber);
         return m.find();//boolean
     }
