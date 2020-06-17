@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -185,6 +186,19 @@ public class ControlMainActivity extends AppCompatActivity  implements EasyPermi
     //按键反应状态
     private String mState = "";
 
+    /**
+     * 重置App界面的字体大小，fontScale 值为 1 代表默认字体大小
+     * @return suyan
+     */
+    @Override
+    public Resources getResources() {
+        Resources res = super.getResources();
+        Configuration config = res.getConfiguration();
+        config.fontScale = 1;
+        res.updateConfiguration(config, res.getDisplayMetrics());
+        return res;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -357,7 +371,7 @@ public class ControlMainActivity extends AppCompatActivity  implements EasyPermi
                 xiaofangsetting.setBackground(getResources().getDrawable(R.drawable.icon_null));
                 mIpadress = "http://wangxiao.16zige.com/";
             });
-            LinearLayout xiaofangsetting_layout =  findViewById(R.id.xiaofangsetting_layout);
+            LinearLayout xiaofangsetting_layout = findViewById(R.id.xiaofangsetting_layout);
             xiaofangsetting_layout.setOnClickListener(v->{
                 ImageView xiaofang = findViewById(R.id.xiaofang);
                 ImageView xiaofangsetting = findViewById(R.id.xiaofangsetting);

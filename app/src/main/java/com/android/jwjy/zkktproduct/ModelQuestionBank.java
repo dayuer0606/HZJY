@@ -8936,6 +8936,11 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                 AnswerInfo answerInfo = mMyQuestionBankExercisesAnswerMap.get(myTestPageIssueDataBean.question_id);
                 if (answerInfo != null) {
                     error_num = error_num + "#" + myTestPageIssueDataBean.question_id + "#" + answerInfo.result + "#" + answerInfo.answer + ";";
+                    String result = answerInfo.result + "#";
+                    if (answerInfo.result.equals("错") && answerInfo.answer.equals("")){
+                        result = result + " ";
+                    }
+                    error_num = error_num + "#" + myTestPageIssueDataBean.question_id + "#" + result + answerInfo.answer + ";";
                 } else {
                     error_num = error_num + "#" + myTestPageIssueDataBean.question_id + "#错# ;";
                 }

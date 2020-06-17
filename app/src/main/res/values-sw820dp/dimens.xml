@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
 	<dimen name="textsize8">18.2222sp</dimen>
+	<dimen name="textsize10">22.7778sp</dimen>
 	<dimen name="textsize11">25.0556sp</dimen>
 	<dimen name="textsize12">27.3333sp</dimen>
 	<dimen name="textsize13">29.6111sp</dimen>
@@ -11,6 +12,8 @@
 	<dimen name="textsize18">41.0000sp</dimen>
 	<dimen name="textsize19">43.2778sp</dimen>
 	<dimen name="textsize20">45.5556sp</dimen>
+	<dimen name="textsize22">50.1111sp</dimen>
+	<dimen name="textsize38">86.5556sp</dimen>
 	<dimen name="dp0">0.0000dp</dimen>
 	<dimen name="dp0_5">1.1389dp</dimen>
 	<dimen name="dp1">2.2778dp</dimen>
