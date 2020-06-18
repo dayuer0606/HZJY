@@ -873,13 +873,13 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
             }
             View catalog_chapterview = LayoutInflater.from(mControlMainActivity).inflate(R.layout.modelcoursedetails_catalog_chapter, null);
             //判断是否显示加载更多按钮
-            if (courseChaptersInfo.mCourseSectionsSum > courseChaptersInfo.mCourseSectionsPage * courseChaptersInfo.mCourseSectionsCount){
+            if (courseChaptersInfo.mCourseSectionsSum > courseChaptersInfo.mCourseSectionsPage * mCourseCatalogCount){
                 TextView course_catalog_more = catalog_chapterview.findViewById(R.id.course_catalog_more);
                 LinearLayout.LayoutParams ll = (LinearLayout.LayoutParams) course_catalog_more.getLayoutParams();
                 ll.height = LinearLayout.LayoutParams.WRAP_CONTENT;
                 course_catalog_more.setLayoutParams(ll);
                 course_catalog_more.setOnClickListener(v->{
-                    if (courseChaptersInfo.mCourseSectionsSum > courseChaptersInfo.mCourseSectionsPage * courseChaptersInfo.mCourseSectionsCount){
+                    if (courseChaptersInfo.mCourseSectionsSum > courseChaptersInfo.mCourseSectionsPage * mCourseCatalogCount){
                         getSingleCourseCatalogSectionMore(courseChaptersInfo.mCourseChaptersId,catalog_chapterview);
                     } else {
                         course_catalog_more.setText("暂无更多课程");
@@ -3231,6 +3231,7 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
         }
         paramsMap.put("pageNum", mCourseCatalogPage);
         paramsMap.put("pageSize",mCourseCatalogCount);
+        paramsMap.put("sectionPageSize",mCourseCatalogCount);
         String strEntity = gson.toJson(paramsMap);
         RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json;charset=UTF-8"),strEntity);
         Call<CourseCatalogBeanNew> call = modelObservableInterface.findSingleCourseCatalogRecNew(body);
@@ -3290,6 +3291,9 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                                 courseSectionsInfo.mVideoId = courseCatalogSectionBean.video_id;
                                 SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
                                 formatter.setTimeZone(TimeZone.getTimeZone("GMT+00:00"));
+                                if (courseCatalogSectionBean.Duration == null){
+                                    courseCatalogSectionBean.Duration = 0;
+                                }
                                 String hms = formatter.format(courseCatalogSectionBean.Duration * 1000);
                                 courseSectionsInfo.mCourseSectionsTime = hms;
                                 courseSectionsInfo.mCourseSectionsTime1 = courseCatalogSectionBean.Duration * 1000;
@@ -3348,6 +3352,7 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
         }
         paramsMap.put("pageNum", mCourseCatalogPage);
         paramsMap.put("pageSize",mCourseCatalogCount);
+        paramsMap.put("sectionPageSize",mCourseCatalogCount);
         String strEntity = gson.toJson(paramsMap);
         RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json;charset=UTF-8"),strEntity);
         Call<CourseCatalogBeanNew> call = modelObservableInterface.findSingleCourseCatalogRecNew(body);
@@ -3406,6 +3411,9 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                                 courseSectionsInfo.mVideoId = courseCatalogSectionBean.video_id;
                                 SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
                                 formatter.setTimeZone(TimeZone.getTimeZone("GMT+00:00"));
+                                if (courseCatalogSectionBean.Duration == null){
+                                    courseCatalogSectionBean.Duration = 0;
+                                }
                                 String hms = formatter.format(courseCatalogSectionBean.Duration * 1000);
                                 courseSectionsInfo.mCourseSectionsTime = hms;
                                 courseSectionsInfo.mCourseSectionsTime1 = courseCatalogSectionBean.Duration * 1000;
@@ -3439,7 +3447,6 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
         }
         boolean isFind = false;
         int courseSectionsPage = 0;
-        int courseSectionsCount = 3;
         for (CourseChaptersInfo courseChaptersInfo:mCourseInfo.mCourseChaptersInfoList){
             if (courseChaptersInfo == null){
                 continue;
@@ -3448,7 +3455,6 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                 isFind = true;
                 courseSectionsPage = courseChaptersInfo.mCourseSectionsPage + 1;
                 courseChaptersInfo.mCourseSectionsPage = courseSectionsPage;
-                courseSectionsCount = courseChaptersInfo.mCourseSectionsCount;
                 break;
             }
         }
@@ -3470,7 +3476,7 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
             paramsMap.put("stu_id", Integer.valueOf(mControlMainActivity.mStuId));
         }
         paramsMap.put("pageNum", courseSectionsPage);
-        paramsMap.put("pageSize",courseSectionsCount);
+        paramsMap.put("pageSize",mCourseCatalogCount);
         String strEntity = gson.toJson(paramsMap);
         RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json;charset=UTF-8"),strEntity);
         Call<CourseCatalogSectionBeanNew> call = modelObservableInterface.findSingleCourseCatalogRecSection(body);
@@ -3520,6 +3526,9 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                         courseSectionsInfo.mVideoId = courseCatalogSectionBean.video_id;
                         SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
                         formatter.setTimeZone(TimeZone.getTimeZone("GMT+00:00"));
+                        if (courseCatalogSectionBean.Duration == null){
+                            courseCatalogSectionBean.Duration = 0;
+                        }
                         String hms = formatter.format(courseCatalogSectionBean.Duration * 1000);
                         courseSectionsInfo.mCourseSectionsTime = hms;
                         courseSectionsInfo.mCourseSectionsTime1 = courseCatalogSectionBean.Duration * 1000;

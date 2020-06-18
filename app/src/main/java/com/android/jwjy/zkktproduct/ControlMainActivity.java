@@ -165,7 +165,6 @@ public class ControlMainActivity extends AppCompatActivity  implements EasyPermi
     //token
     public String mToken = "";
     public String mIpadress = "http://wangxiao.jianweijiaoyu.com/";
-//    public String mIpadress = "http://192.168.2.127:8080/";
     public String mStuId = "";
 
     private class MenuItemInfo {
@@ -353,14 +352,12 @@ public class ControlMainActivity extends AppCompatActivity  implements EasyPermi
             ImageView jiankang = findViewById(R.id.jiankang);
             jiankang.setBackground(getResources().getDrawable(R.drawable.icon_black));
             jiankang_layout.setOnClickListener(v->{
-//                ImageView jiankang = findViewById(R.id.jiankang);
                 ImageView xiaofang = findViewById(R.id.xiaofang);
                 ImageView xiaofangsetting = findViewById(R.id.xiaofangsetting);
                 xiaofang.setBackground(getResources().getDrawable(R.drawable.icon_null));
                 xiaofangsetting.setBackground(getResources().getDrawable(R.drawable.icon_null));
                 jiankang.setBackground(getResources().getDrawable(R.drawable.icon_black));
                 mIpadress = "http://wangxiao.jianweijiaoyu.com/";
-//                mIpadress = "http://192.168.2.127:8080/";
             });
             LinearLayout xiaofang_layout =  findViewById(R.id.xiaofang_layout);
             xiaofang_layout.setOnClickListener(v->{

@@ -8742,7 +8742,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
             }
         }
         if (mMyQuestionBankExercisesBean.cailiaotiQuestion != null) {
-            for (int num = 0; num < mMyQuestionBankExercisesBean.cailiaotiQuestion.size(); num++) {
+            for (int num = 0; num < mMyQuestionBankExercisesBean.cailiaotiQuestion.size(); num ++) {
                 if (mMyQuestionBankExercisesBean.cailiaotiQuestion.get(num) == null) {
                     continue;
                 }
@@ -8789,9 +8789,13 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                 } else {
                     AnswerInfo answerInfo = mMyQuestionBankExercisesAnswerMap.get(mMyQuestionBankExercisesBean.cailiaotiQuestion.get(num).question_id);
                     if (answerInfo != null) {
-                        error_num = error_num + "#" + mMyQuestionBankExercisesBean.cailiaotiQuestion.get(num).question_id + "#" + answerInfo.result + "#" + answerInfo.answer + ";";
+                        String result = answerInfo.result + "#";
+                        if (answerInfo.result.equals("错") && answerInfo.answer.equals("")){
+                            result = result + " ";
+                        }
+                        error_num = error_num + "#" + mMyQuestionBankExercisesBean.jinadatitiQuestion.get(num).question_id + "#" + result + answerInfo.answer + ";";
                     } else {
-                        error_num = error_num + "#" + mMyQuestionBankExercisesBean.cailiaotiQuestion.get(num).question_id + "#错# ;";
+                        error_num = error_num + "#" + mMyQuestionBankExercisesBean.jinadatitiQuestion.get(num).question_id + "#错# ;";
                     }
                 }
             }
