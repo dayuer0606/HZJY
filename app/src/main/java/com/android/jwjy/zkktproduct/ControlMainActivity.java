@@ -1972,6 +1972,9 @@ public class ControlMainActivity extends AppCompatActivity  implements EasyPermi
         }else{
             ((ModelMy)mModelMy).getPersonalInfoDatas();
 //            ((ModelMy)mModelMy).ModelMyInit();
+            if (mModelSetting!=null){
+                ((ModelSetting)mModelSetting).getPersonalInfoDatas();
+            }
             transaction.show(mModelMy);
         }
         transaction.commit();

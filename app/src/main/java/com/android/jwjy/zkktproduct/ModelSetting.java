@@ -1040,7 +1040,7 @@ public class ModelSetting extends Fragment {
     }
 
     //设置-获取个人信息
-    private void getPersonalInfoDatas() {
+    public void getPersonalInfoDatas() {
         if (mControlMainActivity.mStuId.equals("")){
             return;
         }

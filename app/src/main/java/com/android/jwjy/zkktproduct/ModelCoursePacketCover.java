@@ -59,7 +59,7 @@ public class ModelCoursePacketCover implements View.OnClickListener, ModelOrderD
     private ModelCoursePacketCoverOnClickListener mModelCoursePacketCoverOnClickListener = null;
     private int height = 1344;
     private int width = 720;
-    private String mCurrentTab = "Details";
+    private String mCurrentTab = "StageCourse";
     private int lastTabIndex = 1;
     private boolean mIsCollect = false;
     private CoursePacketInfo mCoursePacketInfo;
@@ -122,7 +122,7 @@ public class ModelCoursePacketCover implements View.OnClickListener, ModelOrderD
         getDataPacketDetails();
         return modelCoursePacket;
     }
-     //课程包列表
+    //课程包列表
     public void CoursePacketListInit(CoursePacketInfo coursePacketInfo) {
         ControllerCustomRoundAngleImageView imageView = mListView.findViewById(R.id.coursepacketcover);
         imageView.setImageDrawable(mControlMainActivity.getResources().getDrawable(R.drawable.modelcoursepacketcover));//如果没有url，加载默认图片
@@ -184,16 +184,16 @@ public class ModelCoursePacketCover implements View.OnClickListener, ModelOrderD
         coursepacket_main.addView(mDetailsView);
         //默认显示详情界面  详情1
         TextView coursepacket_details_label = mDetailsView.findViewById(R.id.coursepacket_details_label);
-       // 详情页面2
+        // 详情页面2
         TextView coursepacket_details_label1 = mDetailsView.findViewById(R.id.coursepacket_details_label1);
-        coursepacket_details_label.setTextSize(TypedValue.COMPLEX_UNIT_PX, mDetailsView.getResources().getDimensionPixelSize(R.dimen.textsize18));
-        coursepacket_details_label1.setTextSize(TypedValue.COMPLEX_UNIT_PX, mDetailsView.getResources().getDimensionPixelSize(R.dimen.textsize18));
+        coursepacket_details_label1.setTextSize(TypedValue.COMPLEX_UNIT_PX, mDetailsView.getResources().getDimensionPixelSize(R.dimen.textsize16));
+        coursepacket_details_label.setTextSize(TypedValue.COMPLEX_UNIT_PX, mDetailsView.getResources().getDimensionPixelSize(R.dimen.textsize16));
         //阶段课程
         TextView coursepacket_coursestage_label = mDetailsView.findViewById(R.id.coursepacket_coursestage_label);
         //阶段课程2
         TextView coursepacket_coursestage_label1 = mDetailsView.findViewById(R.id.coursepacket_coursestage_label1);
-        coursepacket_coursestage_label.setTextSize(TypedValue.COMPLEX_UNIT_PX, mDetailsView.getResources().getDimensionPixelSize(R.dimen.textsize16));
-        coursepacket_coursestage_label1.setTextSize(TypedValue.COMPLEX_UNIT_PX, mDetailsView.getResources().getDimensionPixelSize(R.dimen.textsize16));
+        coursepacket_coursestage_label1.setTextSize(TypedValue.COMPLEX_UNIT_PX, mDetailsView.getResources().getDimensionPixelSize(R.dimen.textsize18));
+        coursepacket_coursestage_label.setTextSize(TypedValue.COMPLEX_UNIT_PX, mDetailsView.getResources().getDimensionPixelSize(R.dimen.textsize18));
         //师资1
         TextView coursepacket_teachers_label1 = mDetailsView.findViewById(R.id.coursepacket_teachers_label1);
         //师资1
@@ -211,11 +211,7 @@ public class ModelCoursePacketCover implements View.OnClickListener, ModelOrderD
         LP.height = 0;
         coursepacket_coursestage_label_content_layout.setLayoutParams(LP);
         coursepacket_coursestage_label_content_layout.setVisibility(View.INVISIBLE);
-        ImageView imgv_cursor = mDetailsView.findViewById(R.id.imgv_cursor);
-        ImageView imgv_cursor1 = mDetailsView.findViewById(R.id.imgv_cursor1);
-        int x = width / 6 - mDetailsView.getResources().getDimensionPixelSize(R.dimen.dp18) / 2;
-        imgv_cursor.setX(x);
-        imgv_cursor1.setX(x);
+        getDataPacketStageofcourse();
     }
 
     public void HideAllLayout() {
@@ -240,7 +236,7 @@ public class ModelCoursePacketCover implements View.OnClickListener, ModelOrderD
                 TextView coursepacket_coursestage_label1 = mDetailsView.findViewById(R.id.coursepacket_coursestage_label1);
                 coursepacket_coursestage_label.setTextSize(TypedValue.COMPLEX_UNIT_PX, mDetailsView.getResources().getDimensionPixelSize(R.dimen.textsize16));
                 coursepacket_coursestage_label1.setTextSize(TypedValue.COMPLEX_UNIT_PX, mDetailsView.getResources().getDimensionPixelSize(R.dimen.textsize16));
-                 //师资产列表1
+                //师资产列表1
                 TextView coursepacket_teachers_label1 = mDetailsView.findViewById(R.id.coursepacket_teachers_label1);
                 //师资产列表2
                 TextView coursepacket_teachers_label = mDetailsView.findViewById(R.id.coursepacket_teachers_label);
@@ -265,7 +261,7 @@ public class ModelCoursePacketCover implements View.OnClickListener, ModelOrderD
                 if (!mCurrentTab.equals("Details")) {
                     ImageView imgv_cursor = mDetailsView.findViewById(R.id.imgv_cursor);
                     ImageView imgv_cursor1 = mDetailsView.findViewById(R.id.imgv_cursor1);
-                    Animation animation = new TranslateAnimation((lastTabIndex - 1) * width / 3, 0, 0, 0);
+                    Animation animation = new TranslateAnimation((lastTabIndex - 1) * width / 3, width / 3, 0, 0);
                     animation.setFillAfter(true);// True:图片停在动画结束位置
                     animation.setDuration(200);
                     imgv_cursor.startAnimation(animation);
@@ -316,7 +312,7 @@ public class ModelCoursePacketCover implements View.OnClickListener, ModelOrderD
                 if (!mCurrentTab.equals("StageCourse")) {
                     ImageView imgv_cursor = mDetailsView.findViewById(R.id.imgv_cursor);
                     ImageView imgv_cursor1 = mDetailsView.findViewById(R.id.imgv_cursor1);
-                    Animation animation = new TranslateAnimation((lastTabIndex - 1) * width / 3, width / 3, 0, 0);
+                    Animation animation = new TranslateAnimation((lastTabIndex - 1) * width / 3, 0, 0, 0);
                     animation.setFillAfter(true);// True:图片停在动画结束位置
                     animation.setDuration(200);
                     imgv_cursor.startAnimation(animation);
@@ -485,7 +481,7 @@ public class ModelCoursePacketCover implements View.OnClickListener, ModelOrderD
         imgv_cursor.setImageMatrix(matrix);// 设置动画初始位置
         ImageView imgv_cursor1 = mDetailsView.findViewById(R.id.imgv_cursor1);
         Matrix matrix1 = new Matrix();
-        matrix1.postTranslate(width / 2, 0);
+        matrix1.postTranslate(width / 3, 0);
         imgv_cursor1.setImageMatrix(matrix1);// 设置动画初始位置
         //课程包详情的内容  HTML格式
         if (coursePacketInfo.mCoursePacketDetails != null) {
@@ -691,8 +687,13 @@ public class ModelCoursePacketCover implements View.OnClickListener, ModelOrderD
             ll1.width = view.getResources().getDimensionPixelSize(R.dimen.dp10);
             coursepacket_coursestage_label_arrow_down.setLayoutParams(ll1);
         }
+        ImageView imgv_cursor = mDetailsView.findViewById(R.id.imgv_cursor);
+        ImageView imgv_cursor1 = mDetailsView.findViewById(R.id.imgv_cursor1);
+        int x = width / 6 - mDetailsView.getResources().getDimensionPixelSize(R.dimen.dp18) / 2;
+        imgv_cursor.setX(x);
+        imgv_cursor1.setX(x);
     }
-     //师资列表
+    //师资列表
     public void CoursePacketTeachersInit(CoursePacketInfo coursePacketInfo) {
         LinearLayout coursepacket_teachers_label_content_layout = mDetailsView.findViewById(R.id.coursepacket_teachers_label_content_layout);
         //清空之前添加的师资所有布局
@@ -1079,8 +1080,17 @@ public class ModelCoursePacketCover implements View.OnClickListener, ModelOrderD
                 mCoursePacketInfo.mCoursePacketMessage = describe;
                 //        刷新详情界面的方法
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    CoursePacketDetailsInit(mCoursePacketInfo,collection_status);
-                 }
+
+                    if (mCurrentTab.equals("Details")){
+                        CoursePacketDetailsInit(mCoursePacketInfo,collection_status);
+
+                    }else if (mCurrentTab.equals("StageCourse")){
+                        getDataPacketStageofcourse();
+                    }
+
+
+
+                }
                 LoadingDialog.getInstance(mControlMainActivity).dismiss();
             }
 
