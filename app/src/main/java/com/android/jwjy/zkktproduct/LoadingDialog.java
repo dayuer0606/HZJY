@@ -1,5 +1,6 @@
 package com.android.jwjy.zkktproduct;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Bundle;
@@ -17,7 +18,13 @@ public class LoadingDialog extends AlertDialog {
     private AVLoadingIndicatorView avi;
 
     public static LoadingDialog getInstance(Context context) {
-        if (loadingDialog == null) {
+        if (!((Activity)context).isFinishing()){
+            if (loadingDialog == null) {
+                loadingDialog = new LoadingDialog(context, R.style.TransparentDialog); //设置AlertDialog背景透明
+                loadingDialog.setCancelable(false);
+                loadingDialog.setCanceledOnTouchOutside(false);
+            }
+        } else {
             loadingDialog = new LoadingDialog(context, R.style.TransparentDialog); //设置AlertDialog背景透明
             loadingDialog.setCancelable(false);
             loadingDialog.setCanceledOnTouchOutside(false);
@@ -38,7 +45,11 @@ public class LoadingDialog extends AlertDialog {
 
     @Override
     public void show() {
-        super.show();
+        if (loadingDialog.getContext() instanceof Activity) {
+            if (!((Activity) loadingDialog.getContext()).isFinishing()) {
+                super.show();
+            }
+        }
 //        if (avi == null) {
 //            avi = (AVLoadingIndicatorView)this.findViewById(R.id.avi);
 //        }
@@ -47,7 +58,11 @@ public class LoadingDialog extends AlertDialog {
 
     @Override
     public void dismiss() {
-        super.dismiss();
+        if (loadingDialog.getContext() instanceof Activity) {
+            if (!((Activity) loadingDialog.getContext()).isFinishing()) {
+                super.dismiss();
+            }
+        }
 //        if (avi == null) {
 //            avi = (AVLoadingIndicatorView)this.findViewById(R.id.avi);
 //        }
