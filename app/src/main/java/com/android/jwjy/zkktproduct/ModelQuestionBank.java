@@ -9740,8 +9740,8 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                         mMyFavoriteQuestionDataBeans = null;
                         questionBankAnswerRecordDataBeanLists = null;
                         mCurrentIndex = 0;
-                        mMyTestPageIssueTime = myTestPageIssueBean.answer_time;
-                        mTime = myTestPageIssueBean.answer_time;
+                        mMyTestPageIssueTime = myTestPageIssueBean.answer_time * 60;
+                        mTime = myTestPageIssueBean.answer_time * 60;
                         mCurrentChapterName = test_paper_name;
                         QuestionBankDetailsQuestionModeTestPaperShow();
                         LoadingDialog.getInstance(mControlMainActivity).dismiss();
