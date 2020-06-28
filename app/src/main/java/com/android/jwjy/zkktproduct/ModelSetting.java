@@ -1,7 +1,7 @@
 package com.android.jwjy.zkktproduct;
 
 import android.app.Dialog;
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;

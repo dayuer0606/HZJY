@@ -2,7 +2,6 @@ package com.android.jwjy.zkktproduct;
 import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -27,7 +26,8 @@ import android.support.annotation.RequiresApi;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.bottomnavigation.LabelVisibilityMode;
 import android.support.design.widget.BottomNavigationView;
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
@@ -145,7 +145,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Created by dayuer on 19/7/2.
  * 主程序
  */
-public class ControlMainActivity extends AppCompatActivity  implements EasyPermissions.PermissionCallbacks{
+public class ControlMainActivity extends AppCompatActivity implements EasyPermissions.PermissionCallbacks{
     //继承Activity 不会显示APP头上的标题
     private Fragment mModelHomePage,mModelMy,mModelOpenClass,mModelLogIn,mModelSetting,mModelCoursePacket,mModelCourse,mModelClassCheduleCard
             ,mModelQuestionBank,mModelNews,mModelCommunityAnswer;
@@ -711,7 +711,7 @@ public class ControlMainActivity extends AppCompatActivity  implements EasyPermi
             mBeforePage = "我的";
             //隐藏所有的底部按钮
             mBottomNavigationView.setVisibility(View.INVISIBLE);
-            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             hideAllFragment(transaction);
             if(mModelSetting == null){
                 mModelSetting = ModelSetting.newInstance(mThis,"设置-基本信息",R.layout.modelsetting);//"设置"
@@ -759,7 +759,7 @@ public class ControlMainActivity extends AppCompatActivity  implements EasyPermi
         mBeforePage = "我的";
         //隐藏所有的底部按钮
         mBottomNavigationView.setVisibility(View.INVISIBLE);
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         hideAllFragment(transaction);
         if(mModelSetting == null){
             mModelSetting = ModelSetting.newInstance(mThis,"设置",R.layout.modelsetting);//"设置"
@@ -828,7 +828,7 @@ public class ControlMainActivity extends AppCompatActivity  implements EasyPermi
     public void onClickMyCourseClassCheduleCard(View view) {
         mPage = "课程表";
         mBeforePage = "我的课程";
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         hideAllFragment(transaction);
         if(mModelClassCheduleCard == null){
             mModelClassCheduleCard = ModelClassCheduleCard.newInstance(mThis,"",R.layout.fragment_classchedulecard);//"课程表"
@@ -865,7 +865,7 @@ public class ControlMainActivity extends AppCompatActivity  implements EasyPermi
                 mBeforePage = "我的";
                 //隐藏所有的底部按钮
                 mBottomNavigationView.setVisibility(View.INVISIBLE);
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                 hideAllFragment(transaction);
                 if(mModelSetting == null){
                     mModelSetting = ModelSetting.newInstance(mThis,"设置-基本信息",R.layout.modelsetting);//"设置"
@@ -1391,7 +1391,7 @@ public class ControlMainActivity extends AppCompatActivity  implements EasyPermi
         mBottomNavigationView.setVisibility(View.INVISIBLE);
         mPage = "我的题库";
         mBeforePage = "我的";
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         hideAllFragment(transaction);
         if(mModelQuestionBank == null){
             mModelQuestionBank = ModelQuestionBank.newInstance(mThis,"我的题库:" + mBeforePage,R.layout.fragment_questionbank);//"我的题库"
@@ -1694,7 +1694,7 @@ public class ControlMainActivity extends AppCompatActivity  implements EasyPermi
             mBottomNavigationView.setVisibility(View.INVISIBLE);
             mBeforePage = "首页";
         }
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         hideAllFragment(transaction);
         if(mModelCoursePacket == null){
             mModelCoursePacket = ModelCoursePacket.newInstance(mThis,"课程包:" + mBeforePage,R.layout.fragment_coursepacket);//"课程包"
@@ -1715,7 +1715,7 @@ public class ControlMainActivity extends AppCompatActivity  implements EasyPermi
         mBottomNavigationView.setVisibility(View.INVISIBLE);
         mPage = "题库";
         mBeforePage = "首页";
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         hideAllFragment(transaction);
         if(mModelQuestionBank == null){
             mModelQuestionBank = ModelQuestionBank.newInstance(mThis,"题库:" + mBeforePage,R.layout.fragment_questionbank);//"题库"
@@ -1822,7 +1822,7 @@ public class ControlMainActivity extends AppCompatActivity  implements EasyPermi
         mBottomNavigationView.setVisibility(View.VISIBLE);
         mPage = "首页";
         mBeforePage = "";
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         hideAllFragment(transaction);
         if(mModelHomePage == null){
             mModelHomePage = ModelHomePage.newInstance(mThis,"首页",R.layout.homepage_layout);
@@ -1839,7 +1839,7 @@ public class ControlMainActivity extends AppCompatActivity  implements EasyPermi
         mBottomNavigationView.setVisibility(View.INVISIBLE);
         mPage = "社区问答";
         mBeforePage = "首页";
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         hideAllFragment(transaction);
         if(mModelCommunityAnswer == null){
             mModelCommunityAnswer = ModelCommunityAnswer.newInstance(mThis,"社区问答:" + mBeforePage,R.layout.fragment_communityanswer);//"社区问答"
@@ -1918,7 +1918,7 @@ public class ControlMainActivity extends AppCompatActivity  implements EasyPermi
         } else { //说明底部菜单中没有课程包按钮，将所有按钮隐藏
             mBottomNavigationView.setVisibility(View.INVISIBLE);
         }
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         hideAllFragment(transaction);
         if(mModelClassCheduleCard == null){
             mModelClassCheduleCard = ModelClassCheduleCard.newInstance(mThis,"首页",R.layout.fragment_classchedulecard);//"课程表"
@@ -1937,7 +1937,7 @@ public class ControlMainActivity extends AppCompatActivity  implements EasyPermi
         mBottomNavigationView.setVisibility(View.INVISIBLE);
         mPage = "课程";
         mBeforePage = "首页";
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         hideAllFragment(transaction);
         if(mModelCourse == null){
             mModelCourse = ModelCourse.newInstance(mThis,"课程:" + mBeforePage,R.layout.fragment_course);//"课程"
@@ -1964,7 +1964,7 @@ public class ControlMainActivity extends AppCompatActivity  implements EasyPermi
         } else { //说明底部菜单中没有课程包按钮，将所有按钮隐藏
             mBottomNavigationView.setVisibility(View.INVISIBLE);
         }
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         hideAllFragment(transaction);
         if(mModelMy == null){
             mModelMy = ModelMy.newInstance(mThis,"我的",R.layout.my_layout);//"我的"
@@ -1984,7 +1984,7 @@ public class ControlMainActivity extends AppCompatActivity  implements EasyPermi
     public void Page_LogIn(){
         //隐藏所有的底部按钮
         mBottomNavigationView.setVisibility(View.INVISIBLE);
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         hideAllFragment(transaction);
         if(mModelLogIn == null){
             mModelLogIn = ModelLogIn.newInstance(mThis,R.layout.modellogin);//"登录"
@@ -2001,7 +2001,7 @@ public class ControlMainActivity extends AppCompatActivity  implements EasyPermi
         mBottomNavigationView.setVisibility(View.INVISIBLE);
         mPage = "公开课";
         mBeforePage = "首页";
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         hideAllFragment(transaction);
         if(mModelOpenClass == null){
             mModelOpenClass = ModelOpenClass.newInstance(mThis,"公开课",R.layout.openclass_layout);
@@ -2018,7 +2018,7 @@ public class ControlMainActivity extends AppCompatActivity  implements EasyPermi
         mBottomNavigationView.setVisibility(View.INVISIBLE);
         mPage = "新闻资讯";
         mBeforePage = "首页";
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         hideAllFragment(transaction);
         if(mModelNews == null){
             mModelNews = ModelNews.newInstance(mThis,"新闻资讯",R.layout.news_layout);
@@ -2330,7 +2330,7 @@ public class ControlMainActivity extends AppCompatActivity  implements EasyPermi
                         mBeforePage = "我的";
                         //隐藏所有的底部按钮
                         mBottomNavigationView.setVisibility(View.INVISIBLE);
-                        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                         hideAllFragment(transaction);
                         if(mModelSetting == null){
                             mModelSetting = ModelSetting.newInstance(mThis,"设置-基本信息",R.layout.modelsetting);//"设置"

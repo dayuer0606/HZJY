@@ -1,13 +1,11 @@
 package com.android.jwjy.zkktproduct;
 
-import android.app.Fragment;
 import android.graphics.drawable.ColorDrawable;
-import android.icu.text.DateFormat;
-//import android.icu.text.SimpleDateFormat;
 import java.text.SimpleDateFormat;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.DisplayMetrics;
@@ -1388,37 +1386,62 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
             LinearLayout coursedetails_answerpaper_analysis = mModelQuestionBankAnswerPaperView.findViewById(R.id.coursedetails_answerpaper_analysis);
             coursedetails_answerpaper_analysis.removeAllViews();
             coursedetails_answerpaper_analysisbutton.setOnClickListener(v -> {
+                int questionSize = 0;
                 if (mMyQuestionBankExercisesBean == null) {
                     Toast.makeText(mControlMainActivity, "此题暂无解析！", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 MyQuestionBankExercises.MyQuestionBankExercisesDataBean myQuestionBankExercisesDataBean = null;
-                //字符串分割
-                if (mMyQuestionBankExercisesBean.danxuantiQuestion != null) {
+                if (mMyQuestionBankExercisesBean.danxuantiQuestion != null){
+                    questionSize = questionSize + mMyQuestionBankExercisesBean.danxuantiQuestion.size();
+                    if (mCurrentIndex < questionSize) {
+                        myQuestionBankExercisesDataBean = mMyQuestionBankExercisesBean.danxuantiQuestion.get(mCurrentIndex);
+                    }
+                }
+                if (mMyQuestionBankExercisesBean.duoxuantiQuestion != null){
+                    questionSize = questionSize + mMyQuestionBankExercisesBean.duoxuantiQuestion.size();
                     if (myQuestionBankExercisesDataBean == null) {
-                        if (mCurrentIndex < mMyQuestionBankExercisesBean.danxuantiQuestion.size()) {
-                            myQuestionBankExercisesDataBean = mMyQuestionBankExercisesBean.danxuantiQuestion.get(mCurrentIndex);
+                        if (mCurrentIndex < questionSize) {
+                            int count = 0;
+                            if (mMyQuestionBankExercisesBean.danxuantiQuestion != null) {
+                                count = mCurrentIndex - mMyQuestionBankExercisesBean.danxuantiQuestion.size();
+                            }
+                            if (count < mMyQuestionBankExercisesBean.duoxuantiQuestion.size()) {
+                                myQuestionBankExercisesDataBean = mMyQuestionBankExercisesBean.duoxuantiQuestion.get(count);
+                            }
                         }
                     }
                 }
-                if (mMyQuestionBankExercisesBean.duoxuantiQuestion != null) {
-                    if (myQuestionBankExercisesDataBean == null) {
-                        if (mCurrentIndex < mMyQuestionBankExercisesBean.duoxuantiQuestion.size()) {
-                            myQuestionBankExercisesDataBean = mMyQuestionBankExercisesBean.duoxuantiQuestion.get(mCurrentIndex);
+                if (mMyQuestionBankExercisesBean.jinadatitiQuestion != null){
+                    questionSize = questionSize + mMyQuestionBankExercisesBean.jinadatitiQuestion.size();
+                    if (mCurrentIndex < questionSize && myQuestionBankExercisesDataBean == null) {
+                        int count = mCurrentIndex;
+                        if (mMyQuestionBankExercisesBean.danxuantiQuestion != null) {
+                            count = mCurrentIndex - mMyQuestionBankExercisesBean.danxuantiQuestion.size();
+                        }
+                        if (mMyQuestionBankExercisesBean.duoxuantiQuestion != null) {
+                            count = count - mMyQuestionBankExercisesBean.duoxuantiQuestion.size();
+                        }
+                        if (count < mMyQuestionBankExercisesBean.jinadatitiQuestion.size()) {
+                            myQuestionBankExercisesDataBean = mMyQuestionBankExercisesBean.jinadatitiQuestion.get(count);
                         }
                     }
                 }
-                if (mMyQuestionBankExercisesBean.jinadatitiQuestion != null) {
-                    if (myQuestionBankExercisesDataBean == null) {
-                        if (mCurrentIndex < mMyQuestionBankExercisesBean.jinadatitiQuestion.size()) {
-                            myQuestionBankExercisesDataBean = mMyQuestionBankExercisesBean.jinadatitiQuestion.get(mCurrentIndex);
+                if (mMyQuestionBankExercisesBean.cailiaotiQuestion != null){
+                    questionSize = questionSize + mMyQuestionBankExercisesBean.cailiaotiQuestion.size();
+                    if (mCurrentIndex < questionSize && myQuestionBankExercisesDataBean == null) {
+                        int count = mCurrentIndex;
+                        if (mMyQuestionBankExercisesBean.danxuantiQuestion != null) {
+                            count = mCurrentIndex - mMyQuestionBankExercisesBean.danxuantiQuestion.size();
                         }
-                    }
-                }
-                if (mMyQuestionBankExercisesBean.cailiaotiQuestion != null) {
-                    if (myQuestionBankExercisesDataBean == null) {
-                        if (mCurrentIndex < mMyQuestionBankExercisesBean.cailiaotiQuestion.size()) {
-                            myQuestionBankExercisesDataBean = mMyQuestionBankExercisesBean.cailiaotiQuestion.get(mCurrentIndex);
+                        if (mMyQuestionBankExercisesBean.duoxuantiQuestion != null) {
+                            count = count - mMyQuestionBankExercisesBean.duoxuantiQuestion.size();
+                        }
+                        if (mMyQuestionBankExercisesBean.jinadatitiQuestion != null) {
+                            count = count - mMyQuestionBankExercisesBean.jinadatitiQuestion.size();
+                        }
+                        if (count < mMyQuestionBankExercisesBean.cailiaotiQuestion.size()) {
+                            myQuestionBankExercisesDataBean = mMyQuestionBankExercisesBean.cailiaotiQuestion.get(count);
                         }
                     }
                 }

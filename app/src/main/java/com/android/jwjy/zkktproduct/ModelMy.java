@@ -1,6 +1,6 @@
 package com.android.jwjy.zkktproduct;
 
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;

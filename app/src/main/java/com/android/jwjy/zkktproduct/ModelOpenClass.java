@@ -1,6 +1,6 @@
 package com.android.jwjy.zkktproduct;
 
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.graphics.drawable.Drawable;
 import android.icu.text.DateFormat;
 //import android.icu.text.SimpleDateFormat;

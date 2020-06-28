@@ -199,7 +199,6 @@
 
                         <TextView
                             android:id="@+id/coursepacket_details_label"
-
                             android:layout_width="@dimen/dp0"
                             android:layout_height="@dimen/dp40"
                             android:layout_weight="1"
@@ -248,7 +247,7 @@
                     <FrameLayout
                         android:id="@+id/fl_layout"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:background="@color/white"
                         android:paddingTop="@dimen/dp0"
                         app:layout_collapseMode="pin">
@@ -310,7 +309,6 @@
 
                                 <TextView
                                     android:id="@+id/coursepacket_details_label1"
-
                                     android:layout_width="@dimen/dp0"
                                     android:layout_height="match_parent"
                                     android:layout_gravity="center_vertical"

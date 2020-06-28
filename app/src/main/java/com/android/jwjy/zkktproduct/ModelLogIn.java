@@ -1,6 +1,6 @@
 package com.android.jwjy.zkktproduct;
 
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
@@ -815,7 +815,11 @@ public class ModelLogIn extends Fragment {
                     LoadingDialog.getInstance(mControlMainActivity).dismiss();
                     return;
                 } else if (loginBean.getErrorCode() == 207){
-                    Toast.makeText(mControlMainActivity,"登录失败",Toast.LENGTH_LONG).show();
+                    if (loginBean.getMsg() == null){
+                        Toast.makeText(mControlMainActivity, "登录失败", Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(mControlMainActivity, loginBean.getErrorMsg(), Toast.LENGTH_LONG).show();
+                    }
                     LoadingDialog.getInstance(mControlMainActivity).dismiss();
                     return;
                 } else if (loginBean.getErrorCode() == 208){
