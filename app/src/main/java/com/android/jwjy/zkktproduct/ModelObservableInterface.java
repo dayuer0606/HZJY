@@ -470,6 +470,13 @@ public interface ModelObservableInterface {
     Call<ModelCourseCover.CourseCatalogBean> findSingleCourseCatalog(@Body RequestBody body);
 
     /**
+     * 查询课程资料
+     **/
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST("app/user/queryCourseResData")
+    Call<ModelCourseCover.materialsBean> queryCourseResData(@Body RequestBody body);
+
+    /**
      * 查询课程目录new;2020.06.10 对课程目录进行改版，改为分页查询，每个章节最多显示3节课程
      **/
     @Headers({"Content-type:application/json;charset=UTF-8"})

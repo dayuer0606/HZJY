@@ -90,6 +90,7 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
     private ModelCourseCoverOnClickListener mModelCourseCoverOnClickListener = null;
     private int height = 1344;
     private int width = 720;
+    private int lastTabIndex = 1;
     private String mCurrentTab = "Details";  //当前标签为详情还是目录
     private String mCurrentCatalogTab = "Record"; //当前标签是录播还是直播
     private boolean mIsToday = true;
@@ -204,6 +205,12 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
             course_catalog_label_livemain1.setOnClickListener(this);
             course_catalog_label_recordmain.setOnClickListener(this);
             course_catalog_label_recordmain1.setOnClickListener(this);
+            //课程资料的监听
+            TextView Course_materials_label = mDetailsView.findViewById(R.id.Course_materials_label);
+            TextView Course_materials_label1 = mDetailsView.findViewById(R.id.Course_materials_label1);
+            Course_materials_label.setOnClickListener(this);
+            Course_materials_label1.setOnClickListener(this);
+
         }
         //隐藏所有布局
         HideAllLayout();
@@ -220,6 +227,8 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
         getSingleCourseDetails();
         //获取课程目录
         getSingleCourseCatalogRecNew();
+        //获取课程资料
+
         //获取课程目录（直播）
         getSingleCourseCatalogLiveNew(0);
         getSingleCourseCatalogLiveNew(1);
@@ -241,6 +250,11 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
         TextView course_coursestage_label1 = mDetailsView.findViewById(R.id.course_coursestage_label1);
         course_coursestage_label.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, mDetailsView.getResources().getDimensionPixelSize(R.dimen.textsize18));
         course_coursestage_label1.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, mDetailsView.getResources().getDimensionPixelSize(R.dimen.textsize18));
+        TextView Course_materials_label = mDetailsView.findViewById(R.id.Course_materials_label);
+        TextView Course_materials_label1 = mDetailsView.findViewById(R.id.Course_materials_label1);
+        Course_materials_label.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, mDetailsView.getResources().getDimensionPixelSize(R.dimen.textsize16));
+        Course_materials_label1.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, mDetailsView.getResources().getDimensionPixelSize(R.dimen.textsize16));
+
         //修改body为课程详情
         LinearLayout course_details_label_content_layout = mDetailsView.findViewById(R.id.course_details_label_content_layout);
         LinearLayout.LayoutParams LP = (LinearLayout.LayoutParams) course_details_label_content_layout.getLayoutParams();
@@ -254,7 +268,7 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
         course_catalog_label_content_layout_main.setVisibility(View.VISIBLE);
         ImageView course_imgv_cursor = mDetailsView.findViewById(R.id.course_imgv_cursor);
         ImageView course_imgv_cursor1 = mDetailsView.findViewById(R.id.course_imgv_cursor1);
-        int x = width / 4 - mDetailsView.getResources().getDimensionPixelSize(R.dimen.dp18) / 2;
+        int x = width / 6 - mDetailsView.getResources().getDimensionPixelSize(R.dimen.dp18) / 2;
         course_imgv_cursor.setX(x);
         course_imgv_cursor1.setX(x);
         if (mCourseInfo.mCourseType.equals("直播")) {
@@ -340,6 +354,7 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+
             case R.id.course_details_label1://点击课程详情
                 LinearLayout course_label = mDetailsView.findViewById(R.id.course_label);
                 if (course_label.getAlpha() == 0){
@@ -348,6 +363,7 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
             case R.id.course_details_label:{
                 TextView course_details_label = mDetailsView.findViewById(R.id.course_details_label);
                 TextView course_details_label1 = mDetailsView.findViewById(R.id.course_details_label1);
+
                 //设置文件的字体大小
                 course_details_label.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, mDetailsView.getResources().getDimensionPixelSize(R.dimen.textsize18));
                 course_details_label1.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, mDetailsView.getResources().getDimensionPixelSize(R.dimen.textsize18));
@@ -355,7 +371,10 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                 TextView course_coursestage_label1 = mDetailsView.findViewById(R.id.course_coursestage_label1);
                 course_coursestage_label.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, mDetailsView.getResources().getDimensionPixelSize(R.dimen.textsize16));
                 course_coursestage_label1.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, mDetailsView.getResources().getDimensionPixelSize(R.dimen.textsize16));
-
+                TextView Course_materials_label = mDetailsView.findViewById(R.id.Course_materials_label);
+                TextView Course_materials_label1 = mDetailsView.findViewById(R.id.Course_materials_label1);
+                Course_materials_label.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, mDetailsView.getResources().getDimensionPixelSize(R.dimen.textsize16));
+                Course_materials_label1.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, mDetailsView.getResources().getDimensionPixelSize(R.dimen.textsize16));
                 LinearLayout course_catalog_label1 = mDetailsView.findViewById(R.id.course_catalog_label1);
                 View coursepacket_details_line6 = mDetailsView.findViewById(R.id.coursepacket_details_line6);
                 RelativeLayout.LayoutParams rl = (RelativeLayout.LayoutParams) course_catalog_label1.getLayoutParams();
@@ -375,8 +394,14 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                 LP.height = 0;
                 course_catalog_label_content_layout_main.setLayoutParams(LP);
                 course_catalog_label_content_layout_main.setVisibility(View.INVISIBLE);
+
+                LinearLayout course_materials_label_content_layout = mDetailsView.findViewById(R.id.course_materials_label_content_layout);
+                LP = (LinearLayout.LayoutParams) course_materials_label_content_layout.getLayoutParams();
+                LP.height = 0;
+                course_materials_label_content_layout.setLayoutParams(LP);
+                course_materials_label_content_layout.setVisibility(View.INVISIBLE);
                 if (!mCurrentTab.equals("Details")) {
-                    Animation animation = new TranslateAnimation(0, width / 2, 0, 0);
+                    Animation animation = new TranslateAnimation((lastTabIndex - 1) * width / 3, width / 3, 0, 0);
                     animation.setFillAfter(true);// True:图片停在动画结束位置
                     animation.setDuration(200);
                     ImageView course_imgv_cursor = mDetailsView.findViewById(R.id.course_imgv_cursor);
@@ -384,9 +409,13 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                     ImageView course_imgv_cursor1 = mDetailsView.findViewById(R.id.course_imgv_cursor1);
                     course_imgv_cursor1.startAnimation(animation);
                 }
+                lastTabIndex = 1;
                 mCurrentTab = "Details";
                 break;
             }
+
+
+
             case R.id.course_coursestage_label1://点击课程目录
                 course_label = mDetailsView.findViewById(R.id.course_label);
                 if (course_label.getAlpha() == 0){
@@ -401,6 +430,10 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                 TextView course_coursestage_label1 = mDetailsView.findViewById(R.id.course_coursestage_label1);
                 course_coursestage_label.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, mDetailsView.getResources().getDimensionPixelSize(R.dimen.textsize18));
                 course_coursestage_label1.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, mDetailsView.getResources().getDimensionPixelSize(R.dimen.textsize18));
+                TextView Course_materials_label = mDetailsView.findViewById(R.id.Course_materials_label);
+                TextView Course_materials_label1 = mDetailsView.findViewById(R.id.Course_materials_label1);
+                Course_materials_label.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, mDetailsView.getResources().getDimensionPixelSize(R.dimen.textsize16));
+                Course_materials_label1.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, mDetailsView.getResources().getDimensionPixelSize(R.dimen.textsize16));
                 //修改body为目录
                 LinearLayout course_catalog_label_content_layout_main = mDetailsView.findViewById(R.id.course_catalog_label_content_layout_main);
                 LinearLayout.LayoutParams LP = (LinearLayout.LayoutParams) course_catalog_label_content_layout_main.getLayoutParams();
@@ -412,6 +445,13 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                 LP.height = 0;
                 course_details_label_content_layout.setLayoutParams(LP);
                 course_details_label_content_layout.setVisibility(View.INVISIBLE);
+
+                LinearLayout course_materials_label_content_layout = mDetailsView.findViewById(R.id.course_materials_label_content_layout);
+                LP = (LinearLayout.LayoutParams) course_materials_label_content_layout.getLayoutParams();
+                LP.height = 0;
+                course_materials_label_content_layout.setLayoutParams(LP);
+                course_materials_label_content_layout.setVisibility(View.INVISIBLE);
+
                 if (mCurrentCatalogTab.equals("Live")){
 //                    CourseCatalogLiveInit(mCourseInfo);
                     //获取课程目录（直播）
@@ -427,7 +467,7 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                 }
 
                 if (!mCurrentTab.equals("Catalog")) {
-                    Animation animation = new TranslateAnimation(width / 2, 0, 0, 0);
+                    Animation animation = new TranslateAnimation((lastTabIndex - 1) * width / 3, 0, 0, 0);
                     animation.setFillAfter(true);// True:图片停在动画结束位置
                     animation.setDuration(200);
                     ImageView course_imgv_cursor = mDetailsView.findViewById(R.id.course_imgv_cursor);
@@ -435,9 +475,73 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                     ImageView course_imgv_cursor1 = mDetailsView.findViewById(R.id.course_imgv_cursor1);
                     course_imgv_cursor1.startAnimation(animation);
                 }
+                lastTabIndex = 2;
                 mCurrentTab = "Catalog";
                 break;
             }
+            case R.id.Course_materials_label1://点击课程资料
+                course_label = mDetailsView.findViewById(R.id.course_label);
+                if (course_label.getAlpha() == 0){
+                    break;
+                }
+            case R.id.Course_materials_label:{
+                TextView Course_materials_label = mDetailsView.findViewById(R.id.Course_materials_label);
+                TextView Course_materials_label1 = mDetailsView.findViewById(R.id.Course_materials_label1);
+
+                //设置文件的字体大小
+                Course_materials_label.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, mDetailsView.getResources().getDimensionPixelSize(R.dimen.textsize18));
+                Course_materials_label1.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, mDetailsView.getResources().getDimensionPixelSize(R.dimen.textsize18));
+                TextView course_coursestage_label = mDetailsView.findViewById(R.id.course_coursestage_label);
+                TextView course_coursestage_label1 = mDetailsView.findViewById(R.id.course_coursestage_label1);
+                course_coursestage_label.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, mDetailsView.getResources().getDimensionPixelSize(R.dimen.textsize16));
+                course_coursestage_label1.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, mDetailsView.getResources().getDimensionPixelSize(R.dimen.textsize16));
+                TextView course_details_label = mDetailsView.findViewById(R.id.course_details_label);
+                TextView course_details_label1 = mDetailsView.findViewById(R.id.course_details_label1);
+                course_details_label.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, mDetailsView.getResources().getDimensionPixelSize(R.dimen.textsize16));
+                course_details_label1.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, mDetailsView.getResources().getDimensionPixelSize(R.dimen.textsize16));
+
+                LinearLayout course_catalog_label1 = mDetailsView.findViewById(R.id.course_catalog_label1);
+                View coursepacket_details_line6 = mDetailsView.findViewById(R.id.coursepacket_details_line6);
+                RelativeLayout.LayoutParams rl = (RelativeLayout.LayoutParams) course_catalog_label1.getLayoutParams();
+                rl.height = 0;
+                course_catalog_label1.setLayoutParams(rl);
+                rl = (RelativeLayout.LayoutParams) coursepacket_details_line6.getLayoutParams();
+                rl.height = 0;
+                coursepacket_details_line6.setLayoutParams(rl);
+                //
+                LinearLayout course_details_label_content_layout = mDetailsView.findViewById(R.id.course_details_label_content_layout);
+                LinearLayout.LayoutParams LP = (LinearLayout.LayoutParams) course_details_label_content_layout.getLayoutParams();
+                LP.height = 0;
+                course_details_label_content_layout.setLayoutParams(LP);
+                course_details_label_content_layout.setVisibility(View.INVISIBLE);
+                LinearLayout course_materials_label_content_layout = mDetailsView.findViewById(R.id.course_materials_label_content_layout);
+                LP = (LinearLayout.LayoutParams) course_materials_label_content_layout.getLayoutParams();
+                LP.height = LinearLayout.LayoutParams.WRAP_CONTENT;
+                course_materials_label_content_layout.setLayoutParams(LP);
+                course_materials_label_content_layout.setVisibility(View.VISIBLE);
+                LinearLayout course_catalog_label_content_layout_main = mDetailsView.findViewById(R.id.course_catalog_label_content_layout_main);
+                LP = (LinearLayout.LayoutParams) course_catalog_label_content_layout_main.getLayoutParams();
+                LP.height = 0;
+                course_catalog_label_content_layout_main.setLayoutParams(LP);
+                course_catalog_label_content_layout_main.setVisibility(View.INVISIBLE);
+                if (!mCurrentTab.equals("mater")) {
+                    Animation animation = new TranslateAnimation((lastTabIndex - 1) * width / 3, width * 2 / 3, 0, 0);
+                    animation.setFillAfter(true);// True:图片停在动画结束位置
+                    animation.setDuration(200);
+                    ImageView course_imgv_cursor = mDetailsView.findViewById(R.id.course_imgv_cursor);
+                    course_imgv_cursor.startAnimation(animation);
+                    ImageView course_imgv_cursor1 = mDetailsView.findViewById(R.id.course_imgv_cursor1);
+                    course_imgv_cursor1.startAnimation(animation);
+                }
+                lastTabIndex = 3;
+                mCurrentTab = "mater";
+                //获取课程资料数据
+
+                break;
+            }
+
+
+
             //点击课程收藏
             case R.id.course_details_bottomlayout_collect1:
             case R.id.course_details_bottomlayout_collect: {
@@ -2891,11 +2995,11 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                 //课程详情和课程阶段的标签层的下方游标
                 ImageView course_imgv_cursor = mDetailsView.findViewById(R.id.course_imgv_cursor);
                 Matrix matrix = new Matrix();
-                matrix.postTranslate(width / 2, 0);
+                matrix.postTranslate(width / 3, 0);
                 course_imgv_cursor.setImageMatrix(matrix);// 设置动画初始位置
                 ImageView course_imgv_cursor1 = mDetailsView.findViewById(R.id.course_imgv_cursor1);
                 Matrix matrix1 = new Matrix();
-                matrix1.postTranslate(width / 2, 0);
+                matrix1.postTranslate(width / 3, 0);
                 course_imgv_cursor1.setImageMatrix(matrix1);// 设置动画初始位置
                 if (type == 1){
                     mIsBefore = true;
@@ -3155,11 +3259,11 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                 //课程详情和课程阶段的标签层的下方游标
                 ImageView course_imgv_cursor = mDetailsView.findViewById(R.id.course_imgv_cursor);
                 Matrix matrix = new Matrix();
-                matrix.postTranslate(width / 2, 0);
+                matrix.postTranslate(width / 3, 0);
                 course_imgv_cursor.setImageMatrix(matrix);// 设置动画初始位置
                 ImageView course_imgv_cursor1 = mDetailsView.findViewById(R.id.course_imgv_cursor1);
                 Matrix matrix1 = new Matrix();
-                matrix1.postTranslate(width / 2, 0);
+                matrix1.postTranslate(width / 3, 0);
                 course_imgv_cursor1.setImageMatrix(matrix1);// 设置动画初始位置
                 if (type == 1){
                     mIsBefore = true;
@@ -3210,7 +3314,7 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
     }
 
     //获取课程录播目录
-    private void getSingleCourseCatalogRecNew(){
+      private void getSingleCourseCatalogRecNew(){
         if (mCourseInfo.mCourseId.equals("")){
             return;
         }
@@ -3304,19 +3408,19 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                     }
                     mCourseInfo.mCourseChaptersInfoList.add(courseChaptersInfo);
                 }
+
                 //课程详情和课程阶段的标签层的下方游标
                 ImageView course_imgv_cursor = mDetailsView.findViewById(R.id.course_imgv_cursor);
                 Matrix matrix = new Matrix();
-                matrix.postTranslate(width / 2, 0);
+                matrix.postTranslate(width / 3, 0);
                 course_imgv_cursor.setImageMatrix(matrix);// 设置动画初始位置
                 ImageView course_imgv_cursor1 = mDetailsView.findViewById(R.id.course_imgv_cursor1);
                 Matrix matrix1 = new Matrix();
-                matrix1.postTranslate(width / 2, 0);
+                matrix1.postTranslate(width / 3, 0);
                 course_imgv_cursor1.setImageMatrix(matrix1);// 设置动画初始位置
                 if (mCurrentCatalogTab.equals("Record")){
                     //修改body为录播
-                    CourseCatalogRecordInit(mCourseInfo);
-                }
+                    CourseCatalogRecordInit(mCourseInfo);                }
                 mPage = "Catalog";
                 LoadingDialog.getInstance(mControlMainActivity).dismiss();
             }
@@ -3325,6 +3429,73 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
             public void onFailure(Call<CourseCatalogBeanNew> call, Throwable t) {
                 Log.e("TAG", "onError: " + t.getMessage()+"" );
                 Toast.makeText(mControlMainActivity,"获取课程目录失败",Toast.LENGTH_LONG).show();
+                LoadingDialog.getInstance(mControlMainActivity).dismiss();
+            }
+        });
+    }
+
+
+
+    private void getSinglematerialslogRecNew(){
+        if (mCourseInfo.mCourseId.equals("")){
+            return;
+        }
+        LoadingDialog.getInstance(mControlMainActivity).show();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(mControlMainActivity.mIpadress)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(ModelObservableInterface.client)
+                .build();
+
+        ModelObservableInterface modelObservableInterface = retrofit.create(ModelObservableInterface.class);
+        mCourseCatalogPage = 1;
+        Gson gson = new Gson();
+        HashMap<String,Integer> paramsMap = new HashMap<>();
+        paramsMap.put("course_id", Integer.valueOf(mCourseInfo.mCourseId));
+
+        String strEntity = gson.toJson(paramsMap);
+        RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json;charset=UTF-8"),strEntity);
+        Call<materialsBean> call = modelObservableInterface.queryCourseResData(body);
+        call.enqueue(new Callback<materialsBean>() {
+            @Override
+            public void onResponse(Call<materialsBean> call, Response<materialsBean> response) {
+                int code = response.code();
+                if (code != 200){
+                    Log.e("TAG", "getSingleCourseDetails  onErrorCode: " + code);
+                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    return;
+                }
+                materialsBean materialsBean = response.body();
+                if (materialsBean == null){
+                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    return;
+                }
+                if (!HeaderInterceptor.IsErrorCode(materialsBean.code,"")){
+                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    return;
+                }
+                List<ModelCourseCover.materialsBean.materialsBeanData> materialsDataBeanNew = materialsBean.getData();
+                if (materialsDataBeanNew == null){
+                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    return;
+                }
+                //
+                for (int i = 0; i <materialsDataBeanNew.size() ; i++) {
+
+                    materialsBean.materialsBeanData materialsBeanData = materialsDataBeanNew.get(i);
+                    if (materialsBeanData == null){
+                        continue;
+                    }
+
+                }
+
+                LoadingDialog.getInstance(mControlMainActivity).dismiss();
+            }
+
+            @Override
+            public void onFailure(Call<materialsBean> call, Throwable t) {
+                Log.e("TAG", "onError: " + t.getMessage()+"" );
+                Toast.makeText(mControlMainActivity,"获取课程资料失败",Toast.LENGTH_LONG).show();
                 LoadingDialog.getInstance(mControlMainActivity).dismiss();
             }
         });
@@ -4495,6 +4666,76 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                 LoadingDialog.getInstance(mControlMainActivity).dismiss();
             }
         });
+    }
+    static  class Myadapter{
+        protected List<materialsBean>mlist;
+        protected Context mcontext;
+        LayoutInflater mInflater;
+
+        public Myadapter(Context context, List<materialsBean> list) {
+            this.mlist = list;
+            this.mcontext = context;
+            mInflater=LayoutInflater.from(context);
+        }
+    }
+    static  class materialsBean{
+                private  int  code;
+                private   List<materialsBeanData>data;
+
+        public int getCode() {
+            return code;
+        }
+
+        public void setCode(int code) {
+            this.code = code;
+        }
+
+        public List<materialsBeanData> getData() {
+            return data;
+        }
+
+        public void setData(List<materialsBeanData> data) {
+            this.data = data;
+        }
+
+        class materialsBeanData {
+                private int  c_recourses_id;
+                private  String c_recourses_name;
+                private  String recourses_address;
+
+            public int getC_recourses_id() {
+                return c_recourses_id;
+            }
+
+            public void setC_recourses_id(int c_recourses_id) {
+                this.c_recourses_id = c_recourses_id;
+            }
+
+            public String getC_recourses_name() {
+                return c_recourses_name;
+            }
+
+            public void setC_recourses_name(String c_recourses_name) {
+                this.c_recourses_name = c_recourses_name;
+            }
+
+            public String getRecourses_address() {
+                return recourses_address;
+            }
+
+            public void setRecourses_address(String recourses_address) {
+                this.recourses_address = recourses_address;
+            }
+        }
+
+        @Override
+        public String toString() {
+            return "materialsBean{" +
+                    "code=" + code +
+                    ", data=" + data +
+                    '}';
+        }
+
     }
 
     static class CourseCatalogBean {
