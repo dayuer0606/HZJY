@@ -321,7 +321,9 @@ public class AliyunVodPlayerView extends RelativeLayout implements ITheme {
     }
 
     public void updateScreenShow() {
-        mControlView.updateDownloadBtn();
+        if (mControlView != null){
+            mControlView.updateDownloadBtn();
+        }
     }
 
     /**

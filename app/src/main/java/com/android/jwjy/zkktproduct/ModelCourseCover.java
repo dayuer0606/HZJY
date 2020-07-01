@@ -91,7 +91,7 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
     private int height = 1344;
     private int width = 720;
     private int lastTabIndex = 1;
-    private String mCurrentTab = "Details";  //当前标签为详情还是目录
+    private String mCurrentTab = "Catalog";  //当前标签为详情还是目录
     private String mCurrentCatalogTab = "Record"; //当前标签是录播还是直播
     private boolean mIsToday = true;
     private boolean mIsBefore = true;
@@ -409,7 +409,7 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                     ImageView course_imgv_cursor1 = mDetailsView.findViewById(R.id.course_imgv_cursor1);
                     course_imgv_cursor1.startAnimation(animation);
                 }
-                lastTabIndex = 1;
+                lastTabIndex = 2;
                 mCurrentTab = "Details";
                 break;
             }
@@ -475,7 +475,7 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                     ImageView course_imgv_cursor1 = mDetailsView.findViewById(R.id.course_imgv_cursor1);
                     course_imgv_cursor1.startAnimation(animation);
                 }
-                lastTabIndex = 2;
+                lastTabIndex = 1;
                 mCurrentTab = "Catalog";
                 break;
             }

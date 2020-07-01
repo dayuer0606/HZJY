@@ -49,8 +49,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -109,8 +107,6 @@ import net.sqlcipher.Cursor;
 
 import java.io.File;
 import java.lang.ref.WeakReference;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -4121,6 +4117,7 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
             initAliyunPlayerView();
         } else if (mAliyunVodPlayerView == null){
             mAliyunVodPlayerView = aliyunVodPlayerView;
+            PlayParameter.PLAY_PARAM_TYPE = "vidsts";
             initAliyunPlayerView();
         }
         if (downloadView == null) {

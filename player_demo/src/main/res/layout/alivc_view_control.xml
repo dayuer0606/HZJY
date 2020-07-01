@@ -88,8 +88,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="@dimen/alivc_common_padding_16"
-            android:src="@drawable/icon_donwload"
-            android:visibility="invisible"/>
+            android:src="@drawable/icon_donwload"/>
+<!--            android:visibility="invisible"/>-->
 
         <ImageView
             android:id="@+id/alivc_title_more"
