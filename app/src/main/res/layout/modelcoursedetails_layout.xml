@@ -468,7 +468,7 @@
                         android:layout_height="@dimen/dp0"
                         android:visibility="invisible">
                         <ListView
-                            android:id="@+id/list_view"
+                            android:id="@+id/course_materials_label_list_view"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent" />
                     </LinearLayout>
