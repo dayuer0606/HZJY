@@ -95,10 +95,15 @@
             android:orientation="horizontal" />
     </RelativeLayout>
 
-    <!--    244-->
-    <com.aliyun.vodplayerview.widget.AliyunVodPlayerView
+    <RelativeLayout
         android:id="@+id/modelmy_mycache_aliyunVodPlayerView"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_244"
         android:visibility="gone"/>
+<!--    &lt;!&ndash;    244&ndash;&gt;-->
+<!--    <com.aliyun.vodplayerview.widget.AliyunVodPlayerView-->
+<!--        android:id="@+id/modelmy_mycache_aliyunVodPlayerView"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="@dimen/dp_244"-->
+<!--        android:visibility="gone"/>-->
 </RelativeLayout>

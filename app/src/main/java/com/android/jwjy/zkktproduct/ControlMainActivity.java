@@ -49,8 +49,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -109,8 +107,6 @@ import net.sqlcipher.Cursor;
 
 import java.io.File;
 import java.lang.ref.WeakReference;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -165,6 +161,7 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
     //token
     public String mToken = "";
     public String mIpadress = "http://wangxiao.jianweijiaoyu.com/";
+    private Map<String, String> mIpType = new HashMap<>();
     public String mStuId = "";
 
     private class MenuItemInfo {
@@ -201,6 +198,9 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mIpType.put("http://wangxiao.jianweijiaoyu.com/","jianwei");
+        mIpType.put("http://wangxiao.16zige.com/","yixiao");
+        mIpType.put("http://wangxiao.yixiaojiaoyu.com/","yixiao");
         //阿里视频播放下载，必须初始化的服务，必须放在最开始的位置
         PrivateService.initService(getApplicationContext(), Environment.getExternalStorageDirectory().getAbsolutePath() + "/zhikaowangxiaoedu/encryptedApp.dat");
         //拷贝encryptedApp.dat文件到所需位置
@@ -231,12 +231,6 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
                 break;
             }
             cursor.close();
-        }
-        //初始化极光推送，设置别名，如果是游客登录设置为0，否则设置为学生id
-        if (mStuId.equals("")){
-            JPushInterface.setAlias(this.getApplicationContext(),1,"0");
-        } else {
-            JPushInterface.setAlias(this.getApplicationContext(),1,mStuId);
         }
         mThis = this;
         mBottomNavigationView = findViewById(R.id.nav_view);
@@ -406,6 +400,14 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
                 getAndroidVersion(mThis);//查询是否为最新版本,若不是最新版本弹出对话框
             });
             return;
+        }
+        //初始化极光推送，设置别名，如果是游客登录设置为0，否则设置为学生id
+        if (mStuId.equals("")){
+            String type = mIpType.get(mIpadress);
+            JPushInterface.setAlias(this.getApplicationContext(),1,type + "0");
+        } else {
+            String type = mIpType.get(mIpadress);
+            JPushInterface.setAlias(this.getApplicationContext(),1,type + mStuId);
         }
         //将网校系统选项界面隐藏，显示出主页
         RelativeLayout main_view_choice1 = findViewById(R.id.main_view_choice);
@@ -579,6 +581,14 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
             commenUtils.onDestroy();
             commenUtils = null;
         }
+        if (LoadingDialog.getInstance(this).isShowing()) {
+            LoadingDialog.getInstance(this).dismiss();
+        }
+        if (LoadingDialog.getInstance(this).getContext() instanceof Activity) {
+            if (!((Activity) LoadingDialog.getInstance(this).getContext()).isFinishing()) {
+                LoadingDialog.getInstance(this).dismiss();
+            }
+        }
         super.onDestroy();
         if (downloadManager != null && downloadDataProvider != null) {
             ConcurrentLinkedQueue<AliyunDownloadMediaInfo> downloadMediaInfos = new ConcurrentLinkedQueue<>();
@@ -747,7 +757,8 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
         mStuId = stu_id;
         HeaderInterceptor.stuId = mStuId;
         HeaderInterceptor.permissioncode = mToken;
-        JPushInterface.setAlias(this.getApplicationContext(),1,mStuId);
+        String type = mIpType.get(mIpadress);
+        JPushInterface.setAlias(this.getApplicationContext(),1,type + mStuId);
         ModelSearchRecordSQLiteOpenHelper.getWritableDatabase(this).execSQL("delete from token_table");
         ModelSearchRecordSQLiteOpenHelper.getWritableDatabase(this).execSQL("insert into token_table(token,ipadress,stu_id) values('" + token + "','" + mIpadress + "','" + stu_id + "')");
         Page_My();
@@ -1269,7 +1280,8 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
         mStuId = "";
         HeaderInterceptor.stuId = null;
         HeaderInterceptor.permissioncode = null;
-        JPushInterface.setAlias(this.getApplicationContext(),1,"0");
+        String type = mIpType.get(mIpadress);
+        JPushInterface.setAlias(this.getApplicationContext(),1,type + "0");
         ModelSearchRecordSQLiteOpenHelper.getWritableDatabase(this).execSQL("delete from token_table");
         Page_My();
     }
@@ -1279,7 +1291,8 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
         mThis.mStuId = "";
         HeaderInterceptor.stuId = null;
         HeaderInterceptor.permissioncode = null;
-        JPushInterface.setAlias(mThis.getApplicationContext(),1,"0");
+        String type = mThis.mIpType.get(mThis.mIpadress);
+        JPushInterface.setAlias(mThis.getApplicationContext(),1,type + "0");
         ModelSearchRecordSQLiteOpenHelper.getWritableDatabase(mThis).execSQL("delete from token_table");
     }
 
@@ -4104,6 +4117,7 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
             initAliyunPlayerView();
         } else if (mAliyunVodPlayerView == null){
             mAliyunVodPlayerView = aliyunVodPlayerView;
+            PlayParameter.PLAY_PARAM_TYPE = "vidsts";
             initAliyunPlayerView();
         }
         if (downloadView == null) {

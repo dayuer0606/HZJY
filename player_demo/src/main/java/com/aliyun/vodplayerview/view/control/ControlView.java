@@ -62,7 +62,7 @@ public class ControlView extends RelativeLayout implements ViewAction, ITheme {
     //播放按钮
     private ImageView mPlayStateBtn;
 
-    //下载，暂不需要下载功能，所以注释掉此按钮的显示隐藏
+    //下载
     private ImageView mTitleDownload;
 
 
@@ -429,11 +429,11 @@ public class ControlView extends RelativeLayout implements ViewAction, ITheme {
      * 更新下载按钮的显示和隐藏
      */
     public void updateDownloadBtn() {
-//        if (mAliyunScreenMode == AliyunScreenMode.Full || "localSource".equals(PlayParameter.PLAY_PARAM_TYPE)) {
-//            mTitleDownload.setVisibility(GONE);
-//        } else if (mAliyunScreenMode == AliyunScreenMode.Small || "vidsts".equals(PlayParameter.PLAY_PARAM_TYPE)) {
-//            mTitleDownload.setVisibility(VISIBLE);
-//        }
+        if (mAliyunScreenMode == AliyunScreenMode.Full || "localSource".equals(PlayParameter.PLAY_PARAM_TYPE)) {
+            mTitleDownload.setVisibility(GONE);
+        } else if (mAliyunScreenMode == AliyunScreenMode.Small || "vidsts".equals(PlayParameter.PLAY_PARAM_TYPE)) {
+            mTitleDownload.setVisibility(VISIBLE);
+        }
     }
 
     /**
@@ -466,10 +466,10 @@ public class ControlView extends RelativeLayout implements ViewAction, ITheme {
     private void updateShowMoreBtn() {
         if (mAliyunScreenMode == AliyunScreenMode.Full) {
             mTitleMore.setVisibility(VISIBLE);
-//            mTitleDownload.setVisibility(GONE);
+            mTitleDownload.setVisibility(GONE);
         } else {
             mTitleMore.setVisibility(GONE);
-//            mTitleDownload.setVisibility(VISIBLE);
+            mTitleDownload.setVisibility(VISIBLE);
         }
     }
 

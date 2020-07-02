@@ -561,34 +561,34 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
 //            });
         }
         my_layout_main.addView(mMyCacheView);
-//        //我的缓存子条目布局
-//        LinearLayout modelmy_mycache_main_content = mMyCacheView.findViewById(R.id.modelmy_mycache_main_content);
-//        modelmy_mycache_main_content.removeAllViews();
-//        View view = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_my_mycache1, null);
-//        modelmy_mycache_main_content.addView(view);
-//        ControllerCustomRoundAngleImageView modelmy_mycache1_cover = view.findViewById(R.id.modelmy_mycache1_cover);
-//        Glide.with(mControlMainActivity).load("").listener(new RequestListener<Drawable>() {
-//            @Override
-//            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-//                Log.d("Wain", "加载失败 errorMsg:" + (e != null ? e.getMessage() : "null"));
-//                return false;
-//            }
-//
-//            @Override
-//            public boolean onResourceReady(final Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-//                Log.d("Wain", "成功  Drawable Name:" + resource.getClass().getCanonicalName());
-//                return false;
-//            }
-//        }).error(mControlMainActivity.getResources().getDrawable(R.drawable.modelcoursecover)).into(modelmy_mycache1_cover);
-//
-//        //监听，如果点击此课程，查看此课程下缓存的详细信息
-//        LinearLayout modelmy_mycache1_classname_layout = view.findViewById(R.id.modelmy_mycache1_classname_layout);
-//        modelmy_mycache1_classname_layout.setOnClickListener(v -> {
-//            MyCache_ManagementCacheShow();
-//        });
-//        //布局控件的线
-//        View modelmy_mycache1_line1 = view.findViewById(R.id.modelmy_mycache1_line1);
-//        modelmy_mycache1_line1.setVisibility(View.INVISIBLE);
+        //我的缓存子条目布局
+        LinearLayout modelmy_mycache_main_content = mMyCacheView.findViewById(R.id.modelmy_mycache_main_content);
+        modelmy_mycache_main_content.removeAllViews();
+        View view = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_my_mycache1, null);
+        modelmy_mycache_main_content.addView(view);
+        ControllerCustomRoundAngleImageView modelmy_mycache1_cover = view.findViewById(R.id.modelmy_mycache1_cover);
+        Glide.with(mControlMainActivity).load("").listener(new RequestListener<Drawable>() {
+            @Override
+            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                Log.d("Wain", "加载失败 errorMsg:" + (e != null ? e.getMessage() : "null"));
+                return false;
+            }
+
+            @Override
+            public boolean onResourceReady(final Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                Log.d("Wain", "成功  Drawable Name:" + resource.getClass().getCanonicalName());
+                return false;
+            }
+        }).error(mControlMainActivity.getResources().getDrawable(R.drawable.modelcoursecover)).into(modelmy_mycache1_cover);
+
+        //监听，如果点击此课程，查看此课程下缓存的详细信息
+        LinearLayout modelmy_mycache1_classname_layout = view.findViewById(R.id.modelmy_mycache1_classname_layout);
+        modelmy_mycache1_classname_layout.setOnClickListener(v -> {
+            MyCache_ManagementCacheShow();
+        });
+        //布局控件的线
+        View modelmy_mycache1_line1 = view.findViewById(R.id.modelmy_mycache1_line1);
+        modelmy_mycache1_line1.setVisibility(View.INVISIBLE);
     }
 
     //展示我的缓存界面
@@ -603,7 +603,8 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
         }
         RelativeLayout modelmy_mycache_title = mMyCacheView.findViewById(R.id.modelmy_mycache_title);
         modelmy_mycache_title.setVisibility(View.VISIBLE);
-        AliyunVodPlayerView modelmy_mycache_aliyunVodPlayerView = mMyCacheView.findViewById(R.id.modelmy_mycache_aliyunVodPlayerView);
+        RelativeLayout modelmy_mycache_aliyunVodPlayerView = mMyCacheView.findViewById(R.id.modelmy_mycache_aliyunVodPlayerView);
+        modelmy_mycache_aliyunVodPlayerView.removeAllViews();
         modelmy_mycache_aliyunVodPlayerView.setVisibility(View.INVISIBLE);
         my_layout_main.addView(mMyCacheView);
         if (downloadView.getParent() != null){
@@ -654,9 +655,12 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
         }
         RelativeLayout modelmy_mycache_title = mMyCacheView.findViewById(R.id.modelmy_mycache_title);
         modelmy_mycache_title.setVisibility(View.INVISIBLE);
-        AliyunVodPlayerView modelmy_mycache_aliyunVodPlayerView = mMyCacheView.findViewById(R.id.modelmy_mycache_aliyunVodPlayerView);
+        RelativeLayout modelmy_mycache_aliyunVodPlayerView = mMyCacheView.findViewById(R.id.modelmy_mycache_aliyunVodPlayerView);
+        modelmy_mycache_aliyunVodPlayerView.removeAllViews();
+        AliyunVodPlayerView aliyunVodPlayerView = new AliyunVodPlayerView(mControlMainActivity);
 //        modelmy_mycache_aliyunVodPlayerView.VideoIdSet();
-        mControlMainActivity.setmAliyunVodPlayerView(modelmy_mycache_aliyunVodPlayerView);
+        mControlMainActivity.setmAliyunVodPlayerView(aliyunVodPlayerView);
+        modelmy_mycache_aliyunVodPlayerView.addView(aliyunVodPlayerView);
         modelmy_mycache_aliyunVodPlayerView.setVisibility(View.VISIBLE);
         return true;
     }
