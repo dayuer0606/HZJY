@@ -32,6 +32,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
+import android.widget.Adapter;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -3399,9 +3401,7 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                                 courseSectionsInfo.mCourseSectionsOrder = String.valueOf(courseCatalogSectionBean.section_sort);
                                 courseSectionsInfo.mCourseSectionsName = courseCatalogSectionBean.section_name;
                                 courseSectionsInfo.mVideoId = courseCatalogSectionBean.video_id;
-                                SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
-                                formatter.setTimeZone(TimeZone.getTimeZone("GMT+00:00"));
-                                if (courseCatalogSectionBean.Duration == null) {
+                                SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");if (courseCatalogSectionBean.Duration == null) {
                                     courseCatalogSectionBean.Duration = 0;
                                 }
                                 String hms = formatter.format(courseCatalogSectionBean.Duration * 1000);
@@ -3485,10 +3485,40 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                     LoadingDialog.getInstance(mControlMainActivity).dismiss();
                     return;
                 }
-                //
+                //获取课程资料文件
                 if (mDetailsView != null){
-                    ListView mlistview = mDetailsView.findViewById(R.id .course_materials_label_list_view);
+                    ControllerListViewForScrollView mlistview = mDetailsView.findViewById(R.id .course_materials_label_list_view);
                     mlistview.setAdapter(new MyAdapter(mControlMainActivity,materialsDataBeanNew));
+                    mlistview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                            TextView text = view.findViewById(R.id.text_name);
+                            if (text.getHint() == null){
+                                Toast.makeText(mControlMainActivity,"无法获取该文件",Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+                            String string  = String.valueOf(text.getHint());
+//                            string = "https://wangxiao3.oss-cn-shanghai.aliyuncs.com/b4cac181-237d-481c-8e3b-e26a85e5076f1590830663982.pptx";
+//                            string = "https://wangxiao3.oss-cn-shanghai.aliyuncs.com/test/2.docx";
+//                            string = "https://wangxiao3.oss-cn-shanghai.aliyuncs.com/test/3.doc";
+//                            string = "https://wangxiao3.oss-cn-shanghai.aliyuncs.com/test/4.xls";
+                            //判断文件格式
+                            if (string.contains(".pdf")||string.contains(".pdfx")){
+                                Intent intent = new Intent(mControlMainActivity,PDFActivity.class);
+                                intent.putExtra("url",string);
+                                mControlMainActivity.startActivity(intent);
+                            }else if (string.contains(".doc")||string.contains(".docx")||string.contains(".xls")||string.contains(".xlsx")
+                            ||string.contains(".ppt")||string.contains(".pptx")){
+                                Intent intent = new Intent(mControlMainActivity,OfficeActivity.class);
+                                intent.putExtra("url",string);
+                                mControlMainActivity.startActivity(intent);
+                            }else {
+                                Toast.makeText(mControlMainActivity,"文件格式不正确",Toast.LENGTH_SHORT).show();
+                            }
+
+                        }
+                    });
                 }
                 LoadingDialog.getInstance(mControlMainActivity).dismiss();
             }
@@ -4696,7 +4726,7 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
         }
 
         public View getView(int position, View convertView, ViewGroup parent) {
-            //视图操作
+                //视图操作
             View itemview = null;
             if (convertView == null) {
                 //初始化布局
@@ -4705,18 +4735,15 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                 //复用convertView
                 itemview = convertView;
             }
-
             TextView title = (TextView) itemview.findViewById(R.id.text_name);
             TextView ttt = (TextView) itemview.findViewById(R.id.text_id);
-            //绑定数据
+                 //绑定数据
             materialsBean.materialsBeanData bean = mList.get(position);
-
             title.setText(bean.c_recourses_name);
             title.setHint(bean.recourses_address);
-            ttt.setText(bean.c_recourses_id);
-
-
+            ttt.setText(""+bean.c_recourses_id);
             return itemview;
+
         }
     }
 

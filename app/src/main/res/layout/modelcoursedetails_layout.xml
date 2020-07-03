@@ -467,10 +467,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/dp0"
                         android:visibility="invisible">
-                        <ListView
+                        <com.android.jwjy.zkktproduct.ControllerListViewForScrollView
                             android:id="@+id/course_materials_label_list_view"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent" />
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
                     </LinearLayout>
                     <LinearLayout
                         android:id="@+id/course_catalog_label_content_layout_main"

@@ -1,27 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.android.jwjy.zkktproduct">
-
-    <!-- /** -->
-    <!-- * 获取通话日志的读权限 -->
-    <!-- */ -->
-    <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS" /> <!-- /** -->
-    <!-- &lt;!&ndash; * 获取打电话权限 &ndash;&gt; -->
-    <!-- &lt;!&ndash; */ &ndash;&gt; -->
-    <!-- <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> &lt;!&ndash; /** &ndash;&gt; -->
-    <!-- * 获取录音权限 -->
-    <!-- */ -->
-    <uses-permission android:name="android.permission.READ_CALL_LOG" /> <!-- /** -->
+    <permission
+        android:name="com.android.jwjy.zkktproduct.permission.JPUSH_MESSAGE"
+        android:protectionLevel="signature" /> <!-- /** -->
     <!-- * 获取开机启动权限 -->
     <!-- */ -->
+    <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS" />
+    <uses-permission android:name="android.permission.READ_CALL_LOG" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <uses-permission android:name="com.dbjtech.waiqin.destroy" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" /> <!-- 兼容Android 8.0 安装跳安装界面 -->
-    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" /> <!-- 调用相机权限 -->
-    <uses-permission android:name="android.permission.CAMERA" /> <!-- 允许访问网络权限 -->
-    <uses-permission android:name="android.permission.INTERNET" /> <!-- 允许检查网络状态权限 -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" /> <!-- 兼容Android 8.0 安装跳安装界面 -->
+    <uses-permission android:name="com.dbjtech.waiqin.destroy" /> <!-- 调用相机权限 -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" /> <!-- 允许访问网络权限 -->
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" /> <!-- 允许检查网络状态权限 -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
@@ -30,54 +25,43 @@
     <uses-permission
         android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
         tools:ignore="ProtectedPermissions" />
-    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <!-- Required -->
-    <permission
-        android:name="com.android.jwjy.zkktproduct.permission.JPUSH_MESSAGE"
-        android:protectionLevel="signature" />
-
-    <!-- Required -->
-<!--    <uses-permission android:name="您应用的包名.permission.JPUSH_MESSAGE" />-->
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" /> <!-- Required -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" /> <!-- Required -->
+    <!-- <uses-permission android:name="您应用的包名.permission.JPUSH_MESSAGE" /> -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" /> <!-- Optional. Required for location feature -->
     <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
-
-    <!-- Optional. Required for location feature -->
-    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" /> <!-- 用于开启 debug 版本的应用在 6.0 系统上的层叠窗口权限 -->
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" /> <!-- 用于开启 debug 版本的应用在 6.0 系统上的层叠窗口权限 -->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
     <uses-permission android:name="android.permission.GET_TASKS" />
-    <uses-permission android:name="android.permission.VIBRATE" />
 
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <!-- /** -->
+    <!-- * 获取通话日志的读权限 -->
+    <!-- */ -->
     <application
-        android:name="com.android.jwjy.zkktproduct.TFApplication"
-        android:usesCleartextTraffic="true"
-        android:debuggable="false"
+        android:name=".TFApplication"
         android:allowBackup="true"
+        android:debuggable="false"
         android:icon="@mipmap/logo"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        tools:replace="android:label"
-        tools:ignore="HardcodedDebugMode">
-
-        <provider
-            android:name="android.support.v4.content.FileProvider"
-            android:authorities="com.android.jwjy.zkktproduct.fileprovider"
-            android:exported="false"
-            android:grantUriPermissions="true">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths" />
-        </provider>
+        android:usesCleartextTraffic="true"
+        tools:ignore="HardcodedDebugMode"
+        tools:replace="android:label">
+        <activity android:name=".OfficeActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"
+            />
 
         <activity
-            android:name="com.android.jwjy.zkktproduct.ControlSplashActivity"
+            android:name=".ControlSplashActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"
             android:theme="@style/SplashStyle"
@@ -88,82 +72,72 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name="com.android.jwjy.zkktproduct.ControlGuideActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait" />
 
         <activity
-            android:name="com.android.jwjy.zkktproduct.ControlMainActivity"
+            android:name=".ControlGuideActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.android.jwjy.zkktproduct.activity.LoginJumpActivity"
+            android:name=".PDFActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.android.jwjy.zkktproduct.activity.LiveNativeActivity"
+            android:name=".ControlMainActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.LoginJumpActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.LiveNativeActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
-            android:name="com.android.jwjy.zkktproduct.activity.PlayDownLoadActivity"
+            android:name=".activity.PlayDownLoadActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.android.jwjy.zkktproduct.activity.PlaybackNativeActivity"
+            android:name=".activity.PlaybackNativeActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.android.jwjy.zkktproduct.activity.PlaybackOnlyVideoNativeActivity"
+            android:name=".activity.PlaybackOnlyVideoNativeActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:launchMode="singleTop"
             android:screenOrientation="landscape"
             android:theme="@style/notitle" />
-
-        <receiver android:name="com.android.jwjy.zkktproduct.net.NetWorkStateReceiver">
-            <intent-filter>
-                <action android:name="android.NET.conn.CONNECTIVITY_CHANGE" />
-            </intent-filter>
-        </receiver>
-
         <activity
-            android:name="com.android.jwjy.zkktproduct.activity.LiveRtcNativeActivity"
+            android:name=".activity.LiveRtcNativeActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:launchMode="singleTop"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="adjustResize|stateHidden" />
+
         <activity
-            android:name="com.android.jwjy.zkktproduct.activity.LiveMixNativeActivity"
+            android:name=".activity.LiveMixNativeActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:launchMode="singleTop"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="adjustResize|stateHidden" />
+
         <activity
-            android:name="com.android.jwjy.zkktproduct.activity.LiveOneToOneNativeActivity"
+            android:name=".activity.LiveOneToOneNativeActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="landscape"
             android:theme="@style/notitle"
-            android:windowSoftInputMode="adjustNothing" /> <!-- &lt;!&ndash; FileProvider配置访问路径，适配7.0及其以上 &ndash;&gt; -->
-        <!-- <provider -->
-        <!-- android:name="android.support.v4.content.FileProvider" -->
-        <!-- android:authorities="${applicationId}.fileProvider" -->
-        <!-- android:exported="false" -->
-        <!-- android:grantUriPermissions="true"> -->
-        <!-- <meta-data -->
-        <!-- android:name="android.support.FILE_PROVIDER_PATHS" -->
-        <!-- android:resource="@xml/provider_paths" /> -->
-        <!-- </provider> -->
+            android:windowSoftInputMode="adjustNothing" />
         <activity
-            android:name="com.android.jwjy.zkktproduct.activity.LiveOneToMultiNativeActivity"
+            android:name=".activity.LiveOneToMultiNativeActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="landscape"
             android:theme="@style/notitle"
-            android:windowSoftInputMode="adjustResize|stateHidden" /> <!-- 微信支付 -->
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
-            android:name="com.android.jwjy.zkktproduct.wxapi.WXPayEntryActivity"
+            android:name=".wxapi.WXPayEntryActivity"
             android:exported="true"
             android:launchMode="singleTop">
             <intent-filter>
@@ -173,12 +147,53 @@
 
                 <data android:scheme="wxb4ba3c02aa476ea1" />
             </intent-filter>
-        </activity>
-
-        <!-- Required SDK 核心功能-->
+        </activity> <!-- &lt;!&ndash; FileProvider配置访问路径，适配7.0及其以上 &ndash;&gt; -->
+        <!-- <provider -->
+        <!-- android:name="android.support.v4.content.FileProvider" -->
+        <!-- android:authorities="${applicationId}.fileProvider" -->
+        <!-- android:exported="false" -->
+        <!-- android:grantUriPermissions="true"> -->
+        <!-- <meta-data -->
+        <!-- android:name="android.support.FILE_PROVIDER_PATHS" -->
+        <!-- android:resource="@xml/provider_paths" /> -->
+        <!-- </provider> -->
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.android.jwjy.zkktproduct.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider> <!-- 微信支付 -->
+        <provider
+            android:name="cn.jpush.android.service.DataProvider"
+            android:authorities="com.android.jwjy.zkktproduct.DataProvider"
+            android:exported="false"
+            android:process=":pushcore" /> <!-- Required SDK 核心功能 -->
         <!-- 可配置android:process参数将PushService放在其他进程中 -->
+        <receiver android:name=".net.NetWorkStateReceiver">
+            <intent-filter>
+                <action android:name="android.NET.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver> <!-- since 3.0.9 Required SDK 核心功能 -->
+        <receiver
+            android:name=".MyJPushMessageReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="cn.jpush.android.intent.REGISTRATION" />
+                <action android:name="cn.jpush.android.intent.RECEIVE_MESSAGE" />
+
+                <category android:name="com.android.jwjy.zkktproduct" />
+            </intent-filter>
+        </receiver> <!-- Required since 3.0.7 -->
+        <!-- 新的 tag/alias 接口结果返回需要开发者配置一个自定的广播 -->
+        <!-- 3.3.0开始所有事件将通过该类回调 -->
+        <!-- 该广播需要继承 JPush 提供的 JPushMessageReceiver 类, 并如下新增一个 Intent-Filter -->
+        <!-- User defined.  For test only  用户自定义接收消息器,3.0.7开始支持,目前新tag/alias接口设置结果会在该广播接收器对应的方法中回调 -->
         <service
-            android:name="com.android.jwjy.zkktproduct.PushService"
+            android:name=".PushService"
             android:enabled="true"
             android:exported="false"
             android:process=":pushcore">
@@ -189,26 +204,6 @@
                 <action android:name="cn.jpush.android.intent.PUSH_TIME" />
             </intent-filter>
         </service>
-        <!-- since 3.0.9 Required SDK 核心功能-->
-        <provider
-            android:authorities="com.android.jwjy.zkktproduct.DataProvider"
-            android:name="cn.jpush.android.service.DataProvider"
-            android:process=":pushcore"
-            android:exported="false"
-            />
-        <!-- Required since 3.0.7 -->
-        <!-- 新的 tag/alias 接口结果返回需要开发者配置一个自定的广播 -->
-        <!-- 3.3.0开始所有事件将通过该类回调 -->
-        <!-- 该广播需要继承 JPush 提供的 JPushMessageReceiver 类, 并如下新增一个 Intent-Filter -->
-        <!-- User defined.  For test only  用户自定义接收消息器,3.0.7开始支持,目前新tag/alias接口设置结果会在该广播接收器对应的方法中回调-->
-        <receiver android:name="com.android.jwjy.zkktproduct.MyJPushMessageReceiver"
-            android:enabled="true"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="cn.jpush.android.intent.REGISTRATION" />
-                <action android:name="cn.jpush.android.intent.RECEIVE_MESSAGE" />
-                <category android:name="com.android.jwjy.zkktproduct"></category>
-            </intent-filter>
-        </receiver>
     </application>
+
 </manifest>
