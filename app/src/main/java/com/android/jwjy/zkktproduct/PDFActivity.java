@@ -6,7 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
 /**
- * Created by KaelLi on 2018/11/22.
+ * 加载pdf格式
  */
 public class PDFActivity extends AppCompatActivity {
     private PDFView pdfView;

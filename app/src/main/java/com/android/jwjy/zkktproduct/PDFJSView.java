@@ -11,7 +11,7 @@ import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
 
 /**
- * Created by PDT on 02.06.2017.
+ * 加载pdfjs
  */
 public class PDFJSView extends FrameLayout {
     public static final String PDFJS_ASSETS_PATH = "file:///android_asset/pdf_js/web/viewer.html";

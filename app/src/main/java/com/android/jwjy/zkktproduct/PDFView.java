@@ -8,7 +8,7 @@ import android.webkit.WebView;
 import android.widget.FrameLayout;
 
 /**
- * Created by KaelLi on 2019/1/3.
+ *
  */
 public class PDFView extends FrameLayout {
     private final static String PDFJS_PREFIX = "file:///android_asset/pdf_js/web/viewer.html?file=";

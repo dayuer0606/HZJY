@@ -7,6 +7,10 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+/**
+ * 加载webview格式
+ */
+
 public class OfficeActivity extends AppCompatActivity {
 
     @Override
