@@ -3626,8 +3626,8 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                     }
                     mCourseInfo.mCourseChaptersInfoList.add(courseChaptersInfo);
                 }
-                if (mCurrentCatalogTab.equals("Record")) {
-                    //修改body为录播
+                    if (mCurrentCatalogTab.equals("Record")) {
+                        //修改body为录播
                     CourseCatalogRecordInit(mCourseInfo);
                 }
                 LoadingDialog.getInstance(mControlMainActivity).dismiss();
