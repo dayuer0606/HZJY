@@ -916,17 +916,26 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
         });
         LinearLayout course_details_bottomlayout1 = mDetailsView.findViewById(R.id.course_details_bottomlayout1);
         LinearLayout course_details_bottomlayout = mDetailsView.findViewById(R.id.course_details_bottomlayout);
+
+        if (courseInfo.mCourseIsStartLearn.equals("1")) {
+            Button course_details_buy_button1 = mDetailsView.findViewById(R.id.course_details_buy_button1);
+            course_details_buy_button1.setText("已购买");
+        }
         if (courseInfo.mCourseIsHave.equals("1")) {
             //已购买的课程将按钮栏替换掉
             course_details_bottomlayout1.setVisibility(View.VISIBLE);
             course_details_bottomlayout.setVisibility(View.INVISIBLE);
+            //判断是否是0元课程
+        } else if (courseInfo.mCoursePrice.equals("免费")||courseInfo.mCoursePrice.equals("0")||courseInfo.mCoursePrice.equals("0.0")){
+            //已购买的课程将按钮栏替换掉
+            course_details_bottomlayout1.setVisibility(View.VISIBLE);
+            course_details_bottomlayout.setVisibility(View.INVISIBLE);
+            Button course_details_buy_button1 = mDetailsView.findViewById(R.id.course_details_buy_button1);
+            course_details_buy_button1.setText("立即体验");
+            mCourseInfo.mCourseIsHave = "1";
         } else {
             course_details_bottomlayout1.setVisibility(View.INVISIBLE);
             course_details_bottomlayout.setVisibility(View.VISIBLE);
-        }
-        if (courseInfo.mCourseIsStartLearn.equals("1")) {
-            Button course_details_buy_button1 = mDetailsView.findViewById(R.id.course_details_buy_button1);
-            course_details_buy_button1.setText("已购买");
         }
         if (mCourseInfo.mCourseIsCollect.equals("1")) { //修改为收藏状态
             ImageView course_details_bottomlayout_collectImage1 = mDetailsView.findViewById(R.id.course_details_bottomlayout_collectImage1);

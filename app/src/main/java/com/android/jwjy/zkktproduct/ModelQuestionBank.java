@@ -1563,6 +1563,284 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
         }
     }
 
+    //错题本-选完单选直接显示解析
+    private void ModeWrongQuestionFindAnalysis( QuestionBankMyFavoriteQuestionBean.QuestionBankMyFavoriteQuestionDataBean questionBankMyFavoriteQuestionDataBean){
+        TextView coursedetails_wrongquestion_analysisbutton = mModelQuestionBankWrongQuestionView.findViewById(R.id.coursedetails_wrongquestion_analysisbutton);
+        LinearLayout coursedetails_wrongquestion_analysis = mModelQuestionBankWrongQuestionView.findViewById(R.id.coursedetails_wrongquestion_analysis);
+        coursedetails_wrongquestion_analysis.removeAllViews();
+        LinearLayout.LayoutParams ll = (LinearLayout.LayoutParams) coursedetails_wrongquestion_analysisbutton.getLayoutParams();
+        ll.height = 0;
+        ll.topMargin = 0;
+        coursedetails_wrongquestion_analysisbutton.setLayoutParams(ll);
+        if (questionBankMyFavoriteQuestionDataBean.question_type == 1 || questionBankMyFavoriteQuestionDataBean.question_type == 2) {//单选题或多选题
+            View view = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_answerpaper_analysis1, null);
+            coursedetails_wrongquestion_analysis.addView(view);
+            //修改内容为正确答案
+            String[] optionanswerS = questionBankMyFavoriteQuestionDataBean.optionanswer.split("#EDU;");
+            if (optionanswerS == null) {
+
+            }
+            String currentAnswer = "";
+            for (int i = 0; i < optionanswerS.length; i++) {
+                String[] optionanswerS1 = optionanswerS[i].substring(1).split("#");
+                if (optionanswerS1.length != 3) {
+                    break;
+                }
+                if (optionanswerS1[1].equals("是")) {
+                    currentAnswer = currentAnswer + optionanswerS1[0] + " ";
+                }
+            }
+            TextView questionbank_analysis1_rightAnswer = view.findViewById(R.id.questionbank_analysis1_rightAnswer);
+            questionbank_analysis1_rightAnswer.setText(currentAnswer);
+//                    /修改内容为此题的解析
+            TextView questionbank_analysis1_content = view.findViewById(R.id.questionbank_analysis1_content);
+            if (questionBankMyFavoriteQuestionDataBean.question_analysis == null) {
+                questionBankMyFavoriteQuestionDataBean.question_analysis = "";
+            }
+            new ModelHtmlUtils(mControlMainActivity, questionbank_analysis1_content).setHtmlWithPic(questionBankMyFavoriteQuestionDataBean.question_analysis);
+            //修改内容为您的答案
+            TextView questionbank_analysis1_yourAnswer = view.findViewById(R.id.questionbank_analysis1_yourAnswer);
+            if (mMyQuestionBankExercisesAnswerMap != null) {
+                AnswerInfo answerInfo = mMyQuestionBankExercisesAnswerMap.get(questionBankMyFavoriteQuestionDataBean.question_id);
+                if (answerInfo != null) {
+                    if (answerInfo.answer != null) {
+                        new ModelHtmlUtils(mControlMainActivity, questionbank_analysis1_yourAnswer).setHtmlWithPic(answerInfo.answer);
+                    }
+                }
+            }
+            if (mFontSize.equals("nomal")) {
+                questionbank_analysis1_rightAnswer.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view.getResources().getDimensionPixelSize(R.dimen.textsize17));
+                questionbank_analysis1_content.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view.getResources().getDimensionPixelSize(R.dimen.textsize17));
+                questionbank_analysis1_yourAnswer.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view.getResources().getDimensionPixelSize(R.dimen.textsize17));
+            } else if (mFontSize.equals("small")) {
+                questionbank_analysis1_rightAnswer.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view.getResources().getDimensionPixelSize(R.dimen.textsize14));
+                questionbank_analysis1_content.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view.getResources().getDimensionPixelSize(R.dimen.textsize14));
+                questionbank_analysis1_yourAnswer.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view.getResources().getDimensionPixelSize(R.dimen.textsize14));
+            } else if (mFontSize.equals("big")) {
+                questionbank_analysis1_rightAnswer.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view.getResources().getDimensionPixelSize(R.dimen.textsize20));
+                questionbank_analysis1_content.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view.getResources().getDimensionPixelSize(R.dimen.textsize20));
+                questionbank_analysis1_yourAnswer.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view.getResources().getDimensionPixelSize(R.dimen.textsize20));
+            }
+        } else if (questionBankMyFavoriteQuestionDataBean.question_type == 4) {//简答题
+            View view = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_answerpaper_analysis2, null);
+            coursedetails_wrongquestion_analysis.addView(view);
+            //修改内容为正确答案
+            TextView questionbank_analysis2_rightAnswer = view.findViewById(R.id.questionbank_analysis2_rightAnswer);
+            if (questionBankMyFavoriteQuestionDataBean.optionanswer == null) {
+                questionBankMyFavoriteQuestionDataBean.optionanswer = "";
+            }
+            new ModelHtmlUtils(mControlMainActivity, questionbank_analysis2_rightAnswer).setHtmlWithPic(questionBankMyFavoriteQuestionDataBean.optionanswer);
+            //修改内容为此题的解析
+            TextView questionbank_analysis2_content = view.findViewById(R.id.questionbank_analysis2_content);
+            if (questionBankMyFavoriteQuestionDataBean.question_analysis == null) {
+                questionBankMyFavoriteQuestionDataBean.question_analysis = "";
+            }
+            new ModelHtmlUtils(mControlMainActivity, questionbank_analysis2_content).setHtmlWithPic(questionBankMyFavoriteQuestionDataBean.question_analysis);
+            //修改内容为您的答案
+            TextView questionbank_analysis2_yourAnswer = view.findViewById(R.id.questionbank_analysis2_yourAnswer);
+            if (mMyQuestionBankExercisesAnswerMap != null) {
+                AnswerInfo answerInfo = mMyQuestionBankExercisesAnswerMap.get(questionBankMyFavoriteQuestionDataBean.question_id);
+                if (answerInfo != null) {
+                    if (answerInfo.answer != null) {
+                        new ModelHtmlUtils(mControlMainActivity, questionbank_analysis2_yourAnswer).setHtmlWithPic(answerInfo.answer);
+                    }
+                }
+            }
+            if (mFontSize.equals("nomal")) {
+                questionbank_analysis2_rightAnswer.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view.getResources().getDimensionPixelSize(R.dimen.textsize17));
+                questionbank_analysis2_content.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view.getResources().getDimensionPixelSize(R.dimen.textsize17));
+                questionbank_analysis2_yourAnswer.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view.getResources().getDimensionPixelSize(R.dimen.textsize17));
+            } else if (mFontSize.equals("small")) {
+                questionbank_analysis2_rightAnswer.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view.getResources().getDimensionPixelSize(R.dimen.textsize14));
+                questionbank_analysis2_content.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view.getResources().getDimensionPixelSize(R.dimen.textsize14));
+                questionbank_analysis2_yourAnswer.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view.getResources().getDimensionPixelSize(R.dimen.textsize14));
+            } else if (mFontSize.equals("big")) {
+                questionbank_analysis2_rightAnswer.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view.getResources().getDimensionPixelSize(R.dimen.textsize20));
+                questionbank_analysis2_content.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view.getResources().getDimensionPixelSize(R.dimen.textsize20));
+                questionbank_analysis2_yourAnswer.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view.getResources().getDimensionPixelSize(R.dimen.textsize20));
+            }
+        }
+    }
+
+    //练习模式-选完单选直接显示解析
+    private void ModeTestFindAnalysis(){
+        TextView coursedetails_answerpaper_analysisbutton = mModelQuestionBankAnswerPaperView.findViewById(R.id.coursedetails_answerpaper_analysisbutton);
+        LinearLayout coursedetails_answerpaper_analysis = mModelQuestionBankAnswerPaperView.findViewById(R.id.coursedetails_answerpaper_analysis);
+        coursedetails_answerpaper_analysis.removeAllViews();
+            int questionSize = 0;
+            if (mMyQuestionBankExercisesBean == null) {
+                Toast.makeText(mControlMainActivity, "此题暂无解析！", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            MyQuestionBankExercises.MyQuestionBankExercisesDataBean myQuestionBankExercisesDataBean = null;
+            if (mMyQuestionBankExercisesBean.danxuantiQuestion != null){
+                questionSize = questionSize + mMyQuestionBankExercisesBean.danxuantiQuestion.size();
+                if (mCurrentIndex < questionSize) {
+                    myQuestionBankExercisesDataBean = mMyQuestionBankExercisesBean.danxuantiQuestion.get(mCurrentIndex);
+                }
+            }
+            if (mMyQuestionBankExercisesBean.duoxuantiQuestion != null){
+                questionSize = questionSize + mMyQuestionBankExercisesBean.duoxuantiQuestion.size();
+                if (myQuestionBankExercisesDataBean == null) {
+                    if (mCurrentIndex < questionSize) {
+                        int count = 0;
+                        if (mMyQuestionBankExercisesBean.danxuantiQuestion != null) {
+                            count = mCurrentIndex - mMyQuestionBankExercisesBean.danxuantiQuestion.size();
+                        }
+                        if (count < mMyQuestionBankExercisesBean.duoxuantiQuestion.size()) {
+                            myQuestionBankExercisesDataBean = mMyQuestionBankExercisesBean.duoxuantiQuestion.get(count);
+                        }
+                    }
+                }
+            }
+            if (mMyQuestionBankExercisesBean.jinadatitiQuestion != null){
+                questionSize = questionSize + mMyQuestionBankExercisesBean.jinadatitiQuestion.size();
+                if (mCurrentIndex < questionSize && myQuestionBankExercisesDataBean == null) {
+                    int count = mCurrentIndex;
+                    if (mMyQuestionBankExercisesBean.danxuantiQuestion != null) {
+                        count = mCurrentIndex - mMyQuestionBankExercisesBean.danxuantiQuestion.size();
+                    }
+                    if (mMyQuestionBankExercisesBean.duoxuantiQuestion != null) {
+                        count = count - mMyQuestionBankExercisesBean.duoxuantiQuestion.size();
+                    }
+                    if (count < mMyQuestionBankExercisesBean.jinadatitiQuestion.size()) {
+                        myQuestionBankExercisesDataBean = mMyQuestionBankExercisesBean.jinadatitiQuestion.get(count);
+                    }
+                }
+            }
+            if (mMyQuestionBankExercisesBean.cailiaotiQuestion != null){
+                questionSize = questionSize + mMyQuestionBankExercisesBean.cailiaotiQuestion.size();
+                if (mCurrentIndex < questionSize && myQuestionBankExercisesDataBean == null) {
+                    int count = mCurrentIndex;
+                    if (mMyQuestionBankExercisesBean.danxuantiQuestion != null) {
+                        count = mCurrentIndex - mMyQuestionBankExercisesBean.danxuantiQuestion.size();
+                    }
+                    if (mMyQuestionBankExercisesBean.duoxuantiQuestion != null) {
+                        count = count - mMyQuestionBankExercisesBean.duoxuantiQuestion.size();
+                    }
+                    if (mMyQuestionBankExercisesBean.jinadatitiQuestion != null) {
+                        count = count - mMyQuestionBankExercisesBean.jinadatitiQuestion.size();
+                    }
+                    if (count < mMyQuestionBankExercisesBean.cailiaotiQuestion.size()) {
+                        myQuestionBankExercisesDataBean = mMyQuestionBankExercisesBean.cailiaotiQuestion.get(count);
+                    }
+                }
+            }
+            if (myQuestionBankExercisesDataBean == null) {
+                Toast.makeText(mControlMainActivity, "此题暂无解析！", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            if (myQuestionBankExercisesDataBean.question_analysis == null || myQuestionBankExercisesDataBean.question_type == null) {
+                Toast.makeText(mControlMainActivity, "此题暂无解析！", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            if (myQuestionBankExercisesDataBean.question_analysis.equals("")) {
+                Toast.makeText(mControlMainActivity, "此题暂无解析！", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            LinearLayout.LayoutParams ll = (LinearLayout.LayoutParams) coursedetails_answerpaper_analysisbutton.getLayoutParams();
+            ll.height = 0;
+            ll.topMargin = 0;
+            coursedetails_answerpaper_analysisbutton.setLayoutParams(ll);
+            if (myQuestionBankExercisesDataBean.question_type == 1 || myQuestionBankExercisesDataBean.question_type == 2) {//单选题或多选题
+                if (myQuestionBankExercisesDataBean.optionanswer == null) {
+                    Toast.makeText(mControlMainActivity, "此题暂无解析！", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                //个人答案
+                View view = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_answerpaper_analysis1, null);
+                coursedetails_answerpaper_analysis.addView(view);
+                //修改内容为正确答案
+                String[] optionanswerS = myQuestionBankExercisesDataBean.optionanswer.split("#EDU;");
+                if (optionanswerS == null) {
+                    Toast.makeText(mControlMainActivity, "此题暂无解析！", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                String currentAnswer = "";
+                for (int i = 0; i < optionanswerS.length; i++) {
+                    String[] optionanswerS1 = optionanswerS[i].substring(1).split("#");
+                    if (optionanswerS1.length != 3) {
+                        break;
+                    }
+                    if (optionanswerS1[1].equals("是")) {
+                        currentAnswer = currentAnswer + optionanswerS1[0] + " ";
+                    }
+                }
+                if (currentAnswer.equals("")) {
+                    Toast.makeText(mControlMainActivity, "此题暂无解析！", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                //正确答案
+                TextView questionbank_analysis1_rightAnswer = view.findViewById(R.id.questionbank_analysis1_rightAnswer);
+                questionbank_analysis1_rightAnswer.setText(currentAnswer);
+//             //修改内容为此题的解析
+                TextView questionbank_analysis1_content = view.findViewById(R.id.questionbank_analysis1_content);
+                if (myQuestionBankExercisesDataBean.question_analysis == null) {
+                    myQuestionBankExercisesDataBean.question_analysis = "";
+                }
+                new ModelHtmlUtils(mControlMainActivity, questionbank_analysis1_content).setHtmlWithPic(myQuestionBankExercisesDataBean.question_analysis);
+                //个人答案
+                AnswerInfo answerInfo = mMyQuestionBankExercisesAnswerMap.get(myQuestionBankExercisesDataBean.question_id);
+                TextView questionbank_analysis1_yourAnswer = view.findViewById(R.id.questionbank_analysis1_yourAnswer);
+                if (answerInfo != null) {
+                    if (answerInfo.answer != null) {
+                        questionbank_analysis1_yourAnswer.setText(answerInfo.answer);
+                    } else {
+                        questionbank_analysis1_yourAnswer.setText("");
+                    }
+                }
+                //字体大小的设置
+                if (mFontSize.equals("nomal")) {
+                    questionbank_analysis1_rightAnswer.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view.getResources().getDimensionPixelSize(R.dimen.textsize17));
+                    questionbank_analysis1_content.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view.getResources().getDimensionPixelSize(R.dimen.textsize17));
+                    questionbank_analysis1_yourAnswer.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view.getResources().getDimensionPixelSize(R.dimen.textsize17));
+                } else if (mFontSize.equals("small")) {
+                    questionbank_analysis1_rightAnswer.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view.getResources().getDimensionPixelSize(R.dimen.textsize14));
+                    questionbank_analysis1_content.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view.getResources().getDimensionPixelSize(R.dimen.textsize14));
+                    questionbank_analysis1_yourAnswer.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view.getResources().getDimensionPixelSize(R.dimen.textsize14));
+                } else if (mFontSize.equals("big")) {
+                    questionbank_analysis1_rightAnswer.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view.getResources().getDimensionPixelSize(R.dimen.textsize20));
+                    questionbank_analysis1_content.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view.getResources().getDimensionPixelSize(R.dimen.textsize20));
+                    questionbank_analysis1_yourAnswer.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view.getResources().getDimensionPixelSize(R.dimen.textsize20));
+                }
+            } else if (myQuestionBankExercisesDataBean.question_type == 4) {//简答题
+                View view = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_answerpaper_analysis2, null);
+                coursedetails_answerpaper_analysis.addView(view);
+                //修改内容为正确答案
+                TextView questionbank_analysis2_rightAnswer = view.findViewById(R.id.questionbank_analysis2_rightAnswer);
+                new ModelHtmlUtils(mControlMainActivity, questionbank_analysis2_rightAnswer).setHtmlWithPic(myQuestionBankExercisesDataBean.optionanswer);
+                //修改内容为此题的解析
+                TextView questionbank_analysis2_content = view.findViewById(R.id.questionbank_analysis2_content);
+                if (myQuestionBankExercisesDataBean.question_analysis == null) {
+                    myQuestionBankExercisesDataBean.question_analysis = "";
+                }
+                new ModelHtmlUtils(mControlMainActivity, questionbank_analysis2_content).setHtmlWithPic(myQuestionBankExercisesDataBean.question_analysis);
+                //修改内容为您的答案
+                TextView questionbank_analysis2_yourAnswer = view.findViewById(R.id.questionbank_analysis2_yourAnswer);
+//                EditText questionbank_answerpaper_shortansweredittext = view3.findViewById(R.id.questionbank_answerpaper_shortansweredittext);
+                AnswerInfo answerInfo = mMyQuestionBankExercisesAnswerMap.get(myQuestionBankExercisesDataBean.question_id);
+                if (answerInfo != null) {
+                    if (answerInfo.answer != null) {
+                        questionbank_analysis2_yourAnswer.setText(answerInfo.answer);
+                    } else {
+                        questionbank_analysis2_yourAnswer.setText("");
+                    }
+                }
+                if (mFontSize.equals("nomal")) {
+                    questionbank_analysis2_rightAnswer.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view.getResources().getDimensionPixelSize(R.dimen.textsize17));
+                    questionbank_analysis2_content.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view.getResources().getDimensionPixelSize(R.dimen.textsize17));
+                    questionbank_analysis2_yourAnswer.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view.getResources().getDimensionPixelSize(R.dimen.textsize17));
+                } else if (mFontSize.equals("small")) {
+                    questionbank_analysis2_rightAnswer.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view.getResources().getDimensionPixelSize(R.dimen.textsize14));
+                    questionbank_analysis2_content.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view.getResources().getDimensionPixelSize(R.dimen.textsize14));
+                    questionbank_analysis2_yourAnswer.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view.getResources().getDimensionPixelSize(R.dimen.textsize14));
+                } else if (mFontSize.equals("big")) {
+                    questionbank_analysis2_rightAnswer.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view.getResources().getDimensionPixelSize(R.dimen.textsize20));
+                    questionbank_analysis2_content.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view.getResources().getDimensionPixelSize(R.dimen.textsize20));
+                    questionbank_analysis2_yourAnswer.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view.getResources().getDimensionPixelSize(R.dimen.textsize20));
+                }
+            }
+    }
     //答题-考试模式界面展示
     private void QuestionBankDetailsQuestionModeExamShow() {
         if (mview == null) {
@@ -2870,6 +3148,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                                 answerInfo.result = "错";
                             }
                             mMyQuestionBankExercisesAnswerMap.put(finalMyQuestionBankExercisesDataBean1.question_id,answerInfo);
+                            ModeTestFindAnalysis();
                         } else {
                             AnswerInfo answerInfo = mMyQuestionBankExercisesAnswerMap.get(finalMyQuestionBankExercisesDataBean1.question_id);
                             if (answerInfo != null) {
@@ -4201,6 +4480,8 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                                 answerInfo.result = "错";
                             }
                             mMyQuestionBankExercisesAnswerMap.put(questionBankMyFavoriteQuestionDataBean.question_id,answerInfo);
+                            //单选题选完直接显示解析
+                            ModeWrongQuestionFindAnalysis( questionBankMyFavoriteQuestionDataBean);
                         } else {
                             AnswerInfo answerInfo = mMyQuestionBankExercisesAnswerMap.get(questionBankMyFavoriteQuestionDataBean.question_id);
                             if (answerInfo != null) {

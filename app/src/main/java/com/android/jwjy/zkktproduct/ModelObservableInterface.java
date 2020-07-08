@@ -273,6 +273,16 @@ public interface ModelObservableInterface {
     @Headers("Content-Type:application/json;charset=UTF-8")
     Call<BaseBean> getAliCourseAccessVideo(@Body RequestBody body);
 
+    //0元欢拓-直播
+    @POST("app/user/huanTuoLiveZero")
+    @Headers("Content-Type:application/json;charset=UTF-8")
+    Call<BaseBean> gethuanTuoLiveZeroToken(@Body RequestBody body);
+
+    //0元欢拓-回放
+    @POST("app/user/huanTuoRecZero")
+    @Headers("Content-Type:application/json;charset=UTF-8")
+    Call<BaseBean> gethuanTuoRecZeroToken(@Body RequestBody body);
+
     //课程包
     @POST("app/homePage/queryAllCoursePackageInfo")
     @Headers("Content-Type:application/json;charset=UTF-8")
