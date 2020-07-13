@@ -98,7 +98,7 @@
     <RelativeLayout
         android:id="@+id/modelmy_mycache_aliyunVodPlayerView"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_244"
+        android:layout_height="wrap_content"
         android:visibility="gone"/>
 <!--    &lt;!&ndash;    244&ndash;&gt;-->
 <!--    <com.aliyun.vodplayerview.widget.AliyunVodPlayerView-->

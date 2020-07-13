@@ -6,15 +6,14 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.ConcurrentLinkedQueue;
 
 import android.content.Context;
-import android.util.Log;
 
+//import com.aliyun.vodplayerview.utils.VidStsUtil;
 import com.aliyun.vodplayerview.utils.DownloadSaveInfoUtil;
-import com.aliyun.vodplayerview.utils.VidStsUtil;
 import com.aliyun.vodplayerview.utils.database.LoadDbDatasListener;
 import com.aliyun.vodplayerview.utils.download.AliyunDownloadManager;
+import com.aliyun.vodplayerview.utils.download.AliyunDownloadManagerInterface;
 import com.aliyun.vodplayerview.utils.download.AliyunDownloadMediaInfo;
 
 /**
@@ -28,19 +27,19 @@ public class DownloadDataProvider {
     private AliyunDownloadManager downloadManager;
     private WeakReference<Context> contextWeakReference;
     private List<AliyunDownloadMediaInfo> aliyunDownloadMediaInfos;
-//    private DownloadSaveInfoUtil downloadSaveInfoUtil;
+    private DownloadSaveInfoUtil downloadSaveInfoUtil;
 
-    public DownloadDataProvider(Context context) {
+    public DownloadDataProvider(Context context, AliyunDownloadManagerInterface callback) {
         contextWeakReference = new WeakReference<Context>(context);
-        downloadManager = AliyunDownloadManager.getInstance(contextWeakReference.get());
-//        downloadSaveInfoUtil = new DownloadSaveInfoUtil(downloadManager.getDownloadDir());
+        downloadManager = AliyunDownloadManager.getInstance(contextWeakReference.get(),callback);
+        downloadSaveInfoUtil = new DownloadSaveInfoUtil(downloadManager.getDownloadDir());
     }
 
-    public static DownloadDataProvider getSingleton(Context context) {
+    public static DownloadDataProvider getSingleton(Context context, AliyunDownloadManagerInterface callback) {
         if (instance == null) {
             synchronized (DownloadDataProvider.class) {
                 if (instance == null) {
-                    instance = new DownloadDataProvider(context);
+                    instance = new DownloadDataProvider(context,callback);
                 }
             }
         }

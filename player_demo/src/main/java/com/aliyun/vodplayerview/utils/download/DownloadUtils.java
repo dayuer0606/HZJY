@@ -4,9 +4,9 @@ import android.content.Context;
 
 public class DownloadUtils {
 
-    public static boolean isStorageAlarm(Context context, AliyunDownloadMediaInfo downloadMediaInfo) {
+    public static boolean isStorageAlarm(Context context, AliyunDownloadMediaInfo downloadMediaInfo, AliyunDownloadManagerInterface callback) {
         long availablekb = 0L;
-        if (StorageUtil.isExternalMemoryPath(getSaveDir(context))) {
+        if (StorageUtil.isExternalMemoryPath(getSaveDir(context,callback))) {
             availablekb = StorageUtil.getAvailableExternalMemorySize();
         } else {
             availablekb = StorageUtil.getAvailableInternalMemorySize();
@@ -20,9 +20,9 @@ public class DownloadUtils {
         }
     }
 
-    public static boolean isStorageAlarm(Context context) {
+    public static boolean isStorageAlarm(Context context, AliyunDownloadManagerInterface callback) {
         long availablekb = 0L;
-        if (StorageUtil.isExternalMemoryPath(getSaveDir(context))) {
+        if (StorageUtil.isExternalMemoryPath(getSaveDir(context,callback))) {
             availablekb = StorageUtil.getAvailableExternalMemorySize();
         } else {
             availablekb = StorageUtil.getAvailableInternalMemorySize();
@@ -31,7 +31,7 @@ public class DownloadUtils {
         return availablekb > 0L && availablekb < StorageUtil.MIN_STORAGE_SIZE;
     }
 
-    public static String getSaveDir(Context context) {
-        return AliyunDownloadManager.getInstance(context).getDownloadDir();
+    public static String getSaveDir(Context context, AliyunDownloadManagerInterface callback) {
+        return AliyunDownloadManager.getInstance(context,callback).getDownloadDir();
     }
 }

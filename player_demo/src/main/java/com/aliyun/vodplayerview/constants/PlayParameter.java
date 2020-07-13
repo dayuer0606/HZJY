@@ -47,5 +47,8 @@ public class PlayParameter {
      * url类型的播放地址, 初始为:http://player.alicdn.com/video/aliyunmedia.mp4
      */
     public static String PLAY_PARAM_URL = "http://player.alicdn.com/video/aliyunmedia.mp4";
-
+    /**
+     * sts请求地址
+     */
+    public static String STS_GET_URL = "app/user/stuCourseAccessVideo";
 }

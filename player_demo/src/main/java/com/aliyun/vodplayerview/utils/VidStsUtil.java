@@ -5,8 +5,11 @@ import android.os.AsyncTask;
 import com.aliyun.player.source.VidSts;
 import com.aliyun.utils.VcPlayerLog;
 import com.aliyun.vodplayerview.playlist.vod.core.AliyunVodHttpCommon;
+import com.google.gson.Gson;
 
 import org.json.JSONObject;
+
+import java.util.HashMap;
 
 /**
  * Created by pengshuang on 31/08/2017.
@@ -16,12 +19,16 @@ public class VidStsUtil {
 
     private static final String TAG = VidStsUtil.class.getSimpleName();
 
-    public static VidSts getVidSts(String videoId) {
+    public static VidSts getVidSts(String stsUrl,String videoId) {
 
         try {
+            Gson gson = new Gson();
+            HashMap<String, String> paramsMap1 = new HashMap<>();
+            paramsMap1.put("video_id", videoId);
+            String strEntity = gson.toJson(paramsMap1);
             //以前的连接地址"https://demo-vod.cn-shanghai.aliyuncs.com/voddemo/CreateSecurityToken?BusinessType=vodai&TerminalType=pc&DeviceModel=iPhone9,2&UUID=59ECA-4193-4695-94DD-7E1247288&AppVersion=1.0.0&VideoId=" + videoId"
-            String stsUrl = AliyunVodHttpCommon.getInstance().getVodStsDomain() + "getSts";
-            String response = HttpClientUtil.doGet(stsUrl);
+            stsUrl = stsUrl + "app/user/stuCourseAccessVideo";
+            String response = HttpClientUtil.doPost(stsUrl,strEntity);
             JSONObject jsonObject = new JSONObject(response);
 
             JSONObject securityTokenInfo = jsonObject.getJSONObject("data");
@@ -31,13 +38,13 @@ public class VidStsUtil {
                 return null;
             }
 
-            String accessKeyId = securityTokenInfo.getString("accessKeyId");
-            String accessKeySecret = securityTokenInfo.getString("accessKeySecret");
-            String securityToken = securityTokenInfo.getString("securityToken");
-            String expiration = securityTokenInfo.getString("expiration");
+            String accessKeyId = securityTokenInfo.getString("AccessKeyId");
+            String accessKeySecret = securityTokenInfo.getString("AccessKeySecret");
+            String securityToken = securityTokenInfo.getString("SecurityToken");
+//            String expiration = securityTokenInfo.getString("expiration");
 
-            VcPlayerLog.e("radish", "accessKeyId = " + accessKeyId + " , accessKeySecret = " + accessKeySecret +
-                    " , securityToken = " + securityToken + " ,expiration = " + expiration);
+//            VcPlayerLog.e("radish", "accessKeyId = " + accessKeyId + " , accessKeySecret = " + accessKeySecret +
+//                    " , securityToken = " + securityToken + " ,expiration = " + expiration);
 
             VidSts vidSts = new VidSts();
             vidSts.setVid(videoId);
@@ -58,12 +65,12 @@ public class VidStsUtil {
         void onFail();
     }
 
-    public static void getVidSts(final String vid, final OnStsResultListener onStsResultListener) {
+    public static void getVidSts(final String url, final String vid, final OnStsResultListener onStsResultListener) {
         AsyncTask<Void, Void, VidSts> asyncTask = new AsyncTask<Void, Void, VidSts>() {
 
             @Override
             protected VidSts doInBackground(Void... params) {
-                return getVidSts(vid);
+                return getVidSts(url,vid);
             }
 
             @Override

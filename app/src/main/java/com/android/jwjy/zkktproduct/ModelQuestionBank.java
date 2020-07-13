@@ -8980,6 +8980,9 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                 .build();
         ModelObservableInterface queryMyCourseList = retrofit.create(ModelObservableInterface.class);
         used_answer_time = mMyTestPageIssueTime - used_answer_time;
+        if (used_answer_time > mMyTestPageIssueTime){ //判断已使用的时间大于试卷时间时，已使用的时间等于试卷时间
+            used_answer_time = mMyTestPageIssueTime;
+        }
         String strEntity = "{" +
                 " \"answer_id\": " + mAnswer_Id +
                 ",\"score\": " + score +

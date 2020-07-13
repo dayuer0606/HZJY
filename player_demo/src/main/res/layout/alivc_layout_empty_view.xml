@@ -18,7 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/alivc_common_margin_16"
-        android:textColor="@android:color/white"
+        android:textColor="@android:color/darker_gray"
         android:text="@string/download_no_downloaded"
         android:gravity="center_horizontal"
         android:textSize="@dimen/alivc_common_font_16" />
@@ -29,7 +29,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/alivc_common_margin_16"
         android:text="@string/download_no_downloaded_tips"
-        android:textColor="@android:color/white"
+        android:textColor="@android:color/darker_gray"
         android:gravity="center_horizontal"
         android:textSize="@dimen/alivc_common_font_14" />
 
