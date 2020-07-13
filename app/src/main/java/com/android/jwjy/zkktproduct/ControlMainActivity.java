@@ -2994,10 +2994,18 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
         ModelObservableInterface modelObservableInterface = retrofit.create(ModelObservableInterface.class);
         RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json;charset=UTF-8"),params);
         Call<ModelObservableInterface.BaseBean> call;
-        if (type == PlayType.LIVE) {
-            call = modelObservableInterface.getHuanTuoLiveToken(body);
+        if (!mStuId.equals("")) {
+            if (type == PlayType.LIVE) {
+                call = modelObservableInterface.getHuanTuoLiveToken(body);
+            } else {
+                call = modelObservableInterface.getHuanTuoRecToken(body);
+            }
         } else {
-            call = modelObservableInterface.getHuanTuoRecToken(body);
+            if (type == PlayType.LIVE) {
+                call = modelObservableInterface.gethuanTuoLiveZeroToken(body);
+            } else {
+                call = modelObservableInterface.gethuanTuoRecZeroToken(body);
+            }
         }
         call.enqueue(new Callback<ModelObservableInterface.BaseBean>() {
             @Override
