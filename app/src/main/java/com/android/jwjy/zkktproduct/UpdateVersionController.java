@@ -37,7 +37,7 @@ public class UpdateVersionController {
     /*
      * 记得运行该方法
      */
-    public void forceCheckUpdateInfo(String version,String url){
+    public void forceCheckUpdateInfo(Integer tf_super,String version,String url){
         if (version.equals("")){
             return;
         }
@@ -45,32 +45,43 @@ public class UpdateVersionController {
         versionCode = getVerCode(context);
         //更新app版本号比对，info新版本号和当前的版本号versionCode做对比，如果新版本号大于本版本就运行更新方法showUpdataDialog()
         if ( Float.valueOf(version) > versionCode) {
-            showUpdataDialog(url);
+            showUpdataDialog(tf_super,url);
         }
     }
 
     /**
      * 弹出对话框提示用户更新
      */
-    protected void showUpdataDialog(String url) {
-
+    protected void showUpdataDialog(Integer tf_super,String url) {
         dialog = new Dialog(context, android.R.style.Theme_Dialog);
         dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-        dialog.setContentView(R.layout.dialog_notip_sure_cancel);
-        dialog.setCanceledOnTouchOutside(false);
-        dialog.setCancelable(false);
-        ((TextView) dialog.findViewById(R.id.dialog_content)).setText("是否进行更新?");
-        TextView button_cancel = dialog.findViewById(R.id.button_cancel);
-//        cancelBtn.setVisibility("0".equals(info3) ? View.GONE : View.VISIBLE);
-        // 取消更新
-        button_cancel.setOnClickListener(v -> dialog.dismiss());
 
-        // 确认更新
-        dialog.findViewById(R.id.button_sure).setOnClickListener(v -> {
-            dialog.dismiss();
-            downLoadApk(url);
-        });
-
+        if (tf_super != null && tf_super == 1){ // 强制更新
+            dialog.setContentView(R.layout.dialog_sure);
+            dialog.setCanceledOnTouchOutside(false);
+            dialog.setCancelable(false);
+            ((TextView) dialog.findViewById(R.id.tip)).setText("更新应用");
+            ((TextView) dialog.findViewById(R.id.dialog_content)).setText("为保证您能正常使用，您必须更新此应用");
+            // 确认更新
+            dialog.findViewById(R.id.button_sure).setOnClickListener(v -> {
+                dialog.dismiss();
+                downLoadApk(url);
+            });
+        } else {
+            dialog.setContentView(R.layout.dialog_notip_sure_cancel);
+            dialog.setCanceledOnTouchOutside(false);
+            dialog.setCancelable(false);
+            ((TextView) dialog.findViewById(R.id.dialog_content)).setText("是否进行更新?");
+            TextView button_cancel = dialog.findViewById(R.id.button_cancel);
+            //        cancelBtn.setVisibility("0".equals(info3) ? View.GONE : View.VISIBLE);
+            // 取消更新
+            button_cancel.setOnClickListener(v -> dialog.dismiss());
+            // 确认更新
+            dialog.findViewById(R.id.button_sure).setOnClickListener(v -> {
+                dialog.dismiss();
+                downLoadApk(url);
+            });
+        }
         dialog.show();
     }
 

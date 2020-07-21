@@ -7971,7 +7971,6 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                             if (myTestPageIssueDataBean.question_id == null){
                                 continue;
                             }
-                            myTestPageIssueDataBean.myAnswer = "";
                             if (myTestPageIssueDataBean.question_type == 1 || myTestPageIssueDataBean.question_type == 2) {
                                 AnswerInfo answerInfo = new AnswerInfo();
                                 answerInfo.answer = myTestPageIssueDataBean.myAnswer;
@@ -8021,8 +8020,8 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                         mMyFavoriteQuestionDataBeans = null;
                         questionBankAnswerRecordDataBeanLists = null;
                         mCurrentIndex = 0;
-                        mMyTestPageIssueTime = myTestPageIssueBean.answer_time;
-                        mTime = myTestPageIssueBean.used_answer_time;
+                        mMyTestPageIssueTime = myTestPageIssueBean.answer_time * 60;
+                        mTime = myTestPageIssueBean.answer_time * 60 - myTestPageIssueBean.used_answer_time;
                         mCurrentChapterName = name;
                         QuestionBankDetailsQuestionModeTestPaperShow();
                         LoadingDialog.getInstance(mControlMainActivity).dismiss();
@@ -9243,7 +9242,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
             } else {
                 AnswerInfo answerInfo = mMyQuestionBankExercisesAnswerMap.get(myTestPageIssueDataBean.question_id);
                 if (answerInfo != null) {
-                    error_num = error_num + "#" + myTestPageIssueDataBean.question_id + "#" + answerInfo.result + "#" + answerInfo.answer + ";";
+//                    error_num = error_num + "#" + myTestPageIssueDataBean.question_id + "#" + answerInfo.result + "#" + answerInfo.answer + ";";
                     String result = answerInfo.result + "#";
                     if (answerInfo.result.equals("错") && answerInfo.answer.equals("")){
                         result = result + " ";
@@ -9321,10 +9320,6 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                         LoadingDialog.getInstance(mControlMainActivity).dismiss();
                     }
                 });
-    }
-
-    public static class QuestionBankstatesBean {
-
     }
 
     //题库-出题   是不是练习模式Bean类

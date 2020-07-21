@@ -238,7 +238,7 @@ public interface ModelObservableInterface {
     @Headers("Content-Type:application/json;charset=UTF-8")
     Call<ModelClassCheduleCard.SchoolTimeTableBean> QueryAllSchoolTimeTableFromOneStu(@Body RequestBody body);
 
-    //我的课程包   MyclassPacketList
+    //我的课程包
     @POST("app/my/queryMyCoursePackageList")
     @Headers("Content-Type:application/json;charset=UTF-8")
     Call<ModelMy.MyclassPacketList> QueryMyCoursePackageList(@Body RequestBody body);

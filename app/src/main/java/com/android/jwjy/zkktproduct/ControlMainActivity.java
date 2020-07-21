@@ -2307,6 +2307,17 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
                             modelOrderDetails.onClickOrderDetailsReturn();
                         }
                     } else { //返回到课程包详情界面
+                        if (mAliyunVodPlayerView != null) {
+                            mAliyunVodPlayerView.onStop();
+                            int time1 = mAliyunVodPlayerView.getVideoPostion();
+//                        String videoId = mAliyunVodPlayerView.VideoIdGet();
+                            String SectionsId = mAliyunVodPlayerView.SectionsIdGet();
+                            mAliyunVodPlayerView.onDestroy();
+                            mAliyunVodPlayerView = null;
+                            if (!SectionsId.equals("")) {
+                                SetCourseVideoDuration(Integer.valueOf(SectionsId),time1);
+                            }
+                        }
                         mBeforePage = "";
                         for (int i = 0 ; i < beforePageS.length - 1; i ++){
                             if (i == beforePageS.length - 2){
@@ -3153,9 +3164,10 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
                         }
                         String version_num = String.valueOf(data.get("version_num"));
                         String download_address = String.valueOf(data.get("download_address"));
+                        Integer tf_super = (Integer) data.get("tf_super");
                         //检查是否前往更新
                         UpdateVersionController uvc = new UpdateVersionController(context);
-                        uvc.forceCheckUpdateInfo(version_num,download_address);//运行该方法
+                        uvc.forceCheckUpdateInfo(tf_super,version_num,download_address);//运行该方法
                         LoadingDialog.getInstance(context).dismiss();
                     }
 

@@ -3410,13 +3410,15 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                                 courseSectionsInfo.mCourseSectionsOrder = String.valueOf(courseCatalogSectionBean.section_sort);
                                 courseSectionsInfo.mCourseSectionsName = courseCatalogSectionBean.section_name;
                                 courseSectionsInfo.mVideoId = courseCatalogSectionBean.video_id;
-                                SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");if (courseCatalogSectionBean.Duration == null) {
+                                SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
+                                formatter.setTimeZone(TimeZone.getTimeZone("GMT+0"));
+                                if (courseCatalogSectionBean.Duration == null) {
                                     courseCatalogSectionBean.Duration = 0;
                                 }
                                 String hms = formatter.format(courseCatalogSectionBean.Duration * 1000);
                                 courseSectionsInfo.mCourseSectionsTime = hms;
                                 courseSectionsInfo.mCourseSectionsTime1 = courseCatalogSectionBean.Duration * 1000;
-                                courseSectionsInfo.mCourseSectionsLearnProgress = Double.valueOf(courseCatalogSectionBean.sectionLearningRate) * 100 + "%";
+                                courseSectionsInfo.mCourseSectionsLearnProgress = courseCatalogSectionBean.sectionLearningRate * 100 + "%";
                                 courseChaptersInfo.mCourseSectionsInfoList.add(courseSectionsInfo);
                             }
                         }
@@ -3621,14 +3623,14 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                                 courseSectionsInfo.mCourseSectionsName = courseCatalogSectionBean.section_name;
                                 courseSectionsInfo.mVideoId = courseCatalogSectionBean.video_id;
                                 SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
-                                formatter.setTimeZone(TimeZone.getTimeZone("GMT+00:00"));
+                                formatter.setTimeZone(TimeZone.getTimeZone("GMT+0"));
                                 if (courseCatalogSectionBean.Duration == null) {
                                     courseCatalogSectionBean.Duration = 0;
                                 }
                                 String hms = formatter.format(courseCatalogSectionBean.Duration * 1000);
                                 courseSectionsInfo.mCourseSectionsTime = hms;
                                 courseSectionsInfo.mCourseSectionsTime1 = courseCatalogSectionBean.Duration * 1000;
-                                courseSectionsInfo.mCourseSectionsLearnProgress = Double.valueOf(courseCatalogSectionBean.sectionLearningRate) * 100 + "%";
+                                courseSectionsInfo.mCourseSectionsLearnProgress = courseCatalogSectionBean.sectionLearningRate * 100 + "%";
                                 courseChaptersInfo.mCourseSectionsInfoList.add(courseSectionsInfo);
                             }
                         }
@@ -3736,14 +3738,14 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                         courseSectionsInfo.mCourseSectionsName = courseCatalogSectionBean.section_name;
                         courseSectionsInfo.mVideoId = courseCatalogSectionBean.video_id;
                         SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
-                        formatter.setTimeZone(TimeZone.getTimeZone("GMT+00:00"));
+                        formatter.setTimeZone(TimeZone.getTimeZone("GMT+0"));
                         if (courseCatalogSectionBean.Duration == null) {
                             courseCatalogSectionBean.Duration = 0;
                         }
                         String hms = formatter.format(courseCatalogSectionBean.Duration * 1000);
                         courseSectionsInfo.mCourseSectionsTime = hms;
                         courseSectionsInfo.mCourseSectionsTime1 = courseCatalogSectionBean.Duration * 1000;
-                        courseSectionsInfo.mCourseSectionsLearnProgress = Double.valueOf(courseCatalogSectionBean.sectionLearningRate) * 100 + "%";
+                        courseSectionsInfo.mCourseSectionsLearnProgress = courseCatalogSectionBean.sectionLearningRate * 100 + "%";
                         courseChaptersInfo.mCourseSectionsInfoList.add(courseSectionsInfo);
                     }
                 }
