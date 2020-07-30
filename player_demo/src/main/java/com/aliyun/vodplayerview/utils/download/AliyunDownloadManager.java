@@ -13,6 +13,7 @@ import com.aliyun.player.bean.ErrorInfo;
 import com.aliyun.player.nativeclass.MediaInfo;
 import com.aliyun.player.nativeclass.TrackInfo;
 import com.aliyun.player.source.VidSts;
+import com.aliyun.svideo.common.PublicCommonUtil;
 import com.aliyun.svideo.common.utils.ThreadUtils;
 import com.aliyun.vodplayer.R;
 import com.aliyun.vodplayerview.constants.PlayParameter;
@@ -54,11 +55,11 @@ public class AliyunDownloadManager {
     /**
      * 下载路径
      */
-    private String downloadDir = Environment.getExternalStorageDirectory().getAbsolutePath() + "/zhikaowangxiaoedu_save";
+    private String downloadDir = Environment.getExternalStorageDirectory().getAbsolutePath() + PublicCommonUtil.dowmloadVideoSavePath;
     /**
      * 加密文件路径
      */
-    private String encryptFilePath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/zhikaowangxiaoedu/encryptedApp.dat";
+    private String encryptFilePath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + PublicCommonUtil.encryptedAppPath + "/encryptedApp.dat";
 
     /**
      * AliyunDownloadManager 单例

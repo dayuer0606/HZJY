@@ -61,6 +61,7 @@ import com.aliyun.player.nativeclass.PlayerConfig;
 import com.aliyun.player.source.UrlSource;
 import com.aliyun.player.source.VidSts;
 import com.aliyun.private_service.PrivateService;
+import com.aliyun.svideo.common.PublicCommonUtil;
 import com.aliyun.svideo.common.utils.ToastUtils;
 import com.aliyun.utils.VcPlayerLog;
 import com.aliyun.vodplayerview.constants.PlayParameter;
@@ -100,7 +101,6 @@ import com.android.jwjy.zkktproduct.entity.PrePlaybackEntity;
 import com.android.jwjy.zkktproduct.net.HttpRequest;
 import com.android.jwjy.zkktproduct.util.ActivityUtil;
 import com.google.gson.Gson;
-import com.talkfun.sdk.http.MediaUrlConfig;
 import com.talkfun.sdk.http.PreDataRequestManager;
 import com.talkfun.sdk.model.PreDataForPlaybackInitModel;
 
@@ -208,7 +208,7 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
         mIpType.put("http://wangxiao.16zige.com/","yixiao");
         mIpType.put("http://wangxiao.yixiaojiaoyu.com/","yixiao");
         //阿里视频播放下载，必须初始化的服务，必须放在最开始的位置
-        PrivateService.initService(getApplicationContext(), Environment.getExternalStorageDirectory().getAbsolutePath() + "/zhikaowangxiaoedu/encryptedApp.dat");
+        PrivateService.initService(getApplicationContext(), Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + PublicCommonUtil.encryptedAppPath + "/encryptedApp.dat");
         //拷贝encryptedApp.dat文件到所需位置
         copyAssets();
         //阿里云视频播放数据库初始化
@@ -2831,7 +2831,7 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             //第二个参数为 包名.fileprovider
-            uri = FileProvider.getUriForFile(ControlMainActivity.this, "com.android.jwjy.zkktproduct.fileprovider", cameraSavePath);
+            uri = FileProvider.getUriForFile(ControlMainActivity.this, PublicCommonUtil.fileProvider, cameraSavePath);
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         } else {
             uri = Uri.fromFile(cameraSavePath);
@@ -2940,7 +2940,7 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
             //如果是7.0剪裁图片 同理 需要把uri包装
             //通过FileProvider创建一个content类型的Uri
             Uri inputUri = FileProvider.getUriForFile(ControlMainActivity.this,
-                    "com.android.jwjy.zkktproduct.fileprovider", mOutImage);
+                    PublicCommonUtil.fileProvider, mOutImage);
             startPhotoZoom(inputUri);//设置输入类型
         } else {
             Uri inputUri = Uri.fromFile(mOutImage);
@@ -4404,20 +4404,20 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
 
     //拷贝encryptedApp.dat文件到所需位置
     private void copyAssets() {
-        commenUtils = Common.getInstance(getApplicationContext()).copyAssetsToSD("encrypt", "zhikaowangxiaoedu");
+        commenUtils = Common.getInstance(getApplicationContext()).copyAssetsToSD("encrypt", PublicCommonUtil.encryptedAppPath);
         commenUtils.setFileOperateCallback(
 
                 new Common.FileOperateCallback() {
                     @Override
                     public void onSuccess() {
-                        File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/zhikaowangxiaoedu_save/");
+                        File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + PublicCommonUtil.dowmloadVideoSavePath);
                         if (!file.exists()) {
                             file.mkdir();
                         }
 
                         // 获取AliyunDownloadManager对象
                         downloadManager = AliyunDownloadManager.getInstance(getApplicationContext(),mThis);
-                        downloadManager.setEncryptFilePath(Environment.getExternalStorageDirectory().getAbsolutePath() + "/zhikaowangxiaoedu/encryptedApp.dat");
+                        downloadManager.setEncryptFilePath(Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + PublicCommonUtil.encryptedAppPath + "/encryptedApp.dat");
                         downloadManager.setDownloadDir(file.getAbsolutePath());
                         //设置同时下载个数
                         downloadManager.setMaxNum(4);
