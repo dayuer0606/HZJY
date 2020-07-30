@@ -1664,6 +1664,9 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
 
     //练习模式-选完单选直接显示解析
     private void ModeTestFindAnalysis(){
+        if (mCurrentAnswerMode.equals("exam")){
+            return;
+        }
         TextView coursedetails_answerpaper_analysisbutton = mModelQuestionBankAnswerPaperView.findViewById(R.id.coursedetails_answerpaper_analysisbutton);
         LinearLayout coursedetails_answerpaper_analysis = mModelQuestionBankAnswerPaperView.findViewById(R.id.coursedetails_answerpaper_analysis);
         coursedetails_answerpaper_analysis.removeAllViews();
