@@ -161,7 +161,7 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
     private ModelOrderDetails modelOrderDetails = null;
     //token
     public String mToken = "";
-    public String mIpadress = "http://wangxiao.jianweijiaoyu.com/";
+    public String mIpadress = PublicCommonUtil.ipadress;
     private Map<String, String> mIpType = new HashMap<>();
     public String mStuId = "";
 
