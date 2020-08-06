@@ -50,5 +50,5 @@ public class PlayParameter {
     /**
      * sts请求地址
      */
-    public static String STS_GET_URL = "app/user/stuCourseAccessVideo";
+    public static String STS_GET_URL = "app/user/stuCourseAccessVideo/";
 }

@@ -3431,7 +3431,8 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
             }
             // 如果当前播放列表为空, 网络重连后需要重新请求sts和播放列表, 其他情况不需要
             if (alivcVideoInfos != null && alivcVideoInfos.size() == 0) {
-                VidStsUtil.getVidSts(PlayParameter.STS_GET_URL,PlayParameter.PLAY_PARAM_VID, new MyStsListener(this));
+//                VidStsUtil.getVidSts(PlayParameter.STS_GET_URL,PlayParameter.PLAY_PARAM_VID, new MyStsListener(this));
+                VidStsUtil.getVidSts(mIpadress,PlayParameter.PLAY_PARAM_VID, new MyStsListener(this));
             }
         }
     }
@@ -3576,7 +3577,8 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
      * 鉴权过期
      */
     private void onTimExpiredError() {
-        VidStsUtil.getVidSts(PlayParameter.STS_GET_URL,PlayParameter.PLAY_PARAM_VID, new RetryExpiredSts(this));
+//        VidStsUtil.getVidSts(PlayParameter.STS_GET_URL,PlayParameter.PLAY_PARAM_VID, new RetryExpiredSts(this));
+        VidStsUtil.getVidSts(mIpadress,PlayParameter.PLAY_PARAM_VID, new RetryExpiredSts(this));
     }
     /**
      * 因为鉴权过期,而去重新鉴权
@@ -5054,7 +5056,7 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
      * 刷新下载的VidSts
      */
     private void refreshDownloadVidSts(final AliyunDownloadMediaInfo downloadMediaInfo) {
-        VidStsUtil.getVidSts(PlayParameter.STS_GET_URL,downloadMediaInfo.getVidSts().getVid(), new VidStsUtil.OnStsResultListener() {
+        VidStsUtil.getVidSts(mIpadress,downloadMediaInfo.getVidSts().getVid(), new VidStsUtil.OnStsResultListener() {
             @Override
             public void onSuccess(String vid, String akid, String akSecret, String token) {
                 if (downloadManager != null) {
