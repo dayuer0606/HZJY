@@ -7977,6 +7977,9 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                             if (myTestPageIssueDataBean.question_type == 1 || myTestPageIssueDataBean.question_type == 2) {
                                 AnswerInfo answerInfo = new AnswerInfo();
                                 answerInfo.answer = myTestPageIssueDataBean.myAnswer;
+                                if (myTestPageIssueDataBean.myAnswer == null){
+                                    myTestPageIssueDataBean.myAnswer = "";
+                                }
                                 if (myTestPageIssueDataBean.myAnswer.equals(myTestPageIssueDataBean.answer)) {
                                     answerInfo.result = "对";
                                 } else {
@@ -7985,6 +7988,9 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                                 mMyQuestionBankExercisesAnswerMap.put(myTestPageIssueDataBean.question_id, answerInfo);
                             } else if (myTestPageIssueDataBean.question_type == 4){
                                 AnswerInfo answerInfo = new AnswerInfo();
+                                if (myTestPageIssueDataBean.myAnswer == null){
+                                    myTestPageIssueDataBean.myAnswer = "";
+                                }
                                 answerInfo.answer = myTestPageIssueDataBean.myAnswer;
                                 if (!myTestPageIssueDataBean.myAnswer.equals("")){ //简答题只要答案不为空全是正确
                                     answerInfo.result = "对";
@@ -7998,6 +8004,9 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                                         MyTestPageIssueBean.MyTestPageIssueDataBean MyTestPageIssueDataBean1 = myTestPageIssueDataBean.question_id_group1.get(num);
                                         if (MyTestPageIssueDataBean1 == null) {
                                             continue;
+                                        }
+                                        if (MyTestPageIssueDataBean1.myAnswer == null){
+                                            MyTestPageIssueDataBean1.myAnswer = "";
                                         }
                                         AnswerInfo answerInfo = new AnswerInfo();
                                         answerInfo.answer = MyTestPageIssueDataBean1.myAnswer;
