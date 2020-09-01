@@ -107,6 +107,8 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
     private Map<Integer,AnswerInfo> mMyQuestionBankExercisesAnswerMap = new HashMap<>();
     private Integer mAnswer_Id = null;
     private List<MyTestPageIssueBean.MyTestPageIssueDataBean> mMyTestPageIssueDataBeans = null;
+    private String mTestPageIssueDataTypeScore = "";
+    private String mTestPageIssueDataScore = "";
     private Integer mMyTestPageIssueTime = null;
     private List<QuestionBankMyFavoriteQuestionBean.QuestionBankMyFavoriteQuestionDataBean> mMyFavoriteQuestionDataBeans = null;
 
@@ -226,11 +228,11 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
 //            rl.height = RelativeLayout.LayoutParams.MATCH_PARENT;
 //            questionbank_main_nodata.setLayoutParams(rl);
 //        } else {
-            if (context.contains("我的题库")) {//如果是我的题库，显示的题库只有我购买所有课程所包含的项目和科目
-                MyQuestionBankBeanList();
-            } else {
-                getQuestionBankBeanList();
-            }
+        if (context.contains("我的题库")) {//如果是我的题库，显示的题库只有我购买所有课程所包含的项目和科目
+            MyQuestionBankBeanList();
+        } else {
+            getQuestionBankBeanList();
+        }
 //        }
     }
 
@@ -311,8 +313,8 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                     modelquestionbank_subquestionbank1.setText(subLibraryBean.getIbs_name());
                     modelquestionbank_mainquestionbank_list.addView(view1);
                     //查询子题库的名称
-        //        //判断题库是否有做题权限，如果没有不可点击颜色变灰
-        //        if (!ibs_name.equals("科目二")) {
+                    //        //判断题库是否有做题权限，如果没有不可点击颜色变灰
+                    //        if (!ibs_name.equals("科目二")) {
                     modelquestionbank_subquestionbank1.setClickable(true);
                     modelquestionbank_subquestionbank1.setOnClickListener(v -> {
                         //问答详情  传值id和name
@@ -321,9 +323,9 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                         //查询此子题库是否有未完成的试题
                         getMyQuestionBankGoon();
                     });
-        //        } else {
-        //            modelquestionbank_subquestionbank1.setTextColor(view1.getResources().getColor(R.color.black999999));
-        //        }
+                    //        } else {
+                    //            modelquestionbank_subquestionbank1.setTextColor(view1.getResources().getColor(R.color.black999999));
+                    //        }
                 }
             }
         }
@@ -457,7 +459,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
         //子题库标题
         TextView questionbank_sub_details_brief = mModelQuestionBankDetailsView.findViewById(R.id.questionbank_sub_details_brief);
         questionbank_sub_details_brief.setText("自由选择章节知识点各个突破");
-         //题库章节考点网络请求赋值
+        //题库章节考点网络请求赋值
         getMyQuestionBankChapterTest();
     }
 
@@ -474,12 +476,12 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
         ImageView questionbank_sub_details_quicktask_start = view.findViewById(R.id.questionbank_sub_details_quicktask_start);
         questionbank_sub_details_quicktask_start.setClickable(true);
         questionbank_sub_details_quicktask_start.setOnClickListener(v -> {
-            if (myQuestionBankGoonDataBeans != null){
-                if (myQuestionBankGoonDataBeans.size() != 0) {
-                    Toast.makeText(mControlMainActivity, "您有未完成的试卷，请继续答题或提交未完成的试卷！", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-            }
+//            if (myQuestionBankGoonDataBeans != null){
+//                if (myQuestionBankGoonDataBeans.size() != 0) {
+//                    Toast.makeText(mControlMainActivity, "您有未完成的试卷，请继续答题或提交未完成的试卷！", Toast.LENGTH_SHORT).show();
+//                    return;
+//                }
+//            }
             //网络请求开始做题
             getqueryMyQuestionBankQuickIssue();
         });
@@ -518,12 +520,12 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                 questionbank_sub_details_chapterexercises1_name.setClickable(true);
                 //点击节或考点名称，进行节或考点抽题
                 questionbank_sub_details_chapterexercises1_name.setOnClickListener(v -> {
-                    if (myQuestionBankGoonDataBeans != null){
-                        if (myQuestionBankGoonDataBeans.size() != 0) {
-                            Toast.makeText(mControlMainActivity, "您有未完成的试卷，请继续答题或提交未完成的试卷！", Toast.LENGTH_SHORT).show();
-                            return;
-                        }
-                    }
+//                    if (myQuestionBankGoonDataBeans != null){
+//                        if (myQuestionBankGoonDataBeans.size() != 0) {
+//                            Toast.makeText(mControlMainActivity, "您有未完成的试卷，请继续答题或提交未完成的试卷！", Toast.LENGTH_SHORT).show();
+//                            return;
+//                        }
+//                    }
                     mCurrentChapterName = jieBean.name;
                     mChapter_test_point_id = jieBean.chapter_test_point_id;
                     getQueryTopicSetting(jieBean.chapter_test_point_id );
@@ -588,7 +590,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
             LinearLayout questionbank_questionsetting_questionmode_exam = mModelQuestionBankSettingView.findViewById(R.id.questionbank_questionsetting_questionmode_exam);
             questionbank_questionsetting_questionmode_test.setClickable(true);
             questionbank_questionsetting_questionmode_test.setOnClickListener(v -> {
-                  //显示当前的题索引值
+                //显示当前的题索引值
                 mCurrentIndex = 0;
                 //练习模式的详情
                 getqueryMyQuestionBankIssue();
@@ -995,6 +997,25 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
         mModelQuestionBankHandInView = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_handinpaper, null);
         fragmentquestionbank_main.addView(mModelQuestionBankHandInView);
         ControllerRoundProgressBar coursedetails_handinpaper_accuracyrateprogress = mModelQuestionBankHandInView.findViewById(R.id.coursedetails_handinpaper_accuracyrateprogress);
+        if (!mTestPageIssueDataScore.equals("")){
+            LinearLayout score_linear = mModelQuestionBankHandInView.findViewById(R.id.score_linear);
+            LinearLayout.LayoutParams ll = (LinearLayout.LayoutParams) score_linear.getLayoutParams();
+            ll.height = LinearLayout.LayoutParams.WRAP_CONTENT;
+            score_linear.setLayoutParams(ll);
+            TextView score = mModelQuestionBankHandInView.findViewById(R.id.score);
+            score.setText(mTestPageIssueDataScore);
+            ll = (LinearLayout.LayoutParams) coursedetails_handinpaper_accuracyrateprogress.getLayoutParams();
+            ll.height = 0;
+            coursedetails_handinpaper_accuracyrateprogress.setLayoutParams(ll);
+        } else {
+            LinearLayout score_linear = mModelQuestionBankHandInView.findViewById(R.id.score_linear);
+            LinearLayout.LayoutParams ll = (LinearLayout.LayoutParams) score_linear.getLayoutParams();
+            ll.height = 0;
+            score_linear.setLayoutParams(ll);
+            ll = (LinearLayout.LayoutParams) coursedetails_handinpaper_accuracyrateprogress.getLayoutParams();
+            ll.height = mModelQuestionBankHandInView.getResources().getDimensionPixelSize(R.dimen.dp_137);
+            coursedetails_handinpaper_accuracyrateprogress.setLayoutParams(ll);
+        }
         TextView questionbank_handinpaper__main_titletext = mModelQuestionBankHandInView.findViewById(R.id.questionbank_handinpaper__main_titletext);
         questionbank_handinpaper__main_titletext.setText(mCurrentChapterName);
         LinearLayout coursedetails_handinpaper_details = mModelQuestionBankHandInView.findViewById(R.id.coursedetails_handinpaper_details);
@@ -1176,7 +1197,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
         HideAllLayout();
         RelativeLayout fragmentquestionbank_main = mview.findViewById(R.id.fragmentquestionbank_main);
         if (mModelQuestionBankAnswerPaperView == null) {
-             //练习模式分析内容
+            //练习模式分析内容
             mModelQuestionBankAnswerPaperView = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_answerpaper, null);
         }
         fragmentquestionbank_main.addView(mModelQuestionBankAnswerPaperView);
@@ -1347,7 +1368,10 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
         //答题卡
         LinearLayout button_questionbank_answerquestioncard = mModelQuestionBankAnswerPaperView.findViewById(R.id.button_questionbank_answerquestioncard);
         //添加答题卡
-        button_questionbank_answerquestioncard.setOnClickListener(v ->getQuestionBankAnswerSheet(1));
+        button_questionbank_answerquestioncard.setOnClickListener(v ->{
+            mTestPageIssueDataScore = "";
+            getQuestionBankAnswerSheet(1);
+        });
         //点击字号
         ImageView questionbank_answerpaper_fontsize = mModelQuestionBankAnswerPaperView.findViewById(R.id.questionbank_answerpaper_fontsize);
         questionbank_answerpaper_fontsize.setOnClickListener(v -> {
@@ -1449,46 +1473,46 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                     Toast.makeText(mControlMainActivity, "此题暂无解析！", Toast.LENGTH_SHORT).show();
                     return;
                 }
+                if (myQuestionBankExercisesDataBean.question_analysis == null){
+                    myQuestionBankExercisesDataBean.question_analysis = "";
+                }
                 if (myQuestionBankExercisesDataBean.question_analysis == null || myQuestionBankExercisesDataBean.question_type == null) {
                     Toast.makeText(mControlMainActivity, "此题暂无解析！", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if (myQuestionBankExercisesDataBean.question_analysis.equals("")) {
-                    Toast.makeText(mControlMainActivity, "此题暂无解析！", Toast.LENGTH_SHORT).show();
-                    return;
-                }
+//                if (myQuestionBankExercisesDataBean.question_analysis.equals("")) {
+//                    Toast.makeText(mControlMainActivity, "此题暂无解析！", Toast.LENGTH_SHORT).show();
+//                    return;
+//                }
                 LinearLayout.LayoutParams ll = (LinearLayout.LayoutParams) coursedetails_answerpaper_analysisbutton.getLayoutParams();
                 ll.height = 0;
                 ll.topMargin = 0;
                 coursedetails_answerpaper_analysisbutton.setLayoutParams(ll);
                 if (myQuestionBankExercisesDataBean.question_type == 1 || myQuestionBankExercisesDataBean.question_type == 2) {//单选题或多选题
                     if (myQuestionBankExercisesDataBean.optionanswer == null) {
-                        Toast.makeText(mControlMainActivity, "此题暂无解析！", Toast.LENGTH_SHORT).show();
-                        return;
+                        myQuestionBankExercisesDataBean.optionanswer = "";
                     }
                     //个人答案
                     View view = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_answerpaper_analysis1, null);
                     coursedetails_answerpaper_analysis.addView(view);
                     //修改内容为正确答案
                     String[] optionanswerS = myQuestionBankExercisesDataBean.optionanswer.split("#EDU;");
-                    if (optionanswerS == null) {
-                        Toast.makeText(mControlMainActivity, "此题暂无解析！", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
                     String currentAnswer = "";
-                    for (int i = 0; i < optionanswerS.length; i++) {
-                        String[] optionanswerS1 = optionanswerS[i].substring(1).split("#");
-                        if (optionanswerS1.length != 3) {
-                            break;
-                        }
-                        if (optionanswerS1[1].equals("是")) {
-                            currentAnswer = currentAnswer + optionanswerS1[0] + " ";
+                    if (optionanswerS != null) {
+                        for (int i = 0; i < optionanswerS.length; i++) {
+                            String[] optionanswerS1 = optionanswerS[i].substring(1).split("#");
+                            if (optionanswerS1.length != 3) {
+                                break;
+                            }
+                            if (optionanswerS1[1].equals("是")) {
+                                currentAnswer = currentAnswer + optionanswerS1[0] + " ";
+                            }
                         }
                     }
-                    if (currentAnswer.equals("")) {
-                        Toast.makeText(mControlMainActivity, "此题暂无解析！", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
+//                    if (currentAnswer.equals("")) {
+//                        Toast.makeText(mControlMainActivity, "此题暂无解析！", Toast.LENGTH_SHORT).show();
+//                        return;
+//                    }
                     //正确答案
                     TextView questionbank_analysis1_rightAnswer = view.findViewById(R.id.questionbank_analysis1_rightAnswer);
                     questionbank_analysis1_rightAnswer.setText(currentAnswer);
@@ -1670,96 +1694,95 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
         TextView coursedetails_answerpaper_analysisbutton = mModelQuestionBankAnswerPaperView.findViewById(R.id.coursedetails_answerpaper_analysisbutton);
         LinearLayout coursedetails_answerpaper_analysis = mModelQuestionBankAnswerPaperView.findViewById(R.id.coursedetails_answerpaper_analysis);
         coursedetails_answerpaper_analysis.removeAllViews();
-            int questionSize = 0;
-            if (mMyQuestionBankExercisesBean == null) {
-                Toast.makeText(mControlMainActivity, "此题暂无解析！", Toast.LENGTH_SHORT).show();
-                return;
+        int questionSize = 0;
+        if (mMyQuestionBankExercisesBean == null) {
+            Toast.makeText(mControlMainActivity, "此题暂无解析！", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        MyQuestionBankExercises.MyQuestionBankExercisesDataBean myQuestionBankExercisesDataBean = null;
+        if (mMyQuestionBankExercisesBean.danxuantiQuestion != null){
+            questionSize = questionSize + mMyQuestionBankExercisesBean.danxuantiQuestion.size();
+            if (mCurrentIndex < questionSize) {
+                myQuestionBankExercisesDataBean = mMyQuestionBankExercisesBean.danxuantiQuestion.get(mCurrentIndex);
             }
-            MyQuestionBankExercises.MyQuestionBankExercisesDataBean myQuestionBankExercisesDataBean = null;
-            if (mMyQuestionBankExercisesBean.danxuantiQuestion != null){
-                questionSize = questionSize + mMyQuestionBankExercisesBean.danxuantiQuestion.size();
-                if (mCurrentIndex < questionSize) {
-                    myQuestionBankExercisesDataBean = mMyQuestionBankExercisesBean.danxuantiQuestion.get(mCurrentIndex);
-                }
-            }
-            if (mMyQuestionBankExercisesBean.duoxuantiQuestion != null){
-                questionSize = questionSize + mMyQuestionBankExercisesBean.duoxuantiQuestion.size();
-                if (myQuestionBankExercisesDataBean == null) {
-                    if (mCurrentIndex < questionSize) {
-                        int count = 0;
-                        if (mMyQuestionBankExercisesBean.danxuantiQuestion != null) {
-                            count = mCurrentIndex - mMyQuestionBankExercisesBean.danxuantiQuestion.size();
-                        }
-                        if (count < mMyQuestionBankExercisesBean.duoxuantiQuestion.size()) {
-                            myQuestionBankExercisesDataBean = mMyQuestionBankExercisesBean.duoxuantiQuestion.get(count);
-                        }
-                    }
-                }
-            }
-            if (mMyQuestionBankExercisesBean.jinadatitiQuestion != null){
-                questionSize = questionSize + mMyQuestionBankExercisesBean.jinadatitiQuestion.size();
-                if (mCurrentIndex < questionSize && myQuestionBankExercisesDataBean == null) {
-                    int count = mCurrentIndex;
-                    if (mMyQuestionBankExercisesBean.danxuantiQuestion != null) {
-                        count = mCurrentIndex - mMyQuestionBankExercisesBean.danxuantiQuestion.size();
-                    }
-                    if (mMyQuestionBankExercisesBean.duoxuantiQuestion != null) {
-                        count = count - mMyQuestionBankExercisesBean.duoxuantiQuestion.size();
-                    }
-                    if (count < mMyQuestionBankExercisesBean.jinadatitiQuestion.size()) {
-                        myQuestionBankExercisesDataBean = mMyQuestionBankExercisesBean.jinadatitiQuestion.get(count);
-                    }
-                }
-            }
-            if (mMyQuestionBankExercisesBean.cailiaotiQuestion != null){
-                questionSize = questionSize + mMyQuestionBankExercisesBean.cailiaotiQuestion.size();
-                if (mCurrentIndex < questionSize && myQuestionBankExercisesDataBean == null) {
-                    int count = mCurrentIndex;
-                    if (mMyQuestionBankExercisesBean.danxuantiQuestion != null) {
-                        count = mCurrentIndex - mMyQuestionBankExercisesBean.danxuantiQuestion.size();
-                    }
-                    if (mMyQuestionBankExercisesBean.duoxuantiQuestion != null) {
-                        count = count - mMyQuestionBankExercisesBean.duoxuantiQuestion.size();
-                    }
-                    if (mMyQuestionBankExercisesBean.jinadatitiQuestion != null) {
-                        count = count - mMyQuestionBankExercisesBean.jinadatitiQuestion.size();
-                    }
-                    if (count < mMyQuestionBankExercisesBean.cailiaotiQuestion.size()) {
-                        myQuestionBankExercisesDataBean = mMyQuestionBankExercisesBean.cailiaotiQuestion.get(count);
-                    }
-                }
-            }
+        }
+        if (mMyQuestionBankExercisesBean.duoxuantiQuestion != null){
+            questionSize = questionSize + mMyQuestionBankExercisesBean.duoxuantiQuestion.size();
             if (myQuestionBankExercisesDataBean == null) {
-                Toast.makeText(mControlMainActivity, "此题暂无解析！", Toast.LENGTH_SHORT).show();
-                return;
-            }
-            if (myQuestionBankExercisesDataBean.question_analysis == null || myQuestionBankExercisesDataBean.question_type == null) {
-                Toast.makeText(mControlMainActivity, "此题暂无解析！", Toast.LENGTH_SHORT).show();
-                return;
-            }
-            if (myQuestionBankExercisesDataBean.question_analysis.equals("")) {
-                Toast.makeText(mControlMainActivity, "此题暂无解析！", Toast.LENGTH_SHORT).show();
-                return;
-            }
-            LinearLayout.LayoutParams ll = (LinearLayout.LayoutParams) coursedetails_answerpaper_analysisbutton.getLayoutParams();
-            ll.height = 0;
-            ll.topMargin = 0;
-            coursedetails_answerpaper_analysisbutton.setLayoutParams(ll);
-            if (myQuestionBankExercisesDataBean.question_type == 1 || myQuestionBankExercisesDataBean.question_type == 2) {//单选题或多选题
-                if (myQuestionBankExercisesDataBean.optionanswer == null) {
-                    Toast.makeText(mControlMainActivity, "此题暂无解析！", Toast.LENGTH_SHORT).show();
-                    return;
+                if (mCurrentIndex < questionSize) {
+                    int count = 0;
+                    if (mMyQuestionBankExercisesBean.danxuantiQuestion != null) {
+                        count = mCurrentIndex - mMyQuestionBankExercisesBean.danxuantiQuestion.size();
+                    }
+                    if (count < mMyQuestionBankExercisesBean.duoxuantiQuestion.size()) {
+                        myQuestionBankExercisesDataBean = mMyQuestionBankExercisesBean.duoxuantiQuestion.get(count);
+                    }
                 }
-                //个人答案
-                View view = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_answerpaper_analysis1, null);
-                coursedetails_answerpaper_analysis.addView(view);
-                //修改内容为正确答案
-                String[] optionanswerS = myQuestionBankExercisesDataBean.optionanswer.split("#EDU;");
-                if (optionanswerS == null) {
-                    Toast.makeText(mControlMainActivity, "此题暂无解析！", Toast.LENGTH_SHORT).show();
-                    return;
+            }
+        }
+        if (mMyQuestionBankExercisesBean.jinadatitiQuestion != null){
+            questionSize = questionSize + mMyQuestionBankExercisesBean.jinadatitiQuestion.size();
+            if (mCurrentIndex < questionSize && myQuestionBankExercisesDataBean == null) {
+                int count = mCurrentIndex;
+                if (mMyQuestionBankExercisesBean.danxuantiQuestion != null) {
+                    count = mCurrentIndex - mMyQuestionBankExercisesBean.danxuantiQuestion.size();
                 }
-                String currentAnswer = "";
+                if (mMyQuestionBankExercisesBean.duoxuantiQuestion != null) {
+                    count = count - mMyQuestionBankExercisesBean.duoxuantiQuestion.size();
+                }
+                if (count < mMyQuestionBankExercisesBean.jinadatitiQuestion.size()) {
+                    myQuestionBankExercisesDataBean = mMyQuestionBankExercisesBean.jinadatitiQuestion.get(count);
+                }
+            }
+        }
+        if (mMyQuestionBankExercisesBean.cailiaotiQuestion != null){
+            questionSize = questionSize + mMyQuestionBankExercisesBean.cailiaotiQuestion.size();
+            if (mCurrentIndex < questionSize && myQuestionBankExercisesDataBean == null) {
+                int count = mCurrentIndex;
+                if (mMyQuestionBankExercisesBean.danxuantiQuestion != null) {
+                    count = mCurrentIndex - mMyQuestionBankExercisesBean.danxuantiQuestion.size();
+                }
+                if (mMyQuestionBankExercisesBean.duoxuantiQuestion != null) {
+                    count = count - mMyQuestionBankExercisesBean.duoxuantiQuestion.size();
+                }
+                if (mMyQuestionBankExercisesBean.jinadatitiQuestion != null) {
+                    count = count - mMyQuestionBankExercisesBean.jinadatitiQuestion.size();
+                }
+                if (count < mMyQuestionBankExercisesBean.cailiaotiQuestion.size()) {
+                    myQuestionBankExercisesDataBean = mMyQuestionBankExercisesBean.cailiaotiQuestion.get(count);
+                }
+            }
+        }
+        if (myQuestionBankExercisesDataBean == null) {
+            Toast.makeText(mControlMainActivity, "此题暂无解析！", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (myQuestionBankExercisesDataBean.question_analysis == null){
+            myQuestionBankExercisesDataBean.question_analysis = "";
+        }
+        if (myQuestionBankExercisesDataBean.question_analysis == null || myQuestionBankExercisesDataBean.question_type == null) {
+            Toast.makeText(mControlMainActivity, "此题暂无解析！", Toast.LENGTH_SHORT).show();
+            return;
+        }
+//            if (myQuestionBankExercisesDataBean.question_analysis.equals("")) {
+//                Toast.makeText(mControlMainActivity, "此题暂无解析！", Toast.LENGTH_SHORT).show();
+//                return;
+//            }
+        LinearLayout.LayoutParams ll = (LinearLayout.LayoutParams) coursedetails_answerpaper_analysisbutton.getLayoutParams();
+        ll.height = 0;
+        ll.topMargin = 0;
+        coursedetails_answerpaper_analysisbutton.setLayoutParams(ll);
+        if (myQuestionBankExercisesDataBean.question_type == 1 || myQuestionBankExercisesDataBean.question_type == 2) {//单选题或多选题
+            if (myQuestionBankExercisesDataBean.optionanswer == null) {
+                myQuestionBankExercisesDataBean.optionanswer = "";
+            }
+            //个人答案
+            View view = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_answerpaper_analysis1, null);
+            coursedetails_answerpaper_analysis.addView(view);
+            //修改内容为正确答案
+            String[] optionanswerS = myQuestionBankExercisesDataBean.optionanswer.split("#EDU;");
+            String currentAnswer = "";
+            if (optionanswerS != null) {
                 for (int i = 0; i < optionanswerS.length; i++) {
                     String[] optionanswerS1 = optionanswerS[i].substring(1).split("#");
                     if (optionanswerS1.length != 3) {
@@ -1769,80 +1792,77 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                         currentAnswer = currentAnswer + optionanswerS1[0] + " ";
                     }
                 }
-                if (currentAnswer.equals("")) {
-                    Toast.makeText(mControlMainActivity, "此题暂无解析！", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                //正确答案
-                TextView questionbank_analysis1_rightAnswer = view.findViewById(R.id.questionbank_analysis1_rightAnswer);
-                questionbank_analysis1_rightAnswer.setText(currentAnswer);
+            }
+            //正确答案
+            TextView questionbank_analysis1_rightAnswer = view.findViewById(R.id.questionbank_analysis1_rightAnswer);
+            questionbank_analysis1_rightAnswer.setText(currentAnswer);
 //             //修改内容为此题的解析
-                TextView questionbank_analysis1_content = view.findViewById(R.id.questionbank_analysis1_content);
-                if (myQuestionBankExercisesDataBean.question_analysis == null) {
-                    myQuestionBankExercisesDataBean.question_analysis = "";
-                }
-                new ModelHtmlUtils(mControlMainActivity, questionbank_analysis1_content).setHtmlWithPic(myQuestionBankExercisesDataBean.question_analysis);
-                //个人答案
-                AnswerInfo answerInfo = mMyQuestionBankExercisesAnswerMap.get(myQuestionBankExercisesDataBean.question_id);
-                TextView questionbank_analysis1_yourAnswer = view.findViewById(R.id.questionbank_analysis1_yourAnswer);
-                if (answerInfo != null) {
-                    if (answerInfo.answer != null) {
-                        questionbank_analysis1_yourAnswer.setText(answerInfo.answer);
-                    } else {
-                        questionbank_analysis1_yourAnswer.setText("");
-                    }
-                }
-                //字体大小的设置
-                if (mFontSize.equals("nomal")) {
-                    questionbank_analysis1_rightAnswer.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view.getResources().getDimensionPixelSize(R.dimen.textsize17));
-                    questionbank_analysis1_content.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view.getResources().getDimensionPixelSize(R.dimen.textsize17));
-                    questionbank_analysis1_yourAnswer.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view.getResources().getDimensionPixelSize(R.dimen.textsize17));
-                } else if (mFontSize.equals("small")) {
-                    questionbank_analysis1_rightAnswer.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view.getResources().getDimensionPixelSize(R.dimen.textsize14));
-                    questionbank_analysis1_content.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view.getResources().getDimensionPixelSize(R.dimen.textsize14));
-                    questionbank_analysis1_yourAnswer.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view.getResources().getDimensionPixelSize(R.dimen.textsize14));
-                } else if (mFontSize.equals("big")) {
-                    questionbank_analysis1_rightAnswer.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view.getResources().getDimensionPixelSize(R.dimen.textsize20));
-                    questionbank_analysis1_content.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view.getResources().getDimensionPixelSize(R.dimen.textsize20));
-                    questionbank_analysis1_yourAnswer.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view.getResources().getDimensionPixelSize(R.dimen.textsize20));
-                }
-            } else if (myQuestionBankExercisesDataBean.question_type == 4) {//简答题
-                View view = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_answerpaper_analysis2, null);
-                coursedetails_answerpaper_analysis.addView(view);
-                //修改内容为正确答案
-                TextView questionbank_analysis2_rightAnswer = view.findViewById(R.id.questionbank_analysis2_rightAnswer);
-                new ModelHtmlUtils(mControlMainActivity, questionbank_analysis2_rightAnswer).setHtmlWithPic(myQuestionBankExercisesDataBean.optionanswer);
-                //修改内容为此题的解析
-                TextView questionbank_analysis2_content = view.findViewById(R.id.questionbank_analysis2_content);
-                if (myQuestionBankExercisesDataBean.question_analysis == null) {
-                    myQuestionBankExercisesDataBean.question_analysis = "";
-                }
-                new ModelHtmlUtils(mControlMainActivity, questionbank_analysis2_content).setHtmlWithPic(myQuestionBankExercisesDataBean.question_analysis);
-                //修改内容为您的答案
-                TextView questionbank_analysis2_yourAnswer = view.findViewById(R.id.questionbank_analysis2_yourAnswer);
-//                EditText questionbank_answerpaper_shortansweredittext = view3.findViewById(R.id.questionbank_answerpaper_shortansweredittext);
-                AnswerInfo answerInfo = mMyQuestionBankExercisesAnswerMap.get(myQuestionBankExercisesDataBean.question_id);
-                if (answerInfo != null) {
-                    if (answerInfo.answer != null) {
-                        questionbank_analysis2_yourAnswer.setText(answerInfo.answer);
-                    } else {
-                        questionbank_analysis2_yourAnswer.setText("");
-                    }
-                }
-                if (mFontSize.equals("nomal")) {
-                    questionbank_analysis2_rightAnswer.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view.getResources().getDimensionPixelSize(R.dimen.textsize17));
-                    questionbank_analysis2_content.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view.getResources().getDimensionPixelSize(R.dimen.textsize17));
-                    questionbank_analysis2_yourAnswer.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view.getResources().getDimensionPixelSize(R.dimen.textsize17));
-                } else if (mFontSize.equals("small")) {
-                    questionbank_analysis2_rightAnswer.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view.getResources().getDimensionPixelSize(R.dimen.textsize14));
-                    questionbank_analysis2_content.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view.getResources().getDimensionPixelSize(R.dimen.textsize14));
-                    questionbank_analysis2_yourAnswer.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view.getResources().getDimensionPixelSize(R.dimen.textsize14));
-                } else if (mFontSize.equals("big")) {
-                    questionbank_analysis2_rightAnswer.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view.getResources().getDimensionPixelSize(R.dimen.textsize20));
-                    questionbank_analysis2_content.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view.getResources().getDimensionPixelSize(R.dimen.textsize20));
-                    questionbank_analysis2_yourAnswer.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view.getResources().getDimensionPixelSize(R.dimen.textsize20));
+            TextView questionbank_analysis1_content = view.findViewById(R.id.questionbank_analysis1_content);
+            if (myQuestionBankExercisesDataBean.question_analysis == null) {
+                myQuestionBankExercisesDataBean.question_analysis = "";
+            }
+            new ModelHtmlUtils(mControlMainActivity, questionbank_analysis1_content).setHtmlWithPic(myQuestionBankExercisesDataBean.question_analysis);
+            //个人答案
+            AnswerInfo answerInfo = mMyQuestionBankExercisesAnswerMap.get(myQuestionBankExercisesDataBean.question_id);
+            TextView questionbank_analysis1_yourAnswer = view.findViewById(R.id.questionbank_analysis1_yourAnswer);
+            if (answerInfo != null) {
+                if (answerInfo.answer != null) {
+                    questionbank_analysis1_yourAnswer.setText(answerInfo.answer);
+                } else {
+                    questionbank_analysis1_yourAnswer.setText("");
                 }
             }
+            //字体大小的设置
+            if (mFontSize.equals("nomal")) {
+                questionbank_analysis1_rightAnswer.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view.getResources().getDimensionPixelSize(R.dimen.textsize17));
+                questionbank_analysis1_content.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view.getResources().getDimensionPixelSize(R.dimen.textsize17));
+                questionbank_analysis1_yourAnswer.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view.getResources().getDimensionPixelSize(R.dimen.textsize17));
+            } else if (mFontSize.equals("small")) {
+                questionbank_analysis1_rightAnswer.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view.getResources().getDimensionPixelSize(R.dimen.textsize14));
+                questionbank_analysis1_content.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view.getResources().getDimensionPixelSize(R.dimen.textsize14));
+                questionbank_analysis1_yourAnswer.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view.getResources().getDimensionPixelSize(R.dimen.textsize14));
+            } else if (mFontSize.equals("big")) {
+                questionbank_analysis1_rightAnswer.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view.getResources().getDimensionPixelSize(R.dimen.textsize20));
+                questionbank_analysis1_content.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view.getResources().getDimensionPixelSize(R.dimen.textsize20));
+                questionbank_analysis1_yourAnswer.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view.getResources().getDimensionPixelSize(R.dimen.textsize20));
+            }
+        } else if (myQuestionBankExercisesDataBean.question_type == 4) {//简答题
+            View view = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_answerpaper_analysis2, null);
+            coursedetails_answerpaper_analysis.addView(view);
+            //修改内容为正确答案
+            TextView questionbank_analysis2_rightAnswer = view.findViewById(R.id.questionbank_analysis2_rightAnswer);
+            new ModelHtmlUtils(mControlMainActivity, questionbank_analysis2_rightAnswer).setHtmlWithPic(myQuestionBankExercisesDataBean.optionanswer);
+            //修改内容为此题的解析
+            TextView questionbank_analysis2_content = view.findViewById(R.id.questionbank_analysis2_content);
+            if (myQuestionBankExercisesDataBean.question_analysis == null) {
+                myQuestionBankExercisesDataBean.question_analysis = "";
+            }
+            new ModelHtmlUtils(mControlMainActivity, questionbank_analysis2_content).setHtmlWithPic(myQuestionBankExercisesDataBean.question_analysis);
+            //修改内容为您的答案
+            TextView questionbank_analysis2_yourAnswer = view.findViewById(R.id.questionbank_analysis2_yourAnswer);
+//                EditText questionbank_answerpaper_shortansweredittext = view3.findViewById(R.id.questionbank_answerpaper_shortansweredittext);
+            AnswerInfo answerInfo = mMyQuestionBankExercisesAnswerMap.get(myQuestionBankExercisesDataBean.question_id);
+            if (answerInfo != null) {
+                if (answerInfo.answer != null) {
+                    questionbank_analysis2_yourAnswer.setText(answerInfo.answer);
+                } else {
+                    questionbank_analysis2_yourAnswer.setText("");
+                }
+            }
+            if (mFontSize.equals("nomal")) {
+                questionbank_analysis2_rightAnswer.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view.getResources().getDimensionPixelSize(R.dimen.textsize17));
+                questionbank_analysis2_content.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view.getResources().getDimensionPixelSize(R.dimen.textsize17));
+                questionbank_analysis2_yourAnswer.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view.getResources().getDimensionPixelSize(R.dimen.textsize17));
+            } else if (mFontSize.equals("small")) {
+                questionbank_analysis2_rightAnswer.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view.getResources().getDimensionPixelSize(R.dimen.textsize14));
+                questionbank_analysis2_content.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view.getResources().getDimensionPixelSize(R.dimen.textsize14));
+                questionbank_analysis2_yourAnswer.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view.getResources().getDimensionPixelSize(R.dimen.textsize14));
+            } else if (mFontSize.equals("big")) {
+                questionbank_analysis2_rightAnswer.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view.getResources().getDimensionPixelSize(R.dimen.textsize20));
+                questionbank_analysis2_content.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view.getResources().getDimensionPixelSize(R.dimen.textsize20));
+                questionbank_analysis2_yourAnswer.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view.getResources().getDimensionPixelSize(R.dimen.textsize20));
+            }
+        }
     }
     //答题-考试模式界面展示
     private void QuestionBankDetailsQuestionModeExamShow() {
@@ -1993,7 +2013,10 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
         });
         //答题卡
         LinearLayout button_questionbank_answerquestioncard = mModelQuestionBankAnswerPaperView.findViewById(R.id.button_questionbank_answerquestioncard);
-        button_questionbank_answerquestioncard.setOnClickListener(v ->getQuestionBankAnswerSheet(1));
+        button_questionbank_answerquestioncard.setOnClickListener(v ->{
+            mTestPageIssueDataScore = "";
+            getQuestionBankAnswerSheet(1);
+        });
         //点击字号
         ImageView questionbank_answerpaper_fontsize = mModelQuestionBankAnswerPaperView.findViewById(R.id.questionbank_answerpaper_fontsize);
         questionbank_answerpaper_fontsize.setOnClickListener(v -> {
@@ -2168,7 +2191,10 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
         });
         //答题卡
         LinearLayout button_questionbank_answerquestioncard = mModelQuestionBankAnswerPaperView.findViewById(R.id.button_questionbank_answerquestioncard);
-        button_questionbank_answerquestioncard.setOnClickListener(v ->getQuestionBankAnswerSheet(1));
+        button_questionbank_answerquestioncard.setOnClickListener(v ->{
+            mTestPageIssueDataScore = "";
+            getQuestionBankAnswerSheet(1);
+        });
         //点击字号
         ImageView questionbank_answerpaper_fontsize = mModelQuestionBankAnswerPaperView.findViewById(R.id.questionbank_answerpaper_fontsize);
         questionbank_answerpaper_fontsize.setOnClickListener(v -> {
@@ -2576,8 +2602,8 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
         });
         //答题卡
         LinearLayout button_handin_analysis_answerquestioncard = mModelQuestionBankHandInAnalysisView.findViewById(R.id.button_handin_analysis_answerquestioncard);
-        button_handin_analysis_answerquestioncard.setOnClickListener(v ->
-                getQuestionBankAnswerSheet(2));
+        button_handin_analysis_answerquestioncard.setOnClickListener(v ->{
+            getQuestionBankAnswerSheet(2);});
         //点击字号
         ImageView questionbank_handin_analysis_fontsize = mModelQuestionBankHandInAnalysisView.findViewById(R.id.questionbank_handin_analysis_fontsize);
         questionbank_handin_analysis_fontsize.setOnClickListener(v -> {
@@ -2955,12 +2981,12 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                 TextView button_sure = view1.findViewById(R.id.button_sure);
                 button_sure.setText("再做一遍");
                 button_sure.setOnClickListener(View -> {//将试卷重新调出来，做题
-                    if (myQuestionBankGoonDataBeans != null){
-                        if (myQuestionBankGoonDataBeans.size() != 0) {
-                            Toast.makeText(mControlMainActivity, "您有未完成的试卷，请继续答题或提交未完成的试卷！", Toast.LENGTH_SHORT).show();
-                            return;
-                        }
-                    }
+//                    if (myQuestionBankGoonDataBeans != null){
+//                        if (myQuestionBankGoonDataBeans.size() != 0) {
+//                            Toast.makeText(mControlMainActivity, "您有未完成的试卷，请继续答题或提交未完成的试卷！", Toast.LENGTH_SHORT).show();
+//                            return;
+//                        }
+//                    }
                     mAnswer_Id = questionBankAnswerRecordDataBeanList.answer_id;
                     if (mQuestionRecordCurrentTab.equals("ChapterExercises")){
                         mChapter_test_point_id = questionBankAnswerRecordDataBeanList.chapter_test_point_id;
@@ -5706,6 +5732,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
         TextView coursedetails_answerquestioncard_commit = mModelQuestionBankAnswerQuestionCardView.findViewById(R.id.coursedetails_answerquestioncard_commit);
         coursedetails_answerquestioncard_commit.setOnClickListener(v -> {
             //显示交卷界面
+            mTestPageIssueDataScore = "";
             getQuestionBankAnswerSheet(2);
         });
     }
@@ -6745,143 +6772,143 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
         }
     }
 
-     //题库-做题记录Bean
+    //题库-做题记录Bean
     public static class QuestionBankAnswerRecordBean{
-         private String msg;
-         private Integer code;
-         private QuestionBankAnswerRecordDataBean data;
+        private String msg;
+        private Integer code;
+        private QuestionBankAnswerRecordDataBean data;
 
-         public String getMsg() {
-             return msg;
-         }
+        public String getMsg() {
+            return msg;
+        }
 
-         public void setMsg(String msg) {
-             this.msg = msg;
-         }
+        public void setMsg(String msg) {
+            this.msg = msg;
+        }
 
-         public Integer getCode() {
-             return code;
-         }
+        public Integer getCode() {
+            return code;
+        }
 
-         public void setCode(Integer code) {
-             this.code = code;
-         }
+        public void setCode(Integer code) {
+            this.code = code;
+        }
 
-         public QuestionBankAnswerRecordDataBean getData() {
-             return data;
-         }
+        public QuestionBankAnswerRecordDataBean getData() {
+            return data;
+        }
 
-         public void setData(QuestionBankAnswerRecordDataBean data) {
-             this.data = data;
-         }
+        public void setData(QuestionBankAnswerRecordDataBean data) {
+            this.data = data;
+        }
 
-         class QuestionBankAnswerRecordDataBean{
-             private Integer total;
-             private List<QuestionBankAnswerRecordDataBeanList> list;
+        class QuestionBankAnswerRecordDataBean{
+            private Integer total;
+            private List<QuestionBankAnswerRecordDataBeanList> list;
 
-             public Integer getTotal() {
-                 return total;
-             }
+            public Integer getTotal() {
+                return total;
+            }
 
-             public void setTotal(Integer total) {
-                 this.total = total;
-             }
+            public void setTotal(Integer total) {
+                this.total = total;
+            }
 
-             public List<QuestionBankAnswerRecordDataBeanList> getList() {
-                 return list;
-             }
+            public List<QuestionBankAnswerRecordDataBeanList> getList() {
+                return list;
+            }
 
-             public void setList(List<QuestionBankAnswerRecordDataBeanList> list) {
-                 this.list = list;
-             }
-         }
-         class QuestionBankAnswerRecordDataBeanList {
-             private Integer used_answer_time;
-             private Integer type;
-             private Integer answer_id;
-             private Integer chapter_test_point_id;
-             private String name;
-             private Integer dui;
-             private Integer test_paper_id;
-             private String time;
-             private Integer cuo;
-             private String test_paper_name;
-             public Integer getUsed_answer_time() {
-                 return used_answer_time;
-             }
+            public void setList(List<QuestionBankAnswerRecordDataBeanList> list) {
+                this.list = list;
+            }
+        }
+        class QuestionBankAnswerRecordDataBeanList {
+            private Integer used_answer_time;
+            private Integer type;
+            private Integer answer_id;
+            private Integer chapter_test_point_id;
+            private String name;
+            private Integer dui;
+            private Integer test_paper_id;
+            private String time;
+            private Integer cuo;
+            private String test_paper_name;
+            public Integer getUsed_answer_time() {
+                return used_answer_time;
+            }
 
-             public void setUsed_answer_time(Integer used_answer_time) {
-                 this.used_answer_time = used_answer_time;
-             }
+            public void setUsed_answer_time(Integer used_answer_time) {
+                this.used_answer_time = used_answer_time;
+            }
 
-             public Integer getType() {
-                 return type;
-             }
+            public Integer getType() {
+                return type;
+            }
 
-             public void setType(Integer type) {
-                 this.type = type;
-             }
+            public void setType(Integer type) {
+                this.type = type;
+            }
 
-             public Integer getAnswer_id() {
-                 return answer_id;
-             }
+            public Integer getAnswer_id() {
+                return answer_id;
+            }
 
-             public void setAnswer_id(Integer answer_id) {
-                 this.answer_id = answer_id;
-             }
+            public void setAnswer_id(Integer answer_id) {
+                this.answer_id = answer_id;
+            }
 
-             public Integer getChapter_test_point_id() {
-                 return chapter_test_point_id;
-             }
+            public Integer getChapter_test_point_id() {
+                return chapter_test_point_id;
+            }
 
-             public void setChapter_test_point_id(Integer chapter_test_point_id) {
-                 this.chapter_test_point_id = chapter_test_point_id;
-             }
+            public void setChapter_test_point_id(Integer chapter_test_point_id) {
+                this.chapter_test_point_id = chapter_test_point_id;
+            }
 
-             public String getName() {
-                 return name;
-             }
+            public String getName() {
+                return name;
+            }
 
-             public void setName(String name) {
-                 this.name = name;
-             }
+            public void setName(String name) {
+                this.name = name;
+            }
 
-             public Integer getDui() {
-                 return dui;
-             }
+            public Integer getDui() {
+                return dui;
+            }
 
-             public void setDui(Integer dui) {
-                 this.dui = dui;
-             }
+            public void setDui(Integer dui) {
+                this.dui = dui;
+            }
 
-             public Integer getTest_paper_id() {
-                 return test_paper_id;
-             }
+            public Integer getTest_paper_id() {
+                return test_paper_id;
+            }
 
-             public void setTest_paper_id(Integer test_paper_id) {
-                 this.test_paper_id = test_paper_id;
-             }
+            public void setTest_paper_id(Integer test_paper_id) {
+                this.test_paper_id = test_paper_id;
+            }
 
-             public String getTime() {
-                 return time;
-             }
+            public String getTime() {
+                return time;
+            }
 
-             public void setTime(String time) {
-                 this.time = time;
-             }
+            public void setTime(String time) {
+                this.time = time;
+            }
 
-             public Integer getCuo() {
-                 return cuo;
-             }
+            public Integer getCuo() {
+                return cuo;
+            }
 
-             public void setCuo(Integer cuo) {
-                 this.cuo = cuo;
-             }
-         }
-     }
+            public void setCuo(Integer cuo) {
+                this.cuo = cuo;
+            }
+        }
+    }
 
 
-     //题库-做题记录
+    //题库-做题记录
     public void  getQuestionBankAnswerRecord(){
         if (mControlMainActivity.mStuId.equals("") || mIbs_id.equals("")){
             Toast.makeText(mControlMainActivity,"查询做题记录失败！",Toast.LENGTH_SHORT).show();
@@ -6962,6 +6989,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                         mMyFavoriteQuestionDataBeans = null;
                         mAnswer_Id = null;
                         mMyTestPageIssueDataBeans = null;
+                        mTestPageIssueDataTypeScore = "";
                         mMyQuestionBankExercisesAnswerMap.clear();
                         mMyQuestionBankExercisesBean = null;
                         mCurrentIndex = 0;
@@ -7166,12 +7194,12 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                                 TextView button_sure = view1.findViewById(R.id.button_sure);
                                 button_sure.setText("再做一遍");
                                 button_sure.setOnClickListener(View -> {//将试卷重新调出来，做题
-                                    if (myQuestionBankGoonDataBeans != null){
-                                        if (myQuestionBankGoonDataBeans.size() != 0) {
-                                            Toast.makeText(mControlMainActivity, "您有未完成的试卷，请继续答题或提交未完成的试卷！", Toast.LENGTH_SHORT).show();
-                                            return;
-                                        }
-                                    }
+//                                    if (myQuestionBankGoonDataBeans != null){
+//                                        if (myQuestionBankGoonDataBeans.size() != 0) {
+//                                            Toast.makeText(mControlMainActivity, "您有未完成的试卷，请继续答题或提交未完成的试卷！", Toast.LENGTH_SHORT).show();
+//                                            return;
+//                                        }
+//                                    }
                                     mAnswer_Id = questionBankAnswerRecordDataBeanList.answer_id;
                                     if (mQuestionRecordCurrentTab.equals("ChapterExercises")){
                                         mChapter_test_point_id = questionBankAnswerRecordDataBeanList.chapter_test_point_id;
@@ -7250,6 +7278,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                             return;
                         }
                         mMyTestPageIssueDataBeans = myTestPageIssueBean.data;
+                        mTestPageIssueDataTypeScore = myTestPageIssueBean.question_type_score;
                         mMyQuestionBankExercisesAnswerMap.clear();
                         mMyQuestionBankExercisesBean = null;
                         mMyFavoriteQuestionDataBeans = null;
@@ -7340,7 +7369,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                             if (myTestPageIssueDataBean.question_id == null){
                                 continue;
                             }
-                            myTestPageIssueDataBean.myAnswer = "";
+//                            myTestPageIssueDataBean.myAnswer = "";
                             if (myTestPageIssueDataBean.question_type == 1 || myTestPageIssueDataBean.question_type == 2) {
                                 AnswerInfo answerInfo = new AnswerInfo();
                                 answerInfo.answer = myTestPageIssueDataBean.myAnswer;
@@ -7386,6 +7415,12 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                                 }
                             }
                         }
+                        if (myTestPageIssueBean.score == null){
+                            myTestPageIssueBean.score = 0;
+                        } else {
+                            mTestPageIssueDataScore = String.valueOf(myTestPageIssueBean.score);
+                        }
+
                         QuestionBankDetailsQuestionModeHandInShow();
                         LoadingDialog.getInstance(mControlMainActivity).dismiss();
                     }
@@ -7443,6 +7478,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                             return;
                         }
                         mMyTestPageIssueDataBeans = null;
+                        mTestPageIssueDataTypeScore = "";
                         mMyQuestionBankExercisesAnswerMap.clear();
                         mMyQuestionBankExercisesBean = myQuestionBankExercises.data;
                         mMyFavoriteQuestionDataBeans = null;
@@ -7898,6 +7934,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                             }
                         }
                         mMyTestPageIssueDataBeans = null;
+                        mTestPageIssueDataTypeScore = "";
                         mMyFavoriteQuestionDataBeans = null;
                         questionBankAnswerRecordDataBeanLists = null;
                         mCurrentIndex = 0;
@@ -7961,6 +7998,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                             return;
                         }
                         mMyTestPageIssueDataBeans = myTestPageIssueBean.data;
+                        mTestPageIssueDataTypeScore = myTestPageIssueBean.question_type_score;
                         if (mMyTestPageIssueDataBeans == null){
                             Toast.makeText(mControlMainActivity,"做题记录查询失败！",Toast.LENGTH_SHORT).show();
                             LoadingDialog.getInstance(mControlMainActivity).dismiss();
@@ -7976,10 +8014,10 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                             }
                             if (myTestPageIssueDataBean.question_type == 1 || myTestPageIssueDataBean.question_type == 2) {
                                 AnswerInfo answerInfo = new AnswerInfo();
-                                answerInfo.answer = myTestPageIssueDataBean.myAnswer;
                                 if (myTestPageIssueDataBean.myAnswer == null){
                                     myTestPageIssueDataBean.myAnswer = "";
                                 }
+                                answerInfo.answer = myTestPageIssueDataBean.myAnswer;
                                 if (myTestPageIssueDataBean.myAnswer.equals(myTestPageIssueDataBean.answer)) {
                                     answerInfo.result = "对";
                                 } else {
@@ -8005,10 +8043,10 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                                         if (MyTestPageIssueDataBean1 == null) {
                                             continue;
                                         }
+                                        AnswerInfo answerInfo = new AnswerInfo();
                                         if (MyTestPageIssueDataBean1.myAnswer == null){
                                             MyTestPageIssueDataBean1.myAnswer = "";
                                         }
-                                        AnswerInfo answerInfo = new AnswerInfo();
                                         answerInfo.answer = MyTestPageIssueDataBean1.myAnswer;
                                         if (MyTestPageIssueDataBean1.question_type == 14){
                                             if (!MyTestPageIssueDataBean1.myAnswer.equals("")) {//简答题只要答案不为空全是正确
@@ -8206,7 +8244,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
     }
 
 
-     //题库  我的收藏题
+    //题库  我的收藏题
     public void getQuestionBankMyFavoriteQuestion(Integer type){ //类型 1错题2收藏
         if (mControlMainActivity.mStuId.equals("") || mIbs_id.equals("")){
             if (type == 1){
@@ -8269,6 +8307,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                         mMyFavoriteQuestionDataBeans = questionBankMyFavoriteQuestionBean.data;
                         mAnswer_Id = null;
                         mMyTestPageIssueDataBeans = null;
+                        mTestPageIssueDataTypeScore = "";
                         mMyQuestionBankExercisesAnswerMap.clear();
                         for (QuestionBankMyFavoriteQuestionBean.QuestionBankMyFavoriteQuestionDataBean questionBankMyFavoriteQuestionDataBean :mMyFavoriteQuestionDataBeans){
                             if (questionBankMyFavoriteQuestionDataBean == null){
@@ -8477,12 +8516,12 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                             questionbank_sub_details_chapterexercises_name.setClickable(true);
                             int finalI1 = i;
                             questionbank_sub_details_chapterexercises_name.setOnClickListener(v -> {
-                                if (myQuestionBankGoonDataBeans != null) {
-                                    if (myQuestionBankGoonDataBeans.size() != 0) {
-                                        Toast.makeText(mControlMainActivity, "您有未完成的试卷，请继续答题或提交未完成的试卷！", Toast.LENGTH_SHORT).show();
-                                        return;
-                                    }
-                                }
+//                                if (myQuestionBankGoonDataBeans != null) {
+//                                    if (myQuestionBankGoonDataBeans.size() != 0) {
+//                                        Toast.makeText(mControlMainActivity, "您有未完成的试卷，请继续答题或提交未完成的试卷！", Toast.LENGTH_SHORT).show();
+//                                        return;
+//                                    }
+//                                }
                                 mCurrentChapterName = questionbank_sub_details_chapterexercises_name.getText().toString();
                                 mChapter_test_point_id = data.get(finalI1).chapter_test_point_id;
                                 getQueryTopicSetting(data.get(finalI1).chapter_test_point_id);
@@ -9163,6 +9202,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
 
                         if (state == 1){
                             Toast.makeText(mControlMainActivity,"交卷成功！",Toast.LENGTH_SHORT).show();
+                            mTestPageIssueDataScore = "";
                             getQuestionBankAnswerSheet(2);
                         } else {
                             Toast.makeText(mControlMainActivity,"做题记录提交成功！",Toast.LENGTH_SHORT).show();
@@ -9194,8 +9234,35 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
             return;
         }
         LoadingDialog.getInstance(mControlMainActivity).show();
-        String score = "0";
+        float score = 0;
         String error_num = "";
+        if (mTestPageIssueDataTypeScore == null){
+            mTestPageIssueDataTypeScore = "";
+        }
+        int singleScore = 0;
+        int multiScore = 0;
+        int shortScore = 0;
+        int metScore = 0;
+        if (!mTestPageIssueDataTypeScore.equals("")){
+            String types[] = mTestPageIssueDataTypeScore.split("EDU;");
+            if (types != null){
+                for (String type:
+                        types) {
+                    String scores[] = type.split("#");
+                    if (scores.length == 3){
+                        if (scores[1].equals("单选") && !scores[2].equals("")){
+                            singleScore = Integer.valueOf(scores[2]);
+                        } else if (scores[1].equals("多选") && !scores[2].equals("")){
+                            multiScore = Integer.valueOf(scores[2]);
+                        } else if (scores[1].equals("简答题") && !scores[2].equals("")){
+                            shortScore = Integer.valueOf(scores[2]);
+                        } else if (scores[1].equals("材料题") && !scores[2].equals("")){
+                            metScore = Integer.valueOf(scores[2]);
+                        }
+                    }
+                }
+            }
+        }
         for (int i = 0; i < mMyTestPageIssueDataBeans.size(); i ++){
             MyTestPageIssueBean.MyTestPageIssueDataBean myTestPageIssueDataBean = mMyTestPageIssueDataBeans.get(i);
             if (myTestPageIssueDataBean == null){
@@ -9246,6 +9313,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                     }
                     //如果材料题子题有一道为错，那么此题为错题
                     if (!isWrong) {
+                        score = score + metScore;
                         error_num = error_num + "#" + myTestPageIssueDataBean.question_id + "#对# ;";
                     } else {
                         error_num = error_num + "#" + myTestPageIssueDataBean.question_id + "#错# ;";
@@ -9258,6 +9326,15 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                     String result = answerInfo.result + "#";
                     if (answerInfo.result.equals("错") && answerInfo.answer.equals("")){
                         result = result + " ";
+                    }
+                    if (answerInfo.result.equals("对")){
+                        if (myTestPageIssueDataBean.question_type == 1){
+                            score = score + singleScore;
+                        } else if (myTestPageIssueDataBean.question_type == 2){
+                            score = score + multiScore;
+                        } else if (myTestPageIssueDataBean.question_type == 4){
+                            score = score + shortScore;
+                        }
                     }
                     error_num = error_num + "#" + myTestPageIssueDataBean.question_id + "#" + result + answerInfo.answer + ";";
                 } else {
@@ -9283,6 +9360,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                 ",\"used_answer_time\":" + used_answer_time +
                 ",\"stu_id\":" + mControlMainActivity.mStuId +
                 "}";
+        mTestPageIssueDataScore = String.valueOf(score);
         RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json;charset=UTF-8"), strEntity);
         queryMyCourseList.queryMyQuestionBankHandIn(body)
                 .enqueue(new Callback<ModelObservableInterface.BaseBean>() {
@@ -9550,6 +9628,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
         private Integer code;
         private Integer used_answer_time;
         private Integer total_score;
+        private Integer score;
         private String question_type_score;
         private Integer tf_temporary;
         private String question_id_group;
@@ -9849,6 +9928,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                         }
                         mMyQuestionBankExercisesAnswerMap.clear();
                         mMyTestPageIssueDataBeans = null;
+                        mTestPageIssueDataTypeScore = "";
                         mMyFavoriteQuestionDataBeans = null;
                         questionBankAnswerRecordDataBeanLists = null;
                         mCurrentIndex = 0;
@@ -9955,6 +10035,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                         }
                         mMyQuestionBankExercisesAnswerMap.clear();
                         mMyTestPageIssueDataBeans = null;
+                        mTestPageIssueDataTypeScore = "";
                         mMyFavoriteQuestionDataBeans = null;
                         questionBankAnswerRecordDataBeanLists = null;
                         mCurrentIndex = 0;
@@ -10021,6 +10102,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                         }
                         mAnswer_Id = Integer.valueOf(myTestPageIssueBean.answer_id);
                         mMyTestPageIssueDataBeans = myTestPageIssueBean.data;
+                        mTestPageIssueDataTypeScore = myTestPageIssueBean.question_type_score;
                         if (mMyTestPageIssueDataBeans == null){
                             Toast.makeText(mControlMainActivity,"出题失败！",Toast.LENGTH_SHORT).show();
                             LoadingDialog.getInstance(mControlMainActivity).dismiss();
@@ -10103,6 +10185,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                         }
                         mMyQuestionBankExercisesAnswerMap.clear();
                         mMyTestPageIssueDataBeans = null;
+                        mTestPageIssueDataTypeScore = "";
                         mMyFavoriteQuestionDataBeans = null;
                         questionBankAnswerRecordDataBeanLists = null;
                         mCurrentIndex = 0;
@@ -10205,12 +10288,12 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                             TextView questionbank_simulated_go = view.findViewById(R.id.questionbank_simulated_go);
                             questionbank_simulated_go.setClickable(true);
                             questionbank_simulated_go.setOnClickListener(v -> {
-                                if (myQuestionBankGoonDataBeans != null){
-                                    if (myQuestionBankGoonDataBeans.size() != 0) {
-                                        Toast.makeText(mControlMainActivity, "您有未完成的试卷，请继续答题或提交未完成的试卷！", Toast.LENGTH_SHORT).show();
-                                        return;
-                                    }
-                                }
+//                                if (myQuestionBankGoonDataBeans != null){
+//                                    if (myQuestionBankGoonDataBeans.size() != 0) {
+//                                        Toast.makeText(mControlMainActivity, "您有未完成的试卷，请继续答题或提交未完成的试卷！", Toast.LENGTH_SHORT).show();
+//                                        return;
+//                                    }
+//                                }
                                 //开始真题做题
                                 getQueryTestPageIssue(questionBankTestPaperDataBean.test_paper_name,questionBankTestPaperDataBean.test_paper_id);
                             });
@@ -10218,12 +10301,12 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                             ImageView questionbank_simulated_goimage = view.findViewById(R.id.questionbank_simulated_goimage);
                             questionbank_simulated_goimage.setClickable(true);
                             questionbank_simulated_goimage.setOnClickListener(v -> {
-                                if (myQuestionBankGoonDataBeans != null){
-                                    if (myQuestionBankGoonDataBeans.size() != 0) {
-                                        Toast.makeText(mControlMainActivity, "您有未完成的试卷，请继续答题或提交未完成的试卷！", Toast.LENGTH_SHORT).show();
-                                        return;
-                                    }
-                                }
+//                                if (myQuestionBankGoonDataBeans != null){
+//                                    if (myQuestionBankGoonDataBeans.size() != 0) {
+//                                        Toast.makeText(mControlMainActivity, "您有未完成的试卷，请继续答题或提交未完成的试卷！", Toast.LENGTH_SHORT).show();
+//                                        return;
+//                                    }
+//                                }
                                 //开始真题做题
                                 getQueryTestPageIssue(questionBankTestPaperDataBean.test_paper_name,questionBankTestPaperDataBean.test_paper_id);
                             });

@@ -195,6 +195,17 @@
             android:textSize="@dimen/textsize18"
             android:onClick="onClickLogout"
             android:layout_below="@id/setting_aboutus"/>
+        <TextView
+            android:id="@+id/yijian"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="意见反馈"
+            android:gravity="center"
+            android:textColor="#333333"
+            android:singleLine="true"
+            android:textSize="@dimen/textsize12"
+            android:layout_marginBottom="@dimen/dp15"
+            android:layout_alignParentBottom="true"/>
     </RelativeLayout>
     <RelativeLayout
         android:id="@+id/setting_essentialinformation_main"

@@ -15,7 +15,7 @@ import net.sqlcipher.database.SQLiteOpenHelper;
 public class ModelSearchRecordSQLiteOpenHelper extends SQLiteOpenHelper {
 
     private static String DB_NAME  = PublicCommonUtil.DB_NAME;
-    private static Integer DB_VERSION  = 1;
+    private static Integer DB_VERSION  = PublicCommonUtil.DB_VERSION;
     private static ModelSearchRecordSQLiteOpenHelper instance = null;
     private static SQLiteDatabase db = null;
     private static String SECRET_KEY = PublicCommonUtil.SECRET_KEY;
