@@ -541,6 +541,24 @@ public class ModelSetting extends Fragment {
             //TODO do your job
             mControlMainActivity.onClickSettingAllowNonWifiPlay(isChecked);
         });
+        TextView yijian = mview.findViewById(R.id.yijian);
+        yijian.setClickable(true);
+        yijian.setOnClickListener(v->{
+            //点击意见反馈
+            Dialog dialog = new Dialog(mControlMainActivity, android.R.style.Theme_Dialog);
+            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+            dialog.setContentView(R.layout.dialog_input_sure_cancel);
+            dialog.setCanceledOnTouchOutside(false);
+            dialog.setCancelable(false);
+            TextView button_cancel = dialog.findViewById(R.id.button_cancel);
+            button_cancel.setOnClickListener(v1->{dialog.dismiss();});
+            // 确认更新
+            dialog.findViewById(R.id.button_sure).setOnClickListener(v1 -> {
+                Toast.makeText(mControlMainActivity,"意见已提交",Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+            });
+            dialog.show();
+        });
     }
 
     //照片选择对话框

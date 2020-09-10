@@ -479,7 +479,6 @@ public class ModelHomePage extends Fragment{
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.e("TAG", "onError: "+e.getMessage()+"" + "Http:" + "http://192.168.30.141:8080/app/homePage/queryHomePageInfo/");
                         Toast.makeText(mControlMainActivity,"刷新数据失败",Toast.LENGTH_LONG).show();
                         //需要结束刷新头
                         if (mSmart_homepage_layout1 != null) {

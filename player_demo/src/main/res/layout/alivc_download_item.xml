@@ -4,7 +4,8 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_gravity="center_vertical"
-    android:layout_height="@dimen/alivc_common_height_group_68">
+    android:padding="@dimen/alivc_common_padding_8"
+    android:layout_height="@dimen/alivc_common_height_group_85">
 
     <CheckBox
         android:id="@+id/cb_select"
@@ -101,6 +102,5 @@
             android:layout_marginTop="3dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-
     </RelativeLayout>
 </LinearLayout>

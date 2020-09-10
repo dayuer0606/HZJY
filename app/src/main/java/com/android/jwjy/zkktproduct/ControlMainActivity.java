@@ -61,6 +61,7 @@ import com.aliyun.player.nativeclass.PlayerConfig;
 import com.aliyun.player.source.UrlSource;
 import com.aliyun.player.source.VidSts;
 import com.aliyun.private_service.PrivateService;
+import com.aliyun.svideo.common.PublicCommonUtil;
 import com.aliyun.svideo.common.utils.ToastUtils;
 import com.aliyun.utils.VcPlayerLog;
 import com.aliyun.vodplayerview.constants.PlayParameter;
@@ -72,11 +73,11 @@ import com.aliyun.vodplayerview.listener.RefreshStsCallback;
 import com.aliyun.vodplayerview.playlist.AlivcVideoInfo;
 import com.aliyun.vodplayerview.utils.Common;
 import com.aliyun.vodplayerview.utils.FixedToastUtils;
-import com.aliyun.vodplayerview.utils.VidStsUtil;
 import com.aliyun.vodplayerview.utils.database.DatabaseManager;
 import com.aliyun.vodplayerview.utils.database.LoadDbDatasListener;
 import com.aliyun.vodplayerview.utils.download.AliyunDownloadInfoListener;
 import com.aliyun.vodplayerview.utils.download.AliyunDownloadManager;
+import com.aliyun.vodplayerview.utils.download.AliyunDownloadManagerInterface;
 import com.aliyun.vodplayerview.utils.download.AliyunDownloadMediaInfo;
 import com.aliyun.vodplayerview.view.choice.AlivcShowMoreDialog;
 import com.aliyun.vodplayerview.view.control.ControlView;
@@ -141,7 +142,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Created by dayuer on 19/7/2.
  * 主程序
  */
-public class ControlMainActivity extends AppCompatActivity implements EasyPermissions.PermissionCallbacks{
+public class ControlMainActivity extends AppCompatActivity implements EasyPermissions.PermissionCallbacks, AliyunDownloadManagerInterface {
     //继承Activity 不会显示APP头上的标题
     private Fragment mModelHomePage,mModelMy,mModelOpenClass,mModelLogIn,mModelSetting,mModelCoursePacket,mModelCourse,mModelClassCheduleCard
             ,mModelQuestionBank,mModelNews,mModelCommunityAnswer;
@@ -160,9 +161,14 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
     private ModelOrderDetails modelOrderDetails = null;
     //token
     public String mToken = "";
-    public String mIpadress = "http://wangxiao.jianweijiaoyu.com/";
+    public String mIpadress = PublicCommonUtil.ipadress;
     private Map<String, String> mIpType = new HashMap<>();
     public String mStuId = "";
+
+    @Override
+    public String getUrl() {
+        return mIpadress;
+    }
 
     private class MenuItemInfo {
         String mName;  //按钮名称
@@ -203,7 +209,7 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
         mIpType.put("http://wangxiao.yixiaojiaoyu.com/","yixiao");
         mIpType.put("http://managerwt.16zige.com/","wentao");
         //阿里视频播放下载，必须初始化的服务，必须放在最开始的位置
-        PrivateService.initService(getApplicationContext(), Environment.getExternalStorageDirectory().getAbsolutePath() + "/zhikaowangxiaoedu/encryptedApp.dat");
+        PrivateService.initService(getApplicationContext(), Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + PublicCommonUtil.encryptedAppPath + "/encryptedApp.dat");
         //拷贝encryptedApp.dat文件到所需位置
         copyAssets();
         //阿里云视频播放数据库初始化
@@ -233,6 +239,7 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
             }
             cursor.close();
         }
+        PlayParameter.STS_GET_URL = mIpadress + PlayParameter.STS_GET_URL;
         mThis = this;
         mBottomNavigationView = findViewById(R.id.nav_view);
         mBottomNavigationView.setLabelVisibilityMode(LabelVisibilityMode.LABEL_VISIBILITY_LABELED); //同时显示底部菜单的图标和文字
@@ -334,6 +341,7 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
                         return;
                     }
                     mIpadress = "http://" + dialog_content.getText().toString() + "/";
+                    PlayParameter.STS_GET_URL = mIpadress + PlayParameter.STS_GET_URL;
                     mMyCouponDialog.cancel();
                 });
                 return false;
@@ -355,6 +363,7 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
                 jiankang.setBackground(getResources().getDrawable(R.drawable.icon_black));
                 xiaofangsheshisetting.setBackground(getResources().getDrawable(R.drawable.icon_null));
                 mIpadress = "http://wangxiao.jianweijiaoyu.com/";
+                PlayParameter.STS_GET_URL = mIpadress + PlayParameter.STS_GET_URL;
             });
             LinearLayout xiaofang_layout =  findViewById(R.id.xiaofang_layout);
             xiaofang_layout.setOnClickListener(v->{
@@ -366,6 +375,7 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
                 xiaofangsetting.setBackground(getResources().getDrawable(R.drawable.icon_null));
                 xiaofangsheshisetting.setBackground(getResources().getDrawable(R.drawable.icon_null));
                 mIpadress = "http://wangxiao.16zige.com/";
+                PlayParameter.STS_GET_URL = mIpadress + PlayParameter.STS_GET_URL;
             });
             LinearLayout xiaofangsetting_layout = findViewById(R.id.xiaofangsetting_layout);
             xiaofangsetting_layout.setOnClickListener(v->{
@@ -377,6 +387,7 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
                 xiaofang.setBackground(getResources().getDrawable(R.drawable.icon_null));
                 xiaofangsheshisetting.setBackground(getResources().getDrawable(R.drawable.icon_null));
                 mIpadress = "http://wangxiao.16zige.com/";
+                PlayParameter.STS_GET_URL = mIpadress + PlayParameter.STS_GET_URL;
             });
             LinearLayout xiaofangsheshi_layout = findViewById(R.id.xiaofangsheshi_layout);
             xiaofangsheshi_layout.setOnClickListener(v -> {
@@ -2314,6 +2325,17 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
                             modelOrderDetails.onClickOrderDetailsReturn();
                         }
                     } else { //返回到课程包详情界面
+                        if (mAliyunVodPlayerView != null) {
+                            mAliyunVodPlayerView.onStop();
+                            int time1 = mAliyunVodPlayerView.getVideoPostion();
+//                        String videoId = mAliyunVodPlayerView.VideoIdGet();
+                            String SectionsId = mAliyunVodPlayerView.SectionsIdGet();
+                            mAliyunVodPlayerView.onDestroy();
+                            mAliyunVodPlayerView = null;
+                            if (!SectionsId.equals("")) {
+                                SetCourseVideoDuration(Integer.valueOf(SectionsId),time1);
+                            }
+                        }
                         mBeforePage = "";
                         for (int i = 0 ; i < beforePageS.length - 1; i ++){
                             if (i == beforePageS.length - 2){
@@ -2827,7 +2849,7 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             //第二个参数为 包名.fileprovider
-            uri = FileProvider.getUriForFile(ControlMainActivity.this, "com.android.jwjy.zkktproduct.fileprovider", cameraSavePath);
+            uri = FileProvider.getUriForFile(ControlMainActivity.this, PublicCommonUtil.fileProvider, cameraSavePath);
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         } else {
             uri = Uri.fromFile(cameraSavePath);
@@ -2936,7 +2958,7 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
             //如果是7.0剪裁图片 同理 需要把uri包装
             //通过FileProvider创建一个content类型的Uri
             Uri inputUri = FileProvider.getUriForFile(ControlMainActivity.this,
-                    "com.android.jwjy.zkktproduct.fileprovider", mOutImage);
+                    PublicCommonUtil.fileProvider, mOutImage);
             startPhotoZoom(inputUri);//设置输入类型
         } else {
             Uri inputUri = Uri.fromFile(mOutImage);
@@ -3160,9 +3182,10 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
                         }
                         String version_num = String.valueOf(data.get("version_num"));
                         String download_address = String.valueOf(data.get("download_address"));
+                        Integer tf_super = (Integer) data.get("tf_super");
                         //检查是否前往更新
                         UpdateVersionController uvc = new UpdateVersionController(context);
-                        uvc.forceCheckUpdateInfo(version_num,download_address);//运行该方法
+                        uvc.forceCheckUpdateInfo(tf_super,version_num,download_address);//运行该方法
                         LoadingDialog.getInstance(context).dismiss();
                     }
 
@@ -3426,7 +3449,8 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
             }
             // 如果当前播放列表为空, 网络重连后需要重新请求sts和播放列表, 其他情况不需要
             if (alivcVideoInfos != null && alivcVideoInfos.size() == 0) {
-                VidStsUtil.getVidSts(PlayParameter.PLAY_PARAM_VID, new MyStsListener(this));
+//                VidStsUtil.getVidSts(PlayParameter.STS_GET_URL,PlayParameter.PLAY_PARAM_VID, new MyStsListener(this));
+                VidStsUtil.getVidSts(mIpadress,PlayParameter.PLAY_PARAM_VID, new MyStsListener(this));
             }
         }
     }
@@ -3571,7 +3595,8 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
      * 鉴权过期
      */
     private void onTimExpiredError() {
-        VidStsUtil.getVidSts(PlayParameter.PLAY_PARAM_VID, new RetryExpiredSts(this));
+//        VidStsUtil.getVidSts(PlayParameter.STS_GET_URL,PlayParameter.PLAY_PARAM_VID, new RetryExpiredSts(this));
+        VidStsUtil.getVidSts(mIpadress,PlayParameter.PLAY_PARAM_VID, new RetryExpiredSts(this));
     }
     /**
      * 因为鉴权过期,而去重新鉴权
@@ -3864,7 +3889,7 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
                     vidSts.setAccessKeyId(PlayParameter.PLAY_PARAM_AK_ID);
                     vidSts.setAccessKeySecret(PlayParameter.PLAY_PARAM_AK_SECRE);
                     vidSts.setSecurityToken(PlayParameter.PLAY_PARAM_SCU_TOKEN);
-//                    downloadManager.prepareDownload(vidSts);
+                    downloadManager.prepareDownload(vidSts);
                 }
             }
         });
@@ -4146,6 +4171,11 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
             PlayParameter.PLAY_PARAM_TYPE = "vidsts";
             initAliyunPlayerView();
         }
+        //设置view的布局，宽高之类
+        RelativeLayout.LayoutParams aliVcVideoViewLayoutParams = (RelativeLayout.LayoutParams) mAliyunVodPlayerView.getLayoutParams();
+        aliVcVideoViewLayoutParams.height = getResources().getDimensionPixelSize(R.dimen.dp_244);
+        aliVcVideoViewLayoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
+        mAliyunVodPlayerView.setLayoutParams(aliVcVideoViewLayoutParams);
         if (downloadView == null) {
             downloadView = new DownloadView(this);
         }
@@ -4394,25 +4424,25 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
 
     //拷贝encryptedApp.dat文件到所需位置
     private void copyAssets() {
-        commenUtils = Common.getInstance(getApplicationContext()).copyAssetsToSD("encrypt", "zhikaowangxiaoedu");
+        commenUtils = Common.getInstance(getApplicationContext()).copyAssetsToSD("encrypt", PublicCommonUtil.encryptedAppPath);
         commenUtils.setFileOperateCallback(
 
                 new Common.FileOperateCallback() {
                     @Override
                     public void onSuccess() {
-                        File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/zhikaowangxiaoedu_save/");
+                        File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + PublicCommonUtil.dowmloadVideoSavePath);
                         if (!file.exists()) {
                             file.mkdir();
                         }
 
                         // 获取AliyunDownloadManager对象
-                        downloadManager = AliyunDownloadManager.getInstance(getApplicationContext());
-                        downloadManager.setEncryptFilePath(Environment.getExternalStorageDirectory().getAbsolutePath() + "/zhikaowangxiaoedu/encryptedApp.dat");
+                        downloadManager = AliyunDownloadManager.getInstance(getApplicationContext(),mThis);
+                        downloadManager.setEncryptFilePath(Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + PublicCommonUtil.encryptedAppPath + "/encryptedApp.dat");
                         downloadManager.setDownloadDir(file.getAbsolutePath());
                         //设置同时下载个数
                         downloadManager.setMaxNum(4);
 
-                        downloadDataProvider = DownloadDataProvider.getSingleton(getApplicationContext());
+                        downloadDataProvider = DownloadDataProvider.getSingleton(getApplicationContext(),mThis);
                         // 更新sts回调
                         downloadManager.setRefreshStsCallback(new MyRefreshStsCallback());
 
@@ -4576,15 +4606,37 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
         public VidSts refreshSts(String vid, String quality, String format, String title, boolean encript) {
             VcPlayerLog.d("refreshSts ", "refreshSts , vid = " + vid);
             //NOTE: 注意：这个不能启动线程去请求。因为这个方法已经在线程中调用了。
-            VidSts vidSts = VidStsUtil.getVidSts(vid);
-            if (vidSts == null) {
+//            VidSts vidSts = VidStsUtil.getVidSts(PlayParameter.STS_GET_URL,vid,new VidStsUtil.OnStsResultListener() {
+//                @Override
+//                public void onSuccess(String vid, String akid, String akSecret, String token) {
+//                    if (downloadManager != null) {
+//                        VidSts vidSts = new VidSts();
+//                        vidSts.setVid(vid);
+//                        vidSts.setRegion(PlayParameter.PLAY_PARAM_REGION);
+//                        vidSts.setAccessKeyId(akid);
+//                        vidSts.setAccessKeySecret(akSecret);
+//                        vidSts.setSecurityToken(token);
+//                        downloadMediaInfo.setVidSts(vidSts);
+//                        PlayParameter.PLAY_PARAM_AK_ID = akid;
+//                        PlayParameter.PLAY_PARAM_AK_SECRE = akSecret;
+//                        PlayParameter.PLAY_PARAM_SCU_TOKEN = token;
+//                        downloadManager.prepareDownloadByQuality(downloadMediaInfo, AliyunDownloadManager.INTENT_STATE_START);
+//                    }
+//                }
+//
+//                @Override
+//                public void onFail() {
+//
+//                }
+//            });
+//            if (vidSts == null) {
                 return null;
-            } else {
-                vidSts.setVid(vid);
-                vidSts.setQuality(quality, true);
-                vidSts.setTitle(title);
-                return vidSts;
-            }
+//            } else {
+//                vidSts.setVid(vid);
+//                vidSts.setQuality(quality, true);
+//                vidSts.setTitle(title);
+//                return vidSts;
+//            }
         }
     }
 
@@ -5022,7 +5074,7 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
      * 刷新下载的VidSts
      */
     private void refreshDownloadVidSts(final AliyunDownloadMediaInfo downloadMediaInfo) {
-        VidStsUtil.getVidSts(downloadMediaInfo.getVidSts().getVid(), new VidStsUtil.OnStsResultListener() {
+        VidStsUtil.getVidSts(mIpadress,downloadMediaInfo.getVidSts().getVid(), new VidStsUtil.OnStsResultListener() {
             @Override
             public void onSuccess(String vid, String akid, String akSecret, String token) {
                 if (downloadManager != null) {

@@ -7,7 +7,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -20,16 +19,12 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
-import android.widget.RelativeLayout;
 import android.widget.SeekBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.aliyun.player.IPlayer;
@@ -52,7 +47,7 @@ import com.aliyun.vodplayerview.playlist.AlivcVideoInfo;
 import com.aliyun.vodplayerview.utils.Common;
 import com.aliyun.vodplayerview.utils.FixedToastUtils;
 import com.aliyun.vodplayerview.utils.ScreenUtils;
-import com.aliyun.vodplayerview.utils.VidStsUtil;
+//import com.aliyun.vodplayerview.utils.VidStsUtil;
 import com.aliyun.vodplayerview.utils.database.DatabaseManager;
 import com.aliyun.vodplayerview.utils.database.LoadDbDatasListener;
 import com.aliyun.vodplayerview.utils.download.AliyunDownloadInfoListener;
@@ -93,8 +88,6 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 
 /**
  * 播放器和播放列表界面 Created by Mulberry on 2018/4/9.
@@ -230,16 +223,16 @@ public class AliyunPlayerSkinActivity extends BaseActivity {
                         }
 
                         // 获取AliyunDownloadManager对象
-                        downloadManager = AliyunDownloadManager.getInstance(getApplicationContext());
+//                        downloadManager = AliyunDownloadManager.getInstance(getApplicationContext());
                         downloadManager.setEncryptFilePath(Environment.getExternalStorageDirectory().getAbsolutePath() + "/aliyun/encryptedApp.dat");
                         PrivateService.initService(getApplicationContext(), Environment.getExternalStorageDirectory().getAbsolutePath() + "/aliyun/encryptedApp.dat");
                         downloadManager.setDownloadDir(file.getAbsolutePath());
                         //设置同时下载个数
                         downloadManager.setMaxNum(3);
 
-                        downloadDataProvider = DownloadDataProvider.getSingleton(getApplicationContext());
+//                        downloadDataProvider = DownloadDataProvider.getSingleton(getApplicationContext());
                         // 更新sts回调
-                        downloadManager.setRefreshStsCallback(new MyRefreshStsCallback());
+//                        downloadManager.setRefreshStsCallback(new MyRefreshStsCallback());
 //
                         // 视频下载的回调
                         downloadManager.setDownloadInfoListener(new MyDownloadInfoListener(AliyunPlayerSkinActivity.this));
@@ -299,7 +292,7 @@ public class AliyunPlayerSkinActivity extends BaseActivity {
             PlayParameter.PLAY_PARAM_VID = DEFAULT_VID;
         }
         Log.e("scar", "requestVidSts:xx ");
-        VidStsUtil.getVidSts(PlayParameter.PLAY_PARAM_VID, new MyStsListener(this));
+//        VidStsUtil.getVidSts("",PlayParameter.PLAY_PARAM_VID, new MyStsListener(this));
     }
 
     /**
@@ -1271,23 +1264,23 @@ public class AliyunPlayerSkinActivity extends BaseActivity {
         }
     }
 
-    private static class MyRefreshStsCallback implements RefreshStsCallback {
-
-        @Override
-        public VidSts refreshSts(String vid, String quality, String format, String title, boolean encript) {
-            VcPlayerLog.d("refreshSts ", "refreshSts , vid = " + vid);
-            //NOTE: 注意：这个不能启动线程去请求。因为这个方法已经在线程中调用了。
-            VidSts vidSts = VidStsUtil.getVidSts(vid);
-            if (vidSts == null) {
-                return null;
-            } else {
-                vidSts.setVid(vid);
-                vidSts.setQuality(quality, true);
-                vidSts.setTitle(title);
-                return vidSts;
-            }
-        }
-    }
+//    private static class MyRefreshStsCallback implements RefreshStsCallback {
+//
+//        @Override
+//        public VidSts refreshSts(String vid, String quality, String format, String title, boolean encript) {
+//            VcPlayerLog.d("refreshSts ", "refreshSts , vid = " + vid);
+//            //NOTE: 注意：这个不能启动线程去请求。因为这个方法已经在线程中调用了。
+////            VidSts vidSts = VidStsUtil.getVidSts("",vid);
+////            if (vidSts == null) {
+////                return null;
+////            } else {
+////                vidSts.setVid(vid);
+////                vidSts.setQuality(quality, true);
+////                vidSts.setTitle(title);
+////                return vidSts;
+////            }
+////        }
+//    }
 
     private void onStopped() {
         FixedToastUtils.show(AliyunPlayerSkinActivity.this.getApplicationContext(), R.string.log_play_stopped);
@@ -1501,30 +1494,30 @@ public class AliyunPlayerSkinActivity extends BaseActivity {
         }
     }
 
-    private static class MyStsListener implements VidStsUtil.OnStsResultListener {
-
-        private WeakReference<AliyunPlayerSkinActivity> weakActivity;
-
-        MyStsListener(AliyunPlayerSkinActivity act) {
-            weakActivity = new WeakReference<>(act);
-        }
-
-        @Override
-        public void onSuccess(String vid, final String akid, final String akSecret, final String token) {
-            AliyunPlayerSkinActivity activity = weakActivity.get();
-            if (activity != null) {
-                activity.onStsSuccess(vid, akid, akSecret, token);
-            }
-        }
-
-        @Override
-        public void onFail() {
-            AliyunPlayerSkinActivity activity = weakActivity.get();
-            if (activity != null) {
-                activity.onStsFail();
-            }
-        }
-    }
+//    private static class MyStsListener implements VidStsUtil.OnStsResultListener {
+//
+//        private WeakReference<AliyunPlayerSkinActivity> weakActivity;
+//
+//        MyStsListener(AliyunPlayerSkinActivity act) {
+//            weakActivity = new WeakReference<>(act);
+//        }
+//
+//        @Override
+//        public void onSuccess(String vid, final String akid, final String akSecret, final String token) {
+//            AliyunPlayerSkinActivity activity = weakActivity.get();
+//            if (activity != null) {
+//                activity.onStsSuccess(vid, akid, akSecret, token);
+//            }
+//        }
+//
+//        @Override
+//        public void onFail() {
+//            AliyunPlayerSkinActivity activity = weakActivity.get();
+//            if (activity != null) {
+//                activity.onStsFail();
+//            }
+//        }
+//    }
 
     private void onStsFail() {
 
@@ -1643,35 +1636,35 @@ public class AliyunPlayerSkinActivity extends BaseActivity {
             }
             // 如果当前播放列表为空, 网络重连后需要重新请求sts和播放列表, 其他情况不需要
             if (alivcVideoInfos != null && alivcVideoInfos.size() == 0) {
-                VidStsUtil.getVidSts(PlayParameter.PLAY_PARAM_VID, new MyStsListener(this));
+//                VidStsUtil.getVidSts("",PlayParameter.PLAY_PARAM_VID, new MyStsListener(this));
             }
         }
     }
 
     /**
-     * 因为鉴权过期,而去重新鉴权
-     */
-    private static class RetryExpiredSts implements VidStsUtil.OnStsResultListener {
-
-        private WeakReference<AliyunPlayerSkinActivity> weakReference;
-
-        public RetryExpiredSts(AliyunPlayerSkinActivity activity) {
-            weakReference = new WeakReference<>(activity);
-        }
-
-        @Override
-        public void onSuccess(String vid, String akid, String akSecret, String token) {
-            AliyunPlayerSkinActivity activity = weakReference.get();
-            if (activity != null) {
-                activity.onStsRetrySuccess(vid, akid, akSecret, token);
-            }
-        }
-
-        @Override
-        public void onFail() {
-
-        }
-    }
+//     * 因为鉴权过期,而去重新鉴权
+//     */
+//    private static class RetryExpiredSts implements VidStsUtil.OnStsResultListener {
+//
+//        private WeakReference<AliyunPlayerSkinActivity> weakReference;
+//
+//        public RetryExpiredSts(AliyunPlayerSkinActivity activity) {
+//            weakReference = new WeakReference<>(activity);
+//        }
+//
+//        @Override
+//        public void onSuccess(String vid, String akid, String akSecret, String token) {
+//            AliyunPlayerSkinActivity activity = weakReference.get();
+//            if (activity != null) {
+//                activity.onStsRetrySuccess(vid, akid, akSecret, token);
+//            }
+//        }
+//
+//        @Override
+//        public void onFail() {
+//
+//        }
+//    }
 
     private void onStsRetrySuccess(String mVid, String akid, String akSecret, String token) {
         PlayParameter.PLAY_PARAM_VID = mVid;
@@ -1727,22 +1720,22 @@ public class AliyunPlayerSkinActivity extends BaseActivity {
 
     private void onUrlTimeExpired(String oldVid, String oldQuality) {
         //requestVidSts();
-        VidSts vidSts = VidStsUtil.getVidSts(oldVid);
-        PlayParameter.PLAY_PARAM_VID = vidSts.getVid();
-        PlayParameter.PLAY_PARAM_AK_SECRE = vidSts.getAccessKeySecret();
-        PlayParameter.PLAY_PARAM_AK_ID = vidSts.getAccessKeyId();
-        PlayParameter.PLAY_PARAM_SCU_TOKEN = vidSts.getSecurityToken();
-
-        if (mAliyunVodPlayerView != null) {
-            mAliyunVodPlayerView.setVidSts(vidSts);
-        }
+//        VidSts vidSts = VidStsUtil.getVidSts("",oldVid);
+//        PlayParameter.PLAY_PARAM_VID = vidSts.getVid();
+//        PlayParameter.PLAY_PARAM_AK_SECRE = vidSts.getAccessKeySecret();
+//        PlayParameter.PLAY_PARAM_AK_ID = vidSts.getAccessKeyId();
+//        PlayParameter.PLAY_PARAM_SCU_TOKEN = vidSts.getSecurityToken();
+//
+//        if (mAliyunVodPlayerView != null) {
+//            mAliyunVodPlayerView.setVidSts(vidSts);
+//        }
     }
 
     /**
      * 鉴权过期
      */
     private void onTimExpiredError() {
-        VidStsUtil.getVidSts(PlayParameter.PLAY_PARAM_VID, new RetryExpiredSts(this));
+//        VidStsUtil.getVidSts("",PlayParameter.PLAY_PARAM_VID, new RetryExpiredSts(this));
     }
 
     private static class MyShowMoreClickLisener implements ControlView.OnShowMoreClickListener {
@@ -2073,29 +2066,29 @@ public class AliyunPlayerSkinActivity extends BaseActivity {
      * 刷新下载的VidSts
      */
     private void refreshDownloadVidSts(final AliyunDownloadMediaInfo downloadMediaInfo) {
-        VidStsUtil.getVidSts(downloadMediaInfo.getVidSts().getVid(), new VidStsUtil.OnStsResultListener() {
-            @Override
-            public void onSuccess(String vid, String akid, String akSecret, String token) {
-                if (downloadManager != null) {
-                    VidSts vidSts = new VidSts();
-                    vidSts.setVid(vid);
-                    vidSts.setRegion(PlayParameter.PLAY_PARAM_REGION);
-                    vidSts.setAccessKeyId(akid);
-                    vidSts.setAccessKeySecret(akSecret);
-                    vidSts.setSecurityToken(token);
-                    downloadMediaInfo.setVidSts(vidSts);
-                    PlayParameter.PLAY_PARAM_AK_ID = akid;
-                    PlayParameter.PLAY_PARAM_AK_SECRE = akSecret;
-                    PlayParameter.PLAY_PARAM_SCU_TOKEN = token;
-                    downloadManager.prepareDownloadByQuality(downloadMediaInfo, AliyunDownloadManager.INTENT_STATE_START);
-                }
-            }
-
-            @Override
-            public void onFail() {
-
-            }
-        });
+//        VidStsUtil.getVidSts("",downloadMediaInfo.getVidSts().getVid(), new VidStsUtil.OnStsResultListener() {
+//            @Override
+//            public void onSuccess(String vid, String akid, String akSecret, String token) {
+//                if (downloadManager != null) {
+//                    VidSts vidSts = new VidSts();
+//                    vidSts.setVid(vid);
+//                    vidSts.setRegion(PlayParameter.PLAY_PARAM_REGION);
+//                    vidSts.setAccessKeyId(akid);
+//                    vidSts.setAccessKeySecret(akSecret);
+//                    vidSts.setSecurityToken(token);
+//                    downloadMediaInfo.setVidSts(vidSts);
+//                    PlayParameter.PLAY_PARAM_AK_ID = akid;
+//                    PlayParameter.PLAY_PARAM_AK_SECRE = akSecret;
+//                    PlayParameter.PLAY_PARAM_SCU_TOKEN = token;
+//                    downloadManager.prepareDownloadByQuality(downloadMediaInfo, AliyunDownloadManager.INTENT_STATE_START);
+//                }
+//            }
+//
+//            @Override
+//            public void onFail() {
+//
+//            }
+//        });
 
     }
 }

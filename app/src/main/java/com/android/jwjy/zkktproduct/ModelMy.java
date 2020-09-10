@@ -16,6 +16,7 @@ import android.os.Environment;
 import android.os.StatFs;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -656,12 +657,14 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
         RelativeLayout modelmy_mycache_title = mMyCacheView.findViewById(R.id.modelmy_mycache_title);
         modelmy_mycache_title.setVisibility(View.INVISIBLE);
         RelativeLayout modelmy_mycache_aliyunVodPlayerView = mMyCacheView.findViewById(R.id.modelmy_mycache_aliyunVodPlayerView);
-        modelmy_mycache_aliyunVodPlayerView.removeAllViews();
-        AliyunVodPlayerView aliyunVodPlayerView = new AliyunVodPlayerView(mControlMainActivity);
+        if (modelmy_mycache_aliyunVodPlayerView.getVisibility() == View.INVISIBLE){
+            modelmy_mycache_aliyunVodPlayerView.removeAllViews();
+            AliyunVodPlayerView aliyunVodPlayerView = new AliyunVodPlayerView(mControlMainActivity);
+            modelmy_mycache_aliyunVodPlayerView.addView(aliyunVodPlayerView);
+            modelmy_mycache_aliyunVodPlayerView.setVisibility(View.VISIBLE);
 //        modelmy_mycache_aliyunVodPlayerView.VideoIdSet();
-        mControlMainActivity.setmAliyunVodPlayerView(aliyunVodPlayerView);
-        modelmy_mycache_aliyunVodPlayerView.addView(aliyunVodPlayerView);
-        modelmy_mycache_aliyunVodPlayerView.setVisibility(View.VISIBLE);
+            mControlMainActivity.setmAliyunVodPlayerView(aliyunVodPlayerView);
+        }
         return true;
     }
     //展示我的缓存-管理缓存界面

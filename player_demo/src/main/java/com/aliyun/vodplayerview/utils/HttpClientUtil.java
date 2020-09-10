@@ -226,6 +226,7 @@ public class HttpClientUtil {
 
             connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("POST");
+            connection.setRequestProperty("Content-type", "application/json;charset=UTF-8");
             connection.setConnectTimeout(CONNECTION_TIMEOUT);
             connection.setReadTimeout(CONNECTION_TIMEOUT);
 
@@ -321,9 +322,11 @@ public class HttpClientUtil {
             }
 
             connection = (HttpsURLConnection) url.openConnection();
+            connection.setRequestProperty("Content-type", "application/json;charset=UTF-8");
             connection.setRequestMethod("POST");
             connection.setConnectTimeout(CONNECTION_TIMEOUT);
             connection.setReadTimeout(CONNECTION_TIMEOUT);
+//            .addInterceptor(new HeaderInterceptor()
 
             //设置输入流和输出流,都设置为true
             connection.setDoOutput(true);
