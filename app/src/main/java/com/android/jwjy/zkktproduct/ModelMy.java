@@ -681,60 +681,6 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
         int count = 0;
         LinearLayout course_downloadmanager_layout_content = mMyCacheManagementCacheView.findViewById(R.id.course_downloadmanager_layout_content);
         course_downloadmanager_layout_content.removeAllViews();
-//        for (int i = 0; i < CourseInfo1.mCourseChaptersInfoList.size(); i++) {
-//            CourseChaptersInfo courseChaptersInfo = CourseInfo1.mCourseChaptersInfoList.get(i);
-//            if (courseChaptersInfo == null) {
-//                continue;
-//            }
-//            View view = LayoutInflater.from(mControlMainActivity).inflate(R.layout.modelcoursedetails_download_manager_child, null);
-//            TextView course_downloadmanager_child_titletext = view.findViewById(R.id.course_downloadmanager_child_titletext);
-//            course_downloadmanager_child_titletext.setText(courseChaptersInfo.mCourseChaptersName);
-//            course_downloadmanager_child_titletext.setHint(courseChaptersInfo.mCourseChaptersId);
-//            if (courseChaptersInfo.mCourseSectionsInfoList.size() == 0) {
-//                View course_downloadmanager_child_line1 = view.findViewById(R.id.course_downloadmanager_child_line1);
-//                course_downloadmanager_child_line1.setVisibility(View.INVISIBLE);
-//            }
-//            course_downloadmanager_layout_content.addView(view);
-//            LinearLayout course_downloadmanager_child_content = view.findViewById(R.id.course_downloadmanager_child_content);
-//            course_downloadmanager_child_content.removeAllViews();
-//            for (int num = 0; num < courseChaptersInfo.mCourseSectionsInfoList.size(); num++) {
-//                CourseSectionsInfo courseSectionsInfo = courseChaptersInfo.mCourseSectionsInfoList.get(num);
-//                if (courseSectionsInfo == null) {
-//                    continue;
-//                }
-//                CourseRecordPlayDownloadInfo info = mCourseRecordPlayDownloadInfoMap.get(courseSectionsInfo.mCourseSectionsId);
-//                if (info == null) { //没有添加下载的不做处理
-//                    continue;
-//                }
-//                View MyOrderShow_MyOrder_view2 = LayoutInflater.from(mControlMainActivity).inflate(R.layout.modelcoursedetails_download_manager_child1, null);
-//                TextView course_downloadmanager_child1_name = MyOrderShow_MyOrder_view2.findViewById(R.id.course_downloadmanager_child1_name);
-//                course_downloadmanager_child1_name.setText(courseSectionsInfo.mCourseSectionsName);
-//                course_downloadmanager_child1_name.setHint(courseSectionsInfo.mCourseSectionsId);
-//                ProgressBar progress_bar_healthy = MyOrderShow_MyOrder_view2.findViewById(R.id.progress_bar_healthy);
-//                int progress = 0;
-//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-//                    progress = Math.toIntExact(Long.valueOf(info.mCourseSectionsDownloadSize)
-//                            / Long.valueOf(info.mCourseSectionsSize));
-//                }
-//                progress_bar_healthy.setProgress(progress);
-//                ImageView course_downloadmanager_child1_function = MyOrderShow_MyOrder_view2.findViewById(R.id.course_downloadmanager_child1_function);
-//                TextView course_downloadmanager_child_state = MyOrderShow_MyOrder_view2.findViewById(R.id.course_downloadmanager_child_state);
-//                course_downloadmanager_child1_function.setOnClickListener(v -> {
-//                    int id = getV7ImageResourceId(course_downloadmanager_child1_function);
-//                    if (id == R.drawable.button_pause_blue) {
-//                        course_downloadmanager_child1_function.setBackgroundResource(R.drawable.button_play_blue);
-//                        course_downloadmanager_child_state.setText("已暂停");
-//                        progress_bar_healthy.setProgressDrawable(MyOrderShow_MyOrder_view2.getResources().getDrawable(R.drawable.progressbar_bg1));
-//                    } else if (id == R.drawable.button_play_blue) {
-//                        course_downloadmanager_child1_function.setBackgroundResource(R.drawable.button_pause_blue);
-////                        course_downloadmanager_child_state.setText("下载中");
-////                        progress_bar_healthy.setProgressDrawable(MyOrderShow_MyOrder_view2.getResources().getDrawable(R.drawable.progressbar_bg));
-////                    }
-////                });
-////                course_downloadmanager_child_content.addView(MyOrderShow_MyOrder_view2);
-////                count++;
-////            }
-////        }
         TextView course_downloadmanager_num = mMyCacheManagementCacheView.findViewById(R.id.course_downloadmanager_num);
         course_downloadmanager_num.setText("0");
         TextView course_downloadmanager_sumnum = mMyCacheManagementCacheView.findViewById(R.id.course_downloadmanager_sumnum);

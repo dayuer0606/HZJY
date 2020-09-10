@@ -201,6 +201,7 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
         mIpType.put("http://wangxiao.jianweijiaoyu.com/","jianwei");
         mIpType.put("http://wangxiao.16zige.com/","yixiao");
         mIpType.put("http://wangxiao.yixiaojiaoyu.com/","yixiao");
+        mIpType.put("http://managerwt.16zige.com/","wentao");
         //阿里视频播放下载，必须初始化的服务，必须放在最开始的位置
         PrivateService.initService(getApplicationContext(), Environment.getExternalStorageDirectory().getAbsolutePath() + "/zhikaowangxiaoedu/encryptedApp.dat");
         //拷贝encryptedApp.dat文件到所需位置
@@ -348,28 +349,45 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
             jiankang_layout.setOnClickListener(v->{
                 ImageView xiaofang = findViewById(R.id.xiaofang);
                 ImageView xiaofangsetting = findViewById(R.id.xiaofangsetting);
+                ImageView xiaofangsheshisetting = findViewById(R.id.xiaofangsheshisetting);
                 xiaofang.setBackground(getResources().getDrawable(R.drawable.icon_null));
                 xiaofangsetting.setBackground(getResources().getDrawable(R.drawable.icon_null));
                 jiankang.setBackground(getResources().getDrawable(R.drawable.icon_black));
+                xiaofangsheshisetting.setBackground(getResources().getDrawable(R.drawable.icon_null));
                 mIpadress = "http://wangxiao.jianweijiaoyu.com/";
             });
             LinearLayout xiaofang_layout =  findViewById(R.id.xiaofang_layout);
             xiaofang_layout.setOnClickListener(v->{
                 ImageView xiaofang = findViewById(R.id.xiaofang);
                 ImageView xiaofangsetting = findViewById(R.id.xiaofangsetting);
+                ImageView xiaofangsheshisetting = findViewById(R.id.xiaofangsheshisetting);
                 xiaofang.setBackground(getResources().getDrawable(R.drawable.icon_black));
                 jiankang.setBackground(getResources().getDrawable(R.drawable.icon_null));
                 xiaofangsetting.setBackground(getResources().getDrawable(R.drawable.icon_null));
+                xiaofangsheshisetting.setBackground(getResources().getDrawable(R.drawable.icon_null));
                 mIpadress = "http://wangxiao.16zige.com/";
             });
             LinearLayout xiaofangsetting_layout = findViewById(R.id.xiaofangsetting_layout);
             xiaofangsetting_layout.setOnClickListener(v->{
                 ImageView xiaofang = findViewById(R.id.xiaofang);
                 ImageView xiaofangsetting = findViewById(R.id.xiaofangsetting);
+                ImageView xiaofangsheshisetting = findViewById(R.id.xiaofangsheshisetting);
                 xiaofangsetting.setBackground(getResources().getDrawable(R.drawable.icon_black));
                 jiankang.setBackground(getResources().getDrawable(R.drawable.icon_null));
                 xiaofang.setBackground(getResources().getDrawable(R.drawable.icon_null));
+                xiaofangsheshisetting.setBackground(getResources().getDrawable(R.drawable.icon_null));
                 mIpadress = "http://wangxiao.16zige.com/";
+            });
+            LinearLayout xiaofangsheshi_layout = findViewById(R.id.xiaofangsheshi_layout);
+            xiaofangsheshi_layout.setOnClickListener(v -> {
+                ImageView xiaofang = findViewById(R.id.xiaofang);
+                ImageView xiaofangsheshisetting = findViewById(R.id.xiaofangsheshisetting);
+                ImageView xiaofangsetting = findViewById(R.id.xiaofangsetting);
+                xiaofangsheshisetting.setBackground(getResources().getDrawable(R.drawable.icon_black));
+                jiankang.setBackground(getResources().getDrawable(R.drawable.icon_null));
+                xiaofang.setBackground(getResources().getDrawable(R.drawable.icon_null));
+                xiaofangsetting.setBackground(getResources().getDrawable(R.drawable.icon_null));
+                mIpadress = "http://managerwt.16zige.com/";
             });
             Button button_next = findViewById(R.id.button_next);
             button_next.setOnClickListener(v->{

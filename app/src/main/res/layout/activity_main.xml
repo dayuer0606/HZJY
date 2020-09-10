@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:text=""
             android:textColor="#ff2e2f32"
-            android:layout_marginTop="@dimen/dp_129"
+            android:layout_marginTop="@dimen/dp_70"
             android:layout_marginRight="@dimen/dp23"
             android:layout_marginLeft="@dimen/dp23"
             android:textSize="@dimen/sp_22"
@@ -35,7 +35,7 @@
         <LinearLayout
             android:id="@+id/main_view_choiceproject"
             android:layout_below="@id/main_view_choicetitle"
-            android:layout_marginTop="@dimen/dp50"
+            android:layout_marginTop="@dimen/dp40"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -55,12 +55,13 @@
 <!--                //#37A646-->
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/black"
+                    android:layout_marginLeft="@dimen/dp_13"
+                    android:layout_weight="1"
                     android:text="  健康管理师"
-                    android:textSize="@dimen/sp_20"
-                    android:layout_marginLeft="@dimen/dp_13"/>
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/sp_20" />
+
                 <ImageView
                     android:id="@+id/jiankang"
                     android:layout_width="@dimen/dp30"
@@ -124,13 +125,13 @@
                     android:background="@drawable/icon_firecontrol" />
 
                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_weight="1"
+                    android:layout_width="288dp"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/black"
+                    android:layout_marginLeft="@dimen/dp_13"
+                    android:layout_weight="1"
                     android:text="消防设施操作员"
-                    android:textSize="@dimen/sp_20"
-                    android:layout_marginLeft="@dimen/dp_13"/>
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/sp_20" />
                 <ImageView
                     android:id="@+id/xiaofangsetting"
                     android:layout_width="@dimen/dp30"
@@ -139,13 +140,43 @@
                     android:layout_gravity="center"
                     android:background="@drawable/icon_null"/>
             </LinearLayout>
-<!--            <RadioButton-->
-<!--                android:id="@+id/xiaofangshezhicaozuoyuan"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:checked="true"-->
-<!--                android:gravity="center"-->
-<!--                android:text="消防设置操作员" />-->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp1"
+                android:background="@color/grayeceef0"
+                android:layout_marginTop="@dimen/dp30"/>
+            <LinearLayout
+                android:id="@+id/xiaofangsheshi_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp30">
+
+                <ImageView
+                    android:layout_width="@dimen/dp23"
+                    android:layout_height="@dimen/dp23"
+                    android:layout_gravity="center"
+                    android:background="@drawable/icon_firecontrol" />
+
+                <!--                //#F96931-->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:text="消防设施"
+                    android:textSize="@dimen/sp_20"
+                    android:layout_marginLeft="@dimen/dp_13"/>
+                <ImageView
+                    android:id="@+id/xiaofangsheshisetting"
+                    android:layout_width="@dimen/dp30"
+                    android:layout_height="@dimen/dp30"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:background="@drawable/icon_null"/>
+            </LinearLayout>
+
+
+
         </LinearLayout>
         <Button
             android:id="@+id/button_next"

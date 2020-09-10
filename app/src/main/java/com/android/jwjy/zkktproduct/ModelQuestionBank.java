@@ -1032,12 +1032,17 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
 //                        questionbank_handin2_sign.setVisibility(View.VISIBLE);
 //                    }
 //                }
-                questionbank_handin2_select.setTextColor(view.getResources().getColor(R.color.white));
-                questionbank_handin2_select.setBackground(view.getResources().getDrawable(R.drawable.textview_style_circle_red));
                 if (questionBankAnswerSheetDataBean.TF != null) {
-                    if (questionBankAnswerSheetDataBean.TF == 1) { //此题为当前正在答的题,改变题的颜色
+                    if (questionBankAnswerSheetDataBean.mydaan==null){//如果答案是空的话给它一个空字符串加一个保护防止闪退
+                        questionBankAnswerSheetDataBean.mydaan = "";
+                    }
+                    if (questionBankAnswerSheetDataBean.TF == 1) { //此题为做对了,改变题的颜色
+                        questionbank_handin2_select.setTextColor(view.getResources().getColor(R.color.white));
                         questionbank_handin2_select.setBackground(view.getResources().getDrawable(R.drawable.textview_style_circle_blue));
                         rightCount = rightCount + 1;
+                    }else if (questionBankAnswerSheetDataBean.TF == 2&&!questionBankAnswerSheetDataBean.mydaan.equals("")){//此题做错了并且我的答案不等于空,改变题的颜色
+                        questionbank_handin2_select.setTextColor(view.getResources().getColor(R.color.white));
+                        questionbank_handin2_select.setBackground(view.getResources().getDrawable(R.drawable.textview_style_circle_red));
                     }
                 }
                 int finalCount = i;
@@ -1058,18 +1063,19 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                 coursedetails_handinpaper1_questionnumber.addView(view);
                 TextView questionbank_handin2_select = view.findViewById(R.id.questionbank_handin2_select);
                 questionbank_handin2_select.setText("" + (i + 1));
-//                if (questionBankAnswerSheetDataBean.tf_marked != null){
-//                    if (questionBankAnswerSheetDataBean.tf_marked == 1){//标记此题
-//                        ImageView questionbank_handin2_sign = view.findViewById(R.id.questionbank_handin2_sign);
-//                        questionbank_handin2_sign.setVisibility(View.VISIBLE);
-//                    }
-//                }
                 questionbank_handin2_select.setTextColor(view.getResources().getColor(R.color.white));
                 questionbank_handin2_select.setBackground(view.getResources().getDrawable(R.drawable.textview_style_circle_red));
                 if (questionBankAnswerSheetDataBean.TF != null) {
-                    if (questionBankAnswerSheetDataBean.TF == 1) { //此题为当前正在答的题,改变题的颜色
+                    if (questionBankAnswerSheetDataBean.mydaan==null){//如果答案是空的话给它一个空字符串加一个保护防止闪退
+                        questionBankAnswerSheetDataBean.mydaan="";
+                    }
+                    if (questionBankAnswerSheetDataBean.TF == 1) { //此题为做对了,改变题的颜色
+                        questionbank_handin2_select.setTextColor(view.getResources().getColor(R.color.white));
                         questionbank_handin2_select.setBackground(view.getResources().getDrawable(R.drawable.textview_style_circle_blue));
                         rightCount = rightCount + 1;
+                    }else if (questionBankAnswerSheetDataBean.TF == 2&&!questionBankAnswerSheetDataBean.mydaan.equals("")){//此题做错了并且我的答案不等于空,改变题的颜色
+                        questionbank_handin2_select.setTextColor(view.getResources().getColor(R.color.white));
+                        questionbank_handin2_select.setBackground(view.getResources().getDrawable(R.drawable.textview_style_circle_red));
                     }
                 }
                 int finalCount = i;
@@ -1095,12 +1101,16 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
 //                        questionbank_handin2_sign.setVisibility(View.VISIBLE);
 //                    }
 //                }
-                questionbank_handin2_select.setTextColor(view.getResources().getColor(R.color.white));
-                questionbank_handin2_select.setBackground(view.getResources().getDrawable(R.drawable.textview_style_circle_red));
                 if (questionBankAnswerSheetDataBean.TF != null) {
-                    if (questionBankAnswerSheetDataBean.TF == 1) { //此题为当前正在答的题,改变题的颜色
+                    if (questionBankAnswerSheetDataBean.mydaan==null){//如果答案是空的话给它一个空字符串加一个保护防止闪退
+                        questionBankAnswerSheetDataBean.mydaan="";
+                    }
+                    if (questionBankAnswerSheetDataBean.TF == 1) { //此题为做对了,改变题的颜色
                         questionbank_handin2_select.setBackground(view.getResources().getDrawable(R.drawable.textview_style_circle_blue));
                         rightCount = rightCount + 1;
+                    }else if (questionBankAnswerSheetDataBean.TF == 2&&!questionBankAnswerSheetDataBean.mydaan.equals("")){//此题做错了并且我的答案不等于空,改变题的颜色
+                        questionbank_handin2_select.setTextColor(view.getResources().getColor(R.color.white));
+                        questionbank_handin2_select.setBackground(view.getResources().getDrawable(R.drawable.textview_style_circle_red));
                     }
                 }
                 int finalCount = i;
@@ -1126,12 +1136,17 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
 //                        questionbank_handin2_sign.setVisibility(View.VISIBLE);
 //                    }
 //                }
-                questionbank_handin2_select.setTextColor(view.getResources().getColor(R.color.white));
-                questionbank_handin2_select.setBackground(view.getResources().getDrawable(R.drawable.textview_style_circle_red));
+
                 if (questionBankAnswerSheetDataBean.TF != null) {
-                    if (questionBankAnswerSheetDataBean.TF == 1) { //此题为当前正在答的题,改变题的颜色
+                    if (questionBankAnswerSheetDataBean.mydaan==null){//如果答案是空的话给它一个空字符串加一个保护防止闪退
+                        questionBankAnswerSheetDataBean.mydaan="";
+                    }
+                    if (questionBankAnswerSheetDataBean.TF == 1) { //此题为做对了,改变题的颜色
                         questionbank_handin2_select.setBackground(view.getResources().getDrawable(R.drawable.textview_style_circle_blue));
                         rightCount = rightCount + 1;
+                    }else if (questionBankAnswerSheetDataBean.TF == 2 &&!questionBankAnswerSheetDataBean.mydaan.equals("")){//此题做错了并且我的答案不等于空,改变题的颜色
+                        questionbank_handin2_select.setTextColor(view.getResources().getColor(R.color.white));
+                        questionbank_handin2_select.setBackground(view.getResources().getDrawable(R.drawable.textview_style_circle_red));
                     }
                 }
                 int finalCount = i;
@@ -7564,7 +7579,16 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
     public static class QuestionBankAnswerSheetBean {
         private Integer code;
         private String msg;
+        private Integer mode;
         private List<QuestionBankAnswerSheetDataBean> data;
+
+        public Integer getMode() {
+            return mode;
+        }
+
+        public void setMode(Integer mode) {
+            this.mode = mode;
+        }
 
         public void setData(List<QuestionBankAnswerSheetDataBean> data) {
             this.data = data;
@@ -7595,6 +7619,15 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
             private String question_id;
             private Integer tf_marked;
             private Integer type;
+            private String mydaan;
+
+            public String getMydaan() {
+                return mydaan;
+            }
+
+            public void setMydaan(String mydaan) {
+                this.mydaan = mydaan;
+            }
 
             public Integer getType() {
                 return type;
@@ -7672,6 +7705,30 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                             Toast.makeText(mControlMainActivity,"查询答题卡信息失败！",Toast.LENGTH_SHORT).show();
                             return;
                         }
+                        if (questionBankAnswerSheetBean.mode == null){
+                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            Toast.makeText(mControlMainActivity,"查询答题卡信息失败！",Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                        //判断是不是练习模式
+                        int cunt = -1 ;
+                        if (questionBankAnswerSheetBean.mode==1){
+                            for (int i = 0; i < questionBankAnswerSheetBean.data.size(); i++) {
+                                //判断我的答案是不是空如果是空的话给一个空串防止再判断闪退
+                                if (questionBankAnswerSheetBean.data.get(i).mydaan==null){
+                                    questionBankAnswerSheetBean.data.get(i).mydaan = "";
+                                }
+                                if (!questionBankAnswerSheetBean.data.get(i).mydaan.equals("")){
+                                   cunt = i;
+                                }
+                            }
+                                 if (cunt!=-1 ){
+                                while (questionBankAnswerSheetBean.data.size() > (cunt + 1)){//看过了没有答案也算做，移除没有做的题目
+                                    questionBankAnswerSheetBean.data.remove(cunt+1);
+                                }
+                            }
+                        }
+
                         if (type == 1) { //普通答题卡
                             AnswerQuestionCardViewAdd(questionBankAnswerSheetBean.data);
                         } else if (type == 2) { //答题后答题卡
@@ -7712,7 +7769,8 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
         queryMyCourseList.queryMyQuestionBankGoon(body)
                 .enqueue(new Callback<MyQuestionBankGoonBean>() {
                     @Override
-                    public void onResponse(Call<MyQuestionBankGoonBean> call, Response<MyQuestionBankGoonBean> response) {
+                    public void onResponse(Call<MyQuestionBankGoonBean> call,
+                                           Response<MyQuestionBankGoonBean> response) {
                         MyQuestionBankGoonBean bankGoonBean = response.body();
                         if (bankGoonBean == null) {
                             myQuestionBankGoonDataBeans = null;

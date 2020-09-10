@@ -77,7 +77,9 @@ public class ModelHomePage extends Fragment{
         mView = inflater.inflate(FragmentPage,container,false);
         this.inflater = inflater;
         this.container = container;
+        //获取首页数据
         getHomePageDatas();
+        //首页展示
         HomePageShow();
         return mView;
     }
@@ -238,6 +240,7 @@ public class ModelHomePage extends Fragment{
         lp.rightMargin = width / 25;
         lp.leftMargin = width / 25;
         courseline.setLayoutParams(lp);
+
         //更多课程包
         RelativeLayout morecoursepacketRelativeLayout = view.findViewById(R.id.morecoursepacket);
         LinearLayout.LayoutParams morecoursepacketRelativeLayoutLp = (LinearLayout.LayoutParams) morecoursepacketRelativeLayout.getLayoutParams();
