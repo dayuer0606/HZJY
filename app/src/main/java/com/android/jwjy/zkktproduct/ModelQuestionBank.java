@@ -1056,6 +1056,8 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                 if (questionBankAnswerSheetDataBean.TF != null) {
                     if (questionBankAnswerSheetDataBean.mydaan==null){//如果答案是空的话给它一个空字符串加一个保护防止闪退
                         questionBankAnswerSheetDataBean.mydaan = "";
+                    } else if (questionBankAnswerSheetDataBean.mydaan.equals(" ")){
+                        questionBankAnswerSheetDataBean.mydaan =  "";
                     }
                     if (questionBankAnswerSheetDataBean.TF == 1) { //此题为做对了,改变题的颜色
                         questionbank_handin2_select.setTextColor(view.getResources().getColor(R.color.white));
@@ -1084,11 +1086,11 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                 coursedetails_handinpaper1_questionnumber.addView(view);
                 TextView questionbank_handin2_select = view.findViewById(R.id.questionbank_handin2_select);
                 questionbank_handin2_select.setText("" + (i + 1));
-                questionbank_handin2_select.setTextColor(view.getResources().getColor(R.color.white));
-                questionbank_handin2_select.setBackground(view.getResources().getDrawable(R.drawable.textview_style_circle_red));
                 if (questionBankAnswerSheetDataBean.TF != null) {
                     if (questionBankAnswerSheetDataBean.mydaan==null){//如果答案是空的话给它一个空字符串加一个保护防止闪退
                         questionBankAnswerSheetDataBean.mydaan="";
+                    }else if (questionBankAnswerSheetDataBean.mydaan.equals(" ")){
+                        questionBankAnswerSheetDataBean.mydaan =  "";
                     }
                     if (questionBankAnswerSheetDataBean.TF == 1) { //此题为做对了,改变题的颜色
                         questionbank_handin2_select.setTextColor(view.getResources().getColor(R.color.white));
@@ -1125,8 +1127,11 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                 if (questionBankAnswerSheetDataBean.TF != null) {
                     if (questionBankAnswerSheetDataBean.mydaan==null){//如果答案是空的话给它一个空字符串加一个保护防止闪退
                         questionBankAnswerSheetDataBean.mydaan="";
+                    }else if (questionBankAnswerSheetDataBean.mydaan.equals(" ")){
+                        questionBankAnswerSheetDataBean.mydaan =  "";
                     }
                     if (questionBankAnswerSheetDataBean.TF == 1) { //此题为做对了,改变题的颜色
+                        questionbank_handin2_select.setTextColor(view.getResources().getColor(R.color.white));
                         questionbank_handin2_select.setBackground(view.getResources().getDrawable(R.drawable.textview_style_circle_blue));
                         rightCount = rightCount + 1;
                     }else if (questionBankAnswerSheetDataBean.TF == 2&&!questionBankAnswerSheetDataBean.mydaan.equals("")){//此题做错了并且我的答案不等于空,改变题的颜色
@@ -1161,8 +1166,11 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                 if (questionBankAnswerSheetDataBean.TF != null) {
                     if (questionBankAnswerSheetDataBean.mydaan==null){//如果答案是空的话给它一个空字符串加一个保护防止闪退
                         questionBankAnswerSheetDataBean.mydaan="";
+                    }else if (questionBankAnswerSheetDataBean.mydaan.equals(" ")){
+                        questionBankAnswerSheetDataBean.mydaan =  "";
                     }
                     if (questionBankAnswerSheetDataBean.TF == 1) { //此题为做对了,改变题的颜色
+                        questionbank_handin2_select.setTextColor(view.getResources().getColor(R.color.white));
                         questionbank_handin2_select.setBackground(view.getResources().getDrawable(R.drawable.textview_style_circle_blue));
                         rightCount = rightCount + 1;
                     }else if (questionBankAnswerSheetDataBean.TF == 2 &&!questionBankAnswerSheetDataBean.mydaan.equals("")){//此题做错了并且我的答案不等于空,改变题的颜色
@@ -7755,6 +7763,8 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                             for (int i = 0; i < questionBankAnswerSheetBean.data.size(); i++) {
                                 //判断我的答案是不是空如果是空的话给一个空串防止再判断闪退
                                 if (questionBankAnswerSheetBean.data.get(i).mydaan==null){
+                                    questionBankAnswerSheetBean.data.get(i).mydaan = "";
+                                } else if (questionBankAnswerSheetBean.data.get(i).mydaan.equals(" ")){
                                     questionBankAnswerSheetBean.data.get(i).mydaan = "";
                                 }
                                 if (!questionBankAnswerSheetBean.data.get(i).mydaan.equals("")){
