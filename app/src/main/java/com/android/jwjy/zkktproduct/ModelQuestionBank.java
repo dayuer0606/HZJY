@@ -49,7 +49,8 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import static com.talkfun.utils.HandlerUtil.runOnUiThread;
+import static com.aliyun.svideo.common.utils.ThreadUtils.runOnUiThread;
+
 /**
  * Created by dayuer on 19/7/2.
  * 题库模块

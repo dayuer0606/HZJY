@@ -145,16 +145,16 @@
     <orderEntry type="library" scope="TEST" name="Gradle: com.android.support:multidex-instrumentation:1.0.2@aar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.android.support.test:monitor:1.0.2@aar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.android.support.test.espresso:espresso-idling-resource:3.0.2@aar" level="project" />
-    <orderEntry type="library" name="Gradle: __local_aars__:G.\project\ZKKTProduct\app\libs\clog-1.0.2-sources.jar:unspecified@jar" level="project" />
-    <orderEntry type="library" name="Gradle: __local_aars__:G.\project\ZKKTProduct\app\libs\clog-1.0.2.jar:unspecified@jar" level="project" />
-    <orderEntry type="library" name="Gradle: __local_aars__:G.\project\ZKKTProduct\app\libs\dom4j-1.6.1.jar:unspecified@jar" level="project" />
+    <orderEntry type="library" name="Gradle: __local_aars__:D./word/app/libs/clog-1.0.2-sources.jar:unspecified@jar" level="project" />
+    <orderEntry type="library" name="Gradle: __local_aars__:D./word/app/libs/clog-1.0.2.jar:unspecified@jar" level="project" />
+    <orderEntry type="library" name="Gradle: __local_aars__:D./word/app/libs/dom4j-1.6.1.jar:unspecified@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.tencent.mm.opensdk:wechat-sdk-android-without-mta:6.6.4@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.android.databinding:baseLibrary:3.2.0@jar" level="project" />
-    <orderEntry type="library" name="Gradle: __local_aars__:G.\project\ZKKTProduct\sdk\libs\agora-rtc-sdk.jar:unspecified@jar" level="project" />
-    <orderEntry type="library" name="Gradle: __local_aars__:G.\project\ZKKTProduct\sdk\libs\libcommon.jar:unspecified@jar" level="project" />
-    <orderEntry type="library" name="Gradle: __local_aars__:G.\project\ZKKTProduct\sdk\libs\librtc.jar:unspecified@jar" level="project" />
-    <orderEntry type="library" name="Gradle: __local_aars__:G.\project\ZKKTProduct\sdk\libs\libwhiteboard.jar:unspecified@jar" level="project" />
-    <orderEntry type="library" name="Gradle: __local_aars__:G.\project\ZKKTProduct\sdk\libs\TalkFunSDK.jar:unspecified@jar" level="project" />
+    <orderEntry type="library" name="Gradle: __local_aars__:D./word/sdk/libs/agora-rtc-sdk.jar:unspecified@jar" level="project" />
+    <orderEntry type="library" name="Gradle: __local_aars__:D./word/sdk/libs/libcommon.jar:unspecified@jar" level="project" />
+    <orderEntry type="library" name="Gradle: __local_aars__:D./word/sdk/libs/librtc.jar:unspecified@jar" level="project" />
+    <orderEntry type="library" name="Gradle: __local_aars__:D./word/sdk/libs/libwhiteboard.jar:unspecified@jar" level="project" />
+    <orderEntry type="library" name="Gradle: __local_aars__:D./word/sdk/libs/TalkFunSDK.jar:unspecified@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.readystatesoftware.systembartint:systembartint:1.0.3@jar" level="project" />
     <orderEntry type="library" name="Gradle: org.greenrobot:eventbus:3.0.0@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.squareup.retrofit2:converter-gson:2.3.0@jar" level="project" />
@@ -260,7 +260,6 @@
     <orderEntry type="module" module-name="PhotoPicker" />
     <orderEntry type="module" module-name="AliyunVideoCommon" />
     <orderEntry type="module" module-name="player_demo" />
-    <orderEntry type="library" name="Gradle: android-android-28" level="project" />
     <orderEntry type="library" name="Gradle: org.apache.http.legacy-android-28" level="project" />
   </component>
 </module>
