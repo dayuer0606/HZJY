@@ -37,7 +37,7 @@ public class UpdateVersionController {
     /*
      * 记得运行该方法
      */
-    public void forceCheckUpdateInfo(Integer tf_super,String version,String url){
+    public void forceCheckUpdateInfo(String tf_super,String version,String url){
         if (version.equals("")){
             return;
         }
@@ -52,11 +52,11 @@ public class UpdateVersionController {
     /**
      * 弹出对话框提示用户更新
      */
-    protected void showUpdataDialog(Integer tf_super,String url) {
+    protected void showUpdataDialog(String tf_super,String url) {
         dialog = new Dialog(context, android.R.style.Theme_Dialog);
         dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
 
-        if (tf_super != null && tf_super == 1){ // 强制更新
+        if (tf_super != null && tf_super.indexOf("1") != -1){ // 强制更新
             dialog.setContentView(R.layout.dialog_sure);
             dialog.setCanceledOnTouchOutside(false);
             dialog.setCancelable(false);

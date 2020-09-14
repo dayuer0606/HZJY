@@ -3144,7 +3144,7 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
     private void getAndroidVersion(Context context) {
         LoadingDialog.getInstance(context).show();
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(mIpadress)
+                .baseUrl("http://wangxiao.16zige.com/")
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(ModelObservableInterface.client)
@@ -3182,7 +3182,7 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
                         }
                         String version_num = String.valueOf(data.get("version_num"));
                         String download_address = String.valueOf(data.get("download_address"));
-                        Integer tf_super = (Integer) data.get("tf_super");
+                        String tf_super = String.valueOf(data.get("tf_super"));
                         //检查是否前往更新
                         UpdateVersionController uvc = new UpdateVersionController(context);
                         uvc.forceCheckUpdateInfo(tf_super,version_num,download_address);//运行该方法

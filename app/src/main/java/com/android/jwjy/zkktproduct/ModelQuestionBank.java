@@ -10415,6 +10415,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
         Gson gson = new Gson();
         HashMap<String, Integer> paramsMap = new HashMap<>();
         paramsMap.put("stu_id", Integer.valueOf(mControlMainActivity.mStuId));//学生id
+        paramsMap.put("TF_new", 1);//学生id
         String strEntity = gson.toJson(paramsMap);
         RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json;charset=UTF-8"), strEntity);
         queryMyCourseList.queryMyQuestionBankList(body)
@@ -10531,9 +10532,9 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                 .client(ModelObservableInterface.client)
                 .build();
         ModelObservableInterface modelObservableInterface = retrofit.create(ModelObservableInterface.class);
-        String strEntity = "{}";
+        String strEntity = "{\"TF_new\":\"1\"}";
         if (!mControlMainActivity.mStuId.equals("")) {
-            strEntity = "{\"stu_id\":" + mControlMainActivity.mStuId + "}";
+            strEntity = "{\"stu_id\":" + mControlMainActivity.mStuId + ",\"TF_new\":\"1\"}";
         }
         RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json;charset=UTF-8"), strEntity);
         modelObservableInterface.queryQuestionBankList(body)
