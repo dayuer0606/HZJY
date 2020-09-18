@@ -826,7 +826,11 @@ public class ModelCommunityAnswer extends Fragment{
         String questionPublishImageS = "";
         if (selPhotosPath != null) {
             for (int i = 0; i < selPhotosPath.size(); i++) {
-                questionPublishImageS = questionPublishImageS + selPhotosPath.get(i) + ";";
+                if (i == selPhotosPath.size() -1){
+                    questionPublishImageS = questionPublishImageS + selPhotosPath.get(i);
+                } else {
+                    questionPublishImageS = questionPublishImageS + selPhotosPath.get(i) + ";";
+                }
             }
         }
         paramsMap.put("picture",questionPublishImageS);
