@@ -208,6 +208,7 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
         mIpType.put("http://wangxiao.16zige.com/","yixiao");
         mIpType.put("http://wangxiao.yixiaojiaoyu.com/","yixiao");
         mIpType.put("http://managerwt.16zige.com/","wentao");
+        mIpType.put("http://manager.jinrongstudy.com/","zhuce");
         //阿里视频播放下载，必须初始化的服务，必须放在最开始的位置
         PrivateService.initService(getApplicationContext(), Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + PublicCommonUtil.encryptedAppPath + "/encryptedApp.dat");
         //拷贝encryptedApp.dat文件到所需位置
@@ -358,6 +359,10 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
                 ImageView xiaofang = findViewById(R.id.xiaofang);
                 ImageView xiaofangsetting = findViewById(R.id.xiaofangsetting);
                 ImageView xiaofangsheshisetting = findViewById(R.id.xiaofangsheshisetting);
+                ImageView zhuceanquaqnsetting = findViewById(R.id.zhuceanquaqnsetting);
+                ImageView zhiye = findViewById(R.id.zhiye);
+                zhiye.setBackground(getResources().getDrawable(R.drawable.icon_null));
+                zhuceanquaqnsetting.setBackground(getResources().getDrawable(R.drawable.icon_null));
                 xiaofang.setBackground(getResources().getDrawable(R.drawable.icon_null));
                 xiaofangsetting.setBackground(getResources().getDrawable(R.drawable.icon_null));
                 jiankang.setBackground(getResources().getDrawable(R.drawable.icon_black));
@@ -370,6 +375,10 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
                 ImageView xiaofang = findViewById(R.id.xiaofang);
                 ImageView xiaofangsetting = findViewById(R.id.xiaofangsetting);
                 ImageView xiaofangsheshisetting = findViewById(R.id.xiaofangsheshisetting);
+                ImageView zhuceanquaqnsetting = findViewById(R.id.zhuceanquaqnsetting);
+                ImageView zhiye = findViewById(R.id.zhiye);
+                zhiye.setBackground(getResources().getDrawable(R.drawable.icon_null));
+                zhuceanquaqnsetting.setBackground(getResources().getDrawable(R.drawable.icon_null));
                 xiaofang.setBackground(getResources().getDrawable(R.drawable.icon_black));
                 jiankang.setBackground(getResources().getDrawable(R.drawable.icon_null));
                 xiaofangsetting.setBackground(getResources().getDrawable(R.drawable.icon_null));
@@ -382,6 +391,10 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
                 ImageView xiaofang = findViewById(R.id.xiaofang);
                 ImageView xiaofangsetting = findViewById(R.id.xiaofangsetting);
                 ImageView xiaofangsheshisetting = findViewById(R.id.xiaofangsheshisetting);
+                ImageView zhuceanquaqnsetting = findViewById(R.id.zhuceanquaqnsetting);
+                ImageView zhiye = findViewById(R.id.zhiye);
+                zhiye.setBackground(getResources().getDrawable(R.drawable.icon_null));
+                zhuceanquaqnsetting.setBackground(getResources().getDrawable(R.drawable.icon_null));
                 xiaofangsetting.setBackground(getResources().getDrawable(R.drawable.icon_black));
                 jiankang.setBackground(getResources().getDrawable(R.drawable.icon_null));
                 xiaofang.setBackground(getResources().getDrawable(R.drawable.icon_null));
@@ -394,11 +407,45 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
                 ImageView xiaofang = findViewById(R.id.xiaofang);
                 ImageView xiaofangsheshisetting = findViewById(R.id.xiaofangsheshisetting);
                 ImageView xiaofangsetting = findViewById(R.id.xiaofangsetting);
+                ImageView zhuceanquaqnsetting = findViewById(R.id.zhuceanquaqnsetting);
+                ImageView zhiye = findViewById(R.id.zhiye);
+                zhiye.setBackground(getResources().getDrawable(R.drawable.icon_null));
+                zhuceanquaqnsetting.setBackground(getResources().getDrawable(R.drawable.icon_null));
                 xiaofangsheshisetting.setBackground(getResources().getDrawable(R.drawable.icon_black));
                 jiankang.setBackground(getResources().getDrawable(R.drawable.icon_null));
                 xiaofang.setBackground(getResources().getDrawable(R.drawable.icon_null));
                 xiaofangsetting.setBackground(getResources().getDrawable(R.drawable.icon_null));
                 mIpadress = "http://managerwt.16zige.com/";
+            });
+            LinearLayout zhuceanquaqn_layout = findViewById(R.id.zhuceanquaqn_layout);
+            zhuceanquaqn_layout.setOnClickListener(v -> {
+                ImageView xiaofang = findViewById(R.id.xiaofang);
+                ImageView xiaofangsheshisetting = findViewById(R.id.xiaofangsheshisetting);
+                ImageView xiaofangsetting = findViewById(R.id.xiaofangsetting);
+                ImageView zhuceanquaqnsetting = findViewById(R.id.zhuceanquaqnsetting);
+                ImageView zhiye = findViewById(R.id.zhiye);
+                zhiye.setBackground(getResources().getDrawable(R.drawable.icon_null));
+                zhuceanquaqnsetting.setBackground(getResources().getDrawable(R.drawable.icon_black));
+                xiaofangsheshisetting.setBackground(getResources().getDrawable(R.drawable.icon_null));
+                jiankang.setBackground(getResources().getDrawable(R.drawable.icon_null));
+                xiaofang.setBackground(getResources().getDrawable(R.drawable.icon_null));
+                xiaofangsetting.setBackground(getResources().getDrawable(R.drawable.icon_null));
+                mIpadress = "http://manager.jinrongstudy.com/";
+            });
+            LinearLayout zhiye_layout = findViewById(R.id.zhiye_layout);
+            zhiye_layout.setOnClickListener(v -> {
+                ImageView xiaofang = findViewById(R.id.xiaofang);
+                ImageView xiaofangsheshisetting = findViewById(R.id.xiaofangsheshisetting);
+                ImageView xiaofangsetting = findViewById(R.id.xiaofangsetting);
+                ImageView zhuceanquaqnsetting = findViewById(R.id.zhuceanquaqnsetting);
+                ImageView zhiye = findViewById(R.id.zhiye);
+                zhiye.setBackground(getResources().getDrawable(R.drawable.icon_black));
+                zhuceanquaqnsetting.setBackground(getResources().getDrawable(R.drawable.icon_null));
+                xiaofangsheshisetting.setBackground(getResources().getDrawable(R.drawable.icon_null));
+                jiankang.setBackground(getResources().getDrawable(R.drawable.icon_null));
+                xiaofang.setBackground(getResources().getDrawable(R.drawable.icon_null));
+                xiaofangsetting.setBackground(getResources().getDrawable(R.drawable.icon_null));
+                mIpadress = "http://manager.huostudy.com/";
             });
             Button button_next = findViewById(R.id.button_next);
             button_next.setOnClickListener(v->{

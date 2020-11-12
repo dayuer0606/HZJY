@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ControlMainActivity">
+
     <RelativeLayout
         android:id="@+id/main_view_choice"
         android:layout_width="match_parent"
@@ -16,7 +17,7 @@
             android:layout_height="wrap_content"
             android:text=""
             android:textColor="#ff2e2f32"
-            android:layout_marginTop="@dimen/dp_70"
+            android:layout_marginTop="@dimen/dp10"
             android:layout_marginRight="@dimen/dp23"
             android:layout_marginLeft="@dimen/dp23"
             android:textSize="@dimen/sp_22"
@@ -32,16 +33,19 @@
             android:layout_below="@id/main_view_choicetitle1"
             android:textSize="@dimen/sp_22"
             />
+
+
+
         <LinearLayout
-            android:id="@+id/main_view_choiceproject"
+            android:gravity="center"
             android:layout_below="@id/main_view_choicetitle"
-            android:layout_marginTop="@dimen/dp40"
+            android:layout_marginLeft="@dimen/dp23"
+            android:layout_marginRight="@dimen/dp23"
+            android:layout_marginTop="@dimen/dp20"
+            android:id="@+id/main_view_choiceproject"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:layout_marginLeft="@dimen/dp23"
-            android:layout_marginRight="@dimen/dp23">
+            android:orientation="vertical">
             <LinearLayout
                 android:id="@+id/jiankang_layout"
                 android:layout_width="match_parent"
@@ -75,7 +79,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp1"
                 android:background="@color/grayeceef0"
-                android:layout_marginTop="@dimen/dp30"/>
+                android:layout_marginTop="@dimen/dp10"/>
             <LinearLayout
                 android:id="@+id/xiaofang_layout"
                 android:layout_width="match_parent"
@@ -110,7 +114,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp1"
                 android:background="@color/grayeceef0"
-                android:layout_marginTop="@dimen/dp30"/>
+                android:layout_marginTop="@dimen/dp10"/>
 
             <LinearLayout
                 android:id="@+id/xiaofangsetting_layout"
@@ -144,7 +148,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp1"
                 android:background="@color/grayeceef0"
-                android:layout_marginTop="@dimen/dp30"/>
+                android:layout_marginTop="@dimen/dp10"/>
             <LinearLayout
                 android:id="@+id/xiaofangsheshi_layout"
                 android:layout_width="match_parent"
@@ -174,11 +178,77 @@
                     android:layout_gravity="center"
                     android:background="@drawable/icon_null"/>
             </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp1"
+                android:background="@color/grayeceef0"
+                android:layout_marginTop="@dimen/dp10"/>
+            <LinearLayout
+                android:id="@+id/zhuceanquaqn_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp30">
 
+                <ImageView
+                    android:layout_width="@dimen/dp23"
+                    android:layout_height="@dimen/dp23"
+                    android:layout_gravity="center"
+                    android:background="@drawable/icon_firecontrol" />
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:text="注册安全工程师"
+                    android:textSize="@dimen/sp_20"
+                    android:layout_marginLeft="@dimen/dp_13"/>
+                <ImageView
+                    android:id="@+id/zhuceanquaqnsetting"
+                    android:layout_width="@dimen/dp30"
+                    android:layout_height="@dimen/dp30"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:background="@drawable/icon_null"/>
+            </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp1"
+                    android:background="@color/grayeceef0"
+                    android:layout_marginTop="@dimen/dp10"/>
+            <LinearLayout
+                android:layout_marginTop="@dimen/dp30"
+                android:id="@+id/zhiye_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+                <ImageView
+                    android:layout_width="@dimen/dp_13"
+                    android:layout_height="@dimen/dp17"
+                    android:layout_marginLeft="@dimen/dp4"
+                    android:background="@drawable/icon_healthy"
+                    android:layout_gravity="center"/>
+                <!--                //#37A646-->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_13"
+                    android:layout_weight="1"
+                    android:text="  职业药师"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/sp_20" />
 
+                <ImageView
+                    android:id="@+id/zhiye"
+                    android:layout_width="@dimen/dp30"
+                    android:layout_height="@dimen/dp30"
+                    android:checked="true"
+                    android:gravity="center"
+                    android:background="@drawable/icon_null"
+                    android:layout_gravity="center"/>
+            </LinearLayout>
         </LinearLayout>
         <Button
+            android:layout_marginBottom="@dimen/dp_55"
             android:id="@+id/button_next"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -188,7 +258,6 @@
             android:text="下一步"
             android:textColor="#FFFFFF"
             android:textSize="@dimen/sp_18"
-            android:layout_marginBottom="@dimen/dp50"
             android:layout_alignParentBottom="true"/>
     </RelativeLayout>
     <android.support.constraint.ConstraintLayout
@@ -201,7 +270,6 @@
             android:layout_height="match_parent"
             app:layout_constraintBottom_toTopOf="@+id/nav_view">
         </FrameLayout>
-
         <android.support.design.widget.BottomNavigationView
             android:id="@+id/nav_view"
             android:layout_width="match_parent"
@@ -214,4 +282,5 @@
             app:itemIconTint="@color/selectorcolors"
             app:itemTextColor="@color/selectorcolors"/>
     </android.support.constraint.ConstraintLayout>
+
 </android.support.constraint.ConstraintLayout>

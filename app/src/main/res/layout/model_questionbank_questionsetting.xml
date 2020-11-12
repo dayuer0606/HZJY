@@ -40,6 +40,15 @@
         android:background="#e5e5e5"
         android:layout_below="@id/questionbank_questionsetting_main_title"/>
     <TextView
+        android:id="@+id/tiku_youqingtishi"
+        android:layout_centerInParent="true"
+        android:layout_below="@id/questionbank_questionsetting_main_line1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="友情提示：(实际出题题量可能不满足所选题量)"
+        android:textColor="#B8280D"
+        android:textSize="@dimen/dp15"/>
+    <TextView
         android:id="@+id/questionbank_questionsetting_count"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp25"
@@ -51,7 +60,7 @@
         android:gravity="left|center"
         android:singleLine="true"
         android:ellipsize="end"
-        android:layout_below="@id/questionbank_questionsetting_main_line1"/>
+        android:layout_below="@id/tiku_youqingtishi"/>
     <TextView
         android:id="@+id/questionbank_questionsetting_questiontypetitle"
         android:layout_width="match_parent"
@@ -254,6 +263,7 @@
         android:ellipsize="end"
         android:layout_below="@id/questionbank_questionsetting_questioncount"
         android:layout_marginTop="@dimen/dp20"/>
+
     <LinearLayout
         android:id="@+id/questionbank_questionsetting_questionmode_test"
         android:layout_width="@dimen/dp160"
@@ -342,4 +352,5 @@
                 android:textSize="@dimen/textsize14"/>
         </LinearLayout>
     </LinearLayout>
+
 </RelativeLayout>
