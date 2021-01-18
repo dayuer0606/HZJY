@@ -45,6 +45,7 @@
     <color name="login_jump_activity_bg">#3850a0</color>
     <color name="float_background">#66AFEF</color>
     <color name="float_text">#ECFFFF</color>
+    <color name="bottom_button_select">#FF5A30</color>
     <!--<color name="darkPrimaryColor"></color>-->
     <!--<color name="primaryColor"></color>-->
     <!--<color name="lightPrimaryColor"></color>-->

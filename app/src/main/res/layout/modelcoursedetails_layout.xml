@@ -8,9 +8,46 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+        <LinearLayout
+            android:id="@+id/course_details_navigationbar1"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp44"
+            android:layout_marginLeft="@dimen/dp13"
+            android:layout_marginRight="@dimen/dp13"
+            android:orientation="horizontal">
+            <ImageView
+                android:id="@+id/course_fl_layout_return_button1"
+                android:layout_width="@dimen/dp12"
+                android:layout_height="@dimen/dp16"
+                android:layout_gravity="center"
+                android:background="@drawable/button_return_right_black"
+                android:clickable="true"
+                android:onClick="onClickCourseDetailsReturn"/>
+            <TextView
+                android:id="@+id/course_fl_layout_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:text="@string/title_course"
+                android:textColor="#333333"
+                android:singleLine="true"
+                android:ellipsize="end"
+                android:textStyle="bold"
+                android:textSize="@dimen/textsize20"/>
+            <ImageView
+                android:id="@+id/course_fl_layout_title_download"
+                android:layout_width="@dimen/dp16"
+                android:layout_height="@dimen/dp16"
+                android:background="@drawable/button_download"
+                android:layout_gravity="center"
+                android:visibility="gone"/>
+        </LinearLayout>
         <android.support.design.widget.CoordinatorLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_below="@id/course_details_navigationbar1"
             android:visibility="visible">
             <android.support.design.widget.AppBarLayout
                 android:id="@+id/course_details_appbar"
@@ -29,13 +66,13 @@
                         <ImageView
                             android:id="@+id/course_details_Cover"
                             android:layout_width="match_parent"
-                            android:layout_height="@dimen/dp_240"
+                            android:layout_height="@dimen/dp_210"
                             android:scaleType="centerCrop"
                             android:src="@drawable/modelcoursecover"/>
                         <LinearLayout
                             android:id="@+id/player_layout"
                             android:layout_width="match_parent"
-                            android:layout_height="@dimen/dp_240"
+                            android:layout_height="@dimen/dp_210"
                             android:orientation="vertical"/>
                         <TextView
                             android:id="@+id/course_details_Name"
@@ -44,9 +81,10 @@
                             android:layout_marginTop="@dimen/dp25"
                             android:layout_marginLeft="@dimen/dp13"
                             android:text="开学第一课"
+                            android:textStyle="bold"
                             android:gravity="left"
                             android:textSize="@dimen/textsize20"
-                            android:textColor="#333333"
+                            android:textColor="#212832"
                             android:layout_below="@id/course_details_Cover"/>
 
                         <LinearLayout
@@ -69,8 +107,8 @@
                                 android:textColor="#999999" />
                             <ImageView
                                 android:id="@+id/course_details_content1"
-                                android:layout_width="@dimen/dp3"
-                                android:layout_height="@dimen/dp3"
+                                android:layout_width="@dimen/dp0"
+                                android:layout_height="@dimen/dp0"
                                 android:layout_marginLeft="@dimen/dp10"
                                 android:layout_marginRight="@dimen/dp10"
                                 android:gravity="center"
@@ -82,7 +120,7 @@
                                 android:id="@+id/course_details_content2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="课时"
+                                android:text="课程数"
                                 android:gravity="right"
                                 android:layout_gravity="right"
                                 android:textSize="@dimen/textsize14"
@@ -104,7 +142,7 @@
                                 android:text="免费"
                                 android:gravity="left|center"
                                 android:layout_gravity="right"
-                                android:textColor="#000000"
+                                android:textColor="#EB0029"
                                 android:textStyle="bold"
                                 android:textSize="18sp"/>
                             <TextView
@@ -113,7 +151,6 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/dp10"
                                 android:text="原价"
-                                android:layout_weight="1"
                                 android:gravity="left|center"
                                 android:layout_gravity="bottom"
                                 android:textSize="@dimen/textsize12"
@@ -123,58 +160,29 @@
                                 android:id="@+id/course_details_periodofvalidity"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textColor="#110000"
-                                android:gravity="right|center"
-                                android:textSize="@dimen/textsize13"
-                                android:text="课程有效期:不限天数"
-                                android:paddingLeft="@dimen/dp5"
-                                android:paddingRight="@dimen/dp5"
-                                android:background="@drawable/text_background"
-                                android:layout_marginLeft="@dimen/dp13"
-                                android:layout_marginRight="@dimen/dp13"/>
+                                android:text="课程有效期:"
+                                android:background="#ffe9e7"
+                                android:singleLine="true"
+                                android:textColor="#EB0029"
+                                android:paddingLeft="@dimen/dp_7"
+                                android:paddingRight="@dimen/dp_7"
+                                android:paddingBottom="@dimen/dp2"
+                                android:paddingTop="@dimen/dp2"
+                                android:textSize="@dimen/textsize12"
+                                android:layout_gravity="bottom"
+                                android:layout_marginLeft="@dimen/dp13" />
                         </LinearLayout>
-                        <View
-                            android:id="@+id/coursepacket_details_line1"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/dp1"
-                            android:layout_below="@id/coursepacket_details_pricelayout"
-                            android:layout_marginLeft="@dimen/dp13"
-                            android:layout_marginRight="@dimen/dp13"
-                            android:background="#e5e5e5"
-                            android:layout_marginTop="@dimen/dp15"/>
-                        <TextView
-                            android:id="@+id/coursepacket_details_briefintroduction"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/title_briefintroduction"
-                            android:textColor="#666666"
-                            android:textSize="@dimen/textsize16"
-                            android:layout_marginLeft="@dimen/dp13"
-                            android:layout_marginRight="@dimen/dp13"
-                            android:layout_marginTop="@dimen/dp15"
-                            android:layout_below="@id/coursepacket_details_line1"/>
-                        <TextView
-                            android:id="@+id/coursepacket_details_briefintroductioncontent"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text=""
-                            android:textColor="#999999"
-                            android:textSize="@dimen/textsize14"
-                            android:layout_marginTop="@dimen/dp7"
-                            android:layout_marginLeft="@dimen/dp13"
-                            android:layout_marginRight="@dimen/dp13"
-                            android:layout_below="@id/coursepacket_details_briefintroduction"/>
                         <View
                             android:id="@+id/coursepacket_details_line2"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/dp10"
                             android:layout_marginTop="@dimen/dp20"
                             android:background="#f4f6f9"
-                            android:layout_below="@id/coursepacket_details_briefintroductioncontent"/>
+                            android:layout_below="@id/coursepacket_details_pricelayout"/>
                         <LinearLayout
                             android:id="@+id/course_label1"
                             android:layout_width="match_parent"
-                            android:layout_height="@dimen/dp40"
+                            android:layout_height="@dimen/dp0"
                             android:orientation="horizontal"
                             android:layout_below="@id/coursepacket_details_line2">
                             <TextView
@@ -213,19 +221,10 @@
                         <ImageView
                             android:id="@+id/course_imgv_cursor1"
                             android:layout_width="@dimen/dp18"
-                            android:layout_height="@dimen/dp2"
+                            android:layout_height="@dimen/dp0"
                             android:background="@drawable/image_cusor"
                             android:scaleType="matrix"
                             android:layout_below="@id/course_label1"/>
-                        <ImageView
-                            android:id="@+id/course_details_return_button"
-                            android:layout_marginTop="@dimen/dp10"
-                            android:layout_marginLeft="@dimen/dp13"
-                            android:layout_width="@dimen/dp20"
-                            android:layout_height="@dimen/dp20"
-                            android:clickable="true"
-                            android:src="@drawable/button_return_circleright"
-                            android:onClick="onClickCourseDetailsReturn"/>
                         <ImageView
                             android:id="@+id/course_details_download_button"
                             android:layout_alignParentRight="true"
@@ -253,47 +252,10 @@
                                 android:layout_height="wrap_content"
                                 android:background="@android:color/white">
                                 <LinearLayout
-                                    android:id="@+id/course_details_navigationbar1"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="@dimen/dp44"
-                                    android:layout_marginLeft="@dimen/dp13"
-                                    android:layout_marginRight="@dimen/dp13"
-                                    android:orientation="horizontal">
-                                    <ImageView
-                                        android:id="@+id/course_fl_layout_return_button1"
-                                        android:layout_width="@dimen/dp12"
-                                        android:layout_height="@dimen/dp16"
-                                        android:layout_gravity="center"
-                                        android:background="@drawable/button_return_right_black"
-                                        android:clickable="true"
-                                        android:onClick="onClickCourseDetailsReturn"/>
-                                    <TextView
-                                        android:id="@+id/course_fl_layout_title"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_gravity="center"
-                                        android:gravity="center"
-                                        android:layout_weight="1"
-                                        android:text="@string/title_course"
-                                        android:textColor="#333333"
-                                        android:singleLine="true"
-                                        android:ellipsize="end"
-                                        android:textStyle="bold"
-                                        android:textSize="@dimen/textsize20"/>
-                                    <ImageView
-                                        android:id="@+id/course_fl_layout_title_download"
-                                        android:layout_width="@dimen/dp16"
-                                        android:layout_height="@dimen/dp16"
-                                        android:background="@drawable/button_download"
-                                        android:layout_gravity="center"
-                                        android:visibility="gone"/>
-                                </LinearLayout>
-                                <LinearLayout
                                     android:id="@+id/course_label"
                                     android:layout_width="match_parent"
-                                    android:layout_height="@dimen/dp40"
-                                    android:orientation="horizontal"
-                                    android:layout_below="@id/course_details_navigationbar1">
+                                    android:layout_height="@dimen/dp0"
+                                    android:orientation="horizontal">
                                     <TextView
                                         android:id="@+id/course_coursestage_label1"
                                         android:layout_width="@dimen/dp0"
@@ -328,7 +290,7 @@
                                 <ImageView
                                     android:id="@+id/course_imgv_cursor"
                                     android:layout_width="@dimen/dp18"
-                                    android:layout_height="@dimen/dp2"
+                                    android:layout_height="@dimen/dp0"
                                     android:background="@drawable/image_cusor"
                                     android:scaleType="matrix"
                                     android:layout_below="@id/course_label"/>
@@ -343,7 +305,7 @@
                                 <LinearLayout
                                     android:id="@+id/course_catalog_label1"
                                     android:layout_width="match_parent"
-                                    android:layout_height="@dimen/dp35"
+                                    android:layout_height="@dimen/dp0"
                                     android:layout_marginLeft="@dimen/dp13"
                                     android:layout_below="@id/coursepacket_details_line6"
                                     android:orientation="horizontal">
@@ -443,26 +405,13 @@
             <android.support.v4.widget.NestedScrollView
                 android:id="@+id/n_scroll_view"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="@dimen/dp_270"
                 android:background="@color/white"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
-                    <LinearLayout
-                        android:id="@+id/course_details_label_content_layout"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/dp0"
-                        android:visibility="invisible">
-                        <TextView
-                            android:id="@+id/course_details_label_content"
-                            android:layout_marginTop="@dimen/dp11"
-                            android:layout_marginLeft="@dimen/dp13"
-                            android:layout_marginRight="@dimen/dp13"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"/>
-                    </LinearLayout>
                     <LinearLayout
                         android:id="@+id/course_materials_label_content_layout"
                         android:layout_width="match_parent"
@@ -479,102 +428,47 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
                         android:visibility="visible">
-                        <View
-                            android:id="@+id/coursepacket_details_line3"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/dp1"
-                            android:layout_gravity="center_horizontal"
-                            android:background="#e5e5e5"/>
-                        <LinearLayout
+                        <RelativeLayout
                             android:id="@+id/course_catalog_label"
                             android:layout_width="match_parent"
-                            android:layout_height="@dimen/dp35"
-                            android:orientation="horizontal"
-                            android:layout_marginLeft="@dimen/dp13">
-                            <LinearLayout
-                                android:id="@+id/course_catalog_label_recordmain"
+                            android:layout_height="wrap_content">
+                            <TextView
+                                android:id="@+id/course_catalog_label_title"
+                                android:layout_marginTop="@dimen/dp20"
+                                android:layout_marginLeft="@dimen/dp13"
+                                android:layout_marginRight="@dimen/dp13"
                                 android:layout_width="wrap_content"
-                                android:orientation="horizontal"
-                                android:layout_height="match_parent">
-                                <ImageView
-                                    android:id="@+id/course_catalog_label_recordimage"
-                                    android:layout_width="@dimen/dp17"
-                                    android:layout_height="@dimen/dp11"
-                                    android:layout_gravity="center_vertical"
-                                    android:layout_marginRight="@dimen/dp12"
-                                    android:layout_marginLeft="@dimen/dp13"
-                                    android:src="@drawable/button_record_blue"/>
-                                <TextView
-                                    android:id="@+id/course_catalog_label_record"
-                                    android:layout_width="@dimen/dp0"
-                                    android:layout_height="match_parent"
-                                    android:layout_weight="1"
-                                    android:text="录播(0)"
-                                    android:gravity="left|center_vertical"
-                                    android:textColor="#649cf0"
-                                    android:textSize="@dimen/textsize14"
-                                    android:layout_marginRight="@dimen/dp13"/>
-                            </LinearLayout>
-                            <LinearLayout
-                                android:id="@+id/course_catalog_label_livemain"
+                                android:layout_height="wrap_content"
+                                android:text="课程目录"
+                                android:textColor="#212832"
+                                android:textSize="@dimen/textsize18"
+                                android:textStyle="bold"/>
+                            <TextView
+                                android:id="@+id/course_catalog_label_record"
                                 android:layout_width="wrap_content"
-                                android:orientation="horizontal"
-                                android:layout_height="match_parent">
-                                <ImageView
-                                    android:id="@+id/course_catalog_label_liveimage"
-                                    android:layout_width="@dimen/dp13"
-                                    android:layout_height="@dimen/dp14"
-                                    android:layout_gravity="center_vertical"
-                                    android:layout_marginRight="@dimen/dp12"
-                                    android:layout_marginLeft="@dimen/dp10"
-                                    android:src="@drawable/button_live_gray"/>
-                                <TextView
-                                    android:id="@+id/course_catalog_label_live"
-                                    android:layout_width="@dimen/dp0"
-                                    android:layout_height="match_parent"
-                                    android:text="直播(0)"
-                                    android:layout_weight="1"
-                                    android:gravity="left|center_vertical"
-                                    android:textColor="#999999"
-                                    android:textSize="@dimen/textsize14"/>
-                            </LinearLayout>
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_weight="1"
-                                android:orientation="horizontal"
                                 android:layout_height="match_parent"
-                                android:visibility="gone">
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:text="已学习"
-                                    android:gravity="right"
-                                    android:textSize="@dimen/textsize12"
-                                    android:textColor="#999999"
-                                    android:layout_gravity="center_vertical"/>
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="1"
-                                    android:layout_gravity="center_vertical"
-                                    android:textSize="@dimen/textsize12"
-                                    android:textColor="#649cf0"/>
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="/10"
-                                    android:layout_gravity="center_vertical"
-                                    android:layout_marginRight="@dimen/dp13"
-                                    android:textSize="@dimen/textsize12"
-                                    android:textColor="#999999"/>
-                            </LinearLayout>
-                        </LinearLayout>
-                        <View
-                            android:id="@+id/coursepacket_details_line5"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/dp10"
-                            android:background="#f4f6f9"/>
+                                android:text="录播"
+                                android:gravity="left|bottom"
+                                android:textColor="#649cf0"
+                                android:textSize="@dimen/textsize14"
+                                android:layout_marginRight="@dimen/dp13"
+                                android:layout_toLeftOf="@+id/course_catalog_label_live"
+                                android:layout_alignBottom="@+id/course_catalog_label_title"
+                                android:textStyle="bold"/>
+                            <TextView
+                                android:id="@+id/course_catalog_label_live"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_marginRight="@dimen/dp13"
+                                android:text="直播"
+                                android:gravity="left|bottom"
+                                android:textStyle="bold"
+                                android:textColor="#999999"
+                                android:textSize="@dimen/textsize14"
+                                android:layout_alignBottom="@+id/course_catalog_label_title"
+                                android:layout_alignParentRight="true"/>
+                        </RelativeLayout>
+
                         <LinearLayout
                             android:id="@+id/course_catalog_label_content_layout"
                             android:layout_width="match_parent"
@@ -582,6 +476,7 @@
                             android:orientation="vertical"
                             android:layout_marginLeft="@dimen/dp13"
                             android:layout_marginRight="@dimen/dp13"
+                            android:layout_marginTop="@dimen/dp13"
                             android:visibility="visible"/>
                         <LinearLayout
                             android:id="@+id/course_catalog_label_content_end"
@@ -615,16 +510,58 @@
                         android:layout_height="70dp"/>
                 </LinearLayout>
             </android.support.v4.widget.NestedScrollView>
+            <android.support.v4.widget.NestedScrollView
+                android:id="@+id/n_scroll_view_details"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_270"
+                android:layout_marginTop="@dimen/dp_270"
+                android:background="@color/white"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <View
+                        android:id="@+id/coursepacket_details_line5"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp10"
+                        android:background="#f4f6f9"/>
+                    <TextView
+                        android:id="@+id/course_details_label_title"
+                        android:layout_marginTop="@dimen/dp20"
+                        android:layout_marginLeft="@dimen/dp13"
+                        android:layout_marginRight="@dimen/dp13"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="课程详情"
+                        android:textColor="#212832"
+                        android:textSize="@dimen/textsize18"
+                        android:textStyle="bold"/>
+                    <TextView
+                        android:id="@+id/coursepacket_details_briefintroductioncontent"
+                        android:layout_marginTop="@dimen/dp20"
+                        android:layout_marginLeft="@dimen/dp13"
+                        android:layout_marginRight="@dimen/dp13"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="简介："
+                        android:textColor="#7C838F"
+                        android:textSize="@dimen/textsize15"
+                        android:maxLines="4"
+                        android:ellipsize="end"/>
+                    <TextView
+                        android:id="@+id/course_details_label_content"
+                        android:layout_marginTop="@dimen/dp20"
+                        android:layout_marginLeft="@dimen/dp13"
+                        android:layout_marginRight="@dimen/dp13"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="70dp"/>
+                </LinearLayout>
+            </android.support.v4.widget.NestedScrollView>
         </android.support.design.widget.CoordinatorLayout>
-        <ImageView
-            android:id="@+id/course_details_return_button1"
-            android:layout_marginTop="@dimen/dp10"
-            android:layout_marginLeft="@dimen/dp13"
-            android:layout_width="@dimen/dp20"
-            android:layout_height="@dimen/dp20"
-            android:src="@drawable/button_return_circleright"
-            android:clickable="true"
-            android:onClick="onClickCourseDetailsReturn"/>
         <ImageView
             android:id="@+id/course_details_download_button1"
             android:layout_alignParentRight="true"
@@ -671,7 +608,7 @@
                 android:layout_height="@dimen/dp45"
                 android:layout_weight="1"
                 android:background="@drawable/button_style3"
-                android:text="立即购买"
+                android:text="立即报名"
                 android:textColor="#ffffff"
                 android:textSize="@dimen/textsize20"
                 android:textStyle="bold"/>
@@ -696,6 +633,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:layout_gravity="center"
+                    android:gravity="center"
                     android:orientation="horizontal"
                     android:layout_marginLeft="@dimen/dp12">
                     <ImageView
@@ -709,45 +647,45 @@
                         android:id="@+id/course_details_bottomlayout_collectText1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="收藏"
+                        android:text="收藏课程"
                         android:layout_gravity="center_vertical"
                         android:textColor="#666666"
                         android:textSize="@dimen/textsize16"/>
                 </LinearLayout>
-                <View
-                    android:id="@+id/coursepacket_details_line4"
-                    android:layout_width="@dimen/dp1"
-                    android:layout_height="@dimen/dp40"
-                    android:layout_marginLeft="@dimen/dp13"
-                    android:layout_marginRight="@dimen/dp13"
-                    android:layout_gravity="center_horizontal"
-                    android:background="#e5e5e5"
-                    android:layout_marginTop="@dimen/dp15"/>
-                <LinearLayout
-                    android:id="@+id/course_details_bottomlayout_question"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:layout_gravity="center"
-                    android:layout_weight="1">
-                    <!--                android:clickable="true"-->
-                    <!--                android:onClick="onClickCourseQuestion">-->
-                    <ImageView
-                        android:id="@+id/course_details_bottomlayout_questionImage"
-                        android:layout_width="@dimen/dp15"
-                        android:layout_height="@dimen/dp15"
-                        android:layout_gravity="center_vertical"
-                        android:src="@drawable/button_answer"
-                        android:layout_marginRight="@dimen/dp12"/>
-                    <TextView
-                        android:id="@+id/course_details_bottomlayout_questionText"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="问答"
-                        android:layout_gravity="center_vertical"
-                        android:textColor="#666666"
-                        android:textSize="@dimen/textsize16"/>
-                </LinearLayout>
+<!--                <View-->
+<!--                    android:id="@+id/coursepacket_details_line4"-->
+<!--                    android:layout_width="@dimen/dp1"-->
+<!--                    android:layout_height="@dimen/dp40"-->
+<!--                    android:layout_marginLeft="@dimen/dp13"-->
+<!--                    android:layout_marginRight="@dimen/dp13"-->
+<!--                    android:layout_gravity="center_horizontal"-->
+<!--                    android:background="#e5e5e5"-->
+<!--                    android:layout_marginTop="@dimen/dp15"/>-->
+<!--                <LinearLayout-->
+<!--                    android:id="@+id/course_details_bottomlayout_question"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:orientation="horizontal"-->
+<!--                    android:layout_gravity="center"-->
+<!--                    android:layout_weight="1">-->
+<!--                    &lt;!&ndash;                android:clickable="true"&ndash;&gt;-->
+<!--                    &lt;!&ndash;                android:onClick="onClickCourseQuestion">&ndash;&gt;-->
+<!--                    <ImageView-->
+<!--                        android:id="@+id/course_details_bottomlayout_questionImage"-->
+<!--                        android:layout_width="@dimen/dp15"-->
+<!--                        android:layout_height="@dimen/dp15"-->
+<!--                        android:layout_gravity="center_vertical"-->
+<!--                        android:src="@drawable/button_answer"-->
+<!--                        android:layout_marginRight="@dimen/dp12"/>-->
+<!--                    <TextView-->
+<!--                        android:id="@+id/course_details_bottomlayout_questionText"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="问答"-->
+<!--                        android:layout_gravity="center_vertical"-->
+<!--                        android:textColor="#666666"-->
+<!--                        android:textSize="@dimen/textsize16"/>-->
+<!--                </LinearLayout>-->
             </LinearLayout>
             <Button
                 android:id="@+id/course_details_buy_button1"
@@ -755,7 +693,7 @@
                 android:layout_height="@dimen/dp45"
                 android:layout_weight="1"
                 android:background="@drawable/button_style2"
-                android:text="已购买"
+                android:text="已报名"
                 android:textColor="#ffffff"
                 android:textSize="@dimen/textsize20"
                 android:textStyle="bold"/>

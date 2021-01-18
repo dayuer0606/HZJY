@@ -59,7 +59,7 @@ public class ModelCoursePacketCover implements View.OnClickListener, ModelOrderD
     private ModelCoursePacketCoverOnClickListener mModelCoursePacketCoverOnClickListener = null;
     private int height = 1344;
     private int width = 720;
-    private String mCurrentTab = "StageCourse";
+    private String mCurrentTab = "Details";
     private int lastTabIndex = 1;
     private boolean mIsCollect = false;
     private CoursePacketInfo mCoursePacketInfo;
@@ -117,27 +117,17 @@ public class ModelCoursePacketCover implements View.OnClickListener, ModelOrderD
             FrameLayout mFLayout = mDetailsView.findViewById(R.id.fl_layout);
             mAppBarLayout.addOnOffsetChangedListener((appBarLayout, verticalOffset) -> {
                 float percent = Float.valueOf(Math.abs(verticalOffset)) / Float.valueOf(appBarLayout.getTotalScrollRange());
-                ImageView coursepacket_details_return_button = mDetailsView.findViewById(R.id.coursepacket_details_return_button);
-                ImageView coursepacket_details_return_button1 = mDetailsView.findViewById(R.id.coursepacket_details_return_button1);
-                if (verticalOffset < -coursepacket_details_return_button.getY()) {
+                LinearLayout fl_layout_title_all = mDetailsView.findViewById(R.id.fl_layout_title_all);
+                if (verticalOffset < -fl_layout_title_all.getY()) {
                     Toolbar.LayoutParams fl = (Toolbar.LayoutParams) mFLayout.getLayoutParams();
                     fl.height = FrameLayout.LayoutParams.MATCH_PARENT;
                     mFLayout.setLayoutParams(fl);
                     mFLayout.setAlpha(percent);
-                    coursepacket_details_return_button1.setVisibility(View.INVISIBLE);
                 } else {
                     Toolbar.LayoutParams fl = (Toolbar.LayoutParams) mFLayout.getLayoutParams();
                     fl.height = 0;
                     mFLayout.setLayoutParams(fl);
                     mFLayout.setAlpha(0);
-                    coursepacket_details_return_button1.setVisibility(View.VISIBLE);
-                }
-                TextView coursepacket_details_Name = mDetailsView.findViewById(R.id.coursepacket_details_Name);
-                TextView fl_layout_title = mDetailsView.findViewById(R.id.fl_layout_title);
-                if (verticalOffset <= -coursepacket_details_Name.getY() - coursepacket_details_Name.getHeight()) {
-                    fl_layout_title.setVisibility(View.VISIBLE);
-                } else {
-                    fl_layout_title.setVisibility(View.INVISIBLE);
                 }
                 //课程包详情和课程阶段的标签层
                 LinearLayout coursepacket_label = mDetailsView.findViewById(R.id.coursepacket_label);
@@ -193,14 +183,14 @@ public class ModelCoursePacketCover implements View.OnClickListener, ModelOrderD
         }
         TextView coursepacketcontentTextView = mListView.findViewById(R.id.coursepacketcontent);
         String content = "";
-        if (coursePacketInfo.mCoursePacketStageNum != null) {
-            content = "阶段" + coursePacketInfo.mCoursePacketStageNum;
-        }
-        if (coursePacketInfo.mCoursePacketCourseNum != null) {
-            content = content + "  •  课程" + coursePacketInfo.mCoursePacketCourseNum;
-        }
+//        if (coursePacketInfo.mCoursePacketStageNum != null) {
+//            content = "阶段" + coursePacketInfo.mCoursePacketStageNum;
+//        }
+//        if (coursePacketInfo.mCoursePacketCourseNum != null) {
+//            content = content + "  •  课程" + coursePacketInfo.mCoursePacketCourseNum;
+//        }
         if (coursePacketInfo.mCoursePacketLearnPersonNum != null) {
-            content = content + "  •  " + coursePacketInfo.mCoursePacketLearnPersonNum + "人已学习";
+            content = coursePacketInfo.mCoursePacketLearnPersonNum + "人正在学习";
         }
         coursepacketcontentTextView.setText(content);
         TextView coursepacketpriceTextView = mListView.findViewById(R.id.coursepacketprice);
@@ -308,7 +298,7 @@ public class ModelCoursePacketCover implements View.OnClickListener, ModelOrderD
                 if (!mCurrentTab.equals("Details")) {
                     ImageView imgv_cursor = mDetailsView.findViewById(R.id.imgv_cursor);
                     ImageView imgv_cursor1 = mDetailsView.findViewById(R.id.imgv_cursor1);
-                    Animation animation = new TranslateAnimation((lastTabIndex - 1) * width / 3, width / 3, 0, 0);
+                    Animation animation = new TranslateAnimation((lastTabIndex - 1) * width / 3, 0, 0, 0);
                     animation.setFillAfter(true);// True:图片停在动画结束位置
                     animation.setDuration(200);
                     imgv_cursor.startAnimation(animation);
@@ -359,7 +349,7 @@ public class ModelCoursePacketCover implements View.OnClickListener, ModelOrderD
                 if (!mCurrentTab.equals("StageCourse")) {
                     ImageView imgv_cursor = mDetailsView.findViewById(R.id.imgv_cursor);
                     ImageView imgv_cursor1 = mDetailsView.findViewById(R.id.imgv_cursor1);
-                    Animation animation = new TranslateAnimation((lastTabIndex - 1) * width / 3, 0, 0, 0);
+                    Animation animation = new TranslateAnimation((lastTabIndex - 1) * width / 3, width / 3, 0, 0);
                     animation.setFillAfter(true);// True:图片停在动画结束位置
                     animation.setDuration(200);
                     imgv_cursor.startAnimation(animation);
@@ -483,12 +473,12 @@ public class ModelCoursePacketCover implements View.OnClickListener, ModelOrderD
             coursepacket_details_content0.setText("阶段" + coursePacketInfo.mCoursePacketStageNum);
         }
         if (coursePacketInfo.mCoursePacketCourseNum != null) {
-            coursepacket_details_content2.setText("课程" + coursePacketInfo.mCoursePacketCourseNum);
+            coursepacket_details_content2.setText("课程数:" + coursePacketInfo.mCoursePacketCourseNum);
         }
 
         if (coursePacketInfo.mCoursePacketLearnPersonNum != null) {
             TextView coursepacket_details_learnpersonnum = mDetailsView.findViewById(R.id.coursepacket_details_learnpersonnum);
-            coursepacket_details_learnpersonnum.setText(coursePacketInfo.mCoursePacketLearnPersonNum + "人已学习");
+            coursepacket_details_learnpersonnum.setText("购买人数:" + coursePacketInfo.mCoursePacketLearnPersonNum);
         }
         //课程包价格
         TextView coursepacket_details_price = mDetailsView.findViewById(R.id.coursepacket_details_price);
@@ -667,7 +657,7 @@ public class ModelCoursePacketCover implements View.OnClickListener, ModelOrderD
                 continue;
             }
             TextView coursepacket_coursestage_label_coursecount = view.findViewById(R.id.coursepacket_coursestage_label_coursecount);
-            coursepacket_coursestage_label_coursecount.setText("共" + stageCourseInfo.mCourseInfoList.size() + "讲");
+            coursepacket_coursestage_label_coursecount.setText("（共" + stageCourseInfo.mCourseInfoList.size() + "讲）");
             coursepacket_coursestage_label_card2_content.removeAllViews();
             for (int num = 0; num < stageCourseInfo.mCourseInfoList.size(); num++) {
                 CourseInfo courseInfo = stageCourseInfo.mCourseInfoList.get(num);

@@ -97,7 +97,7 @@ public class ModelImageSlideshow extends FrameLayout {
         width = dm.widthPixels;
 //        //设置使用控件的宽高
         LayoutParams LP = (LayoutParams) llDot.getLayoutParams();
-        LP.topMargin = height / 5;
+        LP.topMargin = height / 6;
         llDot.setLayoutParams(LP);
     }
 

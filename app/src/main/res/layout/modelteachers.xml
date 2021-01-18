@@ -34,7 +34,7 @@
             android:layout_marginTop="@dimen/dp25"
             android:textSize="@dimen/textsize18"
             android:layout_marginBottom="@dimen/dp20"
-            android:textColor="#649cf0"/>
+            android:textColor="#379AFF"/>
         <TextView
             android:id="@+id/teachers_content_message"
             android:layout_width="wrap_content"

@@ -52,7 +52,7 @@ public class SplashActivity extends AppCompatActivity implements IOnUpdateListen
         /**
          * 6.0版本检测并申请开启摄像头、音频录制、扩展卡读写等权限*/
         final String[] PERMISSIONS = {Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE,
-                Manifest.permission.CAMERA, Manifest.permission.MODIFY_AUDIO_SETTINGS, Manifest.permission.RECORD_AUDIO};
+                Manifest.permission.CAMERA, Manifest.permission.MODIFY_AUDIO_SETTINGS};
         //MPermissions.requestPermissions(this, PERMISSION_ALL, PERMISSIONS);
         PermissionsManager.requestPermissions(this, PERMISSIONS,this);
     }

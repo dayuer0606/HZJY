@@ -9,8 +9,8 @@
     <string name="title_news">新闻</string>
     <string name="title_questionbank">题库</string>
     <string name="title_questionanswers">问答</string>
-    <string name="title_recommendcourse">推荐课程</string>
-    <string name="title_recommendcoursepacket">推荐课程包</string>
+    <string name="title_recommendcourse">精选课程</string>
+    <string name="title_recommendcoursepacket">精选课程包</string>
     <string name="title_more">更多 ></string>
     <string name="title_loginnamehint">请输入您的手机号/用户名</string>
     <string name="title_loginphonehint">请输入您的手机号</string>
@@ -73,7 +73,7 @@
     <string name="aboutus_privacyprotectionguideline"><a href="http://www.baidu.com/">《隐私保护指引》</a></string>
     <string name="title_details">详情</string>
     <string name="title_coursestage">阶段课程</string>
-    <string name="title_teachers">师资</string>
+    <string name="title_teachers">老师</string>
     <string name="title_briefintroduction">简介：</string>
     <string name="title_catalog">目录</string>
     <string name="title_Coursematerials">课程资料</string>

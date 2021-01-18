@@ -183,17 +183,17 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
             //课程阶段按钮
             TextView course_coursestage_label = mDetailsView.findViewById(R.id.course_coursestage_label);
             TextView course_coursestage_label1 = mDetailsView.findViewById(R.id.course_coursestage_label1);
+            //直播
+            TextView course_catalog_label_live = mDetailsView.findViewById(R.id.course_catalog_label_live);
+            TextView course_catalog_label_live1 = mDetailsView.findViewById(R.id.course_catalog_label_live1);
+            //录播
+            TextView course_catalog_label_record = mDetailsView.findViewById(R.id.course_catalog_label_record);
+            TextView course_catalog_label_record1 = mDetailsView.findViewById(R.id.course_catalog_label_record1);
             //收藏课程
             LinearLayout course_details_bottomlayout_collect = mDetailsView.findViewById(R.id.course_details_bottomlayout_collect);
             LinearLayout course_details_bottomlayout_collect1 = mDetailsView.findViewById(R.id.course_details_bottomlayout_collect1);
-            //课程问答
-            LinearLayout course_details_bottomlayout_question = mDetailsView.findViewById(R.id.course_details_bottomlayout_question);
-            //直播
-            LinearLayout course_catalog_label_livemain = mDetailsView.findViewById(R.id.course_catalog_label_livemain);
-            LinearLayout course_catalog_label_livemain1 = mDetailsView.findViewById(R.id.course_catalog_label_livemain1);
-            //录播
-            LinearLayout course_catalog_label_recordmain = mDetailsView.findViewById(R.id.course_catalog_label_recordmain);
-            LinearLayout course_catalog_label_recordmain1 = mDetailsView.findViewById(R.id.course_catalog_label_recordmain1);
+//            //课程问答
+//            LinearLayout course_details_bottomlayout_question = mDetailsView.findViewById(R.id.course_details_bottomlayout_question);
             ImageView course_fl_layout_title_download = mDetailsView.findViewById(R.id.course_fl_layout_title_download);
             //下载按钮
             ImageView course_details_download_button = mDetailsView.findViewById(R.id.course_details_download_button);
@@ -210,11 +210,11 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
             course_coursestage_label1.setOnClickListener(this);
             course_details_bottomlayout_collect.setOnClickListener(this);
             course_details_bottomlayout_collect1.setOnClickListener(this);
-            course_details_bottomlayout_question.setOnClickListener(this);
-            course_catalog_label_livemain.setOnClickListener(this);
-            course_catalog_label_livemain1.setOnClickListener(this);
-            course_catalog_label_recordmain.setOnClickListener(this);
-            course_catalog_label_recordmain1.setOnClickListener(this);
+//            course_details_bottomlayout_question.setOnClickListener(this);
+            course_catalog_label_live.setOnClickListener(this);
+            course_catalog_label_live1.setOnClickListener(this);
+            course_catalog_label_record.setOnClickListener(this);
+            course_catalog_label_record1.setOnClickListener(this);
             //课程资料的监听
             TextView Course_materials_label = mDetailsView.findViewById(R.id.Course_materials_label);
             TextView Course_materials_label1 = mDetailsView.findViewById(R.id.Course_materials_label1);
@@ -266,13 +266,8 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
         Course_materials_label1.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, mDetailsView.getResources().getDimensionPixelSize(R.dimen.textsize16));
 
         //修改body为课程详情
-        LinearLayout course_details_label_content_layout = mDetailsView.findViewById(R.id.course_details_label_content_layout);
-        LinearLayout.LayoutParams LP = (LinearLayout.LayoutParams) course_details_label_content_layout.getLayoutParams();
-        LP.height = 0;
-        course_details_label_content_layout.setLayoutParams(LP);
-        course_details_label_content_layout.setVisibility(View.INVISIBLE);
         LinearLayout course_catalog_label_content_layout_main = mDetailsView.findViewById(R.id.course_catalog_label_content_layout_main);
-        LP = (LinearLayout.LayoutParams) course_catalog_label_content_layout_main.getLayoutParams();
+        LinearLayout.LayoutParams LP = (LinearLayout.LayoutParams) course_catalog_label_content_layout_main.getLayoutParams();
         LP.height = LinearLayout.LayoutParams.WRAP_CONTENT;
         course_catalog_label_content_layout_main.setLayoutParams(LP);
         course_catalog_label_content_layout_main.setVisibility(View.VISIBLE);
@@ -282,31 +277,18 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
         course_imgv_cursor.setX(x);
         course_imgv_cursor1.setX(x);
         if (mCourseInfo.mCourseType.equals("直播")) {
-            LinearLayout course_catalog_label_recordmain = mDetailsView.findViewById(R.id.course_catalog_label_recordmain);
-            LinearLayout course_catalog_label_recordmain1 = mDetailsView.findViewById(R.id.course_catalog_label_recordmain1);
-            course_catalog_label_recordmain.setVisibility(View.INVISIBLE);
-            course_catalog_label_recordmain1.setVisibility(View.INVISIBLE);
-            LinearLayout.LayoutParams ll = (LinearLayout.LayoutParams) course_catalog_label_recordmain.getLayoutParams();
-            ll.width = 0;
-            course_catalog_label_recordmain.setLayoutParams(ll);
-            ll = (LinearLayout.LayoutParams) course_catalog_label_recordmain1.getLayoutParams();
-            ll.width = 0;
-            course_catalog_label_recordmain1.setLayoutParams(ll);
             //将直播变为选中状态
-            ImageView course_catalog_label_liveimage = mDetailsView.findViewById(R.id.course_catalog_label_liveimage);
             TextView course_catalog_label_live = mDetailsView.findViewById(R.id.course_catalog_label_live);
-            ImageView course_catalog_label_liveimage1 = mDetailsView.findViewById(R.id.course_catalog_label_liveimage1);
             TextView course_catalog_label_live1 = mDetailsView.findViewById(R.id.course_catalog_label_live1);
-            course_catalog_label_liveimage.setImageDrawable(mDetailsView.getResources().getDrawable(R.drawable.button_live_blue));
             course_catalog_label_live.setTextColor(mDetailsView.getResources().getColor(R.color.blue649cf0));
-            course_catalog_label_liveimage1.setImageDrawable(mDetailsView.getResources().getDrawable(R.drawable.button_live_blue));
             course_catalog_label_live1.setTextColor(mDetailsView.getResources().getColor(R.color.blue649cf0));
             mCurrentCatalogTab = "Live";
         } else if (mCourseInfo.mCourseType.equals("录播")) {
-            LinearLayout course_catalog_label_livemain = mDetailsView.findViewById(R.id.course_catalog_label_livemain);
-            LinearLayout course_catalog_label_livemain1 = mDetailsView.findViewById(R.id.course_catalog_label_livemain1);
-            course_catalog_label_livemain.setVisibility(View.INVISIBLE);
-            course_catalog_label_livemain1.setVisibility(View.INVISIBLE);
+            TextView course_catalog_label_record = mDetailsView.findViewById(R.id.course_catalog_label_record);
+            TextView course_catalog_label_record1 = mDetailsView.findViewById(R.id.course_catalog_label_live1);
+            course_catalog_label_record.setTextColor(mDetailsView.getResources().getColor(R.color.blue649cf0));
+            course_catalog_label_record1.setTextColor(mDetailsView.getResources().getColor(R.color.blue649cf0));
+            mCurrentCatalogTab = "Record";
         }
     }
 
@@ -394,13 +376,8 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                 rl.height = 0;
                 coursepacket_details_line6.setLayoutParams(rl);
                 //修改body为课程详情
-                LinearLayout course_details_label_content_layout = mDetailsView.findViewById(R.id.course_details_label_content_layout);
-                LinearLayout.LayoutParams LP = (LinearLayout.LayoutParams) course_details_label_content_layout.getLayoutParams();
-                LP.height = LinearLayout.LayoutParams.WRAP_CONTENT;
-                course_details_label_content_layout.setLayoutParams(LP);
-                course_details_label_content_layout.setVisibility(View.VISIBLE);
                 LinearLayout course_catalog_label_content_layout_main = mDetailsView.findViewById(R.id.course_catalog_label_content_layout_main);
-                LP = (LinearLayout.LayoutParams) course_catalog_label_content_layout_main.getLayoutParams();
+                LinearLayout.LayoutParams LP = (LinearLayout.LayoutParams) course_catalog_label_content_layout_main.getLayoutParams();
                 LP.height = 0;
                 course_catalog_label_content_layout_main.setLayoutParams(LP);
                 course_catalog_label_content_layout_main.setVisibility(View.INVISIBLE);
@@ -449,11 +426,6 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                 LP.height = LinearLayout.LayoutParams.WRAP_CONTENT;
                 course_catalog_label_content_layout_main.setLayoutParams(LP);
                 course_catalog_label_content_layout_main.setVisibility(View.VISIBLE);
-                LinearLayout course_details_label_content_layout = mDetailsView.findViewById(R.id.course_details_label_content_layout);
-                LP = (LinearLayout.LayoutParams) course_details_label_content_layout.getLayoutParams();
-                LP.height = 0;
-                course_details_label_content_layout.setLayoutParams(LP);
-                course_details_label_content_layout.setVisibility(View.INVISIBLE);
 
                 LinearLayout course_materials_label_content_layout = mDetailsView.findViewById(R.id.course_materials_label_content_layout);
                 LP = (LinearLayout.LayoutParams) course_materials_label_content_layout.getLayoutParams();
@@ -518,13 +490,8 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                 rl.height = 0;
                 coursepacket_details_line6.setLayoutParams(rl);
                 //
-                LinearLayout course_details_label_content_layout = mDetailsView.findViewById(R.id.course_details_label_content_layout);
-                LinearLayout.LayoutParams LP = (LinearLayout.LayoutParams) course_details_label_content_layout.getLayoutParams();
-                LP.height = 0;
-                course_details_label_content_layout.setLayoutParams(LP);
-                course_details_label_content_layout.setVisibility(View.INVISIBLE);
                 LinearLayout course_materials_label_content_layout = mDetailsView.findViewById(R.id.course_materials_label_content_layout);
-                LP = (LinearLayout.LayoutParams) course_materials_label_content_layout.getLayoutParams();
+                LinearLayout.LayoutParams LP = (LinearLayout.LayoutParams) course_materials_label_content_layout.getLayoutParams();
                 LP.height = LinearLayout.LayoutParams.WRAP_CONTENT;
                 course_materials_label_content_layout.setLayoutParams(LP);
                 course_materials_label_content_layout.setVisibility(View.VISIBLE);
@@ -563,34 +530,26 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                 }
                 break;
             }
-            case R.id.course_details_bottomlayout_question: {//点击课程问答
-                //查询课程问答列表
-                CourseQuestionShow();
-                break;
-            }
+//            case R.id.course_details_bottomlayout_question: {//点击课程问答
+//                //查询课程问答列表
+//                CourseQuestionShow();
+//                break;
+//            }
             //点击目录中的直播tab
-            case R.id.course_catalog_label_livemain1:
+            case R.id.course_catalog_label_live1:
                 LinearLayout course_catalog_label1 = mDetailsView.findViewById(R.id.course_catalog_label1);
                 if (course_catalog_label1.getAlpha() == 0) {
                     break;
                 }
-            case R.id.course_catalog_label_livemain: {
+            case R.id.course_catalog_label_live: {
                 if (!mCurrentCatalogTab.equals("Live")) {
-                    ImageView course_catalog_label_liveimage = mDetailsView.findViewById(R.id.course_catalog_label_liveimage);
                     TextView course_catalog_label_live = mDetailsView.findViewById(R.id.course_catalog_label_live);
-                    ImageView course_catalog_label_liveimage1 = mDetailsView.findViewById(R.id.course_catalog_label_liveimage1);
                     TextView course_catalog_label_live1 = mDetailsView.findViewById(R.id.course_catalog_label_live1);
-                    course_catalog_label_liveimage.setImageDrawable(mDetailsView.getResources().getDrawable(R.drawable.button_live_blue));
                     course_catalog_label_live.setTextColor(mDetailsView.getResources().getColor(R.color.blue649cf0));
-                    course_catalog_label_liveimage1.setImageDrawable(mDetailsView.getResources().getDrawable(R.drawable.button_live_blue));
                     course_catalog_label_live1.setTextColor(mDetailsView.getResources().getColor(R.color.blue649cf0));
-                    ImageView course_catalog_label_recordimage = mDetailsView.findViewById(R.id.course_catalog_label_recordimage);
                     TextView course_catalog_label_record = mDetailsView.findViewById(R.id.course_catalog_label_record);
-                    ImageView course_catalog_label_recordimage1 = mDetailsView.findViewById(R.id.course_catalog_label_recordimage1);
                     TextView course_catalog_label_record1 = mDetailsView.findViewById(R.id.course_catalog_label_record1);
-                    course_catalog_label_recordimage.setImageDrawable(mDetailsView.getResources().getDrawable(R.drawable.button_record_gray));
                     course_catalog_label_record.setTextColor(mDetailsView.getResources().getColor(R.color.black999999));
-                    course_catalog_label_recordimage1.setImageDrawable(mDetailsView.getResources().getDrawable(R.drawable.button_record_gray));
                     course_catalog_label_record1.setTextColor(mDetailsView.getResources().getColor(R.color.black999999));
 //                    //修改body为直播
 //                    CourseCatalogLiveInit(mCourseInfo);
@@ -604,28 +563,20 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                 break;
             }
             //点击目录中的录播tab
-            case R.id.course_catalog_label_recordmain1:
+            case R.id.course_catalog_label_record1:
                 course_catalog_label1 = mDetailsView.findViewById(R.id.course_catalog_label1);
                 if (course_catalog_label1.getAlpha() == 0) {
                     break;
                 }
-            case R.id.course_catalog_label_recordmain: {
+            case R.id.course_catalog_label_record: {
                 if (!mCurrentCatalogTab.equals("Record")) {
-                    ImageView course_catalog_label_liveimage = mDetailsView.findViewById(R.id.course_catalog_label_liveimage);
                     TextView course_catalog_label_live = mDetailsView.findViewById(R.id.course_catalog_label_live);
-                    ImageView course_catalog_label_liveimage1 = mDetailsView.findViewById(R.id.course_catalog_label_liveimage1);
                     TextView course_catalog_label_live1 = mDetailsView.findViewById(R.id.course_catalog_label_live1);
-                    course_catalog_label_liveimage.setImageDrawable(mDetailsView.getResources().getDrawable(R.drawable.button_live_gray));
                     course_catalog_label_live.setTextColor(mDetailsView.getResources().getColor(R.color.black999999));
-                    course_catalog_label_liveimage1.setImageDrawable(mDetailsView.getResources().getDrawable(R.drawable.button_live_gray));
                     course_catalog_label_live1.setTextColor(mDetailsView.getResources().getColor(R.color.black999999));
-                    ImageView course_catalog_label_recordimage = mDetailsView.findViewById(R.id.course_catalog_label_recordimage);
                     TextView course_catalog_label_record = mDetailsView.findViewById(R.id.course_catalog_label_record);
-                    ImageView course_catalog_label_recordimage1 = mDetailsView.findViewById(R.id.course_catalog_label_recordimage1);
                     TextView course_catalog_label_record1 = mDetailsView.findViewById(R.id.course_catalog_label_record1);
-                    course_catalog_label_recordimage.setImageDrawable(mDetailsView.getResources().getDrawable(R.drawable.button_record_blue));
                     course_catalog_label_record.setTextColor(mDetailsView.getResources().getColor(R.color.blue649cf0));
-                    course_catalog_label_recordimage1.setImageDrawable(mDetailsView.getResources().getDrawable(R.drawable.button_record_blue));
                     course_catalog_label_record1.setTextColor(mDetailsView.getResources().getColor(R.color.blue649cf0));
 //                    //修改body为录播
 //                    CourseCatalogRecordInit(mCourseInfo);
@@ -713,21 +664,24 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
         if (courseInfo.mCourseName != null) {
             courseNameTextView.setText(courseInfo.mCourseName);
         }
+        TextView courseLearnStuNum = mListView.findViewById(R.id.courseLearnStuNum);
+        courseLearnStuNum.setText(courseInfo.mCourseLearnPersonNum + "人正在学习");
         TextView coursepricebeginTextView = mListView.findViewById(R.id.coursepricebegin);
         TextView coursepriceTextView = mListView.findViewById(R.id.courseprice);
         TextView coursepriceendTextView = mListView.findViewById(R.id.coursepriceend);
         if (courseInfo.mCoursePrice != null) {
             if (!courseInfo.mCoursePrice.equals("免费")) {
                 coursepriceTextView.setTextColor(Color.RED);
-                coursepricebeginTextView.setText("¥");
-                String coursePriceS[] = courseInfo.mCoursePrice.split("\\.");
-                if (coursePriceS.length > 1) {
-                    coursepriceTextView.setText(coursePriceS[0]);
-                    coursepriceendTextView.setText("." + coursePriceS[1]);
-                } else {
-                    coursepriceTextView.setText(courseInfo.mCoursePrice);
-                    coursepriceendTextView.setText(".00");
-                }
+//                coursepricebeginTextView.setText("¥");
+//                String coursePriceS[] = courseInfo.mCoursePrice.split("\\.");
+//                if (coursePriceS.length > 1) {
+//                    coursepriceTextView.setText(coursePriceS[0]);
+//                    coursepriceendTextView.setText("." + coursePriceS[1]);
+//                } else {
+//                    coursepriceTextView.setText(courseInfo.mCoursePrice);
+//                    coursepriceendTextView.setText(".00");
+//                }
+                coursepriceendTextView.setText("¥" + courseInfo.mCoursePrice);
                 //设置原价格
                 TextView coursepriceOldTextView = mListView.findViewById(R.id.coursepriceOld);
                 //文字栅格化
@@ -827,7 +781,7 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
         course_details_periodofvalidity.setText("有效期至：" + invalid_date_date);
         //课程简介
         TextView coursepacket_details_briefintroductioncontent = mDetailsView.findViewById(R.id.coursepacket_details_briefintroductioncontent);
-        coursepacket_details_briefintroductioncontent.setText(courseInfo.mCourseMessage);
+        coursepacket_details_briefintroductioncontent.setText("简介：" + courseInfo.mCourseMessage);
         AppBarLayout course_details_appbar = mDetailsView.findViewById(R.id.course_details_appbar);
         FrameLayout course_fl_layout = mDetailsView.findViewById(R.id.course_fl_layout);
         //课程名称
@@ -849,33 +803,19 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
         TextView course_details_label_content = mDetailsView.findViewById(R.id.course_details_label_content);
         new ModelHtmlUtils(mControlMainActivity, course_details_label_content).setHtmlWithPic(courseInfo.mCourseDetails);
         course_details_appbar.addOnOffsetChangedListener((appBarLayout, verticalOffset) -> {
-            ImageView course_details_return_button = mDetailsView.findViewById(R.id.course_details_return_button);
-            ImageView course_details_return_button1 = mDetailsView.findViewById(R.id.course_details_return_button1);
 //            ImageView course_details_download_button = mDetailsView.findViewById(R.id.course_details_download_button);
 //            ImageView course_details_download_button1 = mDetailsView.findViewById(R.id.course_details_download_button1);
             float percent = Float.valueOf(Math.abs(verticalOffset)) / Float.valueOf(appBarLayout.getTotalScrollRange());
-            if (verticalOffset < -course_details_return_button.getY()) {
+            LinearLayout course_details_navigationbar1 = mDetailsView.findViewById(R.id.course_details_navigationbar1);
+            if (verticalOffset < -course_details_navigationbar1.getY()) {
                 course_fl_layout.setAlpha(percent);
-                course_details_return_button.setVisibility(View.VISIBLE);
-                course_details_return_button1.setVisibility(View.INVISIBLE);
-//                course_details_download_button.setVisibility(View.VISIBLE);
-//                course_details_download_button1.setVisibility(View.INVISIBLE);
             } else {
                 course_fl_layout.setAlpha(0);
-                course_details_return_button.setVisibility(View.INVISIBLE);
-                course_details_return_button1.setVisibility(View.VISIBLE);
-//                course_details_download_button.setVisibility(View.INVISIBLE);
-//                course_details_download_button1.setVisibility(View.VISIBLE);
-            }
-            if (verticalOffset <= -course_details_Name.getY() - course_details_Name.getHeight()) {
-                course_fl_layout_title.setVisibility(View.VISIBLE);
-            } else {
-                course_fl_layout_title.setVisibility(View.INVISIBLE);
             }
             LinearLayout course_catalog_label1 = mDetailsView.findViewById(R.id.course_catalog_label1);
 //            LinearLayout course_catalog_label_content_layout_main = mDetailsView.findViewById(R.id.course_catalog_label_content_layout_main);
             View coursepacket_details_line6 = mDetailsView.findViewById(R.id.coursepacket_details_line6);
-            LinearLayout course_catalog_label = mDetailsView.findViewById(R.id.course_catalog_label);
+            RelativeLayout course_catalog_label = mDetailsView.findViewById(R.id.course_catalog_label);
             if (mCurrentTab.equals("Details")) {
                 course_catalog_label1.setAlpha(0);
                 coursepacket_details_line6.setAlpha(0);
@@ -1080,15 +1020,15 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                 course_catalog_label_line1.setVisibility(View.INVISIBLE);
             }
         }
-        TextView course_catalog_label_record = mDetailsView.findViewById(R.id.course_catalog_label_record);
-        TextView course_catalog_label_record1 = mDetailsView.findViewById(R.id.course_catalog_label_record1);
-        course_catalog_label_record1.setText("录播(" + mRecCourseSum + ")");
-        course_catalog_label_record.setText("录播(" + mRecCourseSum + ")");
-        TextView course_catalog_label_live = mDetailsView.findViewById(R.id.course_catalog_label_live);
-        TextView course_catalog_label_live1 = mDetailsView.findViewById(R.id.course_catalog_label_live1);
-        int liveCourseNum = courseInfo.mCourseClassTimeInfoTodayList.size() + courseInfo.mCourseClassTimeInfoBeforeList.size() + courseInfo.mCourseClassTimeInfoAfterList.size();
-        course_catalog_label_live.setText("直播(" + liveCourseNum + ")");
-        course_catalog_label_live1.setText("直播(" + liveCourseNum + ")");
+//        TextView course_catalog_label_record = mDetailsView.findViewById(R.id.course_catalog_label_record);
+//        TextView course_catalog_label_record1 = mDetailsView.findViewById(R.id.course_catalog_label_record1);
+//        course_catalog_label_record1.setText("录播");
+//        course_catalog_label_record.setText("录播");
+//        TextView course_catalog_label_live = mDetailsView.findViewById(R.id.course_catalog_label_live);
+//        TextView course_catalog_label_live1 = mDetailsView.findViewById(R.id.course_catalog_label_live1);
+//        int liveCourseNum = courseInfo.mCourseClassTimeInfoTodayList.size() + courseInfo.mCourseClassTimeInfoBeforeList.size() + courseInfo.mCourseClassTimeInfoAfterList.size();
+//        course_catalog_label_live.setText("直播");
+//        course_catalog_label_live1.setText("直播");
     }
 
     //课程目录录播界面章节初始化
@@ -1424,11 +1364,11 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                 }
             }
         }
-        TextView course_catalog_label_live = mDetailsView.findViewById(R.id.course_catalog_label_live);
-        TextView course_catalog_label_live1 = mDetailsView.findViewById(R.id.course_catalog_label_live1);
-        int liveCourseNum = courseInfo.mCourseClassTimeInfoTodayList.size() + courseInfo.mCourseClassTimeInfoBeforeList.size() + courseInfo.mCourseClassTimeInfoAfterList.size();
-        course_catalog_label_live.setText("直播(" + liveCourseNum + ")");
-        course_catalog_label_live1.setText("直播(" + liveCourseNum + ")");
+//        TextView course_catalog_label_live = mDetailsView.findViewById(R.id.course_catalog_label_live);
+//        TextView course_catalog_label_live1 = mDetailsView.findViewById(R.id.course_catalog_label_live1);
+//        int liveCourseNum = courseInfo.mCourseClassTimeInfoTodayList.size() + courseInfo.mCourseClassTimeInfoBeforeList.size() + courseInfo.mCourseClassTimeInfoAfterList.size();
+//        course_catalog_label_live.setText("直播(" + liveCourseNum + ")");
+//        course_catalog_label_live1.setText("直播(" + liveCourseNum + ")");
     }
 
     //课程目录直播界面课次初始化
@@ -2866,13 +2806,13 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                         mCurrentTab = "Catalog";
                         LoadingDialog.getInstance(mControlMainActivity).dismiss();
                     }
-                    if (mIsBefore && mIsToday && mIsAfter) {
-                        TextView course_catalog_label_live = mDetailsView.findViewById(R.id.course_catalog_label_live);
-                        TextView course_catalog_label_live1 = mDetailsView.findViewById(R.id.course_catalog_label_live1);
-                        int liveCourseNum = mCourseInfo.mTodayLiveSum + mCourseInfo.mBeforeLiveSum + mCourseInfo.mAfterLiveSum;
-                        course_catalog_label_live.setText("直播(" + liveCourseNum + ")");
-                        course_catalog_label_live1.setText("直播(" + liveCourseNum + ")");
-                    }
+//                    if (mIsBefore && mIsToday && mIsAfter) {
+//                        TextView course_catalog_label_live = mDetailsView.findViewById(R.id.course_catalog_label_live);
+//                        TextView course_catalog_label_live1 = mDetailsView.findViewById(R.id.course_catalog_label_live1);
+//                        int liveCourseNum = mCourseInfo.mTodayLiveSum + mCourseInfo.mBeforeLiveSum + mCourseInfo.mAfterLiveSum;
+//                        course_catalog_label_live.setText("直播(" + liveCourseNum + ")");
+//                        course_catalog_label_live1.setText("直播(" + liveCourseNum + ")");
+//                    }
                     return;
                 }
                 CourseCatalogLiveBeanNew courseCatalogLiveBeanNew = response.body();
@@ -2889,13 +2829,13 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                         mCurrentTab = "Catalog";
                         LoadingDialog.getInstance(mControlMainActivity).dismiss();
                     }
-                    if (mIsBefore && mIsToday && mIsAfter) {
-                        TextView course_catalog_label_live = mDetailsView.findViewById(R.id.course_catalog_label_live);
-                        TextView course_catalog_label_live1 = mDetailsView.findViewById(R.id.course_catalog_label_live1);
-                        int liveCourseNum = mCourseInfo.mTodayLiveSum + mCourseInfo.mBeforeLiveSum + mCourseInfo.mAfterLiveSum;
-                        course_catalog_label_live.setText("直播(" + liveCourseNum + ")");
-                        course_catalog_label_live1.setText("直播(" + liveCourseNum + ")");
-                    }
+//                    if (mIsBefore && mIsToday && mIsAfter) {
+//                        TextView course_catalog_label_live = mDetailsView.findViewById(R.id.course_catalog_label_live);
+//                        TextView course_catalog_label_live1 = mDetailsView.findViewById(R.id.course_catalog_label_live1);
+//                        int liveCourseNum = mCourseInfo.mTodayLiveSum + mCourseInfo.mBeforeLiveSum + mCourseInfo.mAfterLiveSum;
+//                        course_catalog_label_live.setText("直播(" + liveCourseNum + ")");
+//                        course_catalog_label_live1.setText("直播(" + liveCourseNum + ")");
+//                    }
                     return;
                 }
                 if (!HeaderInterceptor.IsErrorCode(courseCatalogLiveBeanNew.getErrorCode(), courseCatalogLiveBeanNew.getErrorMsg())) {
@@ -2911,13 +2851,13 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                         mCurrentTab = "Catalog";
                         LoadingDialog.getInstance(mControlMainActivity).dismiss();
                     }
-                    if (mIsBefore && mIsToday && mIsAfter) {
-                        TextView course_catalog_label_live = mDetailsView.findViewById(R.id.course_catalog_label_live);
-                        TextView course_catalog_label_live1 = mDetailsView.findViewById(R.id.course_catalog_label_live1);
-                        int liveCourseNum = mCourseInfo.mTodayLiveSum + mCourseInfo.mBeforeLiveSum + mCourseInfo.mAfterLiveSum;
-                        course_catalog_label_live.setText("直播(" + liveCourseNum + ")");
-                        course_catalog_label_live1.setText("直播(" + liveCourseNum + ")");
-                    }
+//                    if (mIsBefore && mIsToday && mIsAfter) {
+//                        TextView course_catalog_label_live = mDetailsView.findViewById(R.id.course_catalog_label_live);
+//                        TextView course_catalog_label_live1 = mDetailsView.findViewById(R.id.course_catalog_label_live1);
+//                        int liveCourseNum = mCourseInfo.mTodayLiveSum + mCourseInfo.mBeforeLiveSum + mCourseInfo.mAfterLiveSum;
+//                        course_catalog_label_live.setText("直播(" + liveCourseNum + ")");
+//                        course_catalog_label_live1.setText("直播(" + liveCourseNum + ")");
+//                    }
                     return;
                 }
                 CourseCatalogLiveBeanNew.CourseCatalogLiveData courseCatalogLiveData = courseCatalogLiveBeanNew.getData();
@@ -2934,13 +2874,13 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                         mCurrentTab = "Catalog";
                         LoadingDialog.getInstance(mControlMainActivity).dismiss();
                     }
-                    if (mIsBefore && mIsToday && mIsAfter) {
-                        TextView course_catalog_label_live = mDetailsView.findViewById(R.id.course_catalog_label_live);
-                        TextView course_catalog_label_live1 = mDetailsView.findViewById(R.id.course_catalog_label_live1);
-                        int liveCourseNum = mCourseInfo.mTodayLiveSum + mCourseInfo.mBeforeLiveSum + mCourseInfo.mAfterLiveSum;
-                        course_catalog_label_live.setText("直播(" + liveCourseNum + ")");
-                        course_catalog_label_live1.setText("直播(" + liveCourseNum + ")");
-                    }
+//                    if (mIsBefore && mIsToday && mIsAfter) {
+//                        TextView course_catalog_label_live = mDetailsView.findViewById(R.id.course_catalog_label_live);
+//                        TextView course_catalog_label_live1 = mDetailsView.findViewById(R.id.course_catalog_label_live1);
+//                        int liveCourseNum = mCourseInfo.mTodayLiveSum + mCourseInfo.mBeforeLiveSum + mCourseInfo.mAfterLiveSum;
+//                        course_catalog_label_live.setText("直播(" + liveCourseNum + ")");
+//                        course_catalog_label_live1.setText("直播(" + liveCourseNum + ")");
+//                    }
                     return;
                 }
                 if (courseCatalogLiveData.total == null || courseCatalogLiveData.list == null) {
@@ -2951,13 +2891,13 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                     } else if (type == 3) {
                         mIsAfter = true;
                     }
-                    if (mIsBefore && mIsToday && mIsAfter) {
-                        TextView course_catalog_label_live = mDetailsView.findViewById(R.id.course_catalog_label_live);
-                        TextView course_catalog_label_live1 = mDetailsView.findViewById(R.id.course_catalog_label_live1);
-                        int liveCourseNum = mCourseInfo.mTodayLiveSum + mCourseInfo.mBeforeLiveSum + mCourseInfo.mAfterLiveSum;
-                        course_catalog_label_live.setText("直播(" + liveCourseNum + ")");
-                        course_catalog_label_live1.setText("直播(" + liveCourseNum + ")");
-                    }
+//                    if (mIsBefore && mIsToday && mIsAfter) {
+//                        TextView course_catalog_label_live = mDetailsView.findViewById(R.id.course_catalog_label_live);
+//                        TextView course_catalog_label_live1 = mDetailsView.findViewById(R.id.course_catalog_label_live1);
+//                        int liveCourseNum = mCourseInfo.mTodayLiveSum + mCourseInfo.mBeforeLiveSum + mCourseInfo.mAfterLiveSum;
+//                        course_catalog_label_live.setText("直播(" + liveCourseNum + ")");
+//                        course_catalog_label_live1.setText("直播(" + liveCourseNum + ")");
+//                    }
                     if (mCurrentCatalogTab.equals("Live")) {
                         CourseCatalogLiveInit(mCourseInfo, type);
                         mCurrentTab = "Catalog";
@@ -3030,13 +2970,13 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                     mCurrentTab = "Catalog";
                     LoadingDialog.getInstance(mControlMainActivity).dismiss();
                 }
-                if (mIsBefore && mIsToday && mIsAfter) {
-                    TextView course_catalog_label_live = mDetailsView.findViewById(R.id.course_catalog_label_live);
-                    TextView course_catalog_label_live1 = mDetailsView.findViewById(R.id.course_catalog_label_live1);
-                    int liveCourseNum = mCourseInfo.mTodayLiveSum + mCourseInfo.mBeforeLiveSum + mCourseInfo.mAfterLiveSum;
-                    course_catalog_label_live.setText("直播(" + liveCourseNum + ")");
-                    course_catalog_label_live1.setText("直播(" + liveCourseNum + ")");
-                }
+//                if (mIsBefore && mIsToday && mIsAfter) {
+//                    TextView course_catalog_label_live = mDetailsView.findViewById(R.id.course_catalog_label_live);
+//                    TextView course_catalog_label_live1 = mDetailsView.findViewById(R.id.course_catalog_label_live1);
+//                    int liveCourseNum = mCourseInfo.mTodayLiveSum + mCourseInfo.mBeforeLiveSum + mCourseInfo.mAfterLiveSum;
+//                    course_catalog_label_live.setText("直播(" + liveCourseNum + ")");
+//                    course_catalog_label_live1.setText("直播(" + liveCourseNum + ")");
+//                }
             }
 
             @Override
@@ -3055,13 +2995,13 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                     mCurrentTab = "Catalog";
                     LoadingDialog.getInstance(mControlMainActivity).dismiss();
                 }
-                if (mIsBefore && mIsToday && mIsAfter) {
-                    TextView course_catalog_label_live = mDetailsView.findViewById(R.id.course_catalog_label_live);
-                    TextView course_catalog_label_live1 = mDetailsView.findViewById(R.id.course_catalog_label_live1);
-                    int liveCourseNum = mCourseInfo.mTodayLiveSum + mCourseInfo.mBeforeLiveSum + mCourseInfo.mAfterLiveSum;
-                    course_catalog_label_live.setText("直播(" + liveCourseNum + ")");
-                    course_catalog_label_live1.setText("直播(" + liveCourseNum + ")");
-                }
+//                if (mIsBefore && mIsToday && mIsAfter) {
+//                    TextView course_catalog_label_live = mDetailsView.findViewById(R.id.course_catalog_label_live);
+//                    TextView course_catalog_label_live1 = mDetailsView.findViewById(R.id.course_catalog_label_live1);
+//                    int liveCourseNum = mCourseInfo.mTodayLiveSum + mCourseInfo.mBeforeLiveSum + mCourseInfo.mAfterLiveSum;
+//                    course_catalog_label_live.setText("直播(" + liveCourseNum + ")");
+//                    course_catalog_label_live1.setText("直播(" + liveCourseNum + ")");
+//                }
             }
         });
     }
@@ -3140,13 +3080,13 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                         mCurrentTab = "Catalog";
                         LoadingDialog.getInstance(mControlMainActivity).dismiss();
                     }
-                    if (mIsBefore && mIsToday && mIsAfter) {
-                        TextView course_catalog_label_live = mDetailsView.findViewById(R.id.course_catalog_label_live);
-                        TextView course_catalog_label_live1 = mDetailsView.findViewById(R.id.course_catalog_label_live1);
-                        int liveCourseNum = mCourseInfo.mTodayLiveSum + mCourseInfo.mBeforeLiveSum + mCourseInfo.mAfterLiveSum;
-                        course_catalog_label_live.setText("直播(" + liveCourseNum + ")");
-                        course_catalog_label_live1.setText("直播(" + liveCourseNum + ")");
-                    }
+//                    if (mIsBefore && mIsToday && mIsAfter) {
+//                        TextView course_catalog_label_live = mDetailsView.findViewById(R.id.course_catalog_label_live);
+//                        TextView course_catalog_label_live1 = mDetailsView.findViewById(R.id.course_catalog_label_live1);
+//                        int liveCourseNum = mCourseInfo.mTodayLiveSum + mCourseInfo.mBeforeLiveSum + mCourseInfo.mAfterLiveSum;
+//                        course_catalog_label_live.setText("直播(" + liveCourseNum + ")");
+//                        course_catalog_label_live1.setText("直播(" + liveCourseNum + ")");
+//                    }
                     return;
                 }
                 CourseCatalogLiveBeanNew courseCatalogLiveBeanNew = response.body();
@@ -3163,13 +3103,13 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                         mCurrentTab = "Catalog";
                         LoadingDialog.getInstance(mControlMainActivity).dismiss();
                     }
-                    if (mIsBefore && mIsToday && mIsAfter) {
-                        TextView course_catalog_label_live = mDetailsView.findViewById(R.id.course_catalog_label_live);
-                        TextView course_catalog_label_live1 = mDetailsView.findViewById(R.id.course_catalog_label_live1);
-                        int liveCourseNum = mCourseInfo.mTodayLiveSum + mCourseInfo.mBeforeLiveSum + mCourseInfo.mAfterLiveSum;
-                        course_catalog_label_live.setText("直播(" + liveCourseNum + ")");
-                        course_catalog_label_live1.setText("直播(" + liveCourseNum + ")");
-                    }
+//                    if (mIsBefore && mIsToday && mIsAfter) {
+//                        TextView course_catalog_label_live = mDetailsView.findViewById(R.id.course_catalog_label_live);
+//                        TextView course_catalog_label_live1 = mDetailsView.findViewById(R.id.course_catalog_label_live1);
+//                        int liveCourseNum = mCourseInfo.mTodayLiveSum + mCourseInfo.mBeforeLiveSum + mCourseInfo.mAfterLiveSum;
+//                        course_catalog_label_live.setText("直播(" + liveCourseNum + ")");
+//                        course_catalog_label_live1.setText("直播(" + liveCourseNum + ")");
+//                    }
                     return;
                 }
                 if (!HeaderInterceptor.IsErrorCode(courseCatalogLiveBeanNew.getErrorCode(), courseCatalogLiveBeanNew.getErrorMsg())) {
@@ -3185,13 +3125,13 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                         mCurrentTab = "Catalog";
                         LoadingDialog.getInstance(mControlMainActivity).dismiss();
                     }
-                    if (mIsBefore && mIsToday && mIsAfter) {
-                        TextView course_catalog_label_live = mDetailsView.findViewById(R.id.course_catalog_label_live);
-                        TextView course_catalog_label_live1 = mDetailsView.findViewById(R.id.course_catalog_label_live1);
-                        int liveCourseNum = mCourseInfo.mTodayLiveSum + mCourseInfo.mBeforeLiveSum + mCourseInfo.mAfterLiveSum;
-                        course_catalog_label_live.setText("直播(" + liveCourseNum + ")");
-                        course_catalog_label_live1.setText("直播(" + liveCourseNum + ")");
-                    }
+//                    if (mIsBefore && mIsToday && mIsAfter) {
+//                        TextView course_catalog_label_live = mDetailsView.findViewById(R.id.course_catalog_label_live);
+//                        TextView course_catalog_label_live1 = mDetailsView.findViewById(R.id.course_catalog_label_live1);
+//                        int liveCourseNum = mCourseInfo.mTodayLiveSum + mCourseInfo.mBeforeLiveSum + mCourseInfo.mAfterLiveSum;
+//                        course_catalog_label_live.setText("直播(" + liveCourseNum + ")");
+//                        course_catalog_label_live1.setText("直播(" + liveCourseNum + ")");
+//                    }
                     return;
                 }
                 CourseCatalogLiveBeanNew.CourseCatalogLiveData courseCatalogLiveData = courseCatalogLiveBeanNew.getData();
@@ -3208,13 +3148,13 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                         mCurrentTab = "Catalog";
                         LoadingDialog.getInstance(mControlMainActivity).dismiss();
                     }
-                    if (mIsBefore && mIsToday && mIsAfter) {
-                        TextView course_catalog_label_live = mDetailsView.findViewById(R.id.course_catalog_label_live);
-                        TextView course_catalog_label_live1 = mDetailsView.findViewById(R.id.course_catalog_label_live1);
-                        int liveCourseNum = mCourseInfo.mTodayLiveSum + mCourseInfo.mBeforeLiveSum + mCourseInfo.mAfterLiveSum;
-                        course_catalog_label_live.setText("直播(" + liveCourseNum + ")");
-                        course_catalog_label_live1.setText("直播(" + liveCourseNum + ")");
-                    }
+//                    if (mIsBefore && mIsToday && mIsAfter) {
+//                        TextView course_catalog_label_live = mDetailsView.findViewById(R.id.course_catalog_label_live);
+//                        TextView course_catalog_label_live1 = mDetailsView.findViewById(R.id.course_catalog_label_live1);
+//                        int liveCourseNum = mCourseInfo.mTodayLiveSum + mCourseInfo.mBeforeLiveSum + mCourseInfo.mAfterLiveSum;
+//                        course_catalog_label_live.setText("直播(" + liveCourseNum + ")");
+//                        course_catalog_label_live1.setText("直播(" + liveCourseNum + ")");
+//                    }
                     return;
                 }
                 if (courseCatalogLiveData.total == null || courseCatalogLiveData.list == null) {
@@ -3225,13 +3165,13 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                     } else if (type == 3) {
                         mIsAfter = true;
                     }
-                    if (mIsBefore && mIsToday && mIsAfter) {
-                        TextView course_catalog_label_live = mDetailsView.findViewById(R.id.course_catalog_label_live);
-                        TextView course_catalog_label_live1 = mDetailsView.findViewById(R.id.course_catalog_label_live1);
-                        int liveCourseNum = mCourseInfo.mTodayLiveSum + mCourseInfo.mBeforeLiveSum + mCourseInfo.mAfterLiveSum;
-                        course_catalog_label_live.setText("直播(" + liveCourseNum + ")");
-                        course_catalog_label_live1.setText("直播(" + liveCourseNum + ")");
-                    }
+//                    if (mIsBefore && mIsToday && mIsAfter) {
+//                        TextView course_catalog_label_live = mDetailsView.findViewById(R.id.course_catalog_label_live);
+//                        TextView course_catalog_label_live1 = mDetailsView.findViewById(R.id.course_catalog_label_live1);
+//                        int liveCourseNum = mCourseInfo.mTodayLiveSum + mCourseInfo.mBeforeLiveSum + mCourseInfo.mAfterLiveSum;
+//                        course_catalog_label_live.setText("直播(" + liveCourseNum + ")");
+//                        course_catalog_label_live1.setText("直播(" + liveCourseNum + ")");
+//                    }
                     if (mCurrentCatalogTab.equals("Live")) {
                         CourseCatalogLiveInit(mCourseInfo, type);
                         mCurrentTab = "Catalog";
@@ -3294,13 +3234,13 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                     mCurrentTab = "Catalog";
                     LoadingDialog.getInstance(mControlMainActivity).dismiss();
                 }
-                if (mIsBefore && mIsToday && mIsAfter) {
-                    TextView course_catalog_label_live = mDetailsView.findViewById(R.id.course_catalog_label_live);
-                    TextView course_catalog_label_live1 = mDetailsView.findViewById(R.id.course_catalog_label_live1);
-                    int liveCourseNum = mCourseInfo.mTodayLiveSum + mCourseInfo.mBeforeLiveSum + mCourseInfo.mAfterLiveSum;
-                    course_catalog_label_live.setText("直播(" + liveCourseNum + ")");
-                    course_catalog_label_live1.setText("直播(" + liveCourseNum + ")");
-                }
+//                if (mIsBefore && mIsToday && mIsAfter) {
+//                    TextView course_catalog_label_live = mDetailsView.findViewById(R.id.course_catalog_label_live);
+//                    TextView course_catalog_label_live1 = mDetailsView.findViewById(R.id.course_catalog_label_live1);
+//                    int liveCourseNum = mCourseInfo.mTodayLiveSum + mCourseInfo.mBeforeLiveSum + mCourseInfo.mAfterLiveSum;
+//                    course_catalog_label_live.setText("直播(" + liveCourseNum + ")");
+//                    course_catalog_label_live1.setText("直播(" + liveCourseNum + ")");
+//                }
             }
 
             @Override
@@ -3319,13 +3259,13 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                     mCurrentTab = "Catalog";
                     LoadingDialog.getInstance(mControlMainActivity).dismiss();
                 }
-                if (mIsBefore && mIsToday && mIsAfter) {
-                    TextView course_catalog_label_live = mDetailsView.findViewById(R.id.course_catalog_label_live);
-                    TextView course_catalog_label_live1 = mDetailsView.findViewById(R.id.course_catalog_label_live1);
-                    int liveCourseNum = mCourseInfo.mTodayLiveSum + mCourseInfo.mBeforeLiveSum + mCourseInfo.mAfterLiveSum;
-                    course_catalog_label_live.setText("直播(" + liveCourseNum + ")");
-                    course_catalog_label_live1.setText("直播(" + liveCourseNum + ")");
-                }
+//                if (mIsBefore && mIsToday && mIsAfter) {
+//                    TextView course_catalog_label_live = mDetailsView.findViewById(R.id.course_catalog_label_live);
+//                    TextView course_catalog_label_live1 = mDetailsView.findViewById(R.id.course_catalog_label_live1);
+//                    int liveCourseNum = mCourseInfo.mTodayLiveSum + mCourseInfo.mBeforeLiveSum + mCourseInfo.mAfterLiveSum;
+//                    course_catalog_label_live.setText("直播(" + liveCourseNum + ")");
+//                    course_catalog_label_live1.setText("直播(" + liveCourseNum + ")");
+//                }
             }
         });
     }

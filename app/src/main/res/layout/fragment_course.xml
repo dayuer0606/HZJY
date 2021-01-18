@@ -70,7 +70,7 @@
             android:layout_height="match_parent"
             android:id="@+id/Smart_fragment_course"
             android:layout_below="@id/course_line1">
-            <com.scwang.smartrefresh.header.BezierCircleHeader
+            <com.scwang.smartrefresh.header.DeliveryHeader
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
             <LinearLayout
@@ -83,7 +83,9 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:layout_marginLeft="@dimen/dp13"
+                        android:layout_marginRight="@dimen/dp13">
                         <LinearLayout
                             android:id="@+id/course_linearlayout"
                             android:layout_width="match_parent"
@@ -119,7 +121,7 @@
                     </LinearLayout>
                 </ScrollView>
             </LinearLayout>
-            <com.scwang.smartrefresh.layout.footer.FalsifyFooter
+            <com.scwang.smartrefresh.layout.footer.BallPulseFooter
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
         </com.scwang.smartrefresh.layout.SmartRefreshLayout>

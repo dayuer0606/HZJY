@@ -56,7 +56,7 @@
             android:layout_height="match_parent"
             android:layout_below="@id/modelmy_myclasspacket_main_line1">
 
-            <com.scwang.smartrefresh.header.BezierCircleHeader
+            <com.scwang.smartrefresh.header.DeliveryHeader
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
@@ -109,7 +109,7 @@
                 </ScrollView>
             </LinearLayout>
 
-            <com.scwang.smartrefresh.layout.footer.FalsifyFooter
+            <com.scwang.smartrefresh.layout.footer.BallPulseFooter
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 

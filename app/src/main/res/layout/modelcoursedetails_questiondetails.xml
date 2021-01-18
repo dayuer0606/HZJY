@@ -44,7 +44,7 @@
         android:layout_height="match_parent"
         android:layout_below="@id/course_questiondetails_layout_line1">
 
-        <com.scwang.smartrefresh.header.BezierCircleHeader
+        <com.scwang.smartrefresh.header.DeliveryHeader
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
         <ScrollView
@@ -212,7 +212,7 @@
                 </LinearLayout>
             </LinearLayout>
         </ScrollView>
-        <com.scwang.smartrefresh.layout.footer.FalsifyFooter
+        <com.scwang.smartrefresh.layout.footer.BallPulseFooter
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>

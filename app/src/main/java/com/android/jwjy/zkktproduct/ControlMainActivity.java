@@ -153,7 +153,7 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
     /**
      * 6.0版本检测并申请开启摄像头、音频录制、扩展卡读写等权限*/
     private final String[] permissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.CAMERA, Manifest.permission.MODIFY_AUDIO_SETTINGS, Manifest.permission.RECORD_AUDIO};
+            Manifest.permission.CAMERA, Manifest.permission.MODIFY_AUDIO_SETTINGS};
     private File cameraSavePath;//拍照照片路径
     private Uri uri;//照片uri
     private long firstTime = 0;
@@ -170,9 +170,12 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
         return mIpadress;
     }
 
+    public void onClickHomepageSearch(View view) {
+    }
+
     private class MenuItemInfo {
         String mName;  //按钮名称
-        int mItemId;   //按钮标识（1：首页 2：课程包 3：课程表 4：我的）
+        int mItemId;   //按钮标识（1：首页 2：课程 3：课程包 4：课程表 5：我的）
         int mOrder;    //按钮排序
     }
 
@@ -204,11 +207,11 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mIpType.put("http://wangxiao.jianweijiaoyu.com/","jianwei");
-        mIpType.put("http://wangxiao.16zige.com/","yixiao");
-        mIpType.put("http://wangxiao.yixiaojiaoyu.com/","yixiao");
-        mIpType.put("http://managerwt.16zige.com/","wentao");
-        mIpType.put("http://manager.jinrongstudy.com/","zhuce");
+//        mIpType.put("http://wangxiao.jianweijiaoyu.com/","jianwei");
+//        mIpType.put("http://wangxiao.16zige.com/","yixiao");
+//        mIpType.put("http://wangxiao.yixiaojiaoyu.com/","yixiao");
+//        mIpType.put("http://managerwt.16zige.com/","wentao");
+//        mIpType.put("http://manager.jinrongstudy.com/","zhuce");
         //阿里视频播放下载，必须初始化的服务，必须放在最开始的位置
         PrivateService.initService(getApplicationContext(), Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + PublicCommonUtil.encryptedAppPath + "/encryptedApp.dat");
         //拷贝encryptedApp.dat文件到所需位置
@@ -244,6 +247,13 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
         mThis = this;
         mBottomNavigationView = findViewById(R.id.nav_view);
         mBottomNavigationView.setLabelVisibilityMode(LabelVisibilityMode.LABEL_VISIBILITY_LABELED); //同时显示底部菜单的图标和文字
+        mBottomNavigationView.addOnLayoutChangeListener((view, i, i1, i2, i3, i4, i5, i6, i7) -> {
+            if (i3 - i7 < -1){
+                mBottomNavigationView.setVisibility(View.INVISIBLE);
+            }else {
+                mBottomNavigationView.setVisibility(View.VISIBLE);
+            }
+        });
         //判断底部菜单使用哪些菜单
         List<MenuItemInfo> menuItemList = new ArrayList<>();
         MenuItemInfo MenuItemInfo1 = new MenuItemInfo();
@@ -254,18 +264,23 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
         MenuItemInfo MenuItemInfo2 = new MenuItemInfo();
         MenuItemInfo2.mItemId = 2;
         MenuItemInfo2.mOrder = 2;
-        MenuItemInfo2.mName = "课程包";
+        MenuItemInfo2.mName = "课程";
         menuItemList.add(MenuItemInfo2);
         MenuItemInfo MenuItemInfo3 = new MenuItemInfo();
         MenuItemInfo3.mItemId = 3;
         MenuItemInfo3.mOrder = 3;
-        MenuItemInfo3.mName = "课程表";
+        MenuItemInfo3.mName = "课程包";
         menuItemList.add(MenuItemInfo3);
         MenuItemInfo MenuItemInfo4 = new MenuItemInfo();
         MenuItemInfo4.mItemId = 4;
         MenuItemInfo4.mOrder = 4;
-        MenuItemInfo4.mName = "我的";
+        MenuItemInfo4.mName = "课程表";
         menuItemList.add(MenuItemInfo4);
+        MenuItemInfo MenuItemInfo5 = new MenuItemInfo();
+        MenuItemInfo5.mItemId = 5;
+        MenuItemInfo5.mOrder = 5;
+        MenuItemInfo5.mName = "我的";
+        menuItemList.add(MenuItemInfo5);
         if (menuItemList.size() == 0){  //如果从后台查询的菜单为0，添加默认菜单
             MenuItemInfo MenuItemInfoDefault1 = new MenuItemInfo();
             MenuItemInfoDefault1.mItemId = 1;
@@ -275,18 +290,23 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
             MenuItemInfo MenuItemInfoDefault2 = new MenuItemInfo();
             MenuItemInfoDefault2.mItemId = 2;
             MenuItemInfoDefault2.mOrder = 2;
-            MenuItemInfoDefault2.mName = "课程包";
+            MenuItemInfoDefault2.mName = "课程";
             menuItemList.add(MenuItemInfoDefault2);
             MenuItemInfo MenuItemInfoDefault3 = new MenuItemInfo();
             MenuItemInfoDefault3.mItemId = 3;
             MenuItemInfoDefault3.mOrder = 3;
-            MenuItemInfoDefault3.mName = "课程表";
+            MenuItemInfoDefault3.mName = "课程包";
             menuItemList.add(MenuItemInfoDefault3);
             MenuItemInfo MenuItemInfoDefault4 = new MenuItemInfo();
             MenuItemInfoDefault4.mItemId = 4;
             MenuItemInfoDefault4.mOrder = 4;
-            MenuItemInfoDefault4.mName = "我的";
+            MenuItemInfoDefault4.mName = "课程表";
             menuItemList.add(MenuItemInfoDefault4);
+            MenuItemInfo MenuItemInfoDefault5 = new MenuItemInfo();
+            MenuItemInfoDefault5.mItemId = 5;
+            MenuItemInfoDefault5.mOrder = 5;
+            MenuItemInfoDefault5.mName = "我的";
+            menuItemList.add(MenuItemInfoDefault5);
         }
         for (int i = 0; i < menuItemList.size(); i ++) {
             MenuItemInfo menuItemInfo = menuItemList.get(i);
@@ -300,183 +320,187 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
             menu.add(0, menuItemInfo.mItemId, menuItemInfo.mOrder, menuItemInfo.mName);//设置菜单标题(0,编号,顺序,名称)
             MenuItem item = menu.findItem(menuItemInfo.mItemId);
             if (menuItemInfo.mItemId == 1){ //使用首页的图标
-                item.setIcon(R.drawable.button_homepage);//设置菜单图片
-            } else if (menuItemInfo.mItemId == 2){ //使用课程包的图标
-                item.setIcon(R.drawable.button_coursepacket);//设置菜单图片
-            } else if (menuItemInfo.mItemId == 3){ //使用课程表的图标
-                item.setIcon(R.drawable.button_coursetable);//设置菜单图片
-            } else if (menuItemInfo.mItemId == 4){ //使用我的图标
-                item.setIcon(R.drawable.button_my);//设置菜单图片
+                item.setIcon(R.drawable.button_homepage);
+            } else if (menuItemInfo.mItemId == 2){ //使用课程的图标
+                item.setIcon(R.drawable.button_course);
+            } else if (menuItemInfo.mItemId == 3){ //使用课程包的图标
+                item.setIcon(R.drawable.button_coursepacket);
+            } else if (menuItemInfo.mItemId == 4){ //使用课程表的图标
+                item.setIcon(R.drawable.button_coursetable);
+            } else if (menuItemInfo.mItemId == 5){ //使用我的图标
+                item.setIcon(R.drawable.button_my);
             }
             item.setOnMenuItemClickListener(item1 -> {
                 Log.d("123", "onNavigationItemSelected is click: ");
                 if (menuItemInfo.mItemId == 1){ //跳转首页的界面
                     Page_HomePage();
                 } else if (menuItemInfo.mItemId == 2){ //跳转课程包的界面
+                    Page_Course();
+                } else if (menuItemInfo.mItemId == 3){ //跳转课程包的界面
                     Page_MoreCoursePacket();
-                } else if (menuItemInfo.mItemId == 3){ //跳转课程表的界面
+                } else if (menuItemInfo.mItemId == 4){ //跳转课程表的界面
                     Page_ClassCheduleCard();
-                } else if (menuItemInfo.mItemId == 4){ //跳转我的界面
+                } else if (menuItemInfo.mItemId == 5){ //跳转我的界面
                     Page_My();
                 }
                 return false;
             });
         }
         //添加职考网校逻辑（如果没有登录，请游客先选择是健康项目还是消防项目）
-        if (mStuId.equals("") ||  mIpadress.equals("")){
-            //
-            TextView main_view_choicetitle1 = findViewById(R.id.main_view_choicetitle1);
-            main_view_choicetitle1.setOnLongClickListener(v -> {
-                View view = mThis.getLayoutInflater().inflate(R.layout.dialog_sure_cancel1, null);
-                ControllerCenterDialog mMyCouponDialog = new ControllerCenterDialog(mThis, 0, 0, view, R.style.DialogTheme);
-                mMyCouponDialog.setCancelable(true);
-                mMyCouponDialog.show();
-                TextView button_cancel = view.findViewById(R.id.button_cancel);
-                button_cancel.setOnClickListener(View->{
-                    mMyCouponDialog.cancel();
-                });
-                TextView button_sure = view.findViewById(R.id.button_sure);
-                button_sure.setOnClickListener(View->{
-                    EditText dialog_content = view.findViewById(R.id.dialog_content);
-                    if (dialog_content.getText().toString().equals("")){
-                        return;
-                    }
-                    mIpadress = "http://" + dialog_content.getText().toString() + "/";
-                    PlayParameter.STS_GET_URL = mIpadress + PlayParameter.STS_GET_URL;
-                    mMyCouponDialog.cancel();
-                });
-                return false;
-            });
-            //将网校系统选项界面显示，隐藏主页
-            RelativeLayout main_view_choice = findViewById(R.id.main_view_choice);
-            main_view_choice.setVisibility(View.VISIBLE);
-            ConstraintLayout main_view1 = findViewById(R.id.main_view1);
-            main_view1.setVisibility(View.INVISIBLE);
-            LinearLayout jiankang_layout =  findViewById(R.id.jiankang_layout);
-            ImageView jiankang = findViewById(R.id.jiankang);
-            jiankang.setBackground(getResources().getDrawable(R.drawable.icon_black));
-            jiankang_layout.setOnClickListener(v->{
-                ImageView xiaofang = findViewById(R.id.xiaofang);
-                ImageView xiaofangsetting = findViewById(R.id.xiaofangsetting);
-                ImageView xiaofangsheshisetting = findViewById(R.id.xiaofangsheshisetting);
-                ImageView zhuceanquaqnsetting = findViewById(R.id.zhuceanquaqnsetting);
-                ImageView zhiye = findViewById(R.id.zhiye);
-                zhiye.setBackground(getResources().getDrawable(R.drawable.icon_null));
-                zhuceanquaqnsetting.setBackground(getResources().getDrawable(R.drawable.icon_null));
-                xiaofang.setBackground(getResources().getDrawable(R.drawable.icon_null));
-                xiaofangsetting.setBackground(getResources().getDrawable(R.drawable.icon_null));
-                jiankang.setBackground(getResources().getDrawable(R.drawable.icon_black));
-                xiaofangsheshisetting.setBackground(getResources().getDrawable(R.drawable.icon_null));
-                mIpadress = "http://wangxiao.jianweijiaoyu.com/";
-                PlayParameter.STS_GET_URL = mIpadress + PlayParameter.STS_GET_URL;
-            });
-            LinearLayout xiaofang_layout =  findViewById(R.id.xiaofang_layout);
-            xiaofang_layout.setOnClickListener(v->{
-                ImageView xiaofang = findViewById(R.id.xiaofang);
-                ImageView xiaofangsetting = findViewById(R.id.xiaofangsetting);
-                ImageView xiaofangsheshisetting = findViewById(R.id.xiaofangsheshisetting);
-                ImageView zhuceanquaqnsetting = findViewById(R.id.zhuceanquaqnsetting);
-                ImageView zhiye = findViewById(R.id.zhiye);
-                zhiye.setBackground(getResources().getDrawable(R.drawable.icon_null));
-                zhuceanquaqnsetting.setBackground(getResources().getDrawable(R.drawable.icon_null));
-                xiaofang.setBackground(getResources().getDrawable(R.drawable.icon_black));
-                jiankang.setBackground(getResources().getDrawable(R.drawable.icon_null));
-                xiaofangsetting.setBackground(getResources().getDrawable(R.drawable.icon_null));
-                xiaofangsheshisetting.setBackground(getResources().getDrawable(R.drawable.icon_null));
-                mIpadress = "http://wangxiao.16zige.com/";
-                PlayParameter.STS_GET_URL = mIpadress + PlayParameter.STS_GET_URL;
-            });
-            LinearLayout xiaofangsetting_layout = findViewById(R.id.xiaofangsetting_layout);
-            xiaofangsetting_layout.setOnClickListener(v->{
-                ImageView xiaofang = findViewById(R.id.xiaofang);
-                ImageView xiaofangsetting = findViewById(R.id.xiaofangsetting);
-                ImageView xiaofangsheshisetting = findViewById(R.id.xiaofangsheshisetting);
-                ImageView zhuceanquaqnsetting = findViewById(R.id.zhuceanquaqnsetting);
-                ImageView zhiye = findViewById(R.id.zhiye);
-                zhiye.setBackground(getResources().getDrawable(R.drawable.icon_null));
-                zhuceanquaqnsetting.setBackground(getResources().getDrawable(R.drawable.icon_null));
-                xiaofangsetting.setBackground(getResources().getDrawable(R.drawable.icon_black));
-                jiankang.setBackground(getResources().getDrawable(R.drawable.icon_null));
-                xiaofang.setBackground(getResources().getDrawable(R.drawable.icon_null));
-                xiaofangsheshisetting.setBackground(getResources().getDrawable(R.drawable.icon_null));
-                mIpadress = "http://wangxiao.16zige.com/";
-                PlayParameter.STS_GET_URL = mIpadress + PlayParameter.STS_GET_URL;
-            });
-            LinearLayout xiaofangsheshi_layout = findViewById(R.id.xiaofangsheshi_layout);
-            xiaofangsheshi_layout.setOnClickListener(v -> {
-                ImageView xiaofang = findViewById(R.id.xiaofang);
-                ImageView xiaofangsheshisetting = findViewById(R.id.xiaofangsheshisetting);
-                ImageView xiaofangsetting = findViewById(R.id.xiaofangsetting);
-                ImageView zhuceanquaqnsetting = findViewById(R.id.zhuceanquaqnsetting);
-                ImageView zhiye = findViewById(R.id.zhiye);
-                zhiye.setBackground(getResources().getDrawable(R.drawable.icon_null));
-                zhuceanquaqnsetting.setBackground(getResources().getDrawable(R.drawable.icon_null));
-                xiaofangsheshisetting.setBackground(getResources().getDrawable(R.drawable.icon_black));
-                jiankang.setBackground(getResources().getDrawable(R.drawable.icon_null));
-                xiaofang.setBackground(getResources().getDrawable(R.drawable.icon_null));
-                xiaofangsetting.setBackground(getResources().getDrawable(R.drawable.icon_null));
-                mIpadress = "http://managerwt.16zige.com/";
-            });
-            LinearLayout zhuceanquaqn_layout = findViewById(R.id.zhuceanquaqn_layout);
-            zhuceanquaqn_layout.setOnClickListener(v -> {
-                ImageView xiaofang = findViewById(R.id.xiaofang);
-                ImageView xiaofangsheshisetting = findViewById(R.id.xiaofangsheshisetting);
-                ImageView xiaofangsetting = findViewById(R.id.xiaofangsetting);
-                ImageView zhuceanquaqnsetting = findViewById(R.id.zhuceanquaqnsetting);
-                ImageView zhiye = findViewById(R.id.zhiye);
-                zhiye.setBackground(getResources().getDrawable(R.drawable.icon_null));
-                zhuceanquaqnsetting.setBackground(getResources().getDrawable(R.drawable.icon_black));
-                xiaofangsheshisetting.setBackground(getResources().getDrawable(R.drawable.icon_null));
-                jiankang.setBackground(getResources().getDrawable(R.drawable.icon_null));
-                xiaofang.setBackground(getResources().getDrawable(R.drawable.icon_null));
-                xiaofangsetting.setBackground(getResources().getDrawable(R.drawable.icon_null));
-                mIpadress = "http://manager.jinrongstudy.com/";
-            });
-            LinearLayout zhiye_layout = findViewById(R.id.zhiye_layout);
-            zhiye_layout.setOnClickListener(v -> {
-                ImageView xiaofang = findViewById(R.id.xiaofang);
-                ImageView xiaofangsheshisetting = findViewById(R.id.xiaofangsheshisetting);
-                ImageView xiaofangsetting = findViewById(R.id.xiaofangsetting);
-                ImageView zhuceanquaqnsetting = findViewById(R.id.zhuceanquaqnsetting);
-                ImageView zhiye = findViewById(R.id.zhiye);
-                zhiye.setBackground(getResources().getDrawable(R.drawable.icon_black));
-                zhuceanquaqnsetting.setBackground(getResources().getDrawable(R.drawable.icon_null));
-                xiaofangsheshisetting.setBackground(getResources().getDrawable(R.drawable.icon_null));
-                jiankang.setBackground(getResources().getDrawable(R.drawable.icon_null));
-                xiaofang.setBackground(getResources().getDrawable(R.drawable.icon_null));
-                xiaofangsetting.setBackground(getResources().getDrawable(R.drawable.icon_null));
-                mIpadress = "http://manager.huostudy.com/";
-            });
-            Button button_next = findViewById(R.id.button_next);
-            button_next.setOnClickListener(v->{
-                //将网校系统选项界面隐藏，显示出主页
-                RelativeLayout main_view_choice1 = findViewById(R.id.main_view_choice);
-                main_view_choice1.setVisibility(View.INVISIBLE);
-                ConstraintLayout main_view11 = findViewById(R.id.main_view1);
-                main_view11.setVisibility(View.VISIBLE);
-                //选择好网校系统以后，初始化首页
-                Menu menu = mBottomNavigationView.getMenu();
-                if (menu != null) {
-                    MenuItem MenuItem = menu.getItem(0);
-                    if (MenuItem != null) {
-                        //初次进入app 默认显示menuItemList中的第一个
-                        if (MenuItem.getItemId() == 1) { //首页
-                            Page_HomePage();
-                        } else if (MenuItem.getItemId() == 2) {//课程包
-                            Page_MoreCoursePacket();
-                        } else if (MenuItem.getItemId() == 3) {//课程表
-                            Page_ClassCheduleCard();
-                        } else if (MenuItem.getItemId() == 4) {//我的
-                            Page_My();
-                        }
-                    }
-                }
-                //获取应用权限
-                getPermission();
-                getAndroidVersion(mThis);//查询是否为最新版本,若不是最新版本弹出对话框
-            });
-            return;
-        }
+//        if (mStuId.equals("") ||  mIpadress.equals("")){
+//            //
+//            TextView main_view_choicetitle1 = findViewById(R.id.main_view_choicetitle1);
+//            main_view_choicetitle1.setOnLongClickListener(v -> {
+//                View view = mThis.getLayoutInflater().inflate(R.layout.dialog_sure_cancel1, null);
+//                ControllerCenterDialog mMyCouponDialog = new ControllerCenterDialog(mThis, 0, 0, view, R.style.DialogTheme);
+//                mMyCouponDialog.setCancelable(true);
+//                mMyCouponDialog.show();
+//                TextView button_cancel = view.findViewById(R.id.button_cancel);
+//                button_cancel.setOnClickListener(View->{
+//                    mMyCouponDialog.cancel();
+//                });
+//                TextView button_sure = view.findViewById(R.id.button_sure);
+//                button_sure.setOnClickListener(View->{
+//                    EditText dialog_content = view.findViewById(R.id.dialog_content);
+//                    if (dialog_content.getText().toString().equals("")){
+//                        return;
+//                    }
+//                    mIpadress = "http://" + dialog_content.getText().toString() + "/";
+//                    PlayParameter.STS_GET_URL = mIpadress + PlayParameter.STS_GET_URL;
+//                    mMyCouponDialog.cancel();
+//                });
+//                return false;
+//            });
+//            //将网校系统选项界面显示，隐藏主页
+//            RelativeLayout main_view_choice = findViewById(R.id.main_view_choice);
+//            main_view_choice.setVisibility(View.VISIBLE);
+//            ConstraintLayout main_view1 = findViewById(R.id.main_view1);
+//            main_view1.setVisibility(View.INVISIBLE);
+//            LinearLayout jiankang_layout =  findViewById(R.id.jiankang_layout);
+//            ImageView jiankang = findViewById(R.id.jiankang);
+//            jiankang.setBackground(getResources().getDrawable(R.drawable.icon_black));
+//            jiankang_layout.setOnClickListener(v->{
+//                ImageView xiaofang = findViewById(R.id.xiaofang);
+//                ImageView xiaofangsetting = findViewById(R.id.xiaofangsetting);
+//                ImageView xiaofangsheshisetting = findViewById(R.id.xiaofangsheshisetting);
+//                ImageView zhuceanquaqnsetting = findViewById(R.id.zhuceanquaqnsetting);
+//                ImageView zhiye = findViewById(R.id.zhiye);
+//                zhiye.setBackground(getResources().getDrawable(R.drawable.icon_null));
+//                zhuceanquaqnsetting.setBackground(getResources().getDrawable(R.drawable.icon_null));
+//                xiaofang.setBackground(getResources().getDrawable(R.drawable.icon_null));
+//                xiaofangsetting.setBackground(getResources().getDrawable(R.drawable.icon_null));
+//                jiankang.setBackground(getResources().getDrawable(R.drawable.icon_black));
+//                xiaofangsheshisetting.setBackground(getResources().getDrawable(R.drawable.icon_null));
+//                mIpadress = "http://wangxiao.jianweijiaoyu.com/";
+//                PlayParameter.STS_GET_URL = mIpadress + PlayParameter.STS_GET_URL;
+//            });
+//            LinearLayout xiaofang_layout =  findViewById(R.id.xiaofang_layout);
+//            xiaofang_layout.setOnClickListener(v->{
+//                ImageView xiaofang = findViewById(R.id.xiaofang);
+//                ImageView xiaofangsetting = findViewById(R.id.xiaofangsetting);
+//                ImageView xiaofangsheshisetting = findViewById(R.id.xiaofangsheshisetting);
+//                ImageView zhuceanquaqnsetting = findViewById(R.id.zhuceanquaqnsetting);
+//                ImageView zhiye = findViewById(R.id.zhiye);
+//                zhiye.setBackground(getResources().getDrawable(R.drawable.icon_null));
+//                zhuceanquaqnsetting.setBackground(getResources().getDrawable(R.drawable.icon_null));
+//                xiaofang.setBackground(getResources().getDrawable(R.drawable.icon_black));
+//                jiankang.setBackground(getResources().getDrawable(R.drawable.icon_null));
+//                xiaofangsetting.setBackground(getResources().getDrawable(R.drawable.icon_null));
+//                xiaofangsheshisetting.setBackground(getResources().getDrawable(R.drawable.icon_null));
+//                mIpadress = "http://wangxiao.16zige.com/";
+//                PlayParameter.STS_GET_URL = mIpadress + PlayParameter.STS_GET_URL;
+//            });
+//            LinearLayout xiaofangsetting_layout = findViewById(R.id.xiaofangsetting_layout);
+//            xiaofangsetting_layout.setOnClickListener(v->{
+//                ImageView xiaofang = findViewById(R.id.xiaofang);
+//                ImageView xiaofangsetting = findViewById(R.id.xiaofangsetting);
+//                ImageView xiaofangsheshisetting = findViewById(R.id.xiaofangsheshisetting);
+//                ImageView zhuceanquaqnsetting = findViewById(R.id.zhuceanquaqnsetting);
+//                ImageView zhiye = findViewById(R.id.zhiye);
+//                zhiye.setBackground(getResources().getDrawable(R.drawable.icon_null));
+//                zhuceanquaqnsetting.setBackground(getResources().getDrawable(R.drawable.icon_null));
+//                xiaofangsetting.setBackground(getResources().getDrawable(R.drawable.icon_black));
+//                jiankang.setBackground(getResources().getDrawable(R.drawable.icon_null));
+//                xiaofang.setBackground(getResources().getDrawable(R.drawable.icon_null));
+//                xiaofangsheshisetting.setBackground(getResources().getDrawable(R.drawable.icon_null));
+//                mIpadress = "http://wangxiao.16zige.com/";
+//                PlayParameter.STS_GET_URL = mIpadress + PlayParameter.STS_GET_URL;
+//            });
+//            LinearLayout xiaofangsheshi_layout = findViewById(R.id.xiaofangsheshi_layout);
+//            xiaofangsheshi_layout.setOnClickListener(v -> {
+//                ImageView xiaofang = findViewById(R.id.xiaofang);
+//                ImageView xiaofangsheshisetting = findViewById(R.id.xiaofangsheshisetting);
+//                ImageView xiaofangsetting = findViewById(R.id.xiaofangsetting);
+//                ImageView zhuceanquaqnsetting = findViewById(R.id.zhuceanquaqnsetting);
+//                ImageView zhiye = findViewById(R.id.zhiye);
+//                zhiye.setBackground(getResources().getDrawable(R.drawable.icon_null));
+//                zhuceanquaqnsetting.setBackground(getResources().getDrawable(R.drawable.icon_null));
+//                xiaofangsheshisetting.setBackground(getResources().getDrawable(R.drawable.icon_black));
+//                jiankang.setBackground(getResources().getDrawable(R.drawable.icon_null));
+//                xiaofang.setBackground(getResources().getDrawable(R.drawable.icon_null));
+//                xiaofangsetting.setBackground(getResources().getDrawable(R.drawable.icon_null));
+//                mIpadress = "http://managerwt.16zige.com/";
+//            });
+//            LinearLayout zhuceanquaqn_layout = findViewById(R.id.zhuceanquaqn_layout);
+//            zhuceanquaqn_layout.setOnClickListener(v -> {
+//                ImageView xiaofang = findViewById(R.id.xiaofang);
+//                ImageView xiaofangsheshisetting = findViewById(R.id.xiaofangsheshisetting);
+//                ImageView xiaofangsetting = findViewById(R.id.xiaofangsetting);
+//                ImageView zhuceanquaqnsetting = findViewById(R.id.zhuceanquaqnsetting);
+//                ImageView zhiye = findViewById(R.id.zhiye);
+//                zhiye.setBackground(getResources().getDrawable(R.drawable.icon_null));
+//                zhuceanquaqnsetting.setBackground(getResources().getDrawable(R.drawable.icon_black));
+//                xiaofangsheshisetting.setBackground(getResources().getDrawable(R.drawable.icon_null));
+//                jiankang.setBackground(getResources().getDrawable(R.drawable.icon_null));
+//                xiaofang.setBackground(getResources().getDrawable(R.drawable.icon_null));
+//                xiaofangsetting.setBackground(getResources().getDrawable(R.drawable.icon_null));
+//                mIpadress = "http://manager.jinrongstudy.com/";
+//            });
+//            LinearLayout zhiye_layout = findViewById(R.id.zhiye_layout);
+//            zhiye_layout.setOnClickListener(v -> {
+//                ImageView xiaofang = findViewById(R.id.xiaofang);
+//                ImageView xiaofangsheshisetting = findViewById(R.id.xiaofangsheshisetting);
+//                ImageView xiaofangsetting = findViewById(R.id.xiaofangsetting);
+//                ImageView zhuceanquaqnsetting = findViewById(R.id.zhuceanquaqnsetting);
+//                ImageView zhiye = findViewById(R.id.zhiye);
+//                zhiye.setBackground(getResources().getDrawable(R.drawable.icon_black));
+//                zhuceanquaqnsetting.setBackground(getResources().getDrawable(R.drawable.icon_null));
+//                xiaofangsheshisetting.setBackground(getResources().getDrawable(R.drawable.icon_null));
+//                jiankang.setBackground(getResources().getDrawable(R.drawable.icon_null));
+//                xiaofang.setBackground(getResources().getDrawable(R.drawable.icon_null));
+//                xiaofangsetting.setBackground(getResources().getDrawable(R.drawable.icon_null));
+//                mIpadress = "http://manager.huostudy.com/";
+//            });
+//            Button button_next = findViewById(R.id.button_next);
+//            button_next.setOnClickListener(v->{
+//                //将网校系统选项界面隐藏，显示出主页
+//                RelativeLayout main_view_choice1 = findViewById(R.id.main_view_choice);
+//                main_view_choice1.setVisibility(View.INVISIBLE);
+//                ConstraintLayout main_view11 = findViewById(R.id.main_view1);
+//                main_view11.setVisibility(View.VISIBLE);
+//                //选择好网校系统以后，初始化首页
+//                Menu menu = mBottomNavigationView.getMenu();
+//                if (menu != null) {
+//                    MenuItem MenuItem = menu.getItem(0);
+//                    if (MenuItem != null) {
+//                        //初次进入app 默认显示menuItemList中的第一个
+//                        if (MenuItem.getItemId() == 1) { //首页
+//                            Page_HomePage();
+//                        } else if (MenuItem.getItemId() == 2) {//课程包
+//                            Page_MoreCoursePacket();
+//                        } else if (MenuItem.getItemId() == 3) {//课程表
+//                            Page_ClassCheduleCard();
+//                        } else if (MenuItem.getItemId() == 4) {//我的
+//                            Page_My();
+//                        }
+//                    }
+//                }
+//                //获取应用权限
+//                getPermission();
+//                getAndroidVersion(mThis);//查询是否为最新版本,若不是最新版本弹出对话框
+//            });
+//            return;
+//        }
         //初始化极光推送，设置别名，如果是游客登录设置为0，否则设置为学生id
         if (mStuId.equals("")){
             String type = mIpType.get(mIpadress);
@@ -497,11 +521,13 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
                 //初次进入app 默认显示menuItemList中的第一个
                 if (MenuItem.getItemId() == 1) { //首页
                     Page_HomePage();
-                } else if (MenuItem.getItemId() == 2) {//课程包
+                } else if (MenuItem.getItemId() == 2) {//课程
+                    Page_Course();
+                } else if (MenuItem.getItemId() == 3) {//课程包
                     Page_MoreCoursePacket();
-                } else if (MenuItem.getItemId() == 3) {//课程表
+                } else if (MenuItem.getItemId() == 4) {//课程表
                     Page_ClassCheduleCard();
-                } else if (MenuItem.getItemId() == 4) {//我的
+                } else if (MenuItem.getItemId() == 5) {//我的
                     Page_My();
                 }
             }
@@ -1423,6 +1449,8 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
     public void onCourseMainSearch(View view){
         mBeforePage = mBeforePage + "/" + mPage ;
         mPage = "课程搜索";
+        //将底部菜单隐藏
+        mBottomNavigationView.setVisibility(View.INVISIBLE);
         if (mModelCourse != null){
             ((ModelCourse)mModelCourse).CourseMainSearchShow();
         }
@@ -1775,7 +1803,7 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
         }
         mPage = "课程包";
         mBeforePage = "";
-        MenuItem menuItem = menu.findItem(2);
+        MenuItem menuItem = menu.findItem(3);
         if (menuItem != null){
             menuItem.setChecked(true);
             mBottomNavigationView.setVisibility(View.VISIBLE);
@@ -2001,7 +2029,7 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
         }
         mPage = "课程表";
         mBeforePage = "";
-        MenuItem menuItem = menu.findItem(3);
+        MenuItem menuItem = menu.findItem(4);
         if (menuItem != null){
             menuItem.setChecked(true);
         } else { //说明底部菜单中没有课程包按钮，将所有按钮隐藏
@@ -2023,7 +2051,19 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
 
     //跳转课程
     public void Page_Course(){
-        mBottomNavigationView.setVisibility(View.INVISIBLE);
+        mBottomNavigationView.setVisibility(View.VISIBLE);
+        Menu menu = mBottomNavigationView.getMenu();
+        if (menu == null){
+            return;
+        }
+        MenuItem menuItem = menu.findItem(2);
+        if (menuItem != null){
+            menuItem.setChecked(true);
+            mBottomNavigationView.setVisibility(View.VISIBLE);
+        } else { //说明底部菜单中没有课程按钮，将所有按钮隐藏
+            mBottomNavigationView.setVisibility(View.INVISIBLE);
+            mBeforePage = "首页";
+        }
         mPage = "课程";
         mBeforePage = "首页";
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -2047,7 +2087,7 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
         }
         mPage = "我的";
         mBeforePage = "";
-        MenuItem menuItem = menu.findItem(4);
+        MenuItem menuItem = menu.findItem(5);
         if (menuItem != null){
             menuItem.setChecked(true);
         } else { //说明底部菜单中没有课程包按钮，将所有按钮隐藏

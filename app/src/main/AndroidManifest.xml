@@ -85,6 +85,7 @@
         <activity
             android:name=".ControlMainActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
+            android:windowSoftInputMode="adjustResize|stateHidden"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.LoginJumpActivity"

@@ -10,21 +10,28 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.GridLayout;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListAdapter;
 import android.widget.RelativeLayout;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.aliyun.vodplayerview.utils.DensityUtil;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import io.reactivex.Observable;
 import io.reactivex.Observer;
@@ -58,6 +65,8 @@ public class ModelHomePage extends Fragment{
 
     //刷新控件
     private SmartRefreshLayout mSmart_homepage_layout1 = null;
+
+    private ListAdapter mAdapter;
 
     private class FunctionButtonInfo{
         String mFunctionalModule; // 1：课程包 2：公开课 3：题库 4：问答 5：课程表 6：新闻资讯 7：课程 8：我的
@@ -120,11 +129,6 @@ public class ModelHomePage extends Fragment{
         int width = dm.widthPixels;
         if (mIsUseImageSlideShow) {
             mImageSlideshow = view.findViewById(R.id.is_gallery);
-            //设置使用控件的宽高
-            LinearLayout.LayoutParams LP = (LinearLayout.LayoutParams) mImageSlideshow.getLayoutParams();
-            LP.width = LinearLayout.LayoutParams.MATCH_PARENT;
-            LP.height = height / 4;
-            mImageSlideshow.setLayoutParams(LP);
             // 初始化轮播图数据
             initSlideImageData();
             // 为ImageSlideshow设置数据
@@ -134,81 +138,44 @@ public class ModelHomePage extends Fragment{
             mImageSlideshow.commit();
         }
         if (mIsUseFunctionShow){
-            List<FunctionButtonInfo> FunctionButtonInfoList = initNavigationData();
+            List<Map<String, Object>> FunctionButtonInfoList = initNavigationData();
             while (FunctionButtonInfoList.size() > 8){ //功能按钮不能多于GridLayout的所创个数
                 FunctionButtonInfoList.remove(FunctionButtonInfoList.size() - 1);
             }
-            GridLayout mfunctionButton = view.findViewById(R.id.functionButton);
-            for (int i = 0; i < FunctionButtonInfoList.size(); i ++){ //循环添加功能按钮
-                FunctionButtonInfo functionButtonInfo = FunctionButtonInfoList.get(i);
-                View functionbutton = inflater.inflate(R.layout.homepage_layout_functionbutton,container,false);
-                LinearLayout mfunctionbuttonLinearLayout = functionbutton.findViewById(R.id.LinearLayout_functionbutton);
-                //添加完以后重置按钮布局的大小与间隔
-                FrameLayout.LayoutParams mfunctionbuttonLinearLayoutLayoutParams = (FrameLayout.LayoutParams) mfunctionbuttonLinearLayout.getLayoutParams();
-                mfunctionbuttonLinearLayoutLayoutParams.width = width / 4;
-                mfunctionbuttonLinearLayoutLayoutParams.topMargin = width / 14 / 4;
-                mfunctionbuttonLinearLayout.setLayoutParams(mfunctionbuttonLinearLayoutLayoutParams);
-                mfunctionButton.addView(functionbutton);
-                TextView TextView_functionbutton = functionbutton.findViewById(R.id.TextView_functionbutton);
-                //重置按钮名称
-                TextView_functionbutton.setText(functionButtonInfo.mButtonName);
-                LinearLayout.LayoutParams TextView_functionbuttonLayoutParams = (LinearLayout.LayoutParams) TextView_functionbutton.getLayoutParams();
-                TextView_functionbuttonLayoutParams.topMargin = 0;
-                TextView_functionbutton.setLayoutParams(TextView_functionbuttonLayoutParams);
-                ImageView ImageView_functionbutton = functionbutton.findViewById(R.id.ImageView_functionbutton);
-                LinearLayout.LayoutParams ImageView_functionbuttonLayoutParams = (LinearLayout.LayoutParams) ImageView_functionbutton.getLayoutParams();
-                ImageView_functionbuttonLayoutParams.width = width / 8;
-                ImageView_functionbuttonLayoutParams.height = width / 8;
-                ImageView_functionbutton.setLayoutParams(ImageView_functionbuttonLayoutParams);
-                //判断按钮的id 来加载不同按钮的图片   1：课程包 2：公开课 3：题库 4：问答 5：课程表 6：新闻资讯 7：课程 8：我的
-                if (functionButtonInfo.mFunctionalModule.equals("课程包")){
-                    ImageView_functionbutton.setImageDrawable(getResources().getDrawable(R.drawable.functionbutton_coursepacketbutton));
-                } else if (functionButtonInfo.mFunctionalModule.equals("公开课")){
-                    ImageView_functionbutton.setImageDrawable(getResources().getDrawable(R.drawable.functionbutton_openclassbutton));
-                } else if (functionButtonInfo.mFunctionalModule.equals("题库")){
-                    ImageView_functionbutton.setImageDrawable(getResources().getDrawable(R.drawable.functionbutton_questionbankbutton));
-                } else if (functionButtonInfo.mFunctionalModule.equals("问答")){
-                    ImageView_functionbutton.setImageDrawable(getResources().getDrawable(R.drawable.functionbutton_answersbutton));
-                } else if (functionButtonInfo.mFunctionalModule.equals("课程表")){
-                    ImageView_functionbutton.setImageDrawable(getResources().getDrawable(R.drawable.functionbutton_classchedulecardbutton));
-                } else if (functionButtonInfo.mFunctionalModule.equals("新闻资讯")){
-                    ImageView_functionbutton.setImageDrawable(getResources().getDrawable(R.drawable.functionbutton_newsbutton));
-                } else if (functionButtonInfo.mFunctionalModule.equals("课程")){
-                    ImageView_functionbutton.setImageDrawable(getResources().getDrawable(R.drawable.functionbutton_coursebutton));
-                } else if (functionButtonInfo.mFunctionalModule.equals("我的")){
-                    ImageView_functionbutton.setImageDrawable(getResources().getDrawable(R.drawable.functionbutton_mybutton));
+            int size = FunctionButtonInfoList.size();
+            GridView mfunctionButton = view.findViewById(R.id.functionButton);
+            changeGridView(size,mfunctionButton);
+            mAdapter = new SimpleAdapter(mControlMainActivity, FunctionButtonInfoList,
+                    R.layout.homepage_layout_functionbutton, new String[] {"FunctionalModule","ButtonName"}, new int[] {R.id.TextView_functionbutton,R.id.TextView_functionbuttonname});
+            mfunctionButton.setAdapter(mAdapter);
+            mfunctionButton.setOnItemClickListener((adapterView, view1, i, l) -> {
+                TextView mFunctionalModule = view1.findViewById(R.id.TextView_functionbutton);
+                if (mFunctionalModule == null) {
+                    return;
                 }
-                mfunctionbuttonLinearLayout.setOnClickListener(v -> {
-                    //判断点击什么按钮，跳转什么功能界面1：课程包 2：公开课 3：题库 4：问答 5：课程表 6：新闻资讯 7：课程 8：我的
-                    if (functionButtonInfo.mFunctionalModule.equals("课程包")){
-                        mControlMainActivity.Page_MoreCoursePacket();
-                    } else if (functionButtonInfo.mFunctionalModule.equals("公开课")){
+                //判断点击什么按钮，跳转什么功能界面1：课程包 2：公开课 3：题库 4：问答 5：课程表 6：新闻资讯 7：课程 8：我的
+                if (mFunctionalModule.getText().toString().equals("课程包")){
+                    mControlMainActivity.Page_MoreCoursePacket();
+                } else if (mFunctionalModule.getText().toString().equals("公开课")){
 //                        mControlMainActivity.LoginLiveOrPlayback("391068","dadada","",PlayType.LIVE);
 //                        mControlMainActivity.LoginLiveOrPlayback("365061","dadada","799723",PlayType.PLAYBACK);
-                        mControlMainActivity.Page_OpenClass();
-                    } else if (functionButtonInfo.mFunctionalModule.equals("题库")){
-                        mControlMainActivity.Page_QuestionBank();
-                    } else if (functionButtonInfo.mFunctionalModule.equals("问答")){
-                        mControlMainActivity.Page_CommunityAnswer();
-                    } else if (functionButtonInfo.mFunctionalModule.equals("课程表")){
-                        mControlMainActivity.Page_ClassCheduleCard();
-                    } else if (functionButtonInfo.mFunctionalModule.equals("新闻资讯")){
-                        mControlMainActivity.Page_News();
-                    } else if (functionButtonInfo.mFunctionalModule.equals("课程")){
-                        mControlMainActivity.Page_Course();
-                    } else if (functionButtonInfo.mFunctionalModule.equals("我的")){
-                        mControlMainActivity.Page_My();
-                    }
-                });
-            }
+                    mControlMainActivity.Page_OpenClass();
+                } else if (mFunctionalModule.getText().toString().equals("题库")){
+                    mControlMainActivity.Page_QuestionBank();
+                } else if (mFunctionalModule.getText().toString().equals("问答")){
+                    mControlMainActivity.Page_CommunityAnswer();
+                } else if (mFunctionalModule.getText().toString().equals("课程表")){
+                    mControlMainActivity.Page_ClassCheduleCard();
+                } else if (mFunctionalModule.getText().toString().equals("新闻资讯")){
+                    mControlMainActivity.Page_News();
+                } else if (mFunctionalModule.getText().toString().equals("课程")){
+                    mControlMainActivity.Page_Course();
+                } else if (mFunctionalModule.getText().toString().equals("我的")){
+                    mControlMainActivity.Page_My();
+                }
+            });
         }
         //更多课程
-        RelativeLayout morecourseRelativeLayout = view.findViewById(R.id.morecourse);
-        LinearLayout.LayoutParams morecourseRelativeLayoutLp = (LinearLayout.LayoutParams) morecourseRelativeLayout.getLayoutParams();
-        morecourseRelativeLayoutLp.topMargin = width / 25;
-        morecourseRelativeLayoutLp.rightMargin = width / 28;
-        morecourseRelativeLayoutLp.leftMargin = width / 28;
-        morecourseRelativeLayout.setLayoutParams(morecourseRelativeLayoutLp);
         List<CourseInfo> CourseInfoList = initRecommendCourseData();
         LinearLayout courseModelLinearLayout = view.findViewById(R.id.coursemodel);
         View course_line1 = null;
@@ -242,12 +209,6 @@ public class ModelHomePage extends Fragment{
         courseline.setLayoutParams(lp);
 
         //更多课程包
-        RelativeLayout morecoursepacketRelativeLayout = view.findViewById(R.id.morecoursepacket);
-        LinearLayout.LayoutParams morecoursepacketRelativeLayoutLp = (LinearLayout.LayoutParams) morecoursepacketRelativeLayout.getLayoutParams();
-        morecoursepacketRelativeLayoutLp.topMargin = width / 25;
-        morecoursepacketRelativeLayoutLp.rightMargin = width / 28;
-        morecoursepacketRelativeLayoutLp.leftMargin = width / 28;
-        morecoursepacketRelativeLayout.setLayoutParams(morecoursepacketRelativeLayoutLp);
         List<CoursePacketInfo> CoursePacketInfoList = initRecommendCoursePacketData();
         LinearLayout coursePacketModelLinearLayout = view.findViewById(R.id.coursepacketmodel);
         for (int i = 0; i < CoursePacketInfoList.size(); i ++){
@@ -274,6 +235,27 @@ public class ModelHomePage extends Fragment{
         line.setLayoutParams(lineRelativeLayoutLp);
         return;
     }
+
+    /**
+     * 将GridView改成单行横向布局
+     */
+    private void changeGridView(int size,GridView mfunctionButton) {
+        // item宽度
+        int itemWidth = DensityUtil.dip2px(mControlMainActivity, 50);
+        // item之间的间隔
+        int itemPaddingH = DensityUtil.dip2px(mControlMainActivity, 15);
+        // 计算GridView宽度
+        int gridviewWidth = size * (itemWidth + itemPaddingH);
+
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                gridviewWidth, LinearLayout.LayoutParams.MATCH_PARENT);
+        mfunctionButton.setLayoutParams(params);
+        mfunctionButton.setColumnWidth(itemWidth);
+        mfunctionButton.setHorizontalSpacing(itemPaddingH);
+        mfunctionButton.setStretchMode(GridView.NO_STRETCH);
+        mfunctionButton.setNumColumns(size);
+    }
+
     /**
      * 初始化轮播图数据
      */
@@ -304,8 +286,8 @@ public class ModelHomePage extends Fragment{
     /**
      * 初始化精钢区导航数据
      */
-    private List<FunctionButtonInfo> initNavigationData() {
-        List<FunctionButtonInfo> FunctionButtonInfoList = new ArrayList<>();
+    private List<Map<String, Object>> initNavigationData() {
+        List<Map<String, Object>> FunctionButtonInfoList = new ArrayList<>();
         if (mHomePageDataBean == null){
             return FunctionButtonInfoList;
         }
@@ -320,10 +302,10 @@ public class ModelHomePage extends Fragment{
             if (!homePageAllHomeNavigationAndbBottomMenuBean.nvigation_type.equals("首页导航")){//只查询精钢区导航按钮
                 continue;
             }
-            FunctionButtonInfo functionButtonInfo = new FunctionButtonInfo();
-            functionButtonInfo.mFunctionalModule = homePageAllHomeNavigationAndbBottomMenuBean.functional_module;
-            functionButtonInfo.mButtonName = homePageAllHomeNavigationAndbBottomMenuBean.custom_name;
-            FunctionButtonInfoList.add(functionButtonInfo);
+            Map map = new HashMap<String, Object>();
+            map.put("FunctionalModule",homePageAllHomeNavigationAndbBottomMenuBean.functional_module);
+            map.put("ButtonName",homePageAllHomeNavigationAndbBottomMenuBean.custom_name);
+            FunctionButtonInfoList.add(map);
         }
         return FunctionButtonInfoList;
     }
