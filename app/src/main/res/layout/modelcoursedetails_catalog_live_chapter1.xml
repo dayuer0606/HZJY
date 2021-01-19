@@ -3,64 +3,29 @@
 <LinearLayout android:id="@+id/course_catalog_label_live_namelayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:layout_marginTop="@dimen/dp12"
     android:layout_marginBottom="@dimen/dp8"
     xmlns:android="http://schemas.android.com/apk/res/android">
-    <LinearLayout
+    <TextView
+        android:id="@+id/course_catalog_live_chapter_name"
         android:layout_width="match_parent"
+        android:layout_weight="1"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:text="开学第一课"
+        android:gravity="left"
+        android:textSize="@dimen/textsize15"
         android:layout_marginLeft="@dimen/dp14"
-        android:layout_marginBottom="@dimen/dp10">
-        <TextView
-            android:id="@+id/course_catalog_live_chapter_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="开学第一课"
-            android:gravity="center_vertical"
-            android:layout_gravity="center"
-            android:textSize="@dimen/textsize15"
-            android:textColor="#333333"/>
-        <!--        <TextView-->
-        <!--            android:id="@+id/course_catalog_label_name1"-->
-        <!--            android:layout_width="wrap_content"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:text="-"-->
-        <!--            android:gravity="center_vertical"-->
-        <!--            android:layout_gravity="center"-->
-        <!--            android:layout_marginRight="@dimen/dp4"-->
-        <!--            android:layout_marginLeft="@dimen/dp4"-->
-        <!--            android:textSize="@dimen/textsize15"-->
-        <!--            android:textColor="#333333"/>-->
-        <!--        <TextView-->
-        <!--            android:id="@+id/course_catalog_label_name2"-->
-        <!--            android:layout_width="wrap_content"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:text="徐华洲"-->
-        <!--            android:gravity="center_vertical"-->
-        <!--            android:layout_gravity="center"-->
-        <!--            android:textSize="@dimen/textsize15"-->
-        <!--            android:textColor="#333333"/>-->
-    </LinearLayout>
-    <LinearLayout
+        android:layout_marginBottom="@dimen/dp10"
+        android:textColor="#333333"/>
+    <TextView
+        android:id="@+id/course_catalog_live_chapter_time"
         android:layout_width="match_parent"
+        android:layout_weight="1"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginBottom="@dimen/dp12"
-        android:layout_marginLeft="@dimen/dp14">
-        <ImageView
-            android:layout_width="@dimen/dp9"
-            android:layout_height="@dimen/dp9"
-            android:layout_gravity="center"
-            android:layout_marginRight="@dimen/dp7"
-            android:background="@drawable/button_clock_gray"/>
-        <TextView
-            android:id="@+id/course_catalog_live_chapter_time"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="00:10:00"
-            android:textSize="@dimen/textsize12"
-            android:textColor="#999999"/>
-    </LinearLayout>
+        android:text="00:10:00"
+        android:gravity="right"
+        android:layout_marginRight="@dimen/dp13"
+        android:textSize="@dimen/textsize12"
+        android:textColor="#999999"/>
 </LinearLayout>

@@ -12,17 +12,17 @@
         android:layout_alignParentLeft="true"
         android:layout_marginBottom="@dimen/dp10"
         android:layout_marginTop="@dimen/dp20">
-        <TextView
-            android:layout_width="@dimen/dp2"
-            android:layout_height="@dimen/dp10"
-            android:background="@color/holo_red_dark"
-            android:layout_gravity="center"
-            android:layout_marginRight="10dp"/>
+<!--        <TextView-->
+<!--            android:layout_width="@dimen/dp2"-->
+<!--            android:layout_height="@dimen/dp10"-->
+<!--            android:background="@color/holo_red_dark"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:layout_marginRight="10dp"/>-->
         <TextView
             android:id="@+id/course_catalog_live_label_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="今日课程"
+            android:text="即将开始"
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:layout_gravity="center"
@@ -90,52 +90,26 @@
     <View
         android:id="@+id/coursepacket_details_live_line2"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp10"
+        android:layout_height="@dimen/dp1"
         android:background="#f4f6f9"
         android:layout_below="@id/course_catalog_live_label_expandView"/>
     <LinearLayout
         android:id="@+id/course_catalog_live_label_namelayout1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:orientation="horizontal"
         android:layout_alignParentLeft="true"
-        android:layout_below="@id/coursepacket_details_live_line2"
-        android:layout_marginBottom="@dimen/dp10"
-        android:layout_marginTop="@dimen/dp20">
-        <TextView
-            android:layout_width="@dimen/dp2"
-            android:layout_height="@dimen/dp10"
-            android:background="@color/holo_red_dark"
-            android:layout_gravity="center"
-            android:layout_marginRight="10dp"/>
+        android:layout_below="@id/coursepacket_details_live_line2">
         <TextView
             android:id="@+id/course_catalog_live_label_name1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="后续课程"
+            android:text="已结束"
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:layout_gravity="center"
             android:textSize="@dimen/textsize17"
             android:textColor="#333333"/>
-        <!--        <ImageView-->
-        <!--            android:id="@+id/coursepacket_coursestage_label_Separator"-->
-        <!--            android:layout_width="@dimen/dp3"-->
-        <!--            android:layout_height="@dimen/dp3"-->
-        <!--            android:layout_marginLeft="@dimen/dp10"-->
-        <!--            android:layout_marginRight="@dimen/dp10"-->
-        <!--            android:src="@drawable/button_separator_black"-->
-        <!--            android:layout_gravity="center"/>-->
-        <!--        <TextView-->
-        <!--            android:id="@+id/coursepacket_coursestage_label_coursecount"-->
-        <!--            android:layout_width="wrap_content"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:textSize="@dimen/textsize13"-->
-        <!--            android:text="共2讲"-->
-        <!--            android:layout_weight="1"-->
-        <!--            android:layout_marginRight="@dimen/dp13"-->
-        <!--            android:layout_gravity="center"-->
-        <!--            android:textColor="#333333"/>-->
         <ImageView
             android:id="@+id/course_catalog_live_label_arrow_right1"
             android:layout_width="@dimen/dp6"
@@ -151,8 +125,8 @@
     </LinearLayout>
     <com.android.jwjy.zkktproduct.ModelExpandView
         android:id="@+id/course_catalog_live_label_expandView1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:visibility="visible"
         android:layout_below="@+id/course_catalog_live_label_namelayout1"
         android:clickable="true">
@@ -180,7 +154,7 @@
     <View
         android:id="@+id/coursepacket_details_live_line1"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp10"
+        android:layout_height="@dimen/dp0"
         android:background="#f4f6f9"
         android:layout_below="@id/course_catalog_live_label_expandView1"/>
     <LinearLayout
@@ -193,39 +167,15 @@
         android:layout_marginBottom="@dimen/dp10"
         android:layout_marginTop="@dimen/dp20">
         <TextView
-            android:layout_width="@dimen/dp2"
-            android:layout_height="@dimen/dp10"
-            android:background="@color/holo_red_dark"
-            android:layout_gravity="center"
-            android:layout_marginRight="10dp"/>
-        <TextView
             android:id="@+id/course_catalog_live_label_name2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="历史课程"
+            android:text="已结束"
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:layout_gravity="center"
             android:textSize="@dimen/textsize17"
             android:textColor="#333333"/>
-        <!--        <ImageView-->
-        <!--            android:id="@+id/coursepacket_coursestage_label_Separator"-->
-        <!--            android:layout_width="@dimen/dp3"-->
-        <!--            android:layout_height="@dimen/dp3"-->
-        <!--            android:layout_marginLeft="@dimen/dp10"-->
-        <!--            android:layout_marginRight="@dimen/dp10"-->
-        <!--            android:src="@drawable/button_separator_black"-->
-        <!--            android:layout_gravity="center"/>-->
-        <!--        <TextView-->
-        <!--            android:id="@+id/coursepacket_coursestage_label_coursecount"-->
-        <!--            android:layout_width="wrap_content"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:textSize="@dimen/textsize13"-->
-        <!--            android:text="共2讲"-->
-        <!--            android:layout_weight="1"-->
-        <!--            android:layout_marginRight="@dimen/dp13"-->
-        <!--            android:layout_gravity="center"-->
-        <!--            android:textColor="#333333"/>-->
         <ImageView
             android:id="@+id/course_catalog_live_label_arrow_right2"
             android:layout_width="@dimen/dp6"
@@ -267,10 +217,4 @@
                 android:layout_marginRight="@dimen/dp13"/>
         </LinearLayout>
     </com.android.jwjy.zkktproduct.ModelExpandView>
-<!--    <View-->
-<!--        android:id="@+id/coursepacket_details_line3"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="@dimen/dp10"-->
-<!--        android:background="#f4f6f9"-->
-<!--        android:layout_below="@id/course_catalog_record_label_expandView2"/>-->
 </RelativeLayout>

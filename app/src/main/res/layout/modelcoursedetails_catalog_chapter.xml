@@ -13,12 +13,6 @@
         android:layout_marginBottom="@dimen/dp10"
         android:layout_marginTop="@dimen/dp20">
         <TextView
-            android:layout_width="@dimen/dp2"
-            android:layout_height="@dimen/dp10"
-            android:background="@color/holo_red_dark"
-            android:layout_gravity="center"
-            android:layout_marginRight="10dp"/>
-        <TextView
             android:id="@+id/course_catalog_label_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -28,24 +22,6 @@
             android:layout_gravity="center"
             android:textSize="@dimen/textsize17"
             android:textColor="#333333"/>
-<!--        <ImageView-->
-<!--            android:id="@+id/coursepacket_coursestage_label_Separator"-->
-<!--            android:layout_width="@dimen/dp3"-->
-<!--            android:layout_height="@dimen/dp3"-->
-<!--            android:layout_marginLeft="@dimen/dp10"-->
-<!--            android:layout_marginRight="@dimen/dp10"-->
-<!--            android:src="@drawable/button_separator_black"-->
-<!--            android:layout_gravity="center"/>-->
-<!--        <TextView-->
-<!--            android:id="@+id/coursepacket_coursestage_label_coursecount"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:textSize="@dimen/textsize13"-->
-<!--            android:text="共2讲"-->
-<!--            android:layout_weight="1"-->
-<!--            android:layout_marginRight="@dimen/dp13"-->
-<!--            android:layout_gravity="center"-->
-<!--            android:textColor="#333333"/>-->
         <ImageView
             android:id="@+id/course_catalog_label_arrow_right"
             android:layout_width="@dimen/dp6"

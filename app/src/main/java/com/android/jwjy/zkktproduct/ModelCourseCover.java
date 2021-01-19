@@ -1057,10 +1057,6 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
             course_catalog_record_chapter_name.setText(courseSectionsInfo.mCourseSectionsName);
             TextView course_catalog_record_chapter_learnprogress = view.findViewById(R.id.course_catalog_record_chapter_learnprogress);
             course_catalog_record_chapter_learnprogress.setText(courseSectionsInfo.mCourseSectionsLearnProgress);
-            TextView course_catalog_record_chapter_time = view.findViewById(R.id.course_catalog_record_chapter_time);
-            course_catalog_record_chapter_time.setText(courseSectionsInfo.mCourseSectionsTime);
-            TextView course_catalog_record_chapter_price = view.findViewById(R.id.course_catalog_record_chapter_price);
-            course_catalog_record_chapter_price.setText(courseSectionsInfo.mCourseSectionsPrice);
             view.setOnClickListener(v -> {
 //                courseSectionsInfo.mVideoId = "28b8e6b1e87340c2a9dcac78729ed24c";
                 //判断是否有播放权限
@@ -1148,7 +1144,7 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                     course_catalog_live_label_arrow_down.setLayoutParams(ll1);
                 } else {
                     if (courseInfo.mCourseClassTimeInfoTodayList.size() == 0) {
-                        Toast.makeText(mControlMainActivity, "今日暂时没有课程", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mControlMainActivity, "没有即将开始的课程", Toast.LENGTH_SHORT).show();
                         return;
                     }
                     course_catalog_live_label_expandView.expand();
@@ -1310,7 +1306,7 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                     course_catalog_live_label_arrow_down2.setLayoutParams(ll1);
                 } else {
                     if (courseInfo.mCourseClassTimeInfoBeforeList.size() == 0) {
-                        Toast.makeText(mControlMainActivity, "历史暂时没有课程", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mControlMainActivity, "没有已结束课程", Toast.LENGTH_SHORT).show();
                         return;
                     }
                     course_catalog_live_label_expandView2.expand();
