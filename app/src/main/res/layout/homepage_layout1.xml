@@ -35,7 +35,7 @@
                             android:id="@+id/search_edit"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/dp_32"
-                            android:background="#F2F2F2"
+                            android:background="@drawable/search_edittext"
                             android:hint="快来搜索课程"
                             android:textSize="@dimen/textsize12"
                             android:drawableLeft="@drawable/search"
@@ -153,7 +153,7 @@
 
                     <ImageView
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/dp_70"
+                        android:layout_height="@dimen/dp_80"
                         android:layout_marginTop="@dimen/dp15"
                         android:src="@drawable/banner_icon"
                         android:scaleType="fitXY"/>

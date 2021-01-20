@@ -13,12 +13,7 @@
         android:layout_marginLeft="@dimen/dp13"
         android:layout_marginTop="@dimen/dp20"
         android:layout_marginRight="10dp">
-        <TextView
-            android:layout_width="@dimen/dp2"
-            android:layout_height="@dimen/dp10"
-            android:background="@color/holo_red_dark"
-            android:layout_gravity="center"
-            android:layout_marginRight="10dp"/>
+
         <TextView
             android:id="@+id/coursepacket_coursestage_label_name"
             android:layout_width="wrap_content"

@@ -791,15 +791,6 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
         mBottomNavigationView.setVisibility(View.INVISIBLE);
     }
 
-//    //点击课程问答
-//    public void onClickCourseQuestion(View view) {
-//        mBeforePage = mBeforePage + "/" + mPage ; //上个界面是课程详情界面
-//        mPage = "课程问答";
-//        if (mModelCourse != null){
-//            ((ModelCourse)mModelCourse).CourseSearchInit();
-//        }
-//    }
-
 //    //购买-选择优惠券-返回
 //    public void onClickCouponChooseReturn(View view) {
 //    }
@@ -4119,7 +4110,6 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
 //        tvLogs.append(format.format(new Date()) + getString(R.string.log_seek_start) + "\n");
     }
 
-    //课程问答-回复问答
     private void SetCourseVideoDuration(Integer section_id,Integer time) {
         if (mStuId.equals("")){
             return;

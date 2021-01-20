@@ -80,7 +80,7 @@
         android:id="@+id/coursepacketbuy"
         android:layout_width="@dimen/dp_80"
         android:layout_height="@dimen/dp27"
-        android:text="立即购买"
+        android:text="立即报名"
         android:layout_alignBottom="@id/coursepacketcover"
         android:layout_alignParentRight="true"
         android:gravity="center"
