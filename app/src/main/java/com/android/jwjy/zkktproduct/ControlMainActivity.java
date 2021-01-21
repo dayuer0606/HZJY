@@ -2963,7 +2963,7 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
 //                else if (mModelCommunityAnswer != null && beforePageS[beforePageS.length - 1].equals("首页") && mPage.equals("社区问答")){
 //                    ((ModelCommunityAnswer)mModelCommunityAnswer).CommunityAnswerPictureAdd(data);
 //                }
-                else if (mModelCommunityAnswer != null && beforePageS[beforePageS.length - 1].equals("社区问答") && mPage.equals("添加问答")){
+                if (mModelCommunityAnswer != null && beforePageS[beforePageS.length - 1].equals("社区问答") && mPage.equals("添加问答")){
                     ((ModelCommunityAnswer)mModelCommunityAnswer).CommunityAnswerPictureAdd(data);
                 }
             }
