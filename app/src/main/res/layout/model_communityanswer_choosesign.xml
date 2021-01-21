@@ -91,7 +91,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/communityanswer_choosesign_choose1">
-        <com.android.jwjy.zkktproduct.ControllerWarpLinearLayout
+        <com.android.school.ControllerWarpLinearLayout
             android:id="@+id/communityanswer_choosesign_warpLinearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

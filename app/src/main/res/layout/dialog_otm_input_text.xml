@@ -43,7 +43,7 @@
                     android:src="@mipmap/dialog_otm_input_msg_text"
                     android:visibility="gone" />
 
-                <com.android.jwjy.zkktproduct.view.ClearEditText
+                <com.android.school.view.ClearEditText
                     android:id="@+id/edtInput"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_35"
@@ -81,7 +81,7 @@
                     android:textSize="@dimen/sp_16" />
             </LinearLayout>
 
-            <com.android.jwjy.zkktproduct.view.ExpressionLayout
+            <com.android.school.view.ExpressionLayout
                 android:id="@+id/layout_expression"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_90"

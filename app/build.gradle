@@ -8,7 +8,7 @@ android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
     defaultConfig {
-        applicationId "com.android.jwjy.zkktproduct"
+        applicationId "com.android.school"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         flavorDimensions "versionCode"
 //        jniLibs.srcDirs = ['libs']

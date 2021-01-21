@@ -10,11 +10,11 @@
 
         <import type="android.view.View"></import>
 
-        <import type="com.android.jwjy.zkktproduct.util.DimensionUtils"></import>
+        <import type="com.android.school.util.DimensionUtils"></import>
 
         <variable
             name="videoData"
-            type="com.android.jwjy.zkktproduct.entity.VideoStatusData" />
+            type="com.android.school.entity.VideoStatusData" />
     </data>
 
     <android.support.constraint.ConstraintLayout

@@ -53,7 +53,7 @@
         android:layout_below="@id/questionbank_sub_details_chapterexercises"
         android:layout_marginLeft="@dimen/dp14"
         android:layout_marginRight="@dimen/dp14"/>
-    <com.android.jwjy.zkktproduct.ModelExpandView
+    <com.android.school.ModelExpandView
         android:id="@+id/questionbank_sub_details_chapterexercises_expandView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -65,5 +65,5 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"/>
-    </com.android.jwjy.zkktproduct.ModelExpandView>
+    </com.android.school.ModelExpandView>
 </RelativeLayout>

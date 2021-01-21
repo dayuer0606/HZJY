@@ -54,7 +54,7 @@
             android:layout_gravity="center"
             android:src="@drawable/button_arrow_down"/>
     </LinearLayout>
-    <com.android.jwjy.zkktproduct.ModelExpandView
+    <com.android.school.ModelExpandView
         android:id="@+id/coursepacket_coursestage_label_expandView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -113,7 +113,7 @@
                             android:layout_marginRight="@dimen/dp12"
                             android:textSize="@dimen/textsize14"
                             android:textColor="#666666"/>
-                        <com.android.jwjy.zkktproduct.ControllerHorizontalProgressBar
+                        <com.android.school.ControllerHorizontalProgressBar
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/dp13"
                             android:layout_weight="1"
@@ -156,5 +156,5 @@
                     android:orientation="vertical"/>
             </android.support.v7.widget.CardView>
         </RelativeLayout>
-    </com.android.jwjy.zkktproduct.ModelExpandView>
+    </com.android.school.ModelExpandView>
 </RelativeLayout>

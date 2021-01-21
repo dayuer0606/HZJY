@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.android.jwjy.zkktproduct.PDFView
+    <com.android.school.PDFView
         android:id="@+id/pdfview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

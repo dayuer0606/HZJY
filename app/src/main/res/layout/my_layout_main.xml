@@ -20,7 +20,7 @@
             android:clickable="true"
             android:background="@drawable/button_setting"
             android:onClick="onClickSetting"/>
-        <com.android.jwjy.zkktproduct.ControllerCustomRoundAngleImageView
+        <com.android.school.ControllerCustomRoundAngleImageView
             android:id="@+id/headportrait"
             android:layout_width="@dimen/dp_75"
             android:layout_height="@dimen/dp_75"

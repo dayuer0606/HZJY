@@ -41,7 +41,7 @@
                     android:gravity="center"/>
             </RelativeLayout>
 
-            <com.android.jwjy.zkktproduct.ControllerCustomRoundAngleImageView
+            <com.android.school.ControllerCustomRoundAngleImageView
                 android:id="@+id/huozhonglogo"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
@@ -175,7 +175,7 @@
                     android:gravity="center"/>
             </RelativeLayout>
 
-            <com.android.jwjy.zkktproduct.ControllerCustomRoundAngleImageView
+            <com.android.school.ControllerCustomRoundAngleImageView
                 android:id="@+id/forgetpassword_huozhonglogo"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
@@ -330,7 +330,7 @@
                     android:gravity="center"/>
             </RelativeLayout>
 
-            <com.android.jwjy.zkktproduct.ControllerCustomRoundAngleImageView
+            <com.android.school.ControllerCustomRoundAngleImageView
                 android:id="@+id/register_huozhonglogo"
                 android:layout_width="50dp"
                 android:layout_height="50dp"

@@ -41,7 +41,7 @@
         android:paddingBottom="8dp"
         android:textColor="@color/white" />
 
-    <com.android.jwjy.zkktproduct.view.ExpressionLayout
+    <com.android.school.view.ExpressionLayout
         android:id="@+id/layout_expression"
         android:layout_width="match_parent"
         android:layout_height="90dp"

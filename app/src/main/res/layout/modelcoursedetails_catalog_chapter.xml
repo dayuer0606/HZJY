@@ -42,7 +42,7 @@
         android:layout_below="@id/course_catalog_label_namelayout"
         android:background="#e5e5e5"
         android:layout_marginTop="@dimen/dp15"/>
-    <com.android.jwjy.zkktproduct.ModelExpandView
+    <com.android.school.ModelExpandView
         android:id="@+id/course_catalog_label_expandView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -69,5 +69,5 @@
                 android:layout_marginLeft="@dimen/dp13"
                 android:layout_marginRight="@dimen/dp13"/>
         </LinearLayout>
-    </com.android.jwjy.zkktproduct.ModelExpandView>
+    </com.android.school.ModelExpandView>
 </RelativeLayout>

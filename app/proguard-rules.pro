@@ -275,5 +275,5 @@
 -dontwarn com.alivc.**
 -dontwarn com.aliyun.**
 
--keep class com.android.jwjy.zkktproduct.**{*;}
--dontwarn com.android.jwjy.zkktproduct.**
+-keep class com.android.school.**{*;}
+-dontwarn com.android.school.**

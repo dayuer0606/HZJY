@@ -25,7 +25,7 @@
             android:padding="@dimen/dp0"
             android:layout_gravity="center"
             android:background="@drawable/textview_style_rect_black">
-            <com.android.jwjy.zkktproduct.ModelSearchEditText_Clear
+            <com.android.school.ModelSearchEditText_Clear
                 android:id="@+id/et_search"
                 android:layout_width="match_parent"
                 android:layout_height="fill_parent"
@@ -63,12 +63,12 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <com.android.jwjy.zkktproduct.ModelSearchListView
+            <com.android.school.ModelSearchListView
                 android:id="@+id/listView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-            </com.android.jwjy.zkktproduct.ModelSearchListView>
+            </com.android.school.ModelSearchListView>
 
             <TextView
                 android:id="@+id/tv_clear"

@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white">
-        <com.android.jwjy.zkktproduct.ControllerCustomRoundAngleImageView
+        <com.android.school.ControllerCustomRoundAngleImageView
             android:id="@+id/answerdetails_headportrait"
             android:layout_width="@dimen/dp40"
             android:layout_height="@dimen/dp40"

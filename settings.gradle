@@ -1,2 +1,2 @@
 include ':app', ':PhotoPicker', ':sdk', ':libwidget', ':AliyunVideoCommon', ':player_demo'
-rootProject.name='zkktproduct'
+rootProject.name='school'

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.android.jwjy.zkktproduct">
+    package="com.android.school">
     <permission
-        android:name="com.android.jwjy.zkktproduct.permission.JPUSH_MESSAGE"
+        android:name="com.android.school.permission.JPUSH_MESSAGE"
         android:protectionLevel="signature" /> <!-- /** -->
     <!-- * 获取开机启动权限 -->
     <!-- */ -->
@@ -44,7 +44,7 @@
     <!-- * 获取通话日志的读权限 -->
     <!-- */ -->
     <application
-        android:name=".TFApplication"
+        android:name="com.android.school.TFApplication"
         android:allowBackup="true"
         android:debuggable="false"
         android:icon="@mipmap/logo"
@@ -56,13 +56,13 @@
         android:usesCleartextTraffic="true"
         tools:ignore="HardcodedDebugMode"
         tools:replace="android:label">
-        <activity android:name=".OfficeActivity"
+        <activity android:name="com.android.school.OfficeActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"
             />
 
         <activity
-            android:name=".ControlSplashActivity"
+            android:name="com.android.school.ControlSplashActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"
             android:theme="@style/SplashStyle"
@@ -75,71 +75,71 @@
         </activity>
 
         <activity
-            android:name=".ControlGuideActivity"
+            android:name="com.android.school.ControlGuideActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".PDFActivity"
+            android:name="com.android.school.PDFActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".MainActivity"
+            android:name="com.android.school.MainActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:windowSoftInputMode="adjustResize|stateHidden"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.LoginJumpActivity"
+            android:name="com.android.school.activity.LoginJumpActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.LiveNativeActivity"
+            android:name="com.android.school.activity.LiveNativeActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
-            android:name=".activity.PlayDownLoadActivity"
+            android:name="com.android.school.activity.PlayDownLoadActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.PlaybackNativeActivity"
+            android:name="com.android.school.activity.PlaybackNativeActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.PlaybackOnlyVideoNativeActivity"
+            android:name="com.android.school.activity.PlaybackOnlyVideoNativeActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:launchMode="singleTop"
             android:screenOrientation="landscape"
             android:theme="@style/notitle" />
         <activity
-            android:name=".activity.LiveRtcNativeActivity"
+            android:name="com.android.school.activity.LiveRtcNativeActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:launchMode="singleTop"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="adjustResize|stateHidden" />
 
         <activity
-            android:name=".activity.LiveMixNativeActivity"
+            android:name="com.android.school.activity.LiveMixNativeActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:launchMode="singleTop"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="adjustResize|stateHidden" />
 
         <activity
-            android:name=".activity.LiveOneToOneNativeActivity"
+            android:name="com.android.school.activity.LiveOneToOneNativeActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="landscape"
             android:theme="@style/notitle"
             android:windowSoftInputMode="adjustNothing" />
         <activity
-            android:name=".activity.LiveOneToMultiNativeActivity"
+            android:name="com.android.school.activity.LiveOneToMultiNativeActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="landscape"
             android:theme="@style/notitle"
             android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
-            android:name=".wxapi.WXPayEntryActivity"
+            android:name="com.android.school.wxapi.WXPayEntryActivity"
             android:exported="true"
             android:launchMode="singleTop">
             <intent-filter>
@@ -161,7 +161,7 @@
         <!-- </provider> -->
         <provider
             android:name="android.support.v4.content.FileProvider"
-            android:authorities="com.android.jwjy.zkktproduct.fileprovider"
+            android:authorities="com.android.school.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
@@ -170,24 +170,24 @@
         </provider> <!-- 微信支付 -->
         <provider
             android:name="cn.jpush.android.service.DataProvider"
-            android:authorities="com.android.jwjy.zkktproduct.DataProvider"
+            android:authorities="com.android.school.DataProvider"
             android:exported="false"
             android:process=":pushcore" /> <!-- Required SDK 核心功能 -->
         <!-- 可配置android:process参数将PushService放在其他进程中 -->
-        <receiver android:name=".net.NetWorkStateReceiver">
+        <receiver android:name="com.android.school.net.NetWorkStateReceiver">
             <intent-filter>
                 <action android:name="android.NET.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
         </receiver> <!-- since 3.0.9 Required SDK 核心功能 -->
         <receiver
-            android:name=".MyJPushMessageReceiver"
+            android:name="com.android.school.MyJPushMessageReceiver"
             android:enabled="true"
             android:exported="false">
             <intent-filter>
                 <action android:name="cn.jpush.android.intent.REGISTRATION" />
                 <action android:name="cn.jpush.android.intent.RECEIVE_MESSAGE" />
 
-                <category android:name="com.android.jwjy.zkktproduct" />
+                <category android:name="com.android.school" />
             </intent-filter>
         </receiver> <!-- Required since 3.0.7 -->
         <!-- 新的 tag/alias 接口结果返回需要开发者配置一个自定的广播 -->
@@ -195,7 +195,7 @@
         <!-- 该广播需要继承 JPush 提供的 JPushMessageReceiver 类, 并如下新增一个 Intent-Filter -->
         <!-- User defined.  For test only  用户自定义接收消息器,3.0.7开始支持,目前新tag/alias接口设置结果会在该广播接收器对应的方法中回调 -->
         <service
-            android:name=".PushService"
+            android:name="com.android.school.PushService"
             android:enabled="true"
             android:exported="false"
             android:process=":pushcore">

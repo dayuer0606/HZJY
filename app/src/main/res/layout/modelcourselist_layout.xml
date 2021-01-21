@@ -9,7 +9,7 @@
         android:layout_height="@dimen/dp_140"
         android:layout_marginTop="@dimen/dp18"
         android:background="@drawable/textview_style_rect">
-        <com.android.jwjy.zkktproduct.ControllerCustomRoundAngleImageView
+        <com.android.school.ControllerCustomRoundAngleImageView
             android:id="@+id/coursecover"
             android:layout_width="@dimen/dp0"
             android:layout_height="@dimen/dp0"
@@ -54,7 +54,7 @@
             android:textColor="#999999"
             android:textSize="@dimen/textsize12" />
 
-        <com.android.jwjy.zkktproduct.ControllerCustomRoundAngleImageView
+        <com.android.school.ControllerCustomRoundAngleImageView
             android:id="@+id/courseTeacherIcon"
             android:layout_width="@dimen/dp_32"
             android:layout_height="@dimen/dp_32"
@@ -164,7 +164,7 @@
 <!--    android:layout_height="match_parent"-->
 <!--    xmlns:android="http://schemas.android.com/apk/res/android"-->
 <!--    xmlns:app="http://schemas.android.com/apk/res-auto">-->
-<!--    <com.android.jwjy.zkktproduct.ControllerCustomRoundAngleImageView-->
+<!--    <com.android.school.ControllerCustomRoundAngleImageView-->
 <!--        android:id="@+id/coursecover"-->
 <!--        android:layout_width="@dimen/dp_150"-->
 <!--        android:layout_height="@dimen/dp_90"-->

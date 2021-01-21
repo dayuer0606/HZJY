@@ -206,7 +206,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/dp0"
                         android:visibility="invisible">
-                        <com.android.jwjy.zkktproduct.ControllerListViewForScrollView
+                        <com.android.school.ControllerListViewForScrollView
                             android:id="@+id/course_materials_label_list_view"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />

@@ -10,7 +10,7 @@
         android:layout_marginLeft="@dimen/dp13"
         android:layout_marginRight="@dimen/dp13"
         android:layout_above="@+id/course_select_buttonlayout">
-        <com.android.jwjy.zkktproduct.ModelPtrFrameLayout
+        <com.android.school.ModelPtrFrameLayout
             android:id="@+id/course_select_ptr_frame"
             xmlns:cube_ptr="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
@@ -38,7 +38,7 @@
                         android:layout_marginLeft="@dimen/dp10"
                         android:layout_marginTop="@dimen/dp45"
                         android:textSize="@dimen/textsize17"/>
-                    <com.android.jwjy.zkktproduct.ControllerWarpLinearLayout
+                    <com.android.school.ControllerWarpLinearLayout
                         android:id="@+id/course_select_warpLinearLayout1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -56,7 +56,7 @@
                         android:layout_marginTop="@dimen/dp0"
                         android:layout_marginLeft="@dimen/dp10"
                         android:textSize="@dimen/textsize17"/>
-                    <com.android.jwjy.zkktproduct.ControllerWarpLinearLayout
+                    <com.android.school.ControllerWarpLinearLayout
                         android:id="@+id/course_select_warpLinearLayout2"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
@@ -74,7 +74,7 @@
                         android:layout_marginTop="@dimen/dp45"
                         android:layout_marginLeft="@dimen/dp10"
                         android:textSize="@dimen/textsize17"/>
-                    <com.android.jwjy.zkktproduct.ControllerWarpLinearLayout
+                    <com.android.school.ControllerWarpLinearLayout
                         android:id="@+id/course_select_warpLinearLayout3"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -92,7 +92,7 @@
                         android:layout_marginLeft="@dimen/dp10"
                         android:layout_marginTop="@dimen/dp45"
                         android:textSize="@dimen/textsize17"/>
-                    <com.android.jwjy.zkktproduct.ControllerWarpLinearLayout
+                    <com.android.school.ControllerWarpLinearLayout
                         android:id="@+id/course_select_warpLinearLayout4"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -103,7 +103,7 @@
                         app:vertical_Space="10dp"/>
                 </LinearLayout>
             </ScrollView>
-        </com.android.jwjy.zkktproduct.ModelPtrFrameLayout>
+        </com.android.school.ModelPtrFrameLayout>
     </LinearLayout>
     <View
         android:id="@+id/course_select_line1"

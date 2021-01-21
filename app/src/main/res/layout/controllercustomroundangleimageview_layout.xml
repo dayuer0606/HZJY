@@ -5,7 +5,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:ignore="MissingDefaultResource">
-    <com.android.jwjy.zkktproduct.ControllerCustomRoundAngleImageView
+    <com.android.school.ControllerCustomRoundAngleImageView
         android:id="@+id/CustomRoundAngleImageView"
         android:layout_width="@dimen/dp_140"
         android:layout_height="@dimen/dp_80"

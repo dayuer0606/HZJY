@@ -46,7 +46,7 @@
         android:layout_marginBottom="@dimen/dp5"
         android:background="#e5e5e5" />
 
-    <com.android.jwjy.zkktproduct.ControllerCustomRoundAngleImageView
+    <com.android.school.ControllerCustomRoundAngleImageView
         android:id="@+id/communityanswer_datails_headportrait"
         android:layout_width="@dimen/dp40"
         android:layout_height="@dimen/dp40"

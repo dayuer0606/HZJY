@@ -11,7 +11,7 @@
         android:layout_margin="3dp"
         android:orientation="vertical">
 
-        <com.android.jwjy.zkktproduct.view.NoScrollGridView
+        <com.android.school.view.NoScrollGridView
             android:id="@+id/draw_gv"
             android:layout_width="@dimen/pop_stroke_cmd_width"
             android:layout_height="wrap_content"

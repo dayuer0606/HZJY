@@ -59,7 +59,7 @@
             android:layout_gravity="center"
             android:src="@drawable/button_arrow_down"/>
     </LinearLayout>
-    <com.android.jwjy.zkktproduct.ModelExpandView
+    <com.android.school.ModelExpandView
         android:id="@+id/course_catalog_live_label_expandView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -86,7 +86,7 @@
                 android:layout_marginLeft="@dimen/dp13"
                 android:layout_marginRight="@dimen/dp13"/>
         </LinearLayout>
-    </com.android.jwjy.zkktproduct.ModelExpandView>
+    </com.android.school.ModelExpandView>
     <View
         android:id="@+id/coursepacket_details_live_line2"
         android:layout_width="match_parent"
@@ -123,7 +123,7 @@
             android:layout_gravity="center"
             android:src="@drawable/button_arrow_down"/>
     </LinearLayout>
-    <com.android.jwjy.zkktproduct.ModelExpandView
+    <com.android.school.ModelExpandView
         android:id="@+id/course_catalog_live_label_expandView1"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -150,7 +150,7 @@
                 android:layout_marginLeft="@dimen/dp13"
                 android:layout_marginRight="@dimen/dp13"/>
         </LinearLayout>
-    </com.android.jwjy.zkktproduct.ModelExpandView>
+    </com.android.school.ModelExpandView>
     <View
         android:id="@+id/coursepacket_details_live_line1"
         android:layout_width="match_parent"
@@ -189,7 +189,7 @@
             android:layout_gravity="center"
             android:src="@drawable/button_arrow_down"/>
     </LinearLayout>
-    <com.android.jwjy.zkktproduct.ModelExpandView
+    <com.android.school.ModelExpandView
         android:id="@+id/course_catalog_live_label_expandView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -216,5 +216,5 @@
                 android:layout_marginLeft="@dimen/dp13"
                 android:layout_marginRight="@dimen/dp13"/>
         </LinearLayout>
-    </com.android.jwjy.zkktproduct.ModelExpandView>
+    </com.android.school.ModelExpandView>
 </RelativeLayout>

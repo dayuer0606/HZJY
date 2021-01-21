@@ -55,7 +55,7 @@
             android:layout_marginLeft="@dimen/dp20"
             android:layout_marginRight="@dimen/dp20"
             android:layout_marginTop="@dimen/dp13"/>
-        <com.android.jwjy.zkktproduct.ControllerCustomRoundAngleImageView
+        <com.android.school.ControllerCustomRoundAngleImageView
             android:id="@+id/classchedulecard2_teachers_headportrait"
             android:layout_width="@dimen/dp30"
             android:layout_height="@dimen/dp30"

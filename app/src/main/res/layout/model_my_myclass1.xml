@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <com.android.jwjy.zkktproduct.ControllerCustomRoundAngleImageView
+    <com.android.school.ControllerCustomRoundAngleImageView
         android:id="@+id/modelmy_myclass1_cover"
         android:layout_width="@dimen/dp_160"
         android:layout_height="@dimen/dp_93"

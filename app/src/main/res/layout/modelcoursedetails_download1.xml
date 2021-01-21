@@ -28,7 +28,7 @@
             android:layout_height="@dimen/dp15"
             android:layout_gravity="center"
             android:background="@drawable/button_download_circle_blue"/>
-        <com.android.jwjy.zkktproduct.ControllerRoundProgressBar
+        <com.android.school.ControllerRoundProgressBar
             android:id="@+id/coursedetails_download1_downloadprogress"
             android:layout_width="@dimen/dp0"
             android:layout_height="@dimen/dp15"
