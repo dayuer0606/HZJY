@@ -39,7 +39,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * 课程
  */
 public class ModelCourse extends Fragment implements ModelCourseCover.ModelCourseCoverOnClickListener {
-    private static ControlMainActivity mControlMainActivity;
+    private static MainActivity mMainContext;
     private static String mContext = "xxxxxxxxxxxxx";
     //要显示的页面
     static private int FragmentPage;
@@ -71,9 +71,9 @@ public class ModelCourse extends Fragment implements ModelCourseCover.ModelCours
     private int mPageCount = 10;
     private int mCourseSum = 0; //课程总数
 
-    public static Fragment newInstance(ControlMainActivity content, String context, int iFragmentPage) {
+    public static Fragment newInstance(MainActivity content, String context, int iFragmentPage) {
         mContext = context;
-        mControlMainActivity = content;
+        mMainContext = content;
         ModelCourse myFragment = new ModelCourse();
         FragmentPage = iFragmentPage;
         return myFragment;
@@ -83,7 +83,7 @@ public class ModelCourse extends Fragment implements ModelCourseCover.ModelCours
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mview = inflater.inflate(FragmentPage, container, false);
-        DisplayMetrics dm = mControlMainActivity.getResources().getDisplayMetrics(); //获取屏幕分辨率
+        DisplayMetrics dm = mMainContext.getResources().getDisplayMetrics(); //获取屏幕分辨率
         height = dm.heightPixels;
         width = dm.widthPixels;
         CourseMainShow();
@@ -310,15 +310,8 @@ public class ModelCourse extends Fragment implements ModelCourseCover.ModelCours
         LinearLayout course_linearlayout = mview.findViewById(R.id.course_linearlayout);
         course_linearlayout.removeAllViews();
         course_details1.addView(view);
-        mControlMainActivity.onClickCourseDetails();
+        mMainContext.onClickCourseDetails();
         mModelCourseCover = modelCourseCover;
-    }
-
-    //课程问答添加图片
-    public void ModelCourseCoverQuestionPictureAdd(Intent data) {
-        if (mModelCourseCover != null) {
-            mModelCourseCover.ModelCourseCoverQuestionPictureAdd(data);
-        }
     }
 
     //课程下载初始化
@@ -347,7 +340,7 @@ public class ModelCourse extends Fragment implements ModelCourseCover.ModelCours
 
     //初始化课程条件搜索界面
     protected void initPopupWindow() {
-        View popupWindowView = mControlMainActivity.getLayoutInflater().inflate(R.layout.model_course_selectpop, null);
+        View popupWindowView = mMainContext.getLayoutInflater().inflate(R.layout.model_course_selectpop, null);
         int height1 = (int) (getScreenHeight() - mview.getResources().getDimension(R.dimen.dp45) - getStateBar());
         //内容，高度，宽度
         popupWindow = new PopupWindow(popupWindowView, (int) mview.getResources().getDimension(R.dimen.dp_280), height1, true);
@@ -356,7 +349,7 @@ public class ModelCourse extends Fragment implements ModelCourseCover.ModelCours
         //菜单背景色
         ColorDrawable dw = new ColorDrawable(0xffffffff);
         popupWindow.setBackgroundDrawable(dw);
-        popupWindow.showAtLocation(mControlMainActivity.getLayoutInflater().inflate(R.layout.activity_main, null), Gravity.RIGHT, 0, 500);
+        popupWindow.showAtLocation(mMainContext.getLayoutInflater().inflate(R.layout.activity_main, null), Gravity.RIGHT, 0, 500);
         popupWindow.setBackgroundDrawable(null);
         //设置背景半透明
         backgroundAlpha(0.9f);
@@ -385,7 +378,7 @@ public class ModelCourse extends Fragment implements ModelCourseCover.ModelCours
         mCourseSelectTemp = mCourseSelect;
         //必须有的标签-全部:默认选中全部
         {
-            View view = mControlMainActivity.getLayoutInflater().inflate(R.layout.model_coursepacket_selectpop_child, null);
+            View view = mMainContext.getLayoutInflater().inflate(R.layout.model_coursepacket_selectpop_child, null);
             TextView coursepacket_selectpop_child_signname = view.findViewById(R.id.coursepacket_selectpop_child_signname);
             coursepacket_selectpop_child_signname.setText("全部");
             coursepacket_selectpop_child_signname.setHint("-1");
@@ -435,7 +428,7 @@ public class ModelCourse extends Fragment implements ModelCourseCover.ModelCours
         mCourseSelectSortTemp = mCourseSelectSort;
         //必须有的标签-综合:默认选中综合
         {
-            View view = mControlMainActivity.getLayoutInflater().inflate(R.layout.model_coursepacket_selectpop_child, null);
+            View view = mMainContext.getLayoutInflater().inflate(R.layout.model_coursepacket_selectpop_child, null);
             TextView coursepacket_selectpop_child_signname = view.findViewById(R.id.coursepacket_selectpop_child_signname);
             coursepacket_selectpop_child_signname.setText("综合");
             coursepacket_selectpop_child_signname.setHint("-1");
@@ -469,7 +462,7 @@ public class ModelCourse extends Fragment implements ModelCourseCover.ModelCours
         }
         //必须有的标签-按热度
         {
-            View view = mControlMainActivity.getLayoutInflater().inflate(R.layout.model_coursepacket_selectpop_child, null);
+            View view = mMainContext.getLayoutInflater().inflate(R.layout.model_coursepacket_selectpop_child, null);
             TextView coursepacket_selectpop_child_signname = view.findViewById(R.id.coursepacket_selectpop_child_signname);
             coursepacket_selectpop_child_signname.setText("按热度");
             coursepacket_selectpop_child_signname.setHint("0");
@@ -503,7 +496,7 @@ public class ModelCourse extends Fragment implements ModelCourseCover.ModelCours
         }
         //必须有的标签-按时间
         {
-            View view = mControlMainActivity.getLayoutInflater().inflate(R.layout.model_coursepacket_selectpop_child, null);
+            View view = mMainContext.getLayoutInflater().inflate(R.layout.model_coursepacket_selectpop_child, null);
             TextView coursepacket_selectpop_child_signname = view.findViewById(R.id.coursepacket_selectpop_child_signname);
             coursepacket_selectpop_child_signname.setText("按时间");
             coursepacket_selectpop_child_signname.setHint("1");
@@ -541,7 +534,7 @@ public class ModelCourse extends Fragment implements ModelCourseCover.ModelCours
         mCourseSelectCourseTypeTemp = mCourseSelectCourseType;
         //必须有的标签-综合:默认选中综合
         {
-            View view = mControlMainActivity.getLayoutInflater().inflate(R.layout.model_coursepacket_selectpop_child, null);
+            View view = mMainContext.getLayoutInflater().inflate(R.layout.model_coursepacket_selectpop_child, null);
             TextView coursepacket_selectpop_child_signname = view.findViewById(R.id.coursepacket_selectpop_child_signname);
             coursepacket_selectpop_child_signname.setText("综合");
             coursepacket_selectpop_child_signname.setHint("-1");
@@ -575,7 +568,7 @@ public class ModelCourse extends Fragment implements ModelCourseCover.ModelCours
         }
         //必须有的标签-直播
         {
-            View view = mControlMainActivity.getLayoutInflater().inflate(R.layout.model_coursepacket_selectpop_child, null);
+            View view = mMainContext.getLayoutInflater().inflate(R.layout.model_coursepacket_selectpop_child, null);
             TextView coursepacket_selectpop_child_signname = view.findViewById(R.id.coursepacket_selectpop_child_signname);
             coursepacket_selectpop_child_signname.setText("直播");
             coursepacket_selectpop_child_signname.setHint("0");
@@ -609,7 +602,7 @@ public class ModelCourse extends Fragment implements ModelCourseCover.ModelCours
         }
         //必须有的标签-录播
         {
-            View view = mControlMainActivity.getLayoutInflater().inflate(R.layout.model_coursepacket_selectpop_child, null);
+            View view = mMainContext.getLayoutInflater().inflate(R.layout.model_coursepacket_selectpop_child, null);
             TextView coursepacket_selectpop_child_signname = view.findViewById(R.id.coursepacket_selectpop_child_signname);
             coursepacket_selectpop_child_signname.setText("录播");
             coursepacket_selectpop_child_signname.setHint("1");
@@ -643,7 +636,7 @@ public class ModelCourse extends Fragment implements ModelCourseCover.ModelCours
         }
         //必须有的标签-混合
         {
-            View view = mControlMainActivity.getLayoutInflater().inflate(R.layout.model_coursepacket_selectpop_child, null);
+            View view = mMainContext.getLayoutInflater().inflate(R.layout.model_coursepacket_selectpop_child, null);
             TextView coursepacket_selectpop_child_signname = view.findViewById(R.id.coursepacket_selectpop_child_signname);
             coursepacket_selectpop_child_signname.setText("混合");
             coursepacket_selectpop_child_signname.setHint("2");
@@ -801,14 +794,14 @@ public class ModelCourse extends Fragment implements ModelCourseCover.ModelCours
      *   
      */
     public void backgroundAlpha(float bgAlpha) {
-        WindowManager.LayoutParams lp = mControlMainActivity.getWindow().getAttributes();
+        WindowManager.LayoutParams lp = mMainContext.getWindow().getAttributes();
         lp.alpha = bgAlpha; //0.0-1.0
-        mControlMainActivity.getWindow().setAttributes(lp);
+        mMainContext.getWindow().setAttributes(lp);
     }
 
     //获取屏幕高度 不包含虚拟按键=
     public static int getScreenHeight() {
-        DisplayMetrics dm = mControlMainActivity.getResources().getDisplayMetrics();
+        DisplayMetrics dm = mMainContext.getResources().getDisplayMetrics();
         return dm.heightPixels;
     }
 
@@ -824,11 +817,11 @@ public class ModelCourse extends Fragment implements ModelCourseCover.ModelCours
 
     //获取课程列表
     private void getCourseDatas(String course_name,String project_id,String subject_id,String hour,String fever,String course_type) {
-        LoadingDialog.getInstance(mControlMainActivity).show();
+        LoadingDialog.getInstance(mMainContext).show();
         LinearLayout course_end = mview.findViewById(R.id.course_end);
         course_end.setVisibility(View.INVISIBLE);
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(mControlMainActivity.mIpadress)
+                .baseUrl(mMainContext.mIpadress)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(ModelObservableInterface.client)
                 .build();
@@ -861,7 +854,7 @@ public class ModelCourse extends Fragment implements ModelCourseCover.ModelCours
                     if (mSmart_fragment_course != null){
                         mSmart_fragment_course.finishRefresh();
                     }
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     Log.e("TAG", "queryAllCourseInfo  onErrorCode: " + code);
                     return;
                 }
@@ -870,14 +863,14 @@ public class ModelCourse extends Fragment implements ModelCourseCover.ModelCours
                     if (mSmart_fragment_course != null){
                         mSmart_fragment_course.finishRefresh();
                     }
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 if (!HeaderInterceptor.IsErrorCode(courseBean.getErrorCode(),"")){
                     if (mSmart_fragment_course != null){
                         mSmart_fragment_course.finishRefresh();
                     }
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 CourseBean.CourseDataBean courseDataBean = courseBean.getData();
@@ -885,7 +878,7 @@ public class ModelCourse extends Fragment implements ModelCourseCover.ModelCours
                     if (mSmart_fragment_course != null){
                         mSmart_fragment_course.finishRefresh();
                     }
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 List<CourseBean.CourseListBean> courseListBeansList = courseDataBean.getData();
@@ -893,7 +886,7 @@ public class ModelCourse extends Fragment implements ModelCourseCover.ModelCours
                     if (mSmart_fragment_course != null){
                         mSmart_fragment_course.finishRefresh();
                     }
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 mCourseSum = courseDataBean.getTotal();
@@ -916,7 +909,7 @@ public class ModelCourse extends Fragment implements ModelCourseCover.ModelCours
                     //创建每个课程的视图，添加到课程列表
                     ModelCourseCover modelCourseCover = new ModelCourseCover();
                     modelCourseCover.ModelCourseCoverOnClickListenerSet(ModelCourse.this);
-                    View modelCourseView = modelCourseCover.ModelCourseCover(mControlMainActivity, courseInfo);
+                    View modelCourseView = modelCourseCover.ModelCourseCover(mMainContext, courseInfo);
                     course_linearlayout.addView(modelCourseView);
                     line = modelCourseView.findViewById(R.id.course_line1);
                 }
@@ -926,26 +919,26 @@ public class ModelCourse extends Fragment implements ModelCourseCover.ModelCours
                 if (mSmart_fragment_course != null){
                     mSmart_fragment_course.finishRefresh();
                 }
-                LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                LoadingDialog.getInstance(mMainContext).dismiss();
             }
 
             @Override
             public void onFailure(Call<CourseBean> call, Throwable t) {
                 Log.e("TAG", "onError: " + t.getMessage()+"" );
-                Toast.makeText(mControlMainActivity,"获取课程列表数据失败",Toast.LENGTH_LONG).show();
+                Toast.makeText(mMainContext,"获取课程列表数据失败",Toast.LENGTH_LONG).show();
                 if (mSmart_fragment_course != null){
                     mSmart_fragment_course.finishRefresh();
                 }
-                LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                LoadingDialog.getInstance(mMainContext).dismiss();
             }
         });
     }
 
     //课程列表加载更多
     private void getCourseDatasMore(String course_name,String project_id,String subject_id,String hour,String fever,String course_type) {
-        LoadingDialog.getInstance(mControlMainActivity).show();
+        LoadingDialog.getInstance(mMainContext).show();
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(mControlMainActivity.mIpadress)
+                .baseUrl(mMainContext.mIpadress)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(ModelObservableInterface.client)
                 .build();
@@ -978,7 +971,7 @@ public class ModelCourse extends Fragment implements ModelCourseCover.ModelCours
                     if (mSmart_fragment_course != null){
                         mSmart_fragment_course.finishLoadMore();
                     }
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     Log.e("TAG", "queryAllCourseInfo  onErrorCode: " + code);
                     return;
                 }
@@ -987,14 +980,14 @@ public class ModelCourse extends Fragment implements ModelCourseCover.ModelCours
                     if (mSmart_fragment_course != null){
                         mSmart_fragment_course.finishLoadMore();
                     }
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 if (!HeaderInterceptor.IsErrorCode(courseBean.getErrorCode(),"")){
                     if (mSmart_fragment_course != null){
                         mSmart_fragment_course.finishLoadMore();
                     }
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 CourseBean.CourseDataBean courseDataBean = courseBean.getData();
@@ -1002,7 +995,7 @@ public class ModelCourse extends Fragment implements ModelCourseCover.ModelCours
                     if (mSmart_fragment_course != null){
                         mSmart_fragment_course.finishLoadMore();
                     }
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 List<CourseBean.CourseListBean> courseListBeansList = courseDataBean.getData();
@@ -1010,7 +1003,7 @@ public class ModelCourse extends Fragment implements ModelCourseCover.ModelCours
                     if (mSmart_fragment_course != null){
                         mSmart_fragment_course.finishLoadMore();
                     }
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 LinearLayout course_linearlayout = mview.findViewById(R.id.course_linearlayout);
@@ -1030,7 +1023,7 @@ public class ModelCourse extends Fragment implements ModelCourseCover.ModelCours
                     courseInfo.mCourseLearnPersonNum = String.valueOf(courseListBean.foke_stu_num);
                     ModelCourseCover modelCourseCover = new ModelCourseCover();
                     modelCourseCover.ModelCourseCoverOnClickListenerSet(ModelCourse.this);
-                    View modelCourseView = modelCourseCover.ModelCourseCover(mControlMainActivity, courseInfo);
+                    View modelCourseView = modelCourseCover.ModelCourseCover(mMainContext, courseInfo);
                     course_linearlayout.addView(modelCourseView);
                     line = modelCourseView.findViewById(R.id.course_line1);
                 }
@@ -1040,26 +1033,26 @@ public class ModelCourse extends Fragment implements ModelCourseCover.ModelCours
                 if (mSmart_fragment_course != null){
                     mSmart_fragment_course.finishLoadMore();
                 }
-                LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                LoadingDialog.getInstance(mMainContext).dismiss();
             }
 
             @Override
             public void onFailure(Call<CourseBean> call, Throwable t) {
                 Log.e("TAG", "onError: " + t.getMessage()+"" );
-                Toast.makeText(mControlMainActivity,"获取课程列表数据失败",Toast.LENGTH_LONG).show();
+                Toast.makeText(mMainContext,"获取课程列表数据失败",Toast.LENGTH_LONG).show();
                 if (mSmart_fragment_course != null){
                     mSmart_fragment_course.finishLoadMore();
                 }
-                LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                LoadingDialog.getInstance(mMainContext).dismiss();
             }
         });
     }
 
     //获取项目列表
     private void getAllProject(View popupWindowView) {
-        LoadingDialog.getInstance(mControlMainActivity).show();
+        LoadingDialog.getInstance(mMainContext).show();
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(mControlMainActivity.mIpadress)
+                .baseUrl(mMainContext.mIpadress)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(ModelObservableInterface.client)
                 .build();
@@ -1072,23 +1065,23 @@ public class ModelCourse extends Fragment implements ModelCourseCover.ModelCours
             public void onResponse(Call<ProjectBean> call, Response<ProjectBean> response) {
                 int code = response.code();
                 if (code != 200){
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     Log.e("TAG", "getAllProject  onErrorCode: " + code);
                     return;
                 }
                 ProjectBean baseBean = response.body();
                 if ( baseBean == null){
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     Log.e("TAG", "getAllProject  onErrorCode: " + code);
                     return;
                 }
                 if (!HeaderInterceptor.IsErrorCode(baseBean.getErrorCode(),baseBean.getErrorMsg())){
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 List<ProjectBean.ProjectDataBean> data = baseBean.getData();
                 if (data == null){
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     Log.e("TAG", "getAllProject  onErrorCode: " + code);
                     return;
                 }
@@ -1097,7 +1090,7 @@ public class ModelCourse extends Fragment implements ModelCourseCover.ModelCours
                     if (projectDataBean == null){
                         continue;
                     }
-                    View view = mControlMainActivity.getLayoutInflater().inflate(R.layout.model_coursepacket_selectpop_child, null);
+                    View view = mMainContext.getLayoutInflater().inflate(R.layout.model_coursepacket_selectpop_child, null);
                     TextView coursepacket_selectpop_child_signname = view.findViewById(R.id.coursepacket_selectpop_child_signname);
                     coursepacket_selectpop_child_signname.setText(projectDataBean.pse_name);
                     ControllerWarpLinearLayout course_select_warpLinearLayout1 = popupWindowView.findViewById(R.id.course_select_warpLinearLayout1);
@@ -1134,23 +1127,23 @@ public class ModelCourse extends Fragment implements ModelCourseCover.ModelCours
                         getAllSubjectFromOneProject(popupWindowView, Integer.parseInt(mCourseSelect));
                     }
                 }
-                LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                LoadingDialog.getInstance(mMainContext).dismiss();
             }
 
             @Override
             public void onFailure(Call<ProjectBean> call, Throwable t) {
                 Log.e("TAG", "onError: " + t.getMessage()+"" );
-                Toast.makeText(mControlMainActivity,"获取项目列表失败",Toast.LENGTH_LONG).show();
-                LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                Toast.makeText(mMainContext,"获取项目列表失败",Toast.LENGTH_LONG).show();
+                LoadingDialog.getInstance(mMainContext).dismiss();
             }
         });
     }
 
     //查找某一项目下的子项目列表
     private void getAllSubjectFromOneProject(View popupWindowView,int project_id) {
-        LoadingDialog.getInstance(mControlMainActivity).show();
+        LoadingDialog.getInstance(mMainContext).show();
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(mControlMainActivity.mIpadress)
+                .baseUrl(mMainContext.mIpadress)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(ModelObservableInterface.client)
                 .build();
@@ -1166,22 +1159,22 @@ public class ModelCourse extends Fragment implements ModelCourseCover.ModelCours
             public void onResponse(Call<ProjectBean> call, Response<ProjectBean> response) {
                 int code = response.code();
                 if (code != 200){
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     Log.e("TAG", "getAllSubjectFromOneProject  onErrorCode: " + code);
                     return;
                 }
                 ProjectBean baseBean = response.body();
                 if (baseBean == null){
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 if (!HeaderInterceptor.IsErrorCode(baseBean.getErrorCode(),baseBean.getErrorMsg())){
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 List<ProjectBean.ProjectDataBean> data = baseBean.getData();
                 if (data == null){
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 ControllerWarpLinearLayout course_select_warpLinearLayout2 = popupWindowView.findViewById(R.id.course_select_warpLinearLayout2);
@@ -1208,7 +1201,7 @@ public class ModelCourse extends Fragment implements ModelCourseCover.ModelCours
                         ll.topMargin = popupWindowView.getResources().getDimensionPixelSize(R.dimen.dp45);
                         course_select_signtitle2.setLayoutParams(ll);
                         //必须有的标签-全部:默认选中全部
-                        View view = mControlMainActivity.getLayoutInflater().inflate(R.layout.model_coursepacket_selectpop_child, null);
+                        View view = mMainContext.getLayoutInflater().inflate(R.layout.model_coursepacket_selectpop_child, null);
                         TextView coursepacket_selectpop_child_signname = view.findViewById(R.id.coursepacket_selectpop_child_signname);
                         coursepacket_selectpop_child_signname.setText("全部");
                         coursepacket_selectpop_child_signname.setHint("-1");
@@ -1240,7 +1233,7 @@ public class ModelCourse extends Fragment implements ModelCourseCover.ModelCours
                             coursepacket_selectpop_child_signname.setTextColor(view.getResources().getColor(R.color.white));
                         }
                     }
-                    View view = mControlMainActivity.getLayoutInflater().inflate(R.layout.model_coursepacket_selectpop_child, null);
+                    View view = mMainContext.getLayoutInflater().inflate(R.layout.model_coursepacket_selectpop_child, null);
                     TextView coursepacket_selectpop_child_signname = view.findViewById(R.id.coursepacket_selectpop_child_signname);
                     coursepacket_selectpop_child_signname.setText(projectDataBean.pse_name);
                     course_select_warpLinearLayout2.addView(view);
@@ -1272,14 +1265,14 @@ public class ModelCourse extends Fragment implements ModelCourseCover.ModelCours
                         coursepacket_selectpop_child_signname.setTextColor(view.getResources().getColor(R.color.white));
                     }
                 }
-                LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                LoadingDialog.getInstance(mMainContext).dismiss();
             }
 
             @Override
             public void onFailure(Call<ProjectBean> call, Throwable t) {
                 Log.e("TAG", "onError: " + t.getMessage()+"" );
-                Toast.makeText(mControlMainActivity,"获取项目列表失败",Toast.LENGTH_LONG).show();
-                LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                Toast.makeText(mMainContext,"获取项目列表失败",Toast.LENGTH_LONG).show();
+                LoadingDialog.getInstance(mMainContext).dismiss();
             }
         });
     }

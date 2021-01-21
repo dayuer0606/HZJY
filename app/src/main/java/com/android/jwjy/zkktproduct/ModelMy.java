@@ -66,7 +66,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * 我的模块
  */
 public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
-    private static ControlMainActivity mControlMainActivity;
+    private static MainActivity mMainContext;
     private static String mContext = "xxxxxxxxxxxxx";
     //要显示的页面
     static private int FragmentPage;
@@ -150,9 +150,9 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
     private Integer mAnswerDetailsQuestionId = null;
     private Integer mAnswerDetailsAnswerId = null;
 
-    public static Fragment newInstance(ControlMainActivity content, String context, int iFragmentPage) {
+    public static Fragment newInstance(MainActivity content, String context, int iFragmentPage) {
         mContext = context;
-        mControlMainActivity = content;
+        mMainContext = content;
         ModelMy myFragment = new ModelMy();
         FragmentPage = iFragmentPage;
         return myFragment;
@@ -181,23 +181,23 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
         HideAllLayout();
         LinearLayout my_layout_main = mview.findViewById(R.id.my_layout_main);
         if (mMyView == null) {
-            mMyView = LayoutInflater.from(mControlMainActivity).inflate(R.layout.my_layout_main, null);
+            mMyView = LayoutInflater.from(mMainContext).inflate(R.layout.my_layout_main, null);
             TextView username = mMyView.findViewById(R.id.username);
             username.setOnClickListener(v -> {
                 if (mPersonalInfoDataBean == null) {
-                    mControlMainActivity.onClickImmediatelyLogin("login");
+                    mMainContext.onClickImmediatelyLogin("login");
                 } else {
-                    mControlMainActivity.onClickImmediatelyLogin("personinfo");
+                    mMainContext.onClickImmediatelyLogin("personinfo");
                 }
             });
         }
         my_layout_main.addView(mMyView);
-        DisplayMetrics dm = mControlMainActivity.getResources().getDisplayMetrics(); //获取屏幕分辨率
+        DisplayMetrics dm = mMainContext.getResources().getDisplayMetrics(); //获取屏幕分辨率
         width = dm.widthPixels;
         //加载用户头像
         ControllerCustomRoundAngleImageView headportraitImageView = mMyView.findViewById(R.id.headportrait);
         if (mPersonalInfoDataBean == null) {
-            Glide.with(mControlMainActivity).load("").listener(new RequestListener<Drawable>() {
+            Glide.with(mMainContext).load("").listener(new RequestListener<Drawable>() {
                 @Override
                 public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
                     Log.d("Wain", "加载失败 errorMsg:" + (e != null ? e.getMessage() : "null"));
@@ -209,7 +209,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                     Log.d("Wain", "成功  Drawable Name:" + resource.getClass().getCanonicalName());
                     return false;
                 }
-            }).error(mControlMainActivity.getResources().getDrawable(R.drawable.modelmy_myheaddefault)).into(headportraitImageView);
+            }).error(mMainContext.getResources().getDrawable(R.drawable.modelmy_myheaddefault)).into(headportraitImageView);
             TextView username = mMyView.findViewById(R.id.username);
             username.setText(mMyView.getResources().getString(R.string.title_loginimmediately));
             TextView userinfo = mMyView.findViewById(R.id.userinfo);
@@ -226,7 +226,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                 TextView userinfo = mMyView.findViewById(R.id.userinfo);
                 userinfo.setText(mPersonalInfoDataBean.autograph);
             }
-            Glide.with(mControlMainActivity).load(mPersonalInfoDataBean.head).listener(new RequestListener<Drawable>() {
+            Glide.with(mMainContext).load(mPersonalInfoDataBean.head).listener(new RequestListener<Drawable>() {
                 @Override
                 public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
                     Log.d("Wain", "加载失败 errorMsg:" + (e != null ? e.getMessage() : "null"));
@@ -238,7 +238,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                     Log.d("Wain", "成功  Drawable Name:" + resource.getClass().getCanonicalName());
                     return false;
                 }
-            }).error(mControlMainActivity.getResources().getDrawable(R.drawable.modelmy_myheaddefault)).into(headportraitImageView);
+            }).error(mMainContext.getResources().getDrawable(R.drawable.modelmy_myheaddefault)).into(headportraitImageView);
         }
     }
 
@@ -251,7 +251,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
         //创建布局添加刷新控件
         LinearLayout my_layout_main = mview.findViewById(R.id.my_layout_main);
         if (mMyClassView == null) {
-            mMyClassView = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_my_myclass, null);
+            mMyClassView = LayoutInflater.from(mMainContext).inflate(R.layout.model_my_myclass, null);
             //Smart_model_my_myclass     布局刷新控件
 
             mSmart_model_my_myclass = mMyClassView.findViewById(R.id.Smart_model_my_myclass);
@@ -290,7 +290,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
         HideAllLayout();
         LinearLayout my_layout_main = mview.findViewById(R.id.my_layout_main);
         if (mMyClassPacketView == null) {
-            mMyClassPacketView = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_my_myclasspacket, null);
+            mMyClassPacketView = LayoutInflater.from(mMainContext).inflate(R.layout.model_my_myclasspacket, null);
             //Smart_model_my_myclasspacket  刷新
             mSmart_model_my_myclasspacket = mMyClassPacketView.findViewById(R.id.Smart_model_my_myclasspacket);
             mSmart_model_my_myclasspacket.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
@@ -324,7 +324,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
         HideAllLayout();
         LinearLayout my_layout_main = mview.findViewById(R.id.my_layout_main);
         if (mMyCollectView == null) {
-            mMyCollectView = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_my_mycollect, null);
+            mMyCollectView = LayoutInflater.from(mMainContext).inflate(R.layout.model_my_mycollect, null);
             //Smart_model_my_mycollect
             mSmart_model_my_mycollect = mMyCollectView.findViewById(R.id.Smart_model_my_mycollect);
             mSmart_model_my_mycollect.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
@@ -417,10 +417,10 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
     //展示我的收藏界面-课程
     private View MyCollectShow_MyCourse(LinearLayout modelmy_mycollect_main_content,QueryMyCollectionListBean.DataBean.ListBean listBean) {
         //测试数据我的课程子条目
-        View view = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_my_myclass1, null);
+        View view = LayoutInflater.from(mMainContext).inflate(R.layout.model_my_myclass1, null);
         //加载网络图片封面
         ControllerCustomRoundAngleImageView modelmy_myclass1_cover = view.findViewById(R.id.modelmy_myclass1_cover);
-        Glide.with(mControlMainActivity).load(listBean.cover).listener(new RequestListener<Drawable>() {
+        Glide.with(mMainContext).load(listBean.cover).listener(new RequestListener<Drawable>() {
             @Override
             public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
                 Log.d("Wain", "加载失败 errorMsg:" + (e != null ? e.getMessage() : "null"));
@@ -431,7 +431,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                 Log.d("Wain", "成功  Drawable Name:" + resource.getClass().getCanonicalName());
                 return false;
             }
-        }).error(mControlMainActivity.getResources().getDrawable(R.drawable.modelcoursecover)).into(modelmy_myclass1_cover);
+        }).error(mMainContext.getResources().getDrawable(R.drawable.modelcoursecover)).into(modelmy_myclass1_cover);
         //课程名称
         TextView modelmy_myclass1_classname = view.findViewById(R.id.modelmy_myclass1_classname);
         modelmy_myclass1_classname.setText(listBean.course_name);
@@ -460,12 +460,12 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
             courseInfo.mCourseLearnPersonNum = String.valueOf(listBean.stuNum);
             //跳转课程详情
             ModelCourseCover modelCourseCover = new ModelCourseCover();
-            View modelCourseView = modelCourseCover.ModelCourseCover(mControlMainActivity, courseInfo);
+            View modelCourseView = modelCourseCover.ModelCourseCover(mMainContext, courseInfo);
             modelCourseCover.CourseDetailsShow();
             HideAllLayout();
             LinearLayout my_layout_main = mview.findViewById(R.id.my_layout_main);
             my_layout_main.addView(modelCourseView);
-            mControlMainActivity.onClickCourseDetails();
+            mMainContext.onClickCourseDetails();
         });
         //我的收藏不需要显示课程协议，因为没有购买的课程也可以被收藏
         TextView modelmy_myclass1_agreement = view.findViewById(R.id.modelmy_myclass1_agreement);
@@ -478,10 +478,10 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
     //展示我的收藏界面-课程包
     private View MyCollectShow_MyCoursePacket(LinearLayout modelmy_mycollect_main_content,QueryMyCollectionPacketListBean.DataBean.ListBean listBean) {
         //modelmy_myclasspacket1_line1
-        View view = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_my_myclasspacket1, null);
+        View view = LayoutInflater.from(mMainContext).inflate(R.layout.model_my_myclasspacket1, null);
         //加载网络图片封面
         ControllerCustomRoundAngleImageView modelmy_myclasspacket1_cover = view.findViewById(R.id.modelmy_myclasspacket1_cover);
-        Glide.with(mControlMainActivity).load(listBean.cover).listener(new RequestListener<Drawable>() {
+        Glide.with(mMainContext).load(listBean.cover).listener(new RequestListener<Drawable>() {
             @Override
             public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
                 Log.d("Wain", "加载失败 errorMsg:" + (e != null ? e.getMessage() : "null"));
@@ -492,7 +492,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                 Log.d("Wain", "成功  Drawable Name:" + resource.getClass().getCanonicalName());
                 return false;
             }
-        }).error(mControlMainActivity.getResources().getDrawable(R.drawable.modelcoursepacketcover)).into(modelmy_myclasspacket1_cover);
+        }).error(mMainContext.getResources().getDrawable(R.drawable.modelcoursepacketcover)).into(modelmy_myclasspacket1_cover);
         //课程包名称
         TextView modelmy_myclasspacket1_classname = view.findViewById(R.id.modelmy_myclasspacket1_classname);
         modelmy_myclasspacket1_classname.setText(listBean.cp_name);
@@ -519,12 +519,12 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
             coursePacketInfo.mCoursePacketLearnPersonNum= String.valueOf(listBean.buying_base_number);//购买人数
             //跳转课程包详情
             ModelCoursePacketCover modelCoursePacketCover = new ModelCoursePacketCover();
-            View modelCoursePacketView = modelCoursePacketCover.ModelCoursePacketCover(mControlMainActivity, coursePacketInfo);
+            View modelCoursePacketView = modelCoursePacketCover.ModelCoursePacketCover(mMainContext, coursePacketInfo);
             modelCoursePacketCover.CoursePacketDetailsShow();
             HideAllLayout();
             LinearLayout my_layout_main = mview.findViewById(R.id.my_layout_main);
             my_layout_main.addView(modelCoursePacketView);
-            mControlMainActivity.onClickCoursePacketDetails();
+            mMainContext.onClickCoursePacketDetails();
         });
         
         //我的收藏不需要显示课程协议，因为没有购买的课程也可以被收藏
@@ -546,7 +546,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
         HideAllLayout();
         LinearLayout my_layout_main = mview.findViewById(R.id.my_layout_main);
         if (mMyCacheView == null) {
-            mMyCacheView = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_my_mycache, null);
+            mMyCacheView = LayoutInflater.from(mMainContext).inflate(R.layout.model_my_mycache, null);
             //Smart_model_my_mycache  我的缓存刷新
 //            mSmart_model_my_mycache = mMyCacheView.findViewById(R.id.Smart_model_my_mycache);
 //            mSmart_model_my_mycache.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
@@ -565,10 +565,10 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
         //我的缓存子条目布局
         LinearLayout modelmy_mycache_main_content = mMyCacheView.findViewById(R.id.modelmy_mycache_main_content);
         modelmy_mycache_main_content.removeAllViews();
-        View view = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_my_mycache1, null);
+        View view = LayoutInflater.from(mMainContext).inflate(R.layout.model_my_mycache1, null);
         modelmy_mycache_main_content.addView(view);
         ControllerCustomRoundAngleImageView modelmy_mycache1_cover = view.findViewById(R.id.modelmy_mycache1_cover);
-        Glide.with(mControlMainActivity).load("").listener(new RequestListener<Drawable>() {
+        Glide.with(mMainContext).load("").listener(new RequestListener<Drawable>() {
             @Override
             public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
                 Log.d("Wain", "加载失败 errorMsg:" + (e != null ? e.getMessage() : "null"));
@@ -580,7 +580,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                 Log.d("Wain", "成功  Drawable Name:" + resource.getClass().getCanonicalName());
                 return false;
             }
-        }).error(mControlMainActivity.getResources().getDrawable(R.drawable.modelcoursecover)).into(modelmy_mycache1_cover);
+        }).error(mMainContext.getResources().getDrawable(R.drawable.modelcoursecover)).into(modelmy_mycache1_cover);
 
         //监听，如果点击此课程，查看此课程下缓存的详细信息
         LinearLayout modelmy_mycache1_classname_layout = view.findViewById(R.id.modelmy_mycache1_classname_layout);
@@ -600,7 +600,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
         HideAllLayout();
         LinearLayout my_layout_main = mview.findViewById(R.id.my_layout_main);
         if (mMyCacheView == null) {
-            mMyCacheView = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_my_mycache, null);
+            mMyCacheView = LayoutInflater.from(mMainContext).inflate(R.layout.model_my_mycache, null);
         }
         RelativeLayout modelmy_mycache_title = mMyCacheView.findViewById(R.id.modelmy_mycache_title);
         modelmy_mycache_title.setVisibility(View.VISIBLE);
@@ -622,11 +622,11 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
 //            ll.width = LinearLayout.LayoutParams.MATCH_PARENT;
 //            downloadView.setLayoutParams(ll);
             downloadView.showDownloadContentView();
-//        View view = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_my_mycache1, null)
+//        View view = LayoutInflater.from(mMainContext).inflate(R.layout.model_my_mycache1, null)
         };
 //        modelmy_mycache_main_content.addView(view);
 //        ControllerCustomRoundAngleImageView modelmy_mycache1_cover = view.findViewById(R.id.modelmy_mycache1_cover);
-//        Glide.with(mControlMainActivity).load("").listener(new RequestListener<Drawable>() {
+//        Glide.with(mMainContext).load("").listener(new RequestListener<Drawable>() {
 //            @Override
 //            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
 //                Log.d("Wain", "加载失败 errorMsg:" + (e != null ? e.getMessage() : "null"));
@@ -638,7 +638,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
 //                Log.d("Wain", "成功  Drawable Name:" + resource.getClass().getCanonicalName());
 //                return false;
 //            }
-//        }).error(mControlMainActivity.getResources().getDrawable(R.drawable.modelcoursecover)).into(modelmy_mycache1_cover);
+//        }).error(mMainContext.getResources().getDrawable(R.drawable.modelcoursecover)).into(modelmy_mycache1_cover);
 //
 //        //监听，如果点击此课程，查看此课程下缓存的详细信息
 //        LinearLayout modelmy_mycache1_classname_layout = view.findViewById(R.id.modelmy_mycache1_classname_layout);
@@ -659,11 +659,11 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
         RelativeLayout modelmy_mycache_aliyunVodPlayerView = mMyCacheView.findViewById(R.id.modelmy_mycache_aliyunVodPlayerView);
         if (modelmy_mycache_aliyunVodPlayerView.getVisibility() == View.INVISIBLE){
             modelmy_mycache_aliyunVodPlayerView.removeAllViews();
-            AliyunVodPlayerView aliyunVodPlayerView = new AliyunVodPlayerView(mControlMainActivity);
+            AliyunVodPlayerView aliyunVodPlayerView = new AliyunVodPlayerView(mMainContext);
             modelmy_mycache_aliyunVodPlayerView.addView(aliyunVodPlayerView);
             modelmy_mycache_aliyunVodPlayerView.setVisibility(View.VISIBLE);
 //        modelmy_mycache_aliyunVodPlayerView.VideoIdSet();
-            mControlMainActivity.setmAliyunVodPlayerView(aliyunVodPlayerView);
+            mMainContext.setmAliyunVodPlayerView(aliyunVodPlayerView);
         }
         return true;
     }
@@ -675,7 +675,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
         HideAllLayout();
         LinearLayout my_layout_main = mview.findViewById(R.id.my_layout_main);
         if (mMyCacheManagementCacheView == null) {
-            mMyCacheManagementCacheView = LayoutInflater.from(mControlMainActivity).inflate(R.layout.modelcoursedetails_download_manager, null);
+            mMyCacheManagementCacheView = LayoutInflater.from(mMainContext).inflate(R.layout.modelcoursedetails_download_manager, null);
         }
         my_layout_main.addView(mMyCacheManagementCacheView);
         
@@ -806,8 +806,8 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
         //删除
         TextView course_downloadmanager_delete = mMyCacheManagementCacheView.findViewById(R.id.course_downloadmanager_delete);
         course_downloadmanager_delete.setOnClickListener(v -> {
-            View view = mControlMainActivity.getLayoutInflater().inflate(R.layout.dialog_sure_cancel, null);
-            mMyDialog = new ControllerCenterDialog(mControlMainActivity, 0, 0, view, R.style.DialogTheme);
+            View view = mMainContext.getLayoutInflater().inflate(R.layout.dialog_sure_cancel, null);
+            mMyDialog = new ControllerCenterDialog(mMainContext, 0, 0, view, R.style.DialogTheme);
             mMyDialog.setCancelable(true);
             mMyDialog.show();
             TextView tip = view.findViewById(R.id.tip);
@@ -891,7 +891,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
         HideAllLayout();
         LinearLayout my_layout_main = mview.findViewById(R.id.my_layout_main);
         if (mMyOrderView == null) {
-            mMyOrderView = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_my_myorder, null);
+            mMyOrderView = LayoutInflater.from(mMainContext).inflate(R.layout.model_my_myorder, null);
             //Smart_model_my_myorder   我的订单
             mSmart_model_my_myorder = mMyOrderView.findViewById(R.id.Smart_model_my_myorder);
             mSmart_model_my_myorder.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
@@ -1013,7 +1013,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
         if (listBean.order_status.equals("未支付")) {
             //全部订单的网络数据
             //待支付
-            View MyOrderShow_MyOrder_view1 = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_my_myorder1, null);
+            View MyOrderShow_MyOrder_view1 = LayoutInflater.from(mMainContext).inflate(R.layout.model_my_myorder1, null);
             TextView modelmy_myorder1_ordername1 = MyOrderShow_MyOrder_view1.findViewById(R.id.modelmy_myorder1_ordername);
             modelmy_myorder1_ordername1.setText(listBean.product_name);
             TextView modelmy_myorder1_orderstate1 = MyOrderShow_MyOrder_view1.findViewById(R.id.modelmy_myorder1_orderstate);
@@ -1032,14 +1032,14 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
             });
             modelmy_myorder1_retrypay.setOnClickListener(v -> {
                 HideAllLayout();
-                View orderDetails = mControlMainActivity.Page_OrderDetails(this,null,null, listBean);
+                View orderDetails = mMainContext.Page_OrderDetails(this,null,null, listBean);
                 LinearLayout my_layout_main = mview.findViewById(R.id.my_layout_main);
                 my_layout_main.addView(orderDetails);
             });
         } else if (listBean.order_status.equals("支付成功") || listBean.order_status.equals("已支付")|| listBean.order_status.equals("已确认转账")) {
             //已经完成
           // modelmy_myorder_main_content.addView(MyOrderShow_MyOrder_view1);
-            View MyOrderShow_MyOrder_view3 = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_my_myorder1, null);
+            View MyOrderShow_MyOrder_view3 = LayoutInflater.from(mMainContext).inflate(R.layout.model_my_myorder1, null);
             TextView modelmy_myorder1_ordername = MyOrderShow_MyOrder_view3.findViewById(R.id.modelmy_myorder1_ordername);
             modelmy_myorder1_ordername.setText(listBean.product_name);
             TextView modelmy_myorder1_orderstate = MyOrderShow_MyOrder_view3.findViewById(R.id.modelmy_myorder1_orderstate);
@@ -1060,7 +1060,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
             modelmy_myorder1_orderfunction.setLayoutParams(rl);
         } else if (listBean.order_status.equals("支付失败")||listBean.order_status.equals("已失效")||listBean.order_status.equals("订单已取消")||listBean.order_status.equals("取消订单")) {
             //未完成
-            View MyOrderShow_MyOrder_view2 = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_my_myorder1, null);
+            View MyOrderShow_MyOrder_view2 = LayoutInflater.from(mMainContext).inflate(R.layout.model_my_myorder1, null);
             TextView modelmy_myorder1_ordername = MyOrderShow_MyOrder_view2.findViewById(R.id.modelmy_myorder1_ordername);
             modelmy_myorder1_ordername.setText(listBean.product_name);
             TextView modelmy_myorder1_orderstate = MyOrderShow_MyOrder_view2.findViewById(R.id.modelmy_myorder1_orderstate);
@@ -1081,7 +1081,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
         } else if (listBean.order_status.equals("汇款确认中")) {
             //已经完成
             // modelmy_myorder_main_content.addView(MyOrderShow_MyOrder_view1);
-            View MyOrderShow_MyOrder_view3 = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_my_myorder1, null);
+            View MyOrderShow_MyOrder_view3 = LayoutInflater.from(mMainContext).inflate(R.layout.model_my_myorder1, null);
             TextView modelmy_myorder1_ordername = MyOrderShow_MyOrder_view3.findViewById(R.id.modelmy_myorder1_ordername);
             modelmy_myorder1_ordername.setText(listBean.product_name);
             TextView modelmy_myorder1_orderstate = MyOrderShow_MyOrder_view3.findViewById(R.id.modelmy_myorder1_orderstate);
@@ -1143,12 +1143,12 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
         if (mview == null || dataBean == null) {
             return;
         }
-        mControlMainActivity.onClickMyOrderDetails();
+        mMainContext.onClickMyOrderDetails();
         HideAllLayout();
         LinearLayout my_layout_main = mview.findViewById(R.id.my_layout_main);
         if (mMyOrderDetailsView == null) {
             //订单详情的刷新控件
-            mMyOrderDetailsView = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_my_myorderdetails, null);
+            mMyOrderDetailsView = LayoutInflater.from(mMainContext).inflate(R.layout.model_my_myorderdetails, null);
             //Smart_model_my_myorderdetails  刷新控件
             mSmart_model_my_myorderdetails = mMyOrderDetailsView.findViewById(R.id.Smart_model_my_myorderdetails);
             mSmart_model_my_myorderdetails.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
@@ -1210,12 +1210,12 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
         modelmy_myorderdetails_ordernumbercopy.setOnClickListener(v -> {
             String modelmy_myorderdetails_ordernumbertext = modelmy_myorderdetails_ordernumber.getText().toString();
             //获取剪贴板管理器：
-            ClipboardManager cm = (ClipboardManager) mControlMainActivity.getSystemService(Context.CLIPBOARD_SERVICE);
+            ClipboardManager cm = (ClipboardManager) mMainContext.getSystemService(Context.CLIPBOARD_SERVICE);
             // 创建普通字符型ClipData
             ClipData mClipData = ClipData.newPlainText("Label", modelmy_myorderdetails_ordernumbertext);
             // 将ClipData内容放到系统剪贴板里。
             cm.setPrimaryClip(mClipData);
-            Toast.makeText(mControlMainActivity, "已将订单号复制到剪贴板", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mMainContext, "已将订单号复制到剪贴板", Toast.LENGTH_SHORT).show();
         });
         my_layout_main.addView(mMyOrderDetailsView);
         //文件订单详情   订单判断的时间
@@ -1252,7 +1252,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
         HideAllLayout();
         LinearLayout my_layout_main = mview.findViewById(R.id.my_layout_main);
         if (mMyCouponView == null) {
-            mMyCouponView = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_my_mycoupon, null);
+            mMyCouponView = LayoutInflater.from(mMainContext).inflate(R.layout.model_my_mycoupon, null);
             //Smart_model_my_mycoupon   我的优惠券列表
             mSmart_model_my_mycoupon = mMyCouponView.findViewById(R.id.Smart_model_my_mycoupon);
             mSmart_model_my_mycoupon.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
@@ -1341,8 +1341,8 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
             TextView modelmy_mycoupon_main_exchange = mMyCouponView.findViewById(R.id.modelmy_mycoupon_main_exchange);
             modelmy_mycoupon_main_exchange.setOnClickListener(v -> {
                 //点击兑换弹出兑换对话框
-                View view = mControlMainActivity.getLayoutInflater().inflate(R.layout.dialog_sure_cancel1, null);
-                mMyCouponDialog = new ControllerCenterDialog(mControlMainActivity, 0, 0, view, R.style.DialogTheme);
+                View view = mMainContext.getLayoutInflater().inflate(R.layout.dialog_sure_cancel1, null);
+                mMyCouponDialog = new ControllerCenterDialog(mMainContext, 0, 0, view, R.style.DialogTheme);
                 mMyCouponDialog.setCancelable(true);
                 mMyCouponDialog.show();
                 TextView button_cancel = view.findViewById(R.id.button_cancel);
@@ -1368,7 +1368,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
 
     //展示我的优惠券-优惠券列表
     private void MyCouponShow_MyCoupon(LinearLayout modelmy_myorder_main_content,MyCoupon.DataBean.ListBean listBean) {
-        View view = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_my_mycoupon1, null);
+        View view = LayoutInflater.from(mMainContext).inflate(R.layout.model_my_mycoupon1, null);
         modelmy_myorder_main_content.addView(view);
         if (listBean.preferential_way.equals("满减")){
             //添加满减卷
@@ -1465,7 +1465,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
         HideAllLayout();
         LinearLayout my_layout_main = mview.findViewById(R.id.my_layout_main);
         if (mMyMessageView == null) {
-            mMyMessageView = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_my_mymessage, null);
+            mMyMessageView = LayoutInflater.from(mMainContext).inflate(R.layout.model_my_mymessage, null);
             //Smart_model_my_mymessage   我的消息刷新控件
             mSmart_model_my_mymessage = mMyMessageView.findViewById(R.id.Smart_model_my_mymessage);
             mSmart_model_my_mymessage.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
@@ -1518,11 +1518,11 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                 }
                 //如果没有未读消息弹出toast提示
                 if (!m_isFind) {
-                    Toast.makeText(mControlMainActivity, "暂无未读消息", Toast.LENGTH_LONG).show();
+                    Toast.makeText(mMainContext, "暂无未读消息", Toast.LENGTH_LONG).show();
                 } else {
                     //弹出提示，是否将未读消息置为全部已读
-                    View dialogView = mControlMainActivity.getLayoutInflater().inflate(R.layout.dialog_notip_sure_cancel, null);
-                    mMyDialog = new ControllerCenterDialog(mControlMainActivity, 0, 0, dialogView, R.style.DialogTheme);
+                    View dialogView = mMainContext.getLayoutInflater().inflate(R.layout.dialog_notip_sure_cancel, null);
+                    mMyDialog = new ControllerCenterDialog(mMainContext, 0, 0, dialogView, R.style.DialogTheme);
                     mMyDialog.setCancelable(true);
                     mMyDialog.show();
                     TextView dialog_content = dialogView.findViewById(R.id.dialog_content);
@@ -1578,7 +1578,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
         LinearLayout modelmy_mymessage_main_content = mMyMessageView.findViewById(R.id.modelmy_mymessage_main_content);
         modelmy_mymessage_main_content.removeAllViews();
         if (mMyMessageView0 == null) {
-            mMyMessageView0 = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_my_mymessage0, null);
+            mMyMessageView0 = LayoutInflater.from(mMainContext).inflate(R.layout.model_my_mymessage0, null);
         }
         //系统通知
         RelativeLayout modelmy_mymessage_notice = mMyMessageView0.findViewById(R.id.modelmy_mymessage_notice);
@@ -1608,7 +1608,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
         HideAllLayout();
         LinearLayout my_layout_main = mview.findViewById(R.id.my_layout_main);
         if (mMyAnswerView == null) {
-            mMyAnswerView = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_my_myanswer, null);
+            mMyAnswerView = LayoutInflater.from(mMainContext).inflate(R.layout.model_my_myanswer, null);
             //我的问答刷新控件
             mSmart_model_my_myanswer = mMyAnswerView.findViewById(R.id.Smart_model_my_myanswer);
             mSmart_model_my_myanswer.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
@@ -1692,7 +1692,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
         HideAllLayout();
         LinearLayout my_layout_main = mview.findViewById(R.id.my_layout_main);
         if (mMyAnswerDetailsView == null) {
-            mMyAnswerDetailsView = mControlMainActivity.getLayoutInflater().inflate(R.layout.model_my_myanswerdetails, null);
+            mMyAnswerDetailsView = mMainContext.getLayoutInflater().inflate(R.layout.model_my_myanswerdetails, null);
             //Smart_model_my_myanswerdetails  我的问答详情
             mSmart_model_my_myanswerdetails = mMyAnswerDetailsView.findViewById(R.id.Smart_model_my_myanswerdetails);
             mSmart_model_my_myanswerdetails.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
@@ -1716,8 +1716,8 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
             ImageView modelmy_myanswerdetails_delete = mMyAnswerDetailsView.findViewById(R.id.modelmy_myanswerdetails_delete);
             modelmy_myanswerdetails_delete.setOnClickListener(v -> {
                 //点击弹出删除问答提示框
-                View view = mControlMainActivity.getLayoutInflater().inflate(R.layout.dialog_sure_cancel, null);
-                mMyDialog = new ControllerCenterDialog(mControlMainActivity, 0, 0, view, R.style.DialogTheme);
+                View view = mMainContext.getLayoutInflater().inflate(R.layout.dialog_sure_cancel, null);
+                mMyDialog = new ControllerCenterDialog(mMainContext, 0, 0, view, R.style.DialogTheme);
                 mMyDialog.setCancelable(true);
                 mMyDialog.show();
                 TextView tip = view.findViewById(R.id.tip);
@@ -1748,24 +1748,24 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
         my_layout_main.addView(mMyAnswerDetailsView);
         LinearLayout modelmy_myanswerdetails_main_content = mMyAnswerDetailsView.findViewById(R.id.modelmy_myanswerdetails_main_content);
         modelmy_myanswerdetails_main_content.removeAllViews();
-        mAnswerDetailsView = mControlMainActivity.getLayoutInflater().inflate(R.layout.modelanswerdetails, null);
+        mAnswerDetailsView = mMainContext.getLayoutInflater().inflate(R.layout.modelanswerdetails, null);
         modelmy_myanswerdetails_main_content.addView(mAnswerDetailsView);
         getQueryOneQuestion(questions_id,course_type);
-        mControlMainActivity.Page_AnswerDetails();
+        mMainContext.Page_AnswerDetails();
     }
 
     // 查询个人信息详情（我的界面）
     public void getPersonalInfoDatas() {
-        if (mControlMainActivity.mStuId.equals("")){
+        if (mMainContext.mStuId.equals("")){
             mPersonalInfoDataBean = null;
             //重置我的界面
             ModelMyInit();
-//            Toast.makeText(mControlMainActivity, "获取个人信息失败", Toast.LENGTH_LONG).show();
+//            Toast.makeText(mMainContext, "获取个人信息失败", Toast.LENGTH_LONG).show();
             return;
         }
-        LoadingDialog.getInstance(mControlMainActivity).show();
+        LoadingDialog.getInstance(mMainContext).show();
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(mControlMainActivity.mIpadress)
+                .baseUrl(mMainContext.mIpadress)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(ModelObservableInterface.client)
                 .build();
@@ -1775,7 +1775,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
         Gson gson = new Gson();
 
         HashMap<String, Integer> paramsMap = new HashMap<>();
-        paramsMap.put("stu_id", Integer.valueOf(mControlMainActivity.mStuId));
+        paramsMap.put("stu_id", Integer.valueOf(mMainContext.mStuId));
         String strEntity = gson.toJson(paramsMap);
         RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json;charset=UTF-8"), strEntity);
         Call<PersonalInfoBean> call = modelObservableInterface.queryModelMyPersonInfo(body);
@@ -1784,28 +1784,28 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
             public void onResponse(Call<PersonalInfoBean> call, Response<PersonalInfoBean> response) {
                 PersonalInfoBean personalInfoBean = response.body();
                 if (personalInfoBean == null) {
-                    Toast.makeText(mControlMainActivity, "获取个人信息失败", Toast.LENGTH_LONG).show();
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    Toast.makeText(mMainContext, "获取个人信息失败", Toast.LENGTH_LONG).show();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 if (!HeaderInterceptor.IsErrorCode(personalInfoBean.code,personalInfoBean.msg)){
                     mPersonalInfoDataBean = null;
                     //重置我的界面
                     ModelMyInit();
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 //网络请求数据成功
                 mPersonalInfoDataBean = personalInfoBean.getData();
                 //重置我的界面
                 ModelMyInit();
-                LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                LoadingDialog.getInstance(mMainContext).dismiss();
             }
 
             @Override
             public void onFailure(Call<PersonalInfoBean> call, Throwable t) {
-                Toast.makeText(mControlMainActivity, "获取个人信息失败", Toast.LENGTH_LONG).show();
-                LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                Toast.makeText(mMainContext, "获取个人信息失败", Toast.LENGTH_LONG).show();
+                LoadingDialog.getInstance(mMainContext).dismiss();
             }
         });
     }
@@ -1859,22 +1859,22 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
 
     //我的课程列表
     public void getMyCourseList() {
-        if (mControlMainActivity.mStuId.equals("")){
+        if (mMainContext.mStuId.equals("")){
             if (mSmart_model_my_myclass != null){
                 mSmart_model_my_myclass.finishRefresh();
             }
             return;
         }
-        LoadingDialog.getInstance(mControlMainActivity).show();
+        LoadingDialog.getInstance(mMainContext).show();
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(mControlMainActivity.mIpadress)
+                .baseUrl(mMainContext.mIpadress)
                 .client(ModelObservableInterface.client)
                 .build();
         Gson gson = new Gson();
         mMyCourseCurrentPage = 1;
         HashMap<String, Integer> paramsMap = new HashMap<>();
-        paramsMap.put("stu_id", Integer.valueOf(mControlMainActivity.mStuId));
+        paramsMap.put("stu_id", Integer.valueOf(mMainContext.mStuId));
         paramsMap.put("pageNum", mMyCourseCurrentPage);
         paramsMap.put("pageSize",mMyCoursePageCount);
         String strEntity = gson.toJson(paramsMap);
@@ -1889,7 +1889,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                     if (mSmart_model_my_myclass != null){
                         mSmart_model_my_myclass.finishRefresh();
                     }
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     Log.e("TAG", "queryAllCourseInfo  onErrorCode: " + code);
                     return;
                 }
@@ -1898,14 +1898,14 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                     if (mSmart_model_my_myclass != null){
                         mSmart_model_my_myclass.finishRefresh();
                     }
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 if (!HeaderInterceptor.IsErrorCode(queryMyCourseListBean.getCode(),"")){
                     if (mSmart_model_my_myclass != null){
                         mSmart_model_my_myclass.finishRefresh();
                     }
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 QueryMyCourseListBean.DataBean dataBean = queryMyCourseListBean.getData();
@@ -1913,7 +1913,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                     if (mSmart_model_my_myclass != null){
                         mSmart_model_my_myclass.finishRefresh();
                     }
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 List<QueryMyCourseListBean.DataBean.ListBean> courseListBeansList = dataBean.getList();
@@ -1921,7 +1921,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                     if (mSmart_model_my_myclass != null){
                         mSmart_model_my_myclass.finishRefresh();
                     }
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 mMyCourseSum = dataBean.getTotal();
@@ -1933,10 +1933,10 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                     if (courseListBean == null) {
                         continue;
                     }
-                    View view = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_my_myclass1, null);
+                    View view = LayoutInflater.from(mMainContext).inflate(R.layout.model_my_myclass1, null);
                     //加载网络图片封面
                     ControllerCustomRoundAngleImageView modelmy_myclass1_cover = view.findViewById(R.id.modelmy_myclass1_cover);
-                    Glide.with(mControlMainActivity).load(courseListBean.cover).listener(new RequestListener<Drawable>() {
+                    Glide.with(mMainContext).load(courseListBean.cover).listener(new RequestListener<Drawable>() {
                         @Override
                         public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
                             Log.d("Wain", "加载失败 errorMsg:" + (e != null ? e.getMessage() : "null"));
@@ -1947,7 +1947,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                             Log.d("Wain", "成功  Drawable Name:" + resource.getClass().getCanonicalName());
                             return false;
                         }
-                    }).error(mControlMainActivity.getResources().getDrawable(R.drawable.modelcoursecover)).into(modelmy_myclass1_cover);
+                    }).error(mMainContext.getResources().getDrawable(R.drawable.modelcoursecover)).into(modelmy_myclass1_cover);
                     //课程名称
                     TextView modelmy_myclass1_classname = view.findViewById(R.id.modelmy_myclass1_classname);
                     modelmy_myclass1_classname.setText(courseListBean.course_name);
@@ -1977,13 +1977,13 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
 
                         //跳转课程详情
                         ModelCourseCover modelCourseCover = new ModelCourseCover();
-                        View modelCourseView = modelCourseCover.ModelCourseCover(mControlMainActivity, courseInfo);
+                        View modelCourseView = modelCourseCover.ModelCourseCover(mMainContext, courseInfo);
                         modelCourseCover.CourseDetailsShow();
                         HideAllLayout();
                         LinearLayout my_layout_main = mview.findViewById(R.id.my_layout_main);
                         my_layout_main.addView(modelCourseView);
                         mModelCourseCover = modelCourseCover;
-                        mControlMainActivity.onClickCourseDetails();
+                        mMainContext.onClickCourseDetails();
                     });
                     //我的课程协议
                     if (courseListBean.agreement_id != null) {
@@ -1991,8 +1991,8 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                         TextView modelmy_myclass1_agreement = view.findViewById(R.id.modelmy_myclass1_agreement);
                         modelmy_myclass1_agreement.setOnClickListener(v -> { //点击查看协议
                             HideAllLayout();
-                            mControlMainActivity.onClickMyAgreement();
-                            View myclass_agreement = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_agreement, null);
+                            mMainContext.onClickMyAgreement();
+                            View myclass_agreement = LayoutInflater.from(mMainContext).inflate(R.layout.model_agreement, null);
                             //我的课程网络请求
                             getModelMyMeent(myclass_agreement,courseListBean.agreement_id);
                             LinearLayout my_layout_main = mview.findViewById(R.id.my_layout_main);
@@ -2011,39 +2011,39 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                 if (mSmart_model_my_myclass != null){
                     mSmart_model_my_myclass.finishRefresh();
                 }
-                LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                LoadingDialog.getInstance(mMainContext).dismiss();
             }
 
             @Override
             public void onFailure(Call<QueryMyCourseListBean> call, Throwable t) {
                 Log.e("TAG", "onError: " + t.getMessage()+"" );
-                Toast.makeText(mControlMainActivity,"获取我的课程列表数据失败",Toast.LENGTH_LONG).show();
+                Toast.makeText(mMainContext,"获取我的课程列表数据失败",Toast.LENGTH_LONG).show();
                 if (mSmart_model_my_myclass != null){
                     mSmart_model_my_myclass.finishRefresh();
                 }
-                LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                LoadingDialog.getInstance(mMainContext).dismiss();
             }
         });
     }
 
     //我的课程列表-下拉加载
     public void getMyCourseListMore() {
-        if (mControlMainActivity.mStuId.equals("")){
+        if (mMainContext.mStuId.equals("")){
             if (mSmart_model_my_myclass != null){
                 mSmart_model_my_myclass.finishLoadMore();
             }
             return;
         }
-        LoadingDialog.getInstance(mControlMainActivity).show();
+        LoadingDialog.getInstance(mMainContext).show();
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(mControlMainActivity.mIpadress)
+                .baseUrl(mMainContext.mIpadress)
                 .client(ModelObservableInterface.client)
                 .build();
         Gson gson = new Gson();
         mMyCourseCurrentPage = mMyCourseCurrentPage + 1;
         HashMap<String, Integer> paramsMap = new HashMap<>();
-        paramsMap.put("stu_id", Integer.valueOf(mControlMainActivity.mStuId));
+        paramsMap.put("stu_id", Integer.valueOf(mMainContext.mStuId));
         paramsMap.put("pageNum", mMyCourseCurrentPage);
         paramsMap.put("pageSize",mMyCoursePageCount);
         String strEntity = gson.toJson(paramsMap);
@@ -2059,7 +2059,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                         mSmart_model_my_myclass.finishLoadMore();
                     }
                     Log.e("TAG", "queryAllCourseInfo  onErrorCode: " + code);
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 QueryMyCourseListBean queryMyCourseListBean = response.body();
@@ -2067,14 +2067,14 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                     if (mSmart_model_my_myclass != null){
                         mSmart_model_my_myclass.finishLoadMore();
                     }
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 if (!HeaderInterceptor.IsErrorCode(queryMyCourseListBean.getCode(),"")){
                     if (mSmart_model_my_myclass != null){
                         mSmart_model_my_myclass.finishLoadMore();
                     }
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 QueryMyCourseListBean.DataBean dataBean = queryMyCourseListBean.getData();
@@ -2082,7 +2082,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                     if (mSmart_model_my_myclass != null){
                         mSmart_model_my_myclass.finishLoadMore();
                     }
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 List<QueryMyCourseListBean.DataBean.ListBean> courseListBeansList = dataBean.getList();
@@ -2090,7 +2090,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                     if (mSmart_model_my_myclass != null){
                         mSmart_model_my_myclass.finishLoadMore();
                     }
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 mMyCourseSum = dataBean.getTotal();
@@ -2101,10 +2101,10 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                     if (courseListBean == null) {
                         continue;
                     }
-                    View view = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_my_myclass1, null);
+                    View view = LayoutInflater.from(mMainContext).inflate(R.layout.model_my_myclass1, null);
                     //加载网络图片封面
                     ControllerCustomRoundAngleImageView modelmy_myclass1_cover = view.findViewById(R.id.modelmy_myclass1_cover);
-                    Glide.with(mControlMainActivity).load(courseListBean.cover).listener(new RequestListener<Drawable>() {
+                    Glide.with(mMainContext).load(courseListBean.cover).listener(new RequestListener<Drawable>() {
                         @Override
                         public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
                             Log.d("Wain", "加载失败 errorMsg:" + (e != null ? e.getMessage() : "null"));
@@ -2115,7 +2115,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                             Log.d("Wain", "成功  Drawable Name:" + resource.getClass().getCanonicalName());
                             return false;
                         }
-                    }).error(mControlMainActivity.getResources().getDrawable(R.drawable.modelcoursecover)).into(modelmy_myclass1_cover);
+                    }).error(mMainContext.getResources().getDrawable(R.drawable.modelcoursecover)).into(modelmy_myclass1_cover);
                     //课程名称
                     TextView modelmy_myclass1_classname = view.findViewById(R.id.modelmy_myclass1_classname);
                     modelmy_myclass1_classname.setText(courseListBean.course_name);
@@ -2145,21 +2145,21 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
 
                         //跳转课程详情
                         ModelCourseCover modelCourseCover = new ModelCourseCover();
-                        View modelCourseView = modelCourseCover.ModelCourseCover(mControlMainActivity, courseInfo);
+                        View modelCourseView = modelCourseCover.ModelCourseCover(mMainContext, courseInfo);
                         modelCourseCover.CourseDetailsShow();
                         HideAllLayout();
                         LinearLayout my_layout_main = mview.findViewById(R.id.my_layout_main);
                         my_layout_main.addView(modelCourseView);
                         mModelCourseCover = modelCourseCover;
-                        mControlMainActivity.onClickCourseDetails();
+                        mMainContext.onClickCourseDetails();
                     });
                     if (courseListBean.agreement_id != null) {
                         //我的课程协议
                         TextView modelmy_myclass1_agreement = view.findViewById(R.id.modelmy_myclass1_agreement);
                         modelmy_myclass1_agreement.setOnClickListener(v -> { //点击查看协议
                             HideAllLayout();
-                            mControlMainActivity.onClickMyAgreement();
-                            View myclass_agreement = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_agreement, null);
+                            mMainContext.onClickMyAgreement();
+                            View myclass_agreement = LayoutInflater.from(mMainContext).inflate(R.layout.model_agreement, null);
                             //我的课程网络请求
                             getModelMyMeent(myclass_agreement,courseListBean.agreement_id);
                             LinearLayout my_layout_main = mview.findViewById(R.id.my_layout_main);
@@ -2178,39 +2178,39 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                 if (mSmart_model_my_myclass != null){
                     mSmart_model_my_myclass.finishLoadMore();
                 }
-                LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                LoadingDialog.getInstance(mMainContext).dismiss();
             }
 
             @Override
             public void onFailure(Call<QueryMyCourseListBean> call, Throwable t) {
                 Log.e("TAG", "onError: " + t.getMessage()+"" );
-                Toast.makeText(mControlMainActivity,"获取我的课程列表数据失败",Toast.LENGTH_LONG).show();
+                Toast.makeText(mMainContext,"获取我的课程列表数据失败",Toast.LENGTH_LONG).show();
                 if (mSmart_model_my_myclass != null){
                     mSmart_model_my_myclass.finishRefresh();
                 }
-                LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                LoadingDialog.getInstance(mMainContext).dismiss();
             }
         });
     }
 
     //我的课程包列表请求数据
     public void getMyPacketList() {
-        if (mControlMainActivity.mStuId.equals("")){
+        if (mMainContext.mStuId.equals("")){
             if (mSmart_model_my_myclasspacket != null){
                 mSmart_model_my_myclasspacket.finishRefresh();
             }
             return;
         }
-        LoadingDialog.getInstance(mControlMainActivity).show();
+        LoadingDialog.getInstance(mMainContext).show();
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(mControlMainActivity.mIpadress)
+                .baseUrl(mMainContext.mIpadress)
                 .client(ModelObservableInterface.client)
                 .build();
         Gson gson = new Gson();
         mMyCoursePacketCurrentPage = 1;
         HashMap<String, Integer> paramsMap = new HashMap<>();
-        paramsMap.put("stu_id", Integer.valueOf(mControlMainActivity.mStuId));
+        paramsMap.put("stu_id", Integer.valueOf(mMainContext.mStuId));
         paramsMap.put("pageNum", mMyCoursePacketCurrentPage);
         paramsMap.put("pageSize",mMyCoursePacketPageCount);
         String strEntity = gson.toJson(paramsMap);
@@ -2226,7 +2226,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                         mSmart_model_my_myclasspacket.finishRefresh();
                     }
                     Log.e("TAG", "queryAllCourseInfo  onErrorCode: " + code);
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 MyclassPacketList myclassPacketList = response.body();
@@ -2234,14 +2234,14 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                     if (mSmart_model_my_myclasspacket != null){
                         mSmart_model_my_myclasspacket.finishRefresh();
                     }
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 if (!HeaderInterceptor.IsErrorCode(myclassPacketList.getCode(),"")){
                     if (mSmart_model_my_myclasspacket != null){
                         mSmart_model_my_myclasspacket.finishRefresh();
                     }
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 MyclassPacketList.DataBean dataBean = myclassPacketList.getData();
@@ -2249,7 +2249,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                     if (mSmart_model_my_myclasspacket != null){
                         mSmart_model_my_myclasspacket.finishRefresh();
                     }
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 List<MyclassPacketList.DataBean.ListBean> coursePacketListBeansList = dataBean.getList();
@@ -2257,7 +2257,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                     if (mSmart_model_my_myclasspacket != null){
                         mSmart_model_my_myclasspacket.finishRefresh();
                     }
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 mMyCoursePacketSum = dataBean.getTotal();
@@ -2269,10 +2269,10 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                     if (coursePacketListBean == null) {
                         continue;
                     }
-                    View view = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_my_myclasspacket1, null);
+                    View view = LayoutInflater.from(mMainContext).inflate(R.layout.model_my_myclasspacket1, null);
                     //加载网络图片封面
                     ControllerCustomRoundAngleImageView modelmy_myclasspacket1_cover = view.findViewById(R.id.modelmy_myclasspacket1_cover);
-                    Glide.with(mControlMainActivity).load(coursePacketListBean.cover).listener(new RequestListener<Drawable>() {
+                    Glide.with(mMainContext).load(coursePacketListBean.cover).listener(new RequestListener<Drawable>() {
                         @Override
                         public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
                             Log.d("Wain", "加载失败 errorMsg:" + (e != null ? e.getMessage() : "null"));
@@ -2283,7 +2283,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                             Log.d("Wain", "成功  Drawable Name:" + resource.getClass().getCanonicalName());
                             return false;
                         }
-                    }).error(mControlMainActivity.getResources().getDrawable(R.drawable.modelcoursepacketcover)).into(modelmy_myclasspacket1_cover);
+                    }).error(mMainContext.getResources().getDrawable(R.drawable.modelcoursepacketcover)).into(modelmy_myclasspacket1_cover);
                     //课程包名称
                     TextView modelmy_myclasspacket1_classname = view.findViewById(R.id.modelmy_myclasspacket1_classname);
                     modelmy_myclasspacket1_classname.setText(coursePacketListBean.cp_name);
@@ -2313,12 +2313,12 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                         coursePacketInfo.mCoursePacketLearnPersonNum= String.valueOf(coursePacketListBean.buying_base_number);//购买人数
                         //跳转课程包详情
                         ModelCoursePacketCover modelCoursePacketCover = new ModelCoursePacketCover();
-                        View modelCoursePacketView = modelCoursePacketCover.ModelCoursePacketCover(mControlMainActivity, coursePacketInfo);
+                        View modelCoursePacketView = modelCoursePacketCover.ModelCoursePacketCover(mMainContext, coursePacketInfo);
                         modelCoursePacketCover.CoursePacketDetailsShow();
                         HideAllLayout();
                         LinearLayout my_layout_main = mview.findViewById(R.id.my_layout_main);
                         my_layout_main.addView(modelCoursePacketView);
-                        mControlMainActivity.onClickCoursePacketDetails();
+                        mMainContext.onClickCoursePacketDetails();
                     });
                     //我的课程包协议
                     if (coursePacketListBean.agreement_id != null) {
@@ -2326,8 +2326,8 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                         TextView modelmy_myclasspacket1_agreement = view.findViewById(R.id.modelmy_myclasspacket1_agreement);
                         modelmy_myclasspacket1_agreement.setOnClickListener(v -> { //点击查看协议
                             HideAllLayout();
-                            mControlMainActivity.onClickMyAgreement();
-                            View myclass_agreement = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_agreement, null);
+                            mMainContext.onClickMyAgreement();
+                            View myclass_agreement = LayoutInflater.from(mMainContext).inflate(R.layout.model_agreement, null);
                             //我的课程包协议请求
                             getModelMyMeent(myclass_agreement,coursePacketListBean.agreement_id);
                             LinearLayout my_layout_main = mview.findViewById(R.id.my_layout_main);
@@ -2346,39 +2346,39 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                 if (mSmart_model_my_myclasspacket != null){
                     mSmart_model_my_myclasspacket.finishRefresh();
                 }
-                LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                LoadingDialog.getInstance(mMainContext).dismiss();
             }
 
             @Override
             public void onFailure(Call<MyclassPacketList> call, Throwable t) {
                 Log.e("TAG", "onError: " + t.getMessage()+"" );
-                Toast.makeText(mControlMainActivity,"获取我的课程包列表数据失败",Toast.LENGTH_LONG).show();
+                Toast.makeText(mMainContext,"获取我的课程包列表数据失败",Toast.LENGTH_LONG).show();
                 if (mSmart_model_my_myclasspacket != null){
                     mSmart_model_my_myclasspacket.finishRefresh();
                 }
-                LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                LoadingDialog.getInstance(mMainContext).dismiss();
             }
         });
     }
 
     //我的课程包列表请求数据-下拉加载
     public void getMyPacketListMore() {
-        if (mControlMainActivity.mStuId.equals("")){
+        if (mMainContext.mStuId.equals("")){
             if (mSmart_model_my_myclasspacket != null){
                 mSmart_model_my_myclasspacket.finishLoadMore();
             }
             return;
         }
-        LoadingDialog.getInstance(mControlMainActivity).show();
+        LoadingDialog.getInstance(mMainContext).show();
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(mControlMainActivity.mIpadress)
+                .baseUrl(mMainContext.mIpadress)
                 .client(ModelObservableInterface.client)
                 .build();
         Gson gson = new Gson();
         mMyCoursePacketCurrentPage = mMyCoursePacketCurrentPage + 1;
         HashMap<String, Integer> paramsMap = new HashMap<>();
-        paramsMap.put("stu_id", Integer.valueOf(mControlMainActivity.mStuId));
+        paramsMap.put("stu_id", Integer.valueOf(mMainContext.mStuId));
         paramsMap.put("pageNum", mMyCoursePacketCurrentPage);
         paramsMap.put("pageSize",mMyCoursePacketPageCount);
         String strEntity = gson.toJson(paramsMap);
@@ -2394,7 +2394,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                         mSmart_model_my_myclasspacket.finishLoadMore();
                     }
                     Log.e("TAG", "queryAllCourseInfo  onErrorCode: " + code);
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 MyclassPacketList myclassPacketList = response.body();
@@ -2402,14 +2402,14 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                     if (mSmart_model_my_myclasspacket != null){
                         mSmart_model_my_myclasspacket.finishLoadMore();
                     }
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 if (!HeaderInterceptor.IsErrorCode(myclassPacketList.getCode(),"")){
                     if (mSmart_model_my_myclasspacket != null){
                         mSmart_model_my_myclasspacket.finishLoadMore();
                     }
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 MyclassPacketList.DataBean dataBean = myclassPacketList.getData();
@@ -2417,7 +2417,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                     if (mSmart_model_my_myclasspacket != null){
                         mSmart_model_my_myclasspacket.finishLoadMore();
                     }
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 List<MyclassPacketList.DataBean.ListBean> coursePacketListBeansList = dataBean.getList();
@@ -2425,7 +2425,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                     if (mSmart_model_my_myclasspacket != null){
                         mSmart_model_my_myclasspacket.finishLoadMore();
                     }
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 mMyCoursePacketSum = dataBean.getTotal();
@@ -2436,10 +2436,10 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                     if (coursePacketListBean == null) {
                         continue;
                     }
-                    View view = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_my_myclasspacket1, null);
+                    View view = LayoutInflater.from(mMainContext).inflate(R.layout.model_my_myclasspacket1, null);
                     //加载网络图片封面
                     ControllerCustomRoundAngleImageView modelmy_myclasspacket1_cover = view.findViewById(R.id.modelmy_myclasspacket1_cover);
-                    Glide.with(mControlMainActivity).load(coursePacketListBean.cover).listener(new RequestListener<Drawable>() {
+                    Glide.with(mMainContext).load(coursePacketListBean.cover).listener(new RequestListener<Drawable>() {
                         @Override
                         public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
                             Log.d("Wain", "加载失败 errorMsg:" + (e != null ? e.getMessage() : "null"));
@@ -2450,7 +2450,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                             Log.d("Wain", "成功  Drawable Name:" + resource.getClass().getCanonicalName());
                             return false;
                         }
-                    }).error(mControlMainActivity.getResources().getDrawable(R.drawable.modelcoursepacketcover)).into(modelmy_myclasspacket1_cover);
+                    }).error(mMainContext.getResources().getDrawable(R.drawable.modelcoursepacketcover)).into(modelmy_myclasspacket1_cover);
                     //课程包名称
                     TextView modelmy_myclasspacket1_classname = view.findViewById(R.id.modelmy_myclasspacket1_classname);
                     modelmy_myclasspacket1_classname.setText(coursePacketListBean.cp_name);
@@ -2484,12 +2484,12 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                         coursePacketInfo.mCoursePacketLearnPersonNum= String.valueOf(coursePacketListBean.buying_base_number);//购买人数
                         //跳转课程包详情
                         ModelCoursePacketCover modelCoursePacketCover = new ModelCoursePacketCover();
-                        View modelCoursePacketView = modelCoursePacketCover.ModelCoursePacketCover(mControlMainActivity, coursePacketInfo);
+                        View modelCoursePacketView = modelCoursePacketCover.ModelCoursePacketCover(mMainContext, coursePacketInfo);
                         modelCoursePacketCover.CoursePacketDetailsShow();
                         HideAllLayout();
                         LinearLayout my_layout_main = mview.findViewById(R.id.my_layout_main);
                         my_layout_main.addView(modelCoursePacketView);
-                        mControlMainActivity.onClickCoursePacketDetails();
+                        mMainContext.onClickCoursePacketDetails();
                     });
                     //我的课程包协议
                     if (coursePacketListBean.agreement_id != null) {
@@ -2497,8 +2497,8 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                         TextView modelmy_myclasspacket1_agreement = view.findViewById(R.id.modelmy_myclasspacket1_agreement);
                         modelmy_myclasspacket1_agreement.setOnClickListener(v -> { //点击查看协议
                             HideAllLayout();
-                            mControlMainActivity.onClickMyAgreement();
-                            View myclass_agreement = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_agreement, null);
+                            mMainContext.onClickMyAgreement();
+                            View myclass_agreement = LayoutInflater.from(mMainContext).inflate(R.layout.model_agreement, null);
                             //我的课程包协议请求
                             getModelMyMeent(myclass_agreement,coursePacketListBean.agreement_id);
                             LinearLayout my_layout_main = mview.findViewById(R.id.my_layout_main);
@@ -2517,35 +2517,35 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                 if (mSmart_model_my_myclasspacket != null){
                     mSmart_model_my_myclasspacket.finishLoadMore();
                 }
-                LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                LoadingDialog.getInstance(mMainContext).dismiss();
             }
 
             @Override
             public void onFailure(Call<MyclassPacketList> call, Throwable t) {
                 Log.e("TAG", "onError: " + t.getMessage()+"" );
-                Toast.makeText(mControlMainActivity,"获取我的课程包列表数据失败",Toast.LENGTH_LONG).show();
+                Toast.makeText(mMainContext,"获取我的课程包列表数据失败",Toast.LENGTH_LONG).show();
                 if (mSmart_model_my_myclasspacket != null){
                     mSmart_model_my_myclasspacket.finishLoadMore();
                 }
-                LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                LoadingDialog.getInstance(mMainContext).dismiss();
             }
         });
     }
 
     //我的收藏列表（课程包）
     public void getModelMyClassPacketCollection(){
-        if (mControlMainActivity.mStuId.equals("")){
+        if (mMainContext.mStuId.equals("")){
             if (mSmart_model_my_mycollect != null){
                 mSmart_model_my_mycollect.finishRefresh();
             }
             return;
         }
-        LoadingDialog.getInstance(mControlMainActivity).show();
+        LoadingDialog.getInstance(mMainContext).show();
         LinearLayout modelmy_mycollect_main_content = mMyCollectView.findViewById(R.id.modelmy_mycollect_main_content);
         modelmy_mycollect_main_content.removeAllViews();
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(mControlMainActivity.mIpadress)
+                .baseUrl(mMainContext.mIpadress)
                 .client(ModelObservableInterface.client)
                 .build();
         ModelObservableInterface modelObservableInterface = retrofit.create(ModelObservableInterface.class);
@@ -2554,7 +2554,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
         HashMap<String, Integer> paramsMap = new HashMap<>();
         paramsMap.put("pageNum", mMyCollectPacketCurrentPage);//第几页
         paramsMap.put("pageSize",mMyCollectPacketPageCount);//每页几条
-        paramsMap.put("stu_id", Integer.valueOf(mControlMainActivity.mStuId));//学生id
+        paramsMap.put("stu_id", Integer.valueOf(mMainContext.mStuId));//学生id
         HashMap<String, String> paramsMap1 = new HashMap<>();
         paramsMap1.put("type", "课程包");
         String strEntity = gson.toJson(paramsMap);
@@ -2572,14 +2572,14 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                             if (mSmart_model_my_mycollect != null){
                                 mSmart_model_my_mycollect.finishRefresh();
                             }
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         if (!HeaderInterceptor.IsErrorCode(listBean.getCode(),"")){
                             if (mSmart_model_my_mycollect != null){
                                 mSmart_model_my_mycollect.finishRefresh();
                             }
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         int code = listBean.getCode();
@@ -2607,27 +2607,27 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                                     if (mSmart_model_my_mycollect != null){
                                         mSmart_model_my_mycollect.finishRefresh();
                                     }
-                                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                                    LoadingDialog.getInstance(mMainContext).dismiss();
                                 } else {
                                     if (mSmart_model_my_mycollect != null){
                                         mSmart_model_my_mycollect.finishRefresh();
                                     }
-                                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                                    LoadingDialog.getInstance(mMainContext).dismiss();
                                     return;
                                 }
                             } else {
                                 if (mSmart_model_my_mycollect != null){
                                     mSmart_model_my_mycollect.finishRefresh();
                                 }
-                                LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                                LoadingDialog.getInstance(mMainContext).dismiss();
                                 return;
                             }
                         }else {
                             if (mSmart_model_my_mycollect != null){
                                 mSmart_model_my_mycollect.finishRefresh();
                             }
-                            Toast.makeText(mControlMainActivity,"获取我的收藏数据失败",Toast.LENGTH_LONG).show();
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            Toast.makeText(mMainContext,"获取我的收藏数据失败",Toast.LENGTH_LONG).show();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                     }
@@ -2638,25 +2638,25 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                             mSmart_model_my_mycollect.finishRefresh();
                         }
                         Log.e(TAG, "onFailure: "+t.getMessage()+"错误是" );
-                        Toast.makeText(mControlMainActivity,"获取我的收藏数据失败",Toast.LENGTH_LONG).show();
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        Toast.makeText(mMainContext,"获取我的收藏数据失败",Toast.LENGTH_LONG).show();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                     }
                 });
     }
 
     //我的收藏列表（课程包）-下拉加载
     public void getModelMyClassPacketCollectionMore(){
-        if (mControlMainActivity.mStuId.equals("")){
+        if (mMainContext.mStuId.equals("")){
             if (mSmart_model_my_mycollect != null){
                 mSmart_model_my_mycollect.finishLoadMore();
             }
             return;
         }
-        LoadingDialog.getInstance(mControlMainActivity).show();
+        LoadingDialog.getInstance(mMainContext).show();
         LinearLayout modelmy_mycollect_main_content = mMyCollectView.findViewById(R.id.modelmy_mycollect_main_content);
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(mControlMainActivity.mIpadress)
+                .baseUrl(mMainContext.mIpadress)
                 .client(ModelObservableInterface.client)
                 .build();
         ModelObservableInterface modelObservableInterface = retrofit.create(ModelObservableInterface.class);
@@ -2665,7 +2665,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
         HashMap<String, Integer> paramsMap = new HashMap<>();
         paramsMap.put("pageNum", mMyCollectPacketCurrentPage);//第几页
         paramsMap.put("pageSize",mMyCollectPacketPageCount);//每页几条
-        paramsMap.put("stu_id", Integer.valueOf(mControlMainActivity.mStuId));//学生id
+        paramsMap.put("stu_id", Integer.valueOf(mMainContext.mStuId));//学生id
         HashMap<String, String> paramsMap1 = new HashMap<>();
         paramsMap1.put("type", "课程包");
         String strEntity = gson.toJson(paramsMap);
@@ -2683,14 +2683,14 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                             if (mSmart_model_my_mycollect != null){
                                 mSmart_model_my_mycollect.finishLoadMore();
                             }
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         if (!HeaderInterceptor.IsErrorCode(listBean.getCode(),"")){
                             if (mSmart_model_my_mycollect != null){
                                 mSmart_model_my_mycollect.finishLoadMore();
                             }
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         int code = listBean.getCode();
@@ -2718,27 +2718,27 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                                     if (mSmart_model_my_mycollect != null){
                                         mSmart_model_my_mycollect.finishRefresh();
                                     }
-                                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                                    LoadingDialog.getInstance(mMainContext).dismiss();
                                 } else {
                                     if (mSmart_model_my_mycollect != null){
                                         mSmart_model_my_mycollect.finishLoadMore();
                                     }
-                                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                                    LoadingDialog.getInstance(mMainContext).dismiss();
                                     return;
                                 }
                             } else {
                                 if (mSmart_model_my_mycollect != null){
                                     mSmart_model_my_mycollect.finishLoadMore();
                                 }
-                                LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                                LoadingDialog.getInstance(mMainContext).dismiss();
                                 return;
                             }
                         }else {
                             if (mSmart_model_my_mycollect != null){
                                 mSmart_model_my_mycollect.finishLoadMore();
                             }
-                            Toast.makeText(mControlMainActivity,"获取我的收藏数据失败",Toast.LENGTH_LONG).show();
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            Toast.makeText(mMainContext,"获取我的收藏数据失败",Toast.LENGTH_LONG).show();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                     }
@@ -2749,26 +2749,26 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                             mSmart_model_my_mycollect.finishLoadMore();
                         }
                         Log.e(TAG, "onFailure: "+t.getMessage()+"错误是" );
-                        Toast.makeText(mControlMainActivity,"获取我的收藏数据失败",Toast.LENGTH_LONG).show();
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        Toast.makeText(mMainContext,"获取我的收藏数据失败",Toast.LENGTH_LONG).show();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                     }
                 });
     }
 
     //我的收藏列表（课程）
     public void getModelMyClassCollection(){
-        if (mControlMainActivity.mStuId.equals("")){
+        if (mMainContext.mStuId.equals("")){
             if (mSmart_model_my_mycollect != null){
                 mSmart_model_my_mycollect.finishRefresh();
             }
             return;
         }
-        LoadingDialog.getInstance(mControlMainActivity).show();
+        LoadingDialog.getInstance(mMainContext).show();
         LinearLayout modelmy_mycollect_main_content = mMyCollectView.findViewById(R.id.modelmy_mycollect_main_content);
         modelmy_mycollect_main_content.removeAllViews();
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(mControlMainActivity.mIpadress)
+                .baseUrl(mMainContext.mIpadress)
                 .client(ModelObservableInterface.client)
                 .build();
         ModelObservableInterface modelObservableInterface = retrofit.create(ModelObservableInterface.class);
@@ -2777,7 +2777,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
         HashMap<String, Integer> paramsMap = new HashMap<>();
         paramsMap.put("pageNum", mMyCollectCurrentPage);//第几页
         paramsMap.put("pageSize",mMyCollectPageCount);//每页几条
-        paramsMap.put("stu_id", Integer.valueOf(mControlMainActivity.mStuId));//学生id
+        paramsMap.put("stu_id", Integer.valueOf(mMainContext.mStuId));//学生id
         HashMap<String, String> paramsMap1 = new HashMap<>();
         paramsMap1.put("type", "课程");
         String strEntity = gson.toJson(paramsMap);
@@ -2794,7 +2794,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                             if (mSmart_model_my_mycollect != null){
                                 mSmart_model_my_mycollect.finishRefresh();
                             }
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         int code = listBean.getCode();
@@ -2802,7 +2802,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                             if (mSmart_model_my_mycollect != null){
                                 mSmart_model_my_mycollect.finishRefresh();
                             }
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         if (code == 200){
@@ -2829,26 +2829,26 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                                     if (mSmart_model_my_mycollect != null){
                                         mSmart_model_my_mycollect.finishRefresh();
                                     }
-                                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                                    LoadingDialog.getInstance(mMainContext).dismiss();
                                     return;
                                 }
                             } else {
                                 if (mSmart_model_my_mycollect != null){
                                     mSmart_model_my_mycollect.finishRefresh();
                                 }
-                                LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                                LoadingDialog.getInstance(mMainContext).dismiss();
                                 return;
                             }
                             if (mSmart_model_my_mycollect != null){
                                 mSmart_model_my_mycollect.finishRefresh();
                             }
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                         }else {
                             if (mSmart_model_my_mycollect != null){
                                 mSmart_model_my_mycollect.finishRefresh();
                             }
-                            Toast.makeText(mControlMainActivity,"获取我的收藏数据失败",Toast.LENGTH_LONG).show();
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            Toast.makeText(mMainContext,"获取我的收藏数据失败",Toast.LENGTH_LONG).show();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                     }
@@ -2859,25 +2859,25 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                             mSmart_model_my_mycollect.finishRefresh();
                         }
                         Log.e(TAG, "onFailure: "+t.getMessage()+"错误是" );
-                        Toast.makeText(mControlMainActivity,"获取我的收藏数据失败",Toast.LENGTH_LONG).show();
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        Toast.makeText(mMainContext,"获取我的收藏数据失败",Toast.LENGTH_LONG).show();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                     }
                 });
     }
 
     //我的收藏列表（课程）-下拉加载
     public void getModelMyClassCollectionMore(){
-        if (mControlMainActivity.mStuId.equals("")){
+        if (mMainContext.mStuId.equals("")){
             if (mSmart_model_my_mycollect != null){
                 mSmart_model_my_mycollect.finishLoadMore();
             }
             return;
         }
-        LoadingDialog.getInstance(mControlMainActivity).show();
+        LoadingDialog.getInstance(mMainContext).show();
         LinearLayout modelmy_mycollect_main_content = mMyCollectView.findViewById(R.id.modelmy_mycollect_main_content);
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(mControlMainActivity.mIpadress)
+                .baseUrl(mMainContext.mIpadress)
                 .client(ModelObservableInterface.client)
                 .build();
         ModelObservableInterface modelObservableInterface = retrofit.create(ModelObservableInterface.class);
@@ -2886,7 +2886,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
         HashMap<String, Integer> paramsMap = new HashMap<>();
         paramsMap.put("pageNum", mMyCollectCurrentPage);//第几页
         paramsMap.put("pageSize",mMyCollectPageCount);//每页几条
-        paramsMap.put("stu_id", Integer.valueOf(mControlMainActivity.mStuId));//学生id
+        paramsMap.put("stu_id", Integer.valueOf(mMainContext.mStuId));//学生id
         HashMap<String, String> paramsMap1 = new HashMap<>();
         paramsMap1.put("type", "课程");
         String strEntity = gson.toJson(paramsMap);
@@ -2904,7 +2904,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                             if (mSmart_model_my_mycollect != null){
                                 mSmart_model_my_mycollect.finishLoadMore();
                             }
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         int code = listBean.getCode();
@@ -2912,7 +2912,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                             if (mSmart_model_my_mycollect != null){
                                 mSmart_model_my_mycollect.finishLoadMore();
                             }
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         if (code == 200){
@@ -2938,27 +2938,27 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                                     if (mSmart_model_my_mycollect != null){
                                         mSmart_model_my_mycollect.finishRefresh();
                                     }
-                                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                                    LoadingDialog.getInstance(mMainContext).dismiss();
                                 } else {
                                     if (mSmart_model_my_mycollect != null){
                                         mSmart_model_my_mycollect.finishLoadMore();
                                     }
-                                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                                    LoadingDialog.getInstance(mMainContext).dismiss();
                                     return;
                                 }
                             } else {
                                 if (mSmart_model_my_mycollect != null){
                                     mSmart_model_my_mycollect.finishLoadMore();
                                 }
-                                LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                                LoadingDialog.getInstance(mMainContext).dismiss();
                                 return;
                             }
                         }else {
                             if (mSmart_model_my_mycollect != null){
                                 mSmart_model_my_mycollect.finishLoadMore();
                             }
-                            Toast.makeText(mControlMainActivity,"获取我的收藏数据失败",Toast.LENGTH_LONG).show();
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            Toast.makeText(mMainContext,"获取我的收藏数据失败",Toast.LENGTH_LONG).show();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                     }
@@ -2969,8 +2969,8 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                             mSmart_model_my_mycollect.finishLoadMore();
                         }
                         Log.e(TAG, "onFailure: "+t.getMessage()+"错误是" );
-                        Toast.makeText(mControlMainActivity,"获取我的收藏数据失败",Toast.LENGTH_LONG).show();
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        Toast.makeText(mMainContext,"获取我的收藏数据失败",Toast.LENGTH_LONG).show();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                     }
                 });
     }
@@ -2980,10 +2980,10 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
         if (myMessageInfo == null){
             return;
         }
-        LoadingDialog.getInstance(mControlMainActivity).show();
+        LoadingDialog.getInstance(mMainContext).show();
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(mControlMainActivity.mIpadress)
+                .baseUrl(mMainContext.mIpadress)
                 .client(ModelObservableInterface.client)
                 .build();
         ModelObservableInterface queryMyCourseList = retrofit.create(ModelObservableInterface.class);
@@ -2996,30 +2996,30 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                     public void onResponse(Call<ModelObservableInterface.BaseBean> call, Response<ModelObservableInterface.BaseBean> response) {
                         ModelObservableInterface.BaseBean baseBean = response.body();
                         if (baseBean == null){
-                            Toast.makeText(mControlMainActivity,"删除失败",Toast.LENGTH_SHORT).show();
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            Toast.makeText(mMainContext,"删除失败",Toast.LENGTH_SHORT).show();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         if (!HeaderInterceptor.IsErrorCode(baseBean.getErrorCode(),baseBean.getErrorMsg())){
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         if (baseBean.getErrorCode() != 200){
-                            Toast.makeText(mControlMainActivity,"删除失败",Toast.LENGTH_SHORT).show();
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            Toast.makeText(mMainContext,"删除失败",Toast.LENGTH_SHORT).show();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
 //                        adapter.DeleteItem(myMessageInfo);
                         getModelMyMessageList(mMyMessageType);
-                        Toast.makeText(mControlMainActivity,"删除成功",Toast.LENGTH_SHORT).show();
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        Toast.makeText(mMainContext,"删除成功",Toast.LENGTH_SHORT).show();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                     }
 
                     @Override
                     public void onFailure(Call<ModelObservableInterface.BaseBean> call, Throwable t) {
                         Log.e(TAG, "onFailure: "+t.getMessage() );
-                        Toast.makeText(mControlMainActivity,"删除失败",Toast.LENGTH_SHORT).show();
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        Toast.makeText(mMainContext,"删除失败",Toast.LENGTH_SHORT).show();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                         return;
                     }
                 });
@@ -3027,13 +3027,13 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
 
     //我的消息列表
     public void getModelMyMessageList(Integer info_type){
-        if (mControlMainActivity.mStuId.equals("")){
+        if (mMainContext.mStuId.equals("")){
             if (mSmart_model_my_mymessage != null){
                 mSmart_model_my_mymessage.finishRefresh();
             }
             return;
         }
-        LoadingDialog.getInstance(mControlMainActivity).show();
+        LoadingDialog.getInstance(mMainContext).show();
         if (list != null){
             list.clear();
         }
@@ -3050,10 +3050,10 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                 //我的消息点击
                 LinearLayout modelmy_mymessage_main_content = mMyMessageView.findViewById(R.id.modelmy_mymessage_main_content);
                 modelmy_mymessage_main_content.removeAllViews();
-                View view = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_my_mymessage2, null);
+                View view = LayoutInflater.from(mMainContext).inflate(R.layout.model_my_mymessage2, null);
                 ControllerCustomRoundAngleImageView modelmy_mymessage2_cover = view.findViewById(R.id.modelmy_mymessage2_cover);
                 if (info_type == 3) {
-                    Glide.with(mControlMainActivity).load(myMessageInfo.modelmy_mymessage1_coverurl).listener(new RequestListener<Drawable>() {
+                    Glide.with(mMainContext).load(myMessageInfo.modelmy_mymessage1_coverurl).listener(new RequestListener<Drawable>() {
                         @Override
                         public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
                             Log.d("Wain", "加载失败 errorMsg:" + (e != null ? e.getMessage() : "null"));
@@ -3065,9 +3065,9 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                             Log.d("Wain", "成功  Drawable Name:" + resource.getClass().getCanonicalName());
                             return false;
                         }
-                    }).error(mControlMainActivity.getResources().getDrawable(R.drawable.image_teachersdefault)).into(modelmy_mymessage2_cover);
+                    }).error(mMainContext.getResources().getDrawable(R.drawable.image_teachersdefault)).into(modelmy_mymessage2_cover);
                 } else if (info_type == 2) {
-                    Glide.with(mControlMainActivity).load(myMessageInfo.modelmy_mymessage1_coverurl).listener(new RequestListener<Drawable>() {
+                    Glide.with(mMainContext).load(myMessageInfo.modelmy_mymessage1_coverurl).listener(new RequestListener<Drawable>() {
                         @Override
                         public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
                             Log.d("Wain", "加载失败 errorMsg:" + (e != null ? e.getMessage() : "null"));
@@ -3079,7 +3079,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                             Log.d("Wain", "成功  Drawable Name:" + resource.getClass().getCanonicalName());
                             return false;
                         }
-                    }).error(mControlMainActivity.getResources().getDrawable(R.drawable.img_mymessage_advertisement)).into(modelmy_mymessage2_cover);
+                    }).error(mMainContext.getResources().getDrawable(R.drawable.img_mymessage_advertisement)).into(modelmy_mymessage2_cover);
                 }
                 TextView modelmy_mymessage2_time = view.findViewById(R.id.modelmy_mymessage2_time);
                 modelmy_mymessage2_time.setText(myMessageInfo.modelmy_mymessage1_time);
@@ -3089,13 +3089,13 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                 //修改服务器的已读状态
                 ReadMyNews("\"" + myMessageInfo.modelmy_mymessage1_Id + "\"");
             }
-        }, mControlMainActivity, list);
+        }, mMainContext, list);
         listView.setAdapter(adapter);
         LinearLayout mymessage_end = mMyMessageView.findViewById(R.id.mymessage_end);
         mymessage_end.setVisibility(View.INVISIBLE);
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(mControlMainActivity.mIpadress)
+                .baseUrl(mMainContext.mIpadress)
                 .client(ModelObservableInterface.client)
                 .build();
         mMyMessageCurrentPage = 1;
@@ -3104,7 +3104,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
         HashMap<String, Integer> paramsMap = new HashMap<>();
         paramsMap.put("pageNum", mMyMessageCurrentPage);//第几页
         paramsMap.put("pageSize",mMyMessagePageCount);//每页几条
-        paramsMap.put("stu_id", Integer.valueOf(mControlMainActivity.mStuId));//学生id
+        paramsMap.put("stu_id", Integer.valueOf(mMainContext.mStuId));//学生id
         paramsMap.put("info_type",info_type);
         String strEntity = gson.toJson(paramsMap);
         RequestBody body = RequestBody.create(MediaType.parse("application/json;charset=UTF-8"), strEntity);
@@ -3117,7 +3117,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                            if (mSmart_model_my_mymessage != null){
                                mSmart_model_my_mymessage.finishRefresh();
                            }
-                           LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                           LoadingDialog.getInstance(mMainContext).dismiss();
                            return;
                        }
                        int code = body.getCode();
@@ -3125,14 +3125,14 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                            if (mSmart_model_my_mycollect != null){
                                mSmart_model_my_mycollect.finishRefresh();
                            }
-                           LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                           LoadingDialog.getInstance(mMainContext).dismiss();
                            return;
                        }
                        if (code != 200){
                            if (mSmart_model_my_mymessage != null){
                                mSmart_model_my_mymessage.finishRefresh();
                            }
-                           LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                           LoadingDialog.getInstance(mMainContext).dismiss();
                            return;
                        }
                        MymessageBean.DataBean dataBean = body.getData();
@@ -3140,7 +3140,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                            if (mSmart_model_my_mymessage != null){
                                mSmart_model_my_mymessage.finishRefresh();
                            }
-                           LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                           LoadingDialog.getInstance(mMainContext).dismiss();
                            return;
                        }
                        if (info_type != 3) {
@@ -3186,7 +3186,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                            if (mSmart_model_my_mymessage != null) {
                                mSmart_model_my_mymessage.finishRefresh();
                            }
-                           LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                           LoadingDialog.getInstance(mMainContext).dismiss();
                            return;
                        }
                        //子条目回复问题列表
@@ -3231,7 +3231,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                        if (mSmart_model_my_mymessage != null){
                            mSmart_model_my_mymessage.finishRefresh();
                        }
-                       LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                       LoadingDialog.getInstance(mMainContext).dismiss();
                    }
 
                    @Override
@@ -3240,23 +3240,23 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                        if (mSmart_model_my_mymessage != null){
                            mSmart_model_my_mymessage.finishRefresh();
                        }
-                       LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                       LoadingDialog.getInstance(mMainContext).dismiss();
                    }
                });
     }
 
     //我的消息列表
     public void getModelMyMessageListMore(Integer info_type){
-        if (mControlMainActivity.mStuId.equals("")){
+        if (mMainContext.mStuId.equals("")){
             if (mSmart_model_my_mymessage != null){
                 mSmart_model_my_mymessage.finishLoadMore();
             }
             return;
         }
-        LoadingDialog.getInstance(mControlMainActivity).show();
+        LoadingDialog.getInstance(mMainContext).show();
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(mControlMainActivity.mIpadress)
+                .baseUrl(mMainContext.mIpadress)
                 .client(ModelObservableInterface.client)
                 .build();
         mMyMessageCurrentPage = mMyMessageCurrentPage + 1;
@@ -3265,7 +3265,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
         HashMap<String, Integer> paramsMap = new HashMap<>();
         paramsMap.put("pageNum", mMyMessageCurrentPage);//第几页
         paramsMap.put("pageSize",mMyMessagePageCount);//每页几条
-        paramsMap.put("stu_id", Integer.valueOf(mControlMainActivity.mStuId));//学生id
+        paramsMap.put("stu_id", Integer.valueOf(mMainContext.mStuId));//学生id
         paramsMap.put("info_type",info_type);
         String strEntity = gson.toJson(paramsMap);
         RequestBody body = RequestBody.create(MediaType.parse("application/json;charset=UTF-8"), strEntity);
@@ -3278,7 +3278,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                             if (mSmart_model_my_mymessage != null){
                                 mSmart_model_my_mymessage.finishLoadMore();
                             }
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         int code = body.getCode();
@@ -3286,14 +3286,14 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                             if (mSmart_model_my_mycollect != null){
                                 mSmart_model_my_mycollect.finishLoadMore();
                             }
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         if (code != 200){
                             if (mSmart_model_my_mymessage != null){
                                 mSmart_model_my_mymessage.finishLoadMore();
                             }
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         MymessageBean.DataBean dataBean = body.getData();
@@ -3301,7 +3301,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                             if (mSmart_model_my_mymessage != null){
                                 mSmart_model_my_mymessage.finishLoadMore();
                             }
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         mMyMessageSum = dataBean.getTotal();
@@ -3310,7 +3310,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                             if (mSmart_model_my_mymessage != null){
                                 mSmart_model_my_mymessage.finishLoadMore();
                             }
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         if (info_type != 3) {
@@ -3395,7 +3395,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                         if (mSmart_model_my_mymessage != null){
                             mSmart_model_my_mymessage.finishLoadMore();
                         }
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                     }
 
                     @Override
@@ -3404,17 +3404,17 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                         if (mSmart_model_my_mymessage != null){
                             mSmart_model_my_mymessage.finishLoadMore();
                         }
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                     }
                 });
     }
 
     //我的问答列表(回答)---------删除
     public void DeleteMyQuestion(int id,int delete){
-        LoadingDialog.getInstance(mControlMainActivity).show();
+        LoadingDialog.getInstance(mMainContext).show();
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(mControlMainActivity.mIpadress)
+                .baseUrl(mMainContext.mIpadress)
                 .client(ModelObservableInterface.client)
                 .build();
         ModelObservableInterface queryMyCourseList = retrofit.create(ModelObservableInterface.class);
@@ -3430,42 +3430,42 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                     public void onResponse(Call<ModelObservableInterface.BaseBean> call, Response<ModelObservableInterface.BaseBean> response) {
                         ModelObservableInterface.BaseBean baseBean = response.body();
                         if (baseBean == null){
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
-                            Toast.makeText(mControlMainActivity,"删除失败",Toast.LENGTH_LONG).show();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
+                            Toast.makeText(mMainContext,"删除失败",Toast.LENGTH_LONG).show();
                             return;
                         }
                         if (!HeaderInterceptor.IsErrorCode(baseBean.getErrorCode(),baseBean.getErrorMsg())){
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         if (baseBean.getErrorCode() != 200){
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
-                            Toast.makeText(mControlMainActivity,"删除失败",Toast.LENGTH_LONG).show();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
+                            Toast.makeText(mMainContext,"删除失败",Toast.LENGTH_LONG).show();
                         } else {
                             mMyDialog.cancel();
                             //点击确定删除本条数据
-                            mControlMainActivity.onClickMyAnswerReturn(mMyAnswerView);
+                            mMainContext.onClickMyAnswerReturn(mMyAnswerView);
                         }
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                     }
 
                     @Override
                     public void onFailure(Call<ModelObservableInterface.BaseBean> call, Throwable t) {
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
-                        Toast.makeText(mControlMainActivity,"删除失败",Toast.LENGTH_LONG).show();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
+                        Toast.makeText(mMainContext,"删除失败",Toast.LENGTH_LONG).show();
                     }
                 });
     }
 
     //我的问答的提问列表
     public void getModelMyQuestionList(){
-        if (mControlMainActivity.mStuId.equals("")){
+        if (mMainContext.mStuId.equals("")){
             if (mSmart_model_my_myanswer != null) {
                 mSmart_model_my_myanswer.finishRefresh();
             }
             return;
         }
-        LoadingDialog.getInstance(mControlMainActivity).show();
+        LoadingDialog.getInstance(mMainContext).show();
         mAnswerDetailsAnswerId = null;
         mAnswerDetailsQuestionId = null;
         LinearLayout myanswer_end = mMyAnswerView.findViewById(R.id.myanswer_end);
@@ -3474,7 +3474,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
         modelmy_myanswer_main_content.removeAllViews();
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(mControlMainActivity.mIpadress)
+                .baseUrl(mMainContext.mIpadress)
                 .client(ModelObservableInterface.client)
                 .build();
         mMyQuestionAndAnswerCurrentPage = 1;
@@ -3483,7 +3483,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
         HashMap<String, Integer> paramsMap = new HashMap<>();
         paramsMap.put("pageNum", mMyQuestionAndAnswerCurrentPage);//第几页
         paramsMap.put("pageSize",mMyQuestionAndAnswerPageCount);//每页几条
-        paramsMap.put("stu_id", Integer.valueOf(mControlMainActivity.mStuId));//学生id
+        paramsMap.put("stu_id", Integer.valueOf(mMainContext.mStuId));//学生id
         String strEntity = gson.toJson(paramsMap);
         RequestBody body = RequestBody.create(MediaType.parse("application/json;charset=UTF-8"), strEntity);
         modelObservableInterface.queryMyQuestionList(body)
@@ -3495,14 +3495,14 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                            if (mSmart_model_my_myanswer != null) {
                                mSmart_model_my_myanswer.finishRefresh();
                            }
-                           LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                           LoadingDialog.getInstance(mMainContext).dismiss();
                            return;
                        }
                        if (!HeaderInterceptor.IsErrorCode(myQuestionsBean.getCode(),"")){
                            if (mSmart_model_my_myanswer != null) {
                                mSmart_model_my_myanswer.finishRefresh();
                            }
-                           LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                           LoadingDialog.getInstance(mMainContext).dismiss();
                            return;
                        }
                        int code = myQuestionsBean.getCode();
@@ -3510,7 +3510,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                            if (mSmart_model_my_myanswer != null) {
                                mSmart_model_my_myanswer.finishRefresh();
                            }
-                           LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                           LoadingDialog.getInstance(mMainContext).dismiss();
                            return;
                        }
                        MyQuestionsBean.DataBean dataBean = myQuestionsBean.getData();
@@ -3518,7 +3518,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                            if (mSmart_model_my_myanswer != null) {
                                mSmart_model_my_myanswer.finishRefresh();
                            }
-                           LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                           LoadingDialog.getInstance(mMainContext).dismiss();
                            return;
                        }
                        mMyQuestionAndAnswerSum = dataBean.getTotal();
@@ -3535,7 +3535,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                            if (mSmart_model_my_myanswer != null) {
                                mSmart_model_my_myanswer.finishRefresh();
                            }
-                           LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                           LoadingDialog.getInstance(mMainContext).dismiss();
                            return;
                        }
                        //获取网络数据集合for循环
@@ -3544,11 +3544,11 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                            if (listBean == null){
                                continue;
                            }
-                           View view = mControlMainActivity.getLayoutInflater().inflate(R.layout.model_my_myanswer1, null);
+                           View view = mMainContext.getLayoutInflater().inflate(R.layout.model_my_myanswer1, null);
                            TextView modelmy_myanswer1_title = view.findViewById(R.id.modelmy_myanswer1_title);
                            modelmy_myanswer1_title.setText(listBean.title);
                            TextView modelmy_myanswer1_content = view.findViewById(R.id.modelmy_myanswer1_content);
-                           new ModelHtmlUtils(mControlMainActivity, modelmy_myanswer1_content).setHtmlWithPic(listBean.content);
+                           new ModelHtmlUtils(mMainContext, modelmy_myanswer1_content).setHtmlWithPic(listBean.content);
                            TextView modelmy_myanswer1_time = view.findViewById(R.id.modelmy_myanswer1_time);
                            Date date = null;
                            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
@@ -3575,7 +3575,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                            if (listBean.questions_id != null) {
                                view.setOnClickListener(V -> {
                                    if (listBean.course_type == null){
-                                       Toast.makeText(mControlMainActivity,"此问答已被删除！",Toast.LENGTH_SHORT).show();
+                                       Toast.makeText(mMainContext,"此问答已被删除！",Toast.LENGTH_SHORT).show();
                                        return;
                                    }
                                    mAnswerDetailsQuestionId = listBean.questions_id;
@@ -3586,7 +3586,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                        if (mSmart_model_my_myanswer != null) {
                            mSmart_model_my_myanswer.finishRefresh();
                        }
-                       LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                       LoadingDialog.getInstance(mMainContext).dismiss();
                    }
 
                    @Override
@@ -3594,26 +3594,26 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                        if (mSmart_model_my_myanswer != null) {
                            mSmart_model_my_myanswer.finishRefresh();
                        }
-                       LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                       LoadingDialog.getInstance(mMainContext).dismiss();
                    }
                });
     }
 
     //我的问答的提问列表-下拉加载
     public void getModelMyQuestionListMore(){
-        if (mControlMainActivity.mStuId.equals("")){
+        if (mMainContext.mStuId.equals("")){
             if (mSmart_model_my_myanswer != null) {
                 mSmart_model_my_myanswer.finishLoadMore();
             }
             return;
         }
-        LoadingDialog.getInstance(mControlMainActivity).show();
+        LoadingDialog.getInstance(mMainContext).show();
         mAnswerDetailsAnswerId = null;
         mAnswerDetailsQuestionId = null;
         LinearLayout modelmy_myanswer_main_content = mMyAnswerView.findViewById(R.id.modelmy_myanswer_main_content);
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(mControlMainActivity.mIpadress)
+                .baseUrl(mMainContext.mIpadress)
                 .client(ModelObservableInterface.client)
                 .build();
         mMyQuestionAndAnswerCurrentPage = mMyQuestionAndAnswerCurrentPage + 1;
@@ -3622,7 +3622,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
         HashMap<String, Integer> paramsMap = new HashMap<>();
         paramsMap.put("pageNum", mMyQuestionAndAnswerCurrentPage);//第几页
         paramsMap.put("pageSize",mMyQuestionAndAnswerPageCount);//每页几条
-        paramsMap.put("stu_id", Integer.valueOf(mControlMainActivity.mStuId));//学生id
+        paramsMap.put("stu_id", Integer.valueOf(mMainContext.mStuId));//学生id
         String strEntity = gson.toJson(paramsMap);
         RequestBody body = RequestBody.create(MediaType.parse("application/json;charset=UTF-8"), strEntity);
         modelObservableInterface.queryMyQuestionList(body)
@@ -3634,14 +3634,14 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                             if (mSmart_model_my_myanswer != null) {
                                 mSmart_model_my_myanswer.finishLoadMore();
                             }
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         if (!HeaderInterceptor.IsErrorCode(myQuestionsBean.getCode(),"")){
                             if (mSmart_model_my_myanswer != null) {
                                 mSmart_model_my_myanswer.finishLoadMore();
                             }
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         int code = myQuestionsBean.getCode();
@@ -3649,7 +3649,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                             if (mSmart_model_my_myanswer != null) {
                                 mSmart_model_my_myanswer.finishLoadMore();
                             }
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         MyQuestionsBean.DataBean dataBean = myQuestionsBean.getData();
@@ -3657,7 +3657,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                             if (mSmart_model_my_myanswer != null) {
                                 mSmart_model_my_myanswer.finishLoadMore();
                             }
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         mMyQuestionAndAnswerSum = dataBean.getTotal();
@@ -3674,7 +3674,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                             if (mSmart_model_my_myanswer != null) {
                                 mSmart_model_my_myanswer.finishLoadMore();
                             }
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         //获取网络数据集合for循环
@@ -3683,11 +3683,11 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                             if (listBean == null){
                                 continue;
                             }
-                            View view = mControlMainActivity.getLayoutInflater().inflate(R.layout.model_my_myanswer1, null);
+                            View view = mMainContext.getLayoutInflater().inflate(R.layout.model_my_myanswer1, null);
                             TextView modelmy_myanswer1_title = view.findViewById(R.id.modelmy_myanswer1_title);
                             modelmy_myanswer1_title.setText(listBean.title);
                             TextView modelmy_myanswer1_content = view.findViewById(R.id.modelmy_myanswer1_content);
-                            new ModelHtmlUtils(mControlMainActivity, modelmy_myanswer1_content).setHtmlWithPic(listBean.content);
+                            new ModelHtmlUtils(mMainContext, modelmy_myanswer1_content).setHtmlWithPic(listBean.content);
                             TextView modelmy_myanswer1_time = view.findViewById(R.id.modelmy_myanswer1_time);
                             Date date = null;
                             SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
@@ -3714,7 +3714,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                             if (listBean.questions_id != null) {
                                 view.setOnClickListener(V -> {
                                     if (listBean.course_type == null){
-                                        Toast.makeText(mControlMainActivity,"此问答已被删除！",Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(mMainContext,"此问答已被删除！",Toast.LENGTH_SHORT).show();
                                         return;
                                     }
                                     mAnswerDetailsQuestionId = listBean.questions_id;
@@ -3725,7 +3725,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                         if (mSmart_model_my_myanswer != null) {
                             mSmart_model_my_myanswer.finishLoadMore();
                         }
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                     }
 
                     @Override
@@ -3733,20 +3733,20 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                         if (mSmart_model_my_myanswer != null) {
                             mSmart_model_my_myanswer.finishLoadMore();
                         }
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                     }
                 });
     }
 
     //我的问答的回答列表
     public void getModelMyAnswerList(){
-        if (mControlMainActivity.mStuId.equals("")){
+        if (mMainContext.mStuId.equals("")){
             if (mSmart_model_my_myanswer != null) {
                 mSmart_model_my_myanswer.finishRefresh();
             }
             return;
         }
-        LoadingDialog.getInstance(mControlMainActivity).show();
+        LoadingDialog.getInstance(mMainContext).show();
         mAnswerDetailsAnswerId = null;
         mAnswerDetailsQuestionId = null;
         LinearLayout myanswer_end = mMyAnswerView.findViewById(R.id.myanswer_end);
@@ -3755,7 +3755,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
         modelmy_myanswer_main_content.removeAllViews();
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(mControlMainActivity.mIpadress)
+                .baseUrl(mMainContext.mIpadress)
                 .client(ModelObservableInterface.client)
                 .build();
         mMyQuestionAndAnswerCurrentPage = 1;
@@ -3764,7 +3764,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
         HashMap<String, Integer> paramsMap = new HashMap<>();
         paramsMap.put("pageNum", mMyQuestionAndAnswerCurrentPage);//第几页
         paramsMap.put("pageSize",mMyQuestionAndAnswerPageCount);//每页几条
-        paramsMap.put("stu_id", Integer.valueOf(mControlMainActivity.mStuId));//学生id
+        paramsMap.put("stu_id", Integer.valueOf(mMainContext.mStuId));//学生id
         String strEntity = gson.toJson(paramsMap);
         RequestBody body = RequestBody.create(MediaType.parse("application/json;charset=UTF-8"), strEntity);
         modelObservableInterface.queryMyAnswerList(body)
@@ -3776,14 +3776,14 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                             if (mSmart_model_my_myanswer != null) {
                                 mSmart_model_my_myanswer.finishRefresh();
                             }
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         if (!HeaderInterceptor.IsErrorCode(myAnswerBean.getCode(),"")){
                             if (mSmart_model_my_myanswer != null) {
                                 mSmart_model_my_myanswer.finishRefresh();
                             }
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         int code = myAnswerBean.getCode();
@@ -3791,7 +3791,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                             if (mSmart_model_my_myanswer != null) {
                                 mSmart_model_my_myanswer.finishRefresh();
                             }
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         MyAnswerBean.DataBean dataBean = myAnswerBean.getData();
@@ -3799,7 +3799,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                             if (mSmart_model_my_myanswer != null) {
                                 mSmart_model_my_myanswer.finishRefresh();
                             }
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         mMyQuestionAndAnswerSum = dataBean.total;
@@ -3816,7 +3816,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                             if (mSmart_model_my_myanswer != null) {
                                 mSmart_model_my_myanswer.finishRefresh();
                             }
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         for (int i = 0; i < listBeans.size() ; i ++){
@@ -3824,11 +3824,11 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                             if (listBean == null){
                                 continue;
                             }
-                            View view = mControlMainActivity.getLayoutInflater().inflate(R.layout.model_my_myanswer1, null);
+                            View view = mMainContext.getLayoutInflater().inflate(R.layout.model_my_myanswer1, null);
                             TextView modelmy_myanswer1_title = view.findViewById(R.id.modelmy_myanswer1_title);
                             modelmy_myanswer1_title.setText(listBean.title);
                             TextView modelmy_myanswer1_content = view.findViewById(R.id.modelmy_myanswer1_content);
-                            new ModelHtmlUtils(mControlMainActivity, modelmy_myanswer1_content).setHtmlWithPic(listBean.content);
+                            new ModelHtmlUtils(mMainContext, modelmy_myanswer1_content).setHtmlWithPic(listBean.content);
                             TextView modelmy_myanswer1_time = view.findViewById(R.id.modelmy_myanswer1_time);
                             Date date = null;
                             SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
@@ -3855,7 +3855,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                             if (listBean.questions_id != null) {
                                 view.setOnClickListener(V -> {
                                     if (listBean.course_type == null){
-                                        Toast.makeText(mControlMainActivity,"此问答已被删除！",Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(mMainContext,"此问答已被删除！",Toast.LENGTH_SHORT).show();
                                         return;
                                     }
                                     mAnswerDetailsAnswerId = listBean.huida_questions_id;
@@ -3867,7 +3867,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                         if (mSmart_model_my_myanswer != null) {
                             mSmart_model_my_myanswer.finishRefresh();
                         }
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                     }
 
                     @Override
@@ -3875,7 +3875,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                         if (mSmart_model_my_myanswer != null) {
                             mSmart_model_my_myanswer.finishRefresh();
                         }
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                         return;
                     }
                 });
@@ -3883,19 +3883,19 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
 
     //我的问答的回答列表-下拉加载
     public void getModelMyAnswerListMore(){
-        if (mControlMainActivity.mStuId.equals("")){
+        if (mMainContext.mStuId.equals("")){
             if (mSmart_model_my_myanswer != null) {
                 mSmart_model_my_myanswer.finishLoadMore();
             }
             return;
         }
-        LoadingDialog.getInstance(mControlMainActivity).show();
+        LoadingDialog.getInstance(mMainContext).show();
         mAnswerDetailsAnswerId = null;
         mAnswerDetailsQuestionId = null;
         LinearLayout modelmy_myanswer_main_content = mMyAnswerView.findViewById(R.id.modelmy_myanswer_main_content);
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(mControlMainActivity.mIpadress)
+                .baseUrl(mMainContext.mIpadress)
                 .client(ModelObservableInterface.client)
                 .build();
         mMyQuestionAndAnswerCurrentPage = mMyQuestionAndAnswerCurrentPage + 1;
@@ -3904,7 +3904,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
         HashMap<String, Integer> paramsMap = new HashMap<>();
         paramsMap.put("pageNum", mMyQuestionAndAnswerCurrentPage);//第几页
         paramsMap.put("pageSize",mMyQuestionAndAnswerPageCount);//每页几条
-        paramsMap.put("stu_id", Integer.valueOf(mControlMainActivity.mStuId));//学生id
+        paramsMap.put("stu_id", Integer.valueOf(mMainContext.mStuId));//学生id
         String strEntity = gson.toJson(paramsMap);
         RequestBody body = RequestBody.create(MediaType.parse("application/json;charset=UTF-8"), strEntity);
         modelObservableInterface.queryMyAnswerList(body)
@@ -3916,14 +3916,14 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                             if (mSmart_model_my_myanswer != null) {
                                 mSmart_model_my_myanswer.finishLoadMore();
                             }
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         if (!HeaderInterceptor.IsErrorCode(myAnswerBean.getCode(),"")){
                             if (mSmart_model_my_myanswer != null) {
                                 mSmart_model_my_myanswer.finishLoadMore();
                             }
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         int code = myAnswerBean.getCode();
@@ -3931,7 +3931,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                             if (mSmart_model_my_myanswer != null) {
                                 mSmart_model_my_myanswer.finishLoadMore();
                             }
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         MyAnswerBean.DataBean dataBean = myAnswerBean.getData();
@@ -3939,7 +3939,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                             if (mSmart_model_my_myanswer != null) {
                                 mSmart_model_my_myanswer.finishLoadMore();
                             }
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         mMyQuestionAndAnswerSum = dataBean.total;
@@ -3956,7 +3956,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                             if (mSmart_model_my_myanswer != null) {
                                 mSmart_model_my_myanswer.finishLoadMore();
                             }
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         for (int i = 0; i < listBeans.size() ; i ++){
@@ -3964,11 +3964,11 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                             if (listBean == null){
                                 continue;
                             }
-                            View view = mControlMainActivity.getLayoutInflater().inflate(R.layout.model_my_myanswer1, null);
+                            View view = mMainContext.getLayoutInflater().inflate(R.layout.model_my_myanswer1, null);
                             TextView modelmy_myanswer1_title = view.findViewById(R.id.modelmy_myanswer1_title);
                             modelmy_myanswer1_title.setText(listBean.title);
                             TextView modelmy_myanswer1_content = view.findViewById(R.id.modelmy_myanswer1_content);
-                            new ModelHtmlUtils(mControlMainActivity, modelmy_myanswer1_content).setHtmlWithPic(listBean.content);
+                            new ModelHtmlUtils(mMainContext, modelmy_myanswer1_content).setHtmlWithPic(listBean.content);
                             TextView modelmy_myanswer1_time = view.findViewById(R.id.modelmy_myanswer1_time);
                             Date date = null;
                             SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
@@ -3995,7 +3995,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                             if (listBean.questions_id != null) {
                                 view.setOnClickListener(V -> {
                                     if (listBean.course_type == null){
-                                        Toast.makeText(mControlMainActivity,"此问答已被删除！",Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(mMainContext,"此问答已被删除！",Toast.LENGTH_SHORT).show();
                                         return;
                                     }
                                     mAnswerDetailsAnswerId = listBean.huida_questions_id;
@@ -4007,7 +4007,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                         if (mSmart_model_my_myanswer != null) {
                             mSmart_model_my_myanswer.finishLoadMore();
                         }
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                     }
 
                     @Override
@@ -4015,7 +4015,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                         if (mSmart_model_my_myanswer != null) {
                             mSmart_model_my_myanswer.finishLoadMore();
                         }
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                         return;
                     }
                 });
@@ -4029,14 +4029,14 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
             }
             return;
         }
-        LoadingDialog.getInstance(mControlMainActivity).show();
+        LoadingDialog.getInstance(mMainContext).show();
         LinearLayout myanswerdetails_end = mMyAnswerDetailsView.findViewById(R.id.myanswerdetails_end);
         myanswerdetails_end.setVisibility(View.INVISIBLE);
         LinearLayout answerdetails_content = mAnswerDetailsView.findViewById(R.id.answerdetails_content);
         answerdetails_content.removeAllViews();
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(mControlMainActivity.mIpadress)
+                .baseUrl(mMainContext.mIpadress)
                 .client(ModelObservableInterface.client)
                 .build();
         mMyQuestionAndAnswerDetailsCurrentPage = 1;
@@ -4058,7 +4058,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                             if (mSmart_model_my_myanswerdetails != null) {
                                 mSmart_model_my_myanswerdetails.finishRefresh();
                             }
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         int code = communityDetilsBean.getCode();
@@ -4066,14 +4066,14 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                             if (mSmart_model_my_myanswerdetails != null) {
                                 mSmart_model_my_myanswerdetails.finishRefresh();
                             }
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         if (code != 200){
                             if (mSmart_model_my_myanswerdetails != null) {
                                 mSmart_model_my_myanswerdetails.finishRefresh();
                             }
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         ModelCommunityAnswer.CommunityDetilsBean.CommunityDetilsDataBean communityDetilsDataBean = communityDetilsBean.getData();
@@ -4081,7 +4081,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                             if (mSmart_model_my_myanswerdetails != null) {
                                 mSmart_model_my_myanswerdetails.finishRefresh();
                             }
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         //添加问题的布局
@@ -4114,7 +4114,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                             answerdetails_fine.setLayoutParams(ll);
                         }
                         ControllerCustomRoundAngleImageView answerdetails_headportrait = mAnswerDetailsView.findViewById(R.id.answerdetails_headportrait);
-                        Glide.with(mControlMainActivity).load(communityDetilsDataBean.getHead()).listener(new RequestListener<Drawable>() {
+                        Glide.with(mMainContext).load(communityDetilsDataBean.getHead()).listener(new RequestListener<Drawable>() {
                             @Override
                             public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
                                 Log.d("Wain", "加载失败 errorMsg:" + (e != null ? e.getMessage() : "null"));
@@ -4125,7 +4125,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                                 Log.d("Wain", "成功  Drawable Name:" + resource.getClass().getCanonicalName());
                                 return false;
                             }
-                        }).error(mControlMainActivity.getResources().getDrawable(R.drawable.image_teachersdefault)).into(answerdetails_headportrait);
+                        }).error(mMainContext.getResources().getDrawable(R.drawable.image_teachersdefault)).into(answerdetails_headportrait);
                         TextView answerdetails_name = mAnswerDetailsView.findViewById(R.id.answerdetails_name);
                         answerdetails_name.setText(communityDetilsDataBean.getNicename());
                         TextView answerdetails_time = mAnswerDetailsView.findViewById(R.id.answerdetails_time);
@@ -4153,7 +4153,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                         TextView answerdetails_title = mAnswerDetailsView.findViewById(R.id.answerdetails_title);
                         answerdetails_title.setText(communityDetilsDataBean.getTitle());
                         TextView answerdetails_message = mAnswerDetailsView.findViewById(R.id.answerdetails_message);
-                        new ModelHtmlUtils(mControlMainActivity, answerdetails_message).setHtmlWithPic(communityDetilsDataBean.getContent());
+                        new ModelHtmlUtils(mMainContext, answerdetails_message).setHtmlWithPic(communityDetilsDataBean.getContent());
                         List<String> strings = communityDetilsDataBean.getSubject_id();
                         if (strings != null) {
                             for (int i = 0; i < strings.size(); i++) {
@@ -4192,9 +4192,9 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                                     if (pictures[num].equals("")){
                                         continue;
                                     }
-                                    View imageView = LayoutInflater.from(mControlMainActivity).inflate(R.layout.controllercustomroundangleimageview_layout, null);
+                                    View imageView = LayoutInflater.from(mMainContext).inflate(R.layout.controllercustomroundangleimageview_layout, null);
                                     ControllerCustomRoundAngleImageView CustomRoundAngleImageView = imageView.findViewById(R.id.CustomRoundAngleImageView);
-                                    Glide.with(mControlMainActivity).load(pictures[num]).listener(new RequestListener<Drawable>() {
+                                    Glide.with(mMainContext).load(pictures[num]).listener(new RequestListener<Drawable>() {
                                         @Override
                                         public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
                                             Log.d("Warn", "加载失败 errorMsg:" + (e != null ? e.getMessage() : "null"));
@@ -4206,7 +4206,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                                             Log.d("Warn", "成功  Drawable Name:" + resource.getClass().getCanonicalName());
                                             return false;
                                         }
-                                    }).error(mControlMainActivity.getResources().getDrawable(R.drawable.modelcoursecover)).into(CustomRoundAngleImageView);
+                                    }).error(mMainContext.getResources().getDrawable(R.drawable.modelcoursecover)).into(CustomRoundAngleImageView);
                                     answerdetails_imagelayout.addView(imageView);
                                 }
                             }
@@ -4216,7 +4216,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                             if (mSmart_model_my_myanswerdetails != null) {
                                 mSmart_model_my_myanswerdetails.finishRefresh();
                             }
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         mMyQuestionAndAnswerDetailsSum = communityDetilsAnswerDataBean.getTotal();
@@ -4225,7 +4225,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                             if (mSmart_model_my_myanswerdetails != null) {
                                 mSmart_model_my_myanswerdetails.finishRefresh();
                             }
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         View line = null;
@@ -4234,7 +4234,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                             if (listBean == null){
                                 continue;
                             }
-                            View view = mControlMainActivity.getLayoutInflater().inflate(R.layout.modelanswerdetails_child, null);
+                            View view = mMainContext.getLayoutInflater().inflate(R.layout.modelanswerdetails_child, null);
                             //学员的头像
                             ControllerCustomRoundAngleImageView answerdetails_child_headportrait = view.findViewById(R.id.answerdetails_child_headportrait);
                             Glide.with(getActivity()).load(listBean.getA_head()).into(answerdetails_child_headportrait);
@@ -4265,7 +4265,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                             manswerdetails_child_time.setText(listBean.getCreation_time());
                             //学员的消息
                             TextView answerdetails_child_message = view.findViewById(R.id.answerdetails_child_message);
-                            new ModelHtmlUtils(mControlMainActivity, answerdetails_child_message).setHtmlWithPic(listBean.getContent());
+                            new ModelHtmlUtils(mMainContext, answerdetails_child_message).setHtmlWithPic(listBean.getContent());
                             answerdetails_content.addView(view);
                             line = view.findViewById(R.id.answerdetails_child_line);
                         }
@@ -4275,7 +4275,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                         if (mSmart_model_my_myanswerdetails != null) {
                             mSmart_model_my_myanswerdetails.finishRefresh();
                         }
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                     }
 
                     @Override
@@ -4283,7 +4283,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                         if (mSmart_model_my_myanswerdetails != null) {
                             mSmart_model_my_myanswerdetails.finishRefresh();
                         }
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                         return;
                     }
                 });
@@ -4297,11 +4297,11 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
             }
             return;
         }
-        LoadingDialog.getInstance(mControlMainActivity).show();
+        LoadingDialog.getInstance(mMainContext).show();
         LinearLayout answerdetails_content = mAnswerDetailsView.findViewById(R.id.answerdetails_content);
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(mControlMainActivity.mIpadress)
+                .baseUrl(mMainContext.mIpadress)
                 .client(ModelObservableInterface.client)
                 .build();
         mMyQuestionAndAnswerDetailsCurrentPage = mMyQuestionAndAnswerDetailsCurrentPage + 1;
@@ -4323,7 +4323,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                             if (mSmart_model_my_myanswerdetails != null) {
                                 mSmart_model_my_myanswerdetails.finishLoadMore();
                             }
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         int code = communityDetilsBean.getCode();
@@ -4331,14 +4331,14 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                             if (mSmart_model_my_myanswerdetails != null) {
                                 mSmart_model_my_myanswerdetails.finishLoadMore();
                             }
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         if (code != 200){
                             if (mSmart_model_my_myanswerdetails != null) {
                                 mSmart_model_my_myanswerdetails.finishLoadMore();
                             }
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         ModelCommunityAnswer.CommunityDetilsBean.CommunityDetilsDataBean communityDetilsDataBean= communityDetilsBean.getData();
@@ -4346,12 +4346,12 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                             if (mSmart_model_my_myanswerdetails != null) {
                                 mSmart_model_my_myanswerdetails.finishLoadMore();
                             }
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         //添加问题的布局
                         ControllerCustomRoundAngleImageView answerdetails_headportrait = mAnswerDetailsView.findViewById(R.id.answerdetails_headportrait);
-                        Glide.with(mControlMainActivity).load(communityDetilsDataBean.getHead()).listener(new RequestListener<Drawable>() {
+                        Glide.with(mMainContext).load(communityDetilsDataBean.getHead()).listener(new RequestListener<Drawable>() {
                             @Override
                             public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
                                 Log.d("Wain", "加载失败 errorMsg:" + (e != null ? e.getMessage() : "null"));
@@ -4362,7 +4362,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                                 Log.d("Wain", "成功  Drawable Name:" + resource.getClass().getCanonicalName());
                                 return false;
                             }
-                        }).error(mControlMainActivity.getResources().getDrawable(R.drawable.image_teachersdefault)).into(answerdetails_headportrait);
+                        }).error(mMainContext.getResources().getDrawable(R.drawable.image_teachersdefault)).into(answerdetails_headportrait);
                         TextView answerdetails_name = mAnswerDetailsView.findViewById(R.id.answerdetails_name);
                         answerdetails_name.setText(communityDetilsDataBean.getNicename());
                         TextView answerdetails_time = mAnswerDetailsView.findViewById(R.id.answerdetails_time);
@@ -4390,7 +4390,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                         TextView answerdetails_title = mAnswerDetailsView.findViewById(R.id.answerdetails_title);
                         answerdetails_title.setText(communityDetilsDataBean.getTitle());
                         TextView answerdetails_message = mAnswerDetailsView.findViewById(R.id.answerdetails_message);
-                        new ModelHtmlUtils(mControlMainActivity, answerdetails_message).setHtmlWithPic(communityDetilsDataBean.getContent());
+                        new ModelHtmlUtils(mMainContext, answerdetails_message).setHtmlWithPic(communityDetilsDataBean.getContent());
                         List<String> strings = communityDetilsDataBean.getSubject_id();
                         if (strings != null) {
                             for (int i = 0; i < strings.size(); i++) {
@@ -4421,7 +4421,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                             if (mSmart_model_my_myanswerdetails != null) {
                                 mSmart_model_my_myanswerdetails.finishLoadMore();
                             }
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         mMyQuestionAndAnswerDetailsSum = communityDetilsAnswerDataBean.getTotal();
@@ -4430,7 +4430,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                             if (mSmart_model_my_myanswerdetails != null) {
                                 mSmart_model_my_myanswerdetails.finishLoadMore();
                             }
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         View line = null;
@@ -4439,7 +4439,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                             if (listBean == null){
                                 continue;
                             }
-                            View view = mControlMainActivity.getLayoutInflater().inflate(R.layout.modelanswerdetails_child, null);
+                            View view = mMainContext.getLayoutInflater().inflate(R.layout.modelanswerdetails_child, null);
                             //学员的头像
                             ControllerCustomRoundAngleImageView answerdetails_child_headportrait = view.findViewById(R.id.answerdetails_child_headportrait);
                             Glide.with(getActivity()).load(listBean.getA_head()).into(answerdetails_child_headportrait);
@@ -4470,7 +4470,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                             manswerdetails_child_time.setText(listBean.getCreation_time());
                             //学员的消息
                             TextView answerdetails_child_message = view.findViewById(R.id.answerdetails_child_message);
-                            new ModelHtmlUtils(mControlMainActivity, answerdetails_child_message).setHtmlWithPic(listBean.getContent());
+                            new ModelHtmlUtils(mMainContext, answerdetails_child_message).setHtmlWithPic(listBean.getContent());
                             answerdetails_content.addView(view);
                             line = view.findViewById(R.id.answerdetails_child_line);
                         }
@@ -4480,7 +4480,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                         if (mSmart_model_my_myanswerdetails != null) {
                             mSmart_model_my_myanswerdetails.finishLoadMore();
                         }
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                     }
 
                     @Override
@@ -4488,7 +4488,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                         if (mSmart_model_my_myanswerdetails != null) {
                             mSmart_model_my_myanswerdetails.finishLoadMore();
                         }
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                         return;
                     }
                 });
@@ -5798,10 +5798,10 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
     }
     // 我的消息----全部已读
     public void ReadMyNews(String idS){
-        LoadingDialog.getInstance(mControlMainActivity).show();
+        LoadingDialog.getInstance(mMainContext).show();
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(mControlMainActivity.mIpadress)
+                .baseUrl(mMainContext.mIpadress)
                 .client(ModelObservableInterface.client)
                 .build();
         ModelObservableInterface queryMyCourseList = retrofit.create(ModelObservableInterface.class);
@@ -5813,46 +5813,46 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                     public void onResponse(Call<ModelObservableInterface.BaseBean> call, Response<ModelObservableInterface.BaseBean> response) {
                         ModelObservableInterface.BaseBean baseBean = response.body();
                         if (baseBean == null){
-                            Toast.makeText(mControlMainActivity,"读取失败",Toast.LENGTH_SHORT).show();
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            Toast.makeText(mMainContext,"读取失败",Toast.LENGTH_SHORT).show();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         if (!HeaderInterceptor.IsErrorCode(baseBean.getErrorCode(),baseBean.getErrorMsg())){
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         if (baseBean.getErrorCode() != 200){
-                            Toast.makeText(mControlMainActivity,"读取失败",Toast.LENGTH_SHORT).show();
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            Toast.makeText(mMainContext,"读取失败",Toast.LENGTH_SHORT).show();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                     }
 
                     @Override
                     public void onFailure(Call<ModelObservableInterface.BaseBean> call, Throwable t) {
-                        Toast.makeText(mControlMainActivity,"读取失败",Toast.LENGTH_SHORT).show();
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        Toast.makeText(mMainContext,"读取失败",Toast.LENGTH_SHORT).show();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                     }
                 });
     }
 
     //我的消息列表-全部已读
     public void ReadMyNewsAll(){
-        if (mControlMainActivity.mStuId.equals("")){
-            Toast.makeText(mControlMainActivity,"读取失败！",Toast.LENGTH_SHORT).show();
+        if (mMainContext.mStuId.equals("")){
+            Toast.makeText(mMainContext,"读取失败！",Toast.LENGTH_SHORT).show();
             return;
         }
-        LoadingDialog.getInstance(mControlMainActivity).show();
+        LoadingDialog.getInstance(mMainContext).show();
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(mControlMainActivity.mIpadress)
+                .baseUrl(mMainContext.mIpadress)
                 .client(ModelObservableInterface.client)
                 .build();
         ModelObservableInterface queryMyCourseList = retrofit.create(ModelObservableInterface.class);
         Gson gson = new Gson();
         HashMap<String, Integer> paramsMap = new HashMap<>();
-        paramsMap.put("stu_id", Integer.valueOf(mControlMainActivity.mStuId));//学生id
+        paramsMap.put("stu_id", Integer.valueOf(mMainContext.mStuId));//学生id
         paramsMap.put("info_type", mMyMessageType);//	类型
         paramsMap.put("tf_read", 1);
         String strEntity = gson.toJson(paramsMap);
@@ -5863,38 +5863,38 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                     public void onResponse(Call<ModelObservableInterface.BaseBean> call, Response<ModelObservableInterface.BaseBean> response) {
                         ModelObservableInterface.BaseBean baseBean = response.body();
                         if (baseBean == null){
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
-                            Toast.makeText(mControlMainActivity,"读取失败！",Toast.LENGTH_SHORT).show();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
+                            Toast.makeText(mMainContext,"读取失败！",Toast.LENGTH_SHORT).show();
                             return;
                         }
                         if (!HeaderInterceptor.IsErrorCode(baseBean.getErrorCode(),baseBean.getErrorMsg())){
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         if (baseBean.getErrorCode() != 200){
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
-                            Toast.makeText(mControlMainActivity,"读取失败！",Toast.LENGTH_SHORT).show();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
+                            Toast.makeText(mMainContext,"读取失败！",Toast.LENGTH_SHORT).show();
                             return;
                         }
                         getModelMyMessageList(mMyMessageType);
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
-                        Toast.makeText(mControlMainActivity,"已将所有消息置为已读状态！",Toast.LENGTH_SHORT).show();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
+                        Toast.makeText(mMainContext,"已将所有消息置为已读状态！",Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
                     public void onFailure(Call<ModelObservableInterface.BaseBean> call, Throwable t) {
-                        Toast.makeText(mControlMainActivity,"读取失败！",Toast.LENGTH_SHORT).show();
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        Toast.makeText(mMainContext,"读取失败！",Toast.LENGTH_SHORT).show();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                     }
                 });
     }
 
     //我的协议
     public void getModelMyMeent(View myclass_agreement,int agreement_id){
-        LoadingDialog.getInstance(mControlMainActivity).show();
+        LoadingDialog.getInstance(mMainContext).show();
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(mControlMainActivity.mIpadress)
+                .baseUrl(mMainContext.mIpadress)
                 .client(ModelObservableInterface.client)
                 .build();
         ModelObservableInterface modelObservableInterface = retrofit.create(ModelObservableInterface.class);
@@ -5909,40 +5909,40 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                     public void onResponse(Call<MyClassMeent> call, Response<MyClassMeent> response) {
                         MyClassMeent classMeent = response.body();
                         if (classMeent == null){
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         if (!HeaderInterceptor.IsErrorCode(classMeent.getCode(),"")){
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         if (classMeent.getCode() == 200){
                             MyClassMeent.DataBean data = classMeent.getData();
                             String agreement_content = data.getAgreement_content();
                             TextView tv1 = myclass_agreement.findViewById(R.id.model_agreement_content);
-                            new ModelHtmlUtils(mControlMainActivity, tv1).setHtmlWithPic(agreement_content);
+                            new ModelHtmlUtils(mMainContext, tv1).setHtmlWithPic(agreement_content);
                         }
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                     }
                     @Override
                     public void onFailure(Call<MyClassMeent> call, Throwable t) {
                         Log.e(TAG, "onFailure: "+t.getMessage() );
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                     }
                 });
     }
 
     //我的订单--取消订单的支付状态
     public void getCancelOrder(View MyOrderShow_MyOrder_view1,Integer order_id){
-        LoadingDialog.getInstance(mControlMainActivity).show();
+        LoadingDialog.getInstance(mMainContext).show();
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(mControlMainActivity.mIpadress)
+                .baseUrl(mMainContext.mIpadress)
                 .client(ModelObservableInterface.client)
                 .build();
         ModelObservableInterface queryMyCourseList = retrofit.create(ModelObservableInterface.class);
         String strEntity = "{\"order_id\": \"" + order_id + "\"," +
-                "    \"stu_id\":" + mControlMainActivity.mStuId + "}";
+                "    \"stu_id\":" + mMainContext.mStuId + "}";
         RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json;charset=UTF-8"), strEntity);
         queryMyCourseList.queryMyCancelOrderStates(body)
                 .enqueue(new Callback<ModelObservableInterface.BaseBean>() {
@@ -5950,20 +5950,20 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                     public void onResponse(Call<ModelObservableInterface.BaseBean> call, Response<ModelObservableInterface.BaseBean> response) {
                         ModelObservableInterface.BaseBean baseBean = response.body();
                         if (baseBean == null){
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
-                            Toast.makeText(mControlMainActivity,"取消订单失败",Toast.LENGTH_SHORT).show();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
+                            Toast.makeText(mMainContext,"取消订单失败",Toast.LENGTH_SHORT).show();
                             return;
                         }
                         if (!HeaderInterceptor.IsErrorCode(baseBean.getErrorCode(),baseBean.getErrorMsg())){
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         if (baseBean.getErrorCode() != 200){
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
-                            Toast.makeText(mControlMainActivity,"取消订单失败",Toast.LENGTH_SHORT).show();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
+                            Toast.makeText(mMainContext,"取消订单失败",Toast.LENGTH_SHORT).show();
                             return;
                         }
-                        Toast.makeText(mControlMainActivity,"取消订单成功",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mMainContext,"取消订单成功",Toast.LENGTH_SHORT).show();
                         if (MyOrderShow_MyOrder_view1 != null) {
                             TextView modelmy_myorder1_orderstate1 = MyOrderShow_MyOrder_view1.findViewById(R.id.modelmy_myorder1_orderstate);
                             //取消支付，将此订单设置为失效
@@ -5973,31 +5973,31 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                             r2.height = 0;
                             modelmy_myorder1_orderfunction2.setLayoutParams(r2);
                         }
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                     }
 
                     @Override
                     public void onFailure(Call<ModelObservableInterface.BaseBean> call, Throwable t) {
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
-                        Toast.makeText(mControlMainActivity,"取消订单失败",Toast.LENGTH_SHORT).show();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
+                        Toast.makeText(mMainContext,"取消订单失败",Toast.LENGTH_SHORT).show();
                     }
                 });
 
     }
     //订单列表请求网络数据          queryMyPackageOrderList
     public void getModelMyOrderList(String type){
-        if (mControlMainActivity.mStuId.equals("")){
+        if (mMainContext.mStuId.equals("")){
             if (mSmart_model_my_myorder != null){
                 mSmart_model_my_myorder.finishRefresh();
             }
             return;
         }
-        LoadingDialog.getInstance(mControlMainActivity).show();
+        LoadingDialog.getInstance(mMainContext).show();
         LinearLayout modelmy_myorder_main_content = mMyOrderView.findViewById(R.id.modelmy_myorder_main_content);
         modelmy_myorder_main_content.removeAllViews();
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(mControlMainActivity.mIpadress)
+                .baseUrl(mMainContext.mIpadress)
                 .client(ModelObservableInterface.client)
                 .build();
         ModelObservableInterface modelObservableInterface = retrofit.create(ModelObservableInterface.class);
@@ -6006,7 +6006,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
         HashMap<String, Integer> paramsMap = new HashMap<>();
         paramsMap.put("pageNum", mMyOrderCurrentPage);//第几页
         paramsMap.put("pageSize",mMyOrderPageCount);//每页几条
-        paramsMap.put("stu_id", Integer.valueOf(mControlMainActivity.mStuId));//学生id
+        paramsMap.put("stu_id", Integer.valueOf(mMainContext.mStuId));//学生id
         HashMap<String, String> paramsMap1 = new HashMap<>();
         paramsMap1.put("type", type);
         String strEntity = gson.toJson(paramsMap);
@@ -6023,7 +6023,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                             if (mSmart_model_my_myorder != null){
                                 mSmart_model_my_myorder.finishRefresh();
                             }
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         int code = orderlistBean.getCode();
@@ -6031,14 +6031,14 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                             if (mSmart_model_my_myorder != null){
                                 mSmart_model_my_myorder.finishRefresh();
                             }
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         if (code != 200) {
                             if (mSmart_model_my_myorder != null){
                                 mSmart_model_my_myorder.finishRefresh();
                             }
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         MyOrderlistBean.DataBean data = orderlistBean.getData();
@@ -6046,7 +6046,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                             if (mSmart_model_my_myorder != null){
                                 mSmart_model_my_myorder.finishRefresh();
                             }
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         mMyOrderSum = data.total;
@@ -6067,7 +6067,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                             if (mSmart_model_my_myorder != null){
                                 mSmart_model_my_myorder.finishRefresh();
                             }
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         for (int i = 0; i < list.size(); i ++) {
@@ -6080,31 +6080,31 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                         if (mSmart_model_my_myorder != null){
                             mSmart_model_my_myorder.finishRefresh();
                         }
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                     }
                     @Override
                     public void onFailure(Call<MyOrderlistBean> call, Throwable t) {
                         if (mSmart_model_my_myorder != null){
                             mSmart_model_my_myorder.finishRefresh();
                         }
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                     }
                 });
     }
 
     //订单列表请求网络数据          queryMyPackageOrderList -下拉加载
     public void getModelMyOrderListMore(String type){
-        if (mControlMainActivity.mStuId.equals("")){
+        if (mMainContext.mStuId.equals("")){
             if (mSmart_model_my_myorder != null){
                 mSmart_model_my_myorder.finishLoadMore();
             }
             return;
         }
-        LoadingDialog.getInstance(mControlMainActivity).show();
+        LoadingDialog.getInstance(mMainContext).show();
         LinearLayout modelmy_myorder_main_content = mMyOrderView.findViewById(R.id.modelmy_myorder_main_content);
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(mControlMainActivity.mIpadress)
+                .baseUrl(mMainContext.mIpadress)
                 .client(ModelObservableInterface.client)
                 .build();
         ModelObservableInterface modelObservableInterface = retrofit.create(ModelObservableInterface.class);
@@ -6113,7 +6113,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
         HashMap<String, Integer> paramsMap = new HashMap<>();
         paramsMap.put("pageNum", mMyOrderCurrentPage);//第几页
         paramsMap.put("pageSize",mMyOrderPageCount);//每页几条
-        paramsMap.put("stu_id", Integer.valueOf(mControlMainActivity.mStuId));//学生id
+        paramsMap.put("stu_id", Integer.valueOf(mMainContext.mStuId));//学生id
         HashMap<String, String> paramsMap1 = new HashMap<>();
         paramsMap1.put("type", type);
         String strEntity = gson.toJson(paramsMap);
@@ -6130,7 +6130,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                             if (mSmart_model_my_myorder != null){
                                 mSmart_model_my_myorder.finishLoadMore();
                             }
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         int code = orderlistBean.getCode();
@@ -6138,14 +6138,14 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                             if (mSmart_model_my_myorder != null){
                                 mSmart_model_my_myorder.finishLoadMore();
                             }
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         if (code != 200) {
                             if (mSmart_model_my_myorder != null){
                                 mSmart_model_my_myorder.finishLoadMore();
                             }
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         MyOrderlistBean.DataBean data = orderlistBean.getData();
@@ -6153,7 +6153,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                             if (mSmart_model_my_myorder != null){
                                 mSmart_model_my_myorder.finishLoadMore();
                             }
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         if (orderlistBean.getTotal_num() != null){
@@ -6174,7 +6174,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                             if (mSmart_model_my_myorder != null){
                                 mSmart_model_my_myorder.finishLoadMore();
                             }
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         for (int i = 0; i < list.size(); i ++) {
@@ -6187,14 +6187,14 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                         if (mSmart_model_my_myorder != null){
                             mSmart_model_my_myorder.finishLoadMore();
                         }
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                     }
                     @Override
                     public void onFailure(Call<MyOrderlistBean> call, Throwable t) {
                         if (mSmart_model_my_myorder != null){
                             mSmart_model_my_myorder.finishLoadMore();
                         }
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                     }
                 });
     }
@@ -6202,14 +6202,14 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
     //获取订单详情
     public void getModelMyOrderDetails(Integer order_id,String state){
         if (order_id == null){
-            Toast.makeText(mControlMainActivity, "查询订单详情失败", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mMainContext, "查询订单详情失败", Toast.LENGTH_SHORT).show();
             return;
         }
-        LoadingDialog.getInstance(mControlMainActivity).show();
+        LoadingDialog.getInstance(mMainContext).show();
         LinearLayout modelmy_myorder_main_content = mMyOrderView.findViewById(R.id.modelmy_myorder_main_content);
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(mControlMainActivity.mIpadress)
+                .baseUrl(mMainContext.mIpadress)
                 .client(ModelObservableInterface.client)
                 .build();
         ModelObservableInterface modelObservableInterface = retrofit.create(ModelObservableInterface.class);
@@ -6224,8 +6224,8 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                     public void onResponse(Call<MyOrderDetailsBean> call, Response<MyOrderDetailsBean> response) {
                         MyOrderDetailsBean myOrderDetailsBean = response.body();
                         if (myOrderDetailsBean == null){
-                            Toast.makeText(mControlMainActivity, "查询订单详情失败", Toast.LENGTH_SHORT).show();
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            Toast.makeText(mMainContext, "查询订单详情失败", Toast.LENGTH_SHORT).show();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         int code = myOrderDetailsBean.getCode();
@@ -6233,27 +6233,27 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                             if (mSmart_model_my_myorder != null){
                                 mSmart_model_my_myorder.finishRefresh();
                             }
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         if (code != 200) {
-                            Toast.makeText(mControlMainActivity, "查询订单详情失败", Toast.LENGTH_SHORT).show();
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            Toast.makeText(mMainContext, "查询订单详情失败", Toast.LENGTH_SHORT).show();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         MyOrderDetailsBean.DataBean data = myOrderDetailsBean.getData();
                         if (data == null){
-                            Toast.makeText(mControlMainActivity, "查询订单详情失败", Toast.LENGTH_SHORT).show();
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            Toast.makeText(mMainContext, "查询订单详情失败", Toast.LENGTH_SHORT).show();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         MyOrderShow_OrderDetails(data,state);
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                     }
                     @Override
                     public void onFailure(Call<MyOrderDetailsBean> call, Throwable t) {
-                        Toast.makeText(mControlMainActivity, "查询订单详情失败", Toast.LENGTH_SHORT).show();
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        Toast.makeText(mMainContext, "查询订单详情失败", Toast.LENGTH_SHORT).show();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                     }
                 });
     }
@@ -8280,20 +8280,20 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
     }
     //我的优惠券列表网络请求
     public void getMyCouponList(String type){
-        if (mControlMainActivity.mStuId.equals("")){
+        if (mMainContext.mStuId.equals("")){
             if (mSmart_model_my_mycoupon != null){
                 mSmart_model_my_mycoupon.finishRefresh();
             }
             return;
         }
-        LoadingDialog.getInstance(mControlMainActivity).show();
+        LoadingDialog.getInstance(mMainContext).show();
         LinearLayout mycoupon_end = mMyCouponView.findViewById(R.id.mycoupon_end);
         mycoupon_end.setVisibility(View.INVISIBLE);
         LinearLayout modelmy_mycoupon_main_content = mMyCouponView.findViewById(R.id.modelmy_mycoupon_main_content);
         modelmy_mycoupon_main_content.removeAllViews();
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(mControlMainActivity.mIpadress)
+                .baseUrl(mMainContext.mIpadress)
                 .client(ModelObservableInterface.client)
                 .build();
         mMyCouponCurrentPage = 1;
@@ -8302,7 +8302,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
         Gson gson = new Gson();
         paramsMap.put("pageNum", mMyCouponCurrentPage);//第几页
         paramsMap.put("pageSize",mMyCouponPageCount);//每页几条
-        paramsMap.put("stu_id", Integer.valueOf(mControlMainActivity.mStuId));//学生id
+        paramsMap.put("stu_id", Integer.valueOf(mMainContext.mStuId));//学生id
         HashMap<String, String> paramsMap1 = new HashMap<>();
         paramsMap1.put("type", type);
         String strEntity = gson.toJson(paramsMap);
@@ -8319,14 +8319,14 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                             if (mSmart_model_my_mycoupon != null){
                                 mSmart_model_my_mycoupon.finishRefresh();
                             }
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         if (!HeaderInterceptor.IsErrorCode(myCoupon.getCode(),"")){
                             if (mSmart_model_my_mycoupon != null){
                                 mSmart_model_my_mycoupon.finishRefresh();
                             }
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         int code = myCoupon.getCode();
@@ -8334,7 +8334,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                             if (mSmart_model_my_mycoupon != null){
                                 mSmart_model_my_mycoupon.finishRefresh();
                             }
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         MyCoupon.DataBean data = myCoupon.getData();
@@ -8342,7 +8342,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                             if (mSmart_model_my_mycoupon != null){
                                 mSmart_model_my_mycoupon.finishRefresh();
                             }
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         mMyCouponSum = data.getTotal();
@@ -8363,7 +8363,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                             if (mSmart_model_my_mycoupon != null){
                                 mSmart_model_my_mycoupon.finishRefresh();
                             }
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         for (int i = 0; i < list.size(); i++) {
@@ -8377,31 +8377,31 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                         if (mSmart_model_my_mycoupon != null){
                             mSmart_model_my_mycoupon.finishRefresh();
                         }
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                     }
                     @Override
                     public void onFailure(Call<MyCoupon> call, Throwable t) {
                         if (mSmart_model_my_mycoupon != null){
                             mSmart_model_my_mycoupon.finishRefresh();
                         }
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                     }
                 });
     }
 
     //我的优惠券列表网络请求
     public void getMyCouponListMore(String type){
-        if (mControlMainActivity.mStuId.equals("")){
+        if (mMainContext.mStuId.equals("")){
             if (mSmart_model_my_mycoupon != null){
                 mSmart_model_my_mycoupon.finishLoadMore();
             }
             return;
         }
-        LoadingDialog.getInstance(mControlMainActivity).show();
+        LoadingDialog.getInstance(mMainContext).show();
         LinearLayout modelmy_mycoupon_main_content = mMyCouponView.findViewById(R.id.modelmy_mycoupon_main_content);
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(mControlMainActivity.mIpadress)
+                .baseUrl(mMainContext.mIpadress)
                 .client(ModelObservableInterface.client)
                 .build();
         mMyCouponCurrentPage = mMyCouponCurrentPage + 1;
@@ -8410,7 +8410,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
         Gson gson = new Gson();
         paramsMap.put("pageNum", mMyCouponCurrentPage);//第几页
         paramsMap.put("pageSize",mMyCouponPageCount);//每页几条
-        paramsMap.put("stu_id", Integer.valueOf(mControlMainActivity.mStuId));//学生id
+        paramsMap.put("stu_id", Integer.valueOf(mMainContext.mStuId));//学生id
         HashMap<String, String> paramsMap1 = new HashMap<>();
         paramsMap1.put("type", type);
         String strEntity = gson.toJson(paramsMap);
@@ -8427,14 +8427,14 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                             if (mSmart_model_my_mycoupon != null){
                                 mSmart_model_my_mycoupon.finishLoadMore();
                             }
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         if (!HeaderInterceptor.IsErrorCode(myCoupon.getCode(),"")){
                             if (mSmart_model_my_mycoupon != null){
                                 mSmart_model_my_mycoupon.finishLoadMore();
                             }
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         int code = myCoupon.getCode();
@@ -8442,7 +8442,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                             if (mSmart_model_my_mycoupon != null){
                                 mSmart_model_my_mycoupon.finishLoadMore();
                             }
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         MyCoupon.DataBean data = myCoupon.getData();
@@ -8450,7 +8450,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                             if (mSmart_model_my_mycoupon != null){
                                 mSmart_model_my_mycoupon.finishLoadMore();
                             }
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         mMyCouponSum = data.getTotal();
@@ -8471,7 +8471,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                             if (mSmart_model_my_mycoupon != null){
                                 mSmart_model_my_mycoupon.finishLoadMore();
                             }
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         for (int i = 0; i < list.size(); i++) {
@@ -8485,14 +8485,14 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                         if (mSmart_model_my_mycoupon != null){
                             mSmart_model_my_mycoupon.finishLoadMore();
                         }
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                     }
                     @Override
                     public void onFailure(Call<MyCoupon> call, Throwable t) {
                         if (mSmart_model_my_mycoupon != null){
                             mSmart_model_my_mycoupon.finishLoadMore();
                         }
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                     }
                 });
     }
@@ -8900,12 +8900,6 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                     this.preferential_scope = preferential_scope;
                 }
             }
-        }
-    }
-
-    public void ModelCourseCoverQuestionPictureAdd(Intent data) {
-        if (mModelCourseCover != null) {
-            mModelCourseCover.ModelCourseCoverQuestionPictureAdd(data);
         }
     }
 }

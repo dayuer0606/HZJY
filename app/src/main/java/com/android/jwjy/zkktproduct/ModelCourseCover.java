@@ -84,7 +84,7 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
     private ArrayList<ControllerPictureBean> mPictureBeansList;
     private ControllerPictureAdapter mPictureAdapter;
     private ArrayList<String> selPhotosPath = null;//选中的图片路径集合
-    private ControlMainActivity mControlMainActivity = null;
+    private MainActivity mMainContext = null;
     private ModelCourseCoverOnClickListener mModelCourseCoverOnClickListener = null;
     private String mCurrentCatalogTab = "Live"; //当前标签是录播还是直播
     private CourseInfo mCourseInfo;
@@ -138,7 +138,7 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
     }
 
     public View ModelCourseCover(Context context, CourseInfo courseInfo) {
-        mControlMainActivity = (ControlMainActivity) context;
+        mMainContext = (MainActivity) context;
         if (courseInfo == null) {
             return null;
         }
@@ -283,11 +283,11 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
             case R.id.course_details_buy_button: { //课程详情购买
                 //如果是免费的课程直接购买
                 if (!mCourseInfo.mCourseIsHave.equals("1")) {
-                    Toast.makeText(mControlMainActivity, "此功能还在完善，敬请期待！", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mMainContext, "此功能还在完善，敬请期待！", Toast.LENGTH_SHORT).show();
                 }
 //                HideAllLayout();
 //                RelativeLayout course_main = modelCourse.findViewById(R.id.course_main);
-//                View view = mControlMainActivity.Page_OrderDetails(this,mCourseInfo,null,null);
+//                View view = mMainContext.Page_OrderDetails(this,mCourseInfo,null,null);
 //                course_main.addView(view);
                 break;
             }
@@ -311,9 +311,9 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
     //课程信息初始化
     public void CourseListInit(CourseInfo courseInfo) {
         ControllerCustomRoundAngleImageView imageView = mListView.findViewById(R.id.coursecover);
-        imageView.setImageDrawable(mControlMainActivity.getResources().getDrawable(R.drawable.modelcoursecover));//如果没有url，加载默认图片
+        imageView.setImageDrawable(mMainContext.getResources().getDrawable(R.drawable.modelcoursecover));//如果没有url，加载默认图片
         if (courseInfo.mCourseCover != null) {
-            Glide.with(mControlMainActivity).
+            Glide.with(mMainContext).
                     load(courseInfo.mCourseCover).listener(new RequestListener<Drawable>() {
                 @Override
                 public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
@@ -327,7 +327,7 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                     return false;
                 }
             })
-                    .error(mControlMainActivity.getResources().getDrawable(R.drawable.modelcoursecover)).into(imageView);
+                    .error(mMainContext.getResources().getDrawable(R.drawable.modelcoursecover)).into(imageView);
         }
         //设置课程类型
         ImageView coursetype = mListView.findViewById(R.id.coursetype);
@@ -384,7 +384,7 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
         ImageView course_details_Cover = mDetailsView.findViewById(R.id.course_details_Cover);
         //课程界面
         if (courseInfo.mCourseCover != null) {
-            Glide.with(mControlMainActivity).
+            Glide.with(mMainContext).
                     load(courseInfo.mCourseCover).listener(new RequestListener<Drawable>() {
                 @Override
                 public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
@@ -398,7 +398,7 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                     return false;
                 }
             })
-                    .error(mControlMainActivity.getResources().getDrawable(R.drawable.modelcoursecover)).into(course_details_Cover);
+                    .error(mMainContext.getResources().getDrawable(R.drawable.modelcoursecover)).into(course_details_Cover);
         }
         //课程详情-课程名称
         TextView course_details_Name = mDetailsView.findViewById(R.id.course_details_Name);
@@ -465,7 +465,7 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
         course_fl_layout_title.setText(courseInfo.mCourseName);
         //课程详情的内容  HTML格式
         TextView course_details_label_content = mDetailsView.findViewById(R.id.course_details_label_content);
-        new ModelHtmlUtils(mControlMainActivity, course_details_label_content).setHtmlWithPic(courseInfo.mCourseDetails);
+        new ModelHtmlUtils(mMainContext, course_details_label_content).setHtmlWithPic(courseInfo.mCourseDetails);
         LinearLayout course_details_bottomlayout1 = mDetailsView.findViewById(R.id.course_details_bottomlayout1);
         LinearLayout course_details_bottomlayout = mDetailsView.findViewById(R.id.course_details_bottomlayout);
 
@@ -544,7 +544,7 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
             if (courseChaptersInfo == null) {
                 continue;
             }
-            View catalog_chapterview = LayoutInflater.from(mControlMainActivity).inflate(R.layout.modelcoursedetails_catalog_chapter, null);
+            View catalog_chapterview = LayoutInflater.from(mMainContext).inflate(R.layout.modelcoursedetails_catalog_chapter, null);
             //判断是否显示加载更多按钮
             if (courseChaptersInfo.mCourseSectionsSum > courseChaptersInfo.mCourseSectionsPage * mCourseCatalogCount) {
                 TextView course_catalog_more = catalog_chapterview.findViewById(R.id.course_catalog_more);
@@ -556,7 +556,7 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                         getSingleCourseCatalogSectionMore(courseChaptersInfo.mCourseChaptersId, catalog_chapterview);
                     } else {
                         course_catalog_more.setText("暂无更多课程");
-                        Toast.makeText(mControlMainActivity, "暂无更多课程", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mMainContext, "暂无更多课程", Toast.LENGTH_SHORT).show();
                     }
                 });
             } else {
@@ -593,7 +593,7 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                     course_catalog_label_arrow_down.setLayoutParams(ll1);
                 } else {
                     if (courseChaptersInfo.mCourseSectionsInfoList.size() == 0) {
-                        Toast.makeText(mControlMainActivity, "本章节暂时没有课程", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mMainContext, "本章节暂时没有课程", Toast.LENGTH_SHORT).show();
                         return;
                     }
                     course_catalog_label_expandView.expand();
@@ -655,7 +655,7 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
         course_catalog_label_content.removeAllViews();
         for (int i = 0; i < courseChaptersInfo.mCourseSectionsInfoList.size(); i++) {
             CourseSectionsInfo courseSectionsInfo = courseChaptersInfo.mCourseSectionsInfoList.get(i);
-            View view = LayoutInflater.from(mControlMainActivity).inflate(R.layout.modelcoursedetails_catalog_chapter1, null);
+            View view = LayoutInflater.from(mMainContext).inflate(R.layout.modelcoursedetails_catalog_chapter1, null);
             TextView course_catalog_record_chapter_name = view.findViewById(R.id.course_catalog_record_chapter_name);
             course_catalog_record_chapter_name.setText(courseSectionsInfo.mCourseSectionsName);
             TextView course_catalog_record_chapter_learnprogress = view.findViewById(R.id.course_catalog_record_chapter_learnprogress);
@@ -664,7 +664,7 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
 //                courseSectionsInfo.mVideoId = "28b8e6b1e87340c2a9dcac78729ed24c";
                 //判断是否有播放权限
                 if (mCourseInfo.mCourseIsHave.equals("0")) {
-                    Toast.makeText(mControlMainActivity, "您还没有购买此课程", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mMainContext, "您还没有购买此课程", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 //判断是否为失效课程
@@ -682,7 +682,7 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                         CourseValidityPeriod = date.getTime();
                     }
                     if (CourseValidityPeriod != 0 && CourseValidityPeriod < currentTime) {
-                        Toast.makeText(mControlMainActivity, "您购买的课程已过期", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mMainContext, "您购买的课程已过期", Toast.LENGTH_SHORT).show();
                         return;
                     }
                 }
@@ -692,7 +692,7 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
             course_catalog_label_content.addView(view);
             if (courseChaptersInfo.mCourseSectionsInfoList.size() != 1 && i != (courseChaptersInfo.mCourseSectionsInfoList.size() - 1)) {
                 //添加横线
-                View lineView = new View(mControlMainActivity);
+                View lineView = new View(mMainContext);
                 lineView.setBackgroundColor(view.getResources().getColor(R.color.whitee5e5e5));
                 course_catalog_label_content.addView(lineView);
                 LinearLayout.LayoutParams ll = (LinearLayout.LayoutParams) lineView.getLayoutParams();
@@ -715,7 +715,7 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
         course_catalog_label_content_endtextview.setText("已显示全部章内容");
         course_catalog_label_content_endtextview.setTextColor(mDetailsView.getResources().getColor(R.color.graycc999999));
         if (mcatalog_chapter_liveview == null) {
-            mcatalog_chapter_liveview = LayoutInflater.from(mControlMainActivity).inflate(R.layout.modelcoursedetails_catalog_live_chapter, null);
+            mcatalog_chapter_liveview = LayoutInflater.from(mMainContext).inflate(R.layout.modelcoursedetails_catalog_live_chapter, null);
         }
         LinearLayout course_catalog_label_content_layout = mDetailsView.findViewById(R.id.course_catalog_label_content_layout);
         if (course_catalog_label_content_layout.getChildCount() == 0) {
@@ -749,7 +749,7 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                     course_catalog_live_label_arrow_down.setLayoutParams(ll1);
                 } else {
                     if (courseInfo.mCourseClassTimeInfoTodayList.size() == 0) {
-                        Toast.makeText(mControlMainActivity, "没有即将开始的课程", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mMainContext, "没有即将开始的课程", Toast.LENGTH_SHORT).show();
                         return;
                     }
                     course_catalog_live_label_expandView.expand();
@@ -830,7 +830,7 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                     course_catalog_live_label_arrow_down1.setLayoutParams(ll1);
                 } else {
                     if (courseInfo.mCourseClassTimeInfoAfterList.size() == 0) {
-                        Toast.makeText(mControlMainActivity, "后续暂时没有课程", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mMainContext, "后续暂时没有课程", Toast.LENGTH_SHORT).show();
                         return;
                     }
                     course_catalog_live_label_expandView1.expand();
@@ -911,7 +911,7 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                     course_catalog_live_label_arrow_down2.setLayoutParams(ll1);
                 } else {
                     if (courseInfo.mCourseClassTimeInfoBeforeList.size() == 0) {
-                        Toast.makeText(mControlMainActivity, "没有已结束课程", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mMainContext, "没有已结束课程", Toast.LENGTH_SHORT).show();
                         return;
                     }
                     course_catalog_live_label_expandView2.expand();
@@ -983,7 +983,7 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                 if (courseClassTimeInfo == null) {
                     continue;
                 }
-                View view = LayoutInflater.from(mControlMainActivity).inflate(R.layout.modelcoursedetails_catalog_live_chapter1, null);
+                View view = LayoutInflater.from(mMainContext).inflate(R.layout.modelcoursedetails_catalog_live_chapter1, null);
                 TextView course_catalog_live_chapter_name = view.findViewById(R.id.course_catalog_live_chapter_name);
                 course_catalog_live_chapter_name.setText(courseClassTimeInfo.mCourseClassTimeName);
                 TextView course_catalog_live_chapter_time = view.findViewById(R.id.course_catalog_live_chapter_time);
@@ -991,7 +991,7 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                 course_catalog_label_content.addView(view);
                 if (mCourseInfo.mCourseClassTimeInfoTodayList.size() != 1 && i != (mCourseInfo.mCourseClassTimeInfoTodayList.size() - 1)) {
                     //添加横线
-                    View lineView = new View(mControlMainActivity);
+                    View lineView = new View(mMainContext);
                     lineView.setBackgroundColor(view.getResources().getColor(R.color.whitee5e5e5));
                     course_catalog_label_content.addView(lineView);
                     LinearLayout.LayoutParams ll = (LinearLayout.LayoutParams) lineView.getLayoutParams();
@@ -1003,7 +1003,7 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                 view.setOnClickListener(v -> {
                     //判断是否有播放权限
                     if (mCourseInfo.mCourseIsHave.equals("0")) {
-                        Toast.makeText(mControlMainActivity, "您还没有购买此课程", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mMainContext, "您还没有购买此课程", Toast.LENGTH_SHORT).show();
                         return;
                     }
                     //判断是否为失效课程
@@ -1021,14 +1021,14 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                             CourseValidityPeriod = date.getTime();
                         }
                         if (CourseValidityPeriod != 0 && CourseValidityPeriod < currentTime) {
-                            Toast.makeText(mControlMainActivity, "您购买的课程已过期", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(mMainContext, "您购买的课程已过期", Toast.LENGTH_SHORT).show();
                             return;
                         }
                     }
                     if (finalCourseClassTimeInfo.liveStatus == 2 || finalCourseClassTimeInfo.liveStatus == 1 || finalCourseClassTimeInfo.liveStatus == 0) {
-                        mControlMainActivity.LoginLiveOrPlayback(Integer.parseInt(finalCourseClassTimeInfo.mCourseClassTimeId), 2, PlayType.LIVE);
+                        mMainContext.LoginLiveOrPlayback(Integer.parseInt(finalCourseClassTimeInfo.mCourseClassTimeId), 2, PlayType.LIVE);
                     } else if (finalCourseClassTimeInfo.liveStatus == 3) {
-                        mControlMainActivity.LoginLiveOrPlayback(Integer.parseInt(finalCourseClassTimeInfo.mCourseClassTimeId), 2, PlayType.PLAYBACK);
+                        mMainContext.LoginLiveOrPlayback(Integer.parseInt(finalCourseClassTimeInfo.mCourseClassTimeId), 2, PlayType.PLAYBACK);
                     }
                 });
             }
@@ -1043,7 +1043,7 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                 if (courseClassTimeInfo == null) {
                     continue;
                 }
-                View view = LayoutInflater.from(mControlMainActivity).inflate(R.layout.modelcoursedetails_catalog_live_chapter1, null);
+                View view = LayoutInflater.from(mMainContext).inflate(R.layout.modelcoursedetails_catalog_live_chapter1, null);
                 TextView course_catalog_live_chapter_name = view.findViewById(R.id.course_catalog_live_chapter_name);
                 course_catalog_live_chapter_name.setText(courseClassTimeInfo.mCourseClassTimeName);
                 TextView course_catalog_live_chapter_time = view.findViewById(R.id.course_catalog_live_chapter_time);
@@ -1051,7 +1051,7 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                 course_catalog_label_content.addView(view);
                 if (mCourseInfo.mCourseClassTimeInfoBeforeList.size() != 1 && i != (mCourseInfo.mCourseClassTimeInfoBeforeList.size() - 1)) {
                     //添加横线
-                    View lineView = new View(mControlMainActivity);
+                    View lineView = new View(mMainContext);
                     lineView.setBackgroundColor(view.getResources().getColor(R.color.whitee5e5e5));
                     course_catalog_label_content.addView(lineView);
                     LinearLayout.LayoutParams ll = (LinearLayout.LayoutParams) lineView.getLayoutParams();
@@ -1063,7 +1063,7 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                 view.setOnClickListener(v -> {
                     //判断是否有播放权限
                     if (mCourseInfo.mCourseIsHave.equals("0")) {
-                        Toast.makeText(mControlMainActivity, "您还没有购买此课程", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mMainContext, "您还没有购买此课程", Toast.LENGTH_SHORT).show();
                         return;
                     }
                     //判断是否为失效课程
@@ -1081,14 +1081,14 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                             CourseValidityPeriod = date.getTime();
                         }
                         if (CourseValidityPeriod != 0 && CourseValidityPeriod < currentTime) {
-                            Toast.makeText(mControlMainActivity, "您购买的课程已过期", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(mMainContext, "您购买的课程已过期", Toast.LENGTH_SHORT).show();
                             return;
                         }
                     }
                     if (finalCourseClassTimeInfo.liveStatus == 2 || finalCourseClassTimeInfo.liveStatus == 1 || finalCourseClassTimeInfo.liveStatus == 0) {
-                        mControlMainActivity.LoginLiveOrPlayback(Integer.parseInt(finalCourseClassTimeInfo.mCourseClassTimeId), 2, PlayType.LIVE);
+                        mMainContext.LoginLiveOrPlayback(Integer.parseInt(finalCourseClassTimeInfo.mCourseClassTimeId), 2, PlayType.LIVE);
                     } else if (finalCourseClassTimeInfo.liveStatus == 3) {
-                        mControlMainActivity.LoginLiveOrPlayback(Integer.parseInt(finalCourseClassTimeInfo.mCourseClassTimeId), 2, PlayType.PLAYBACK);
+                        mMainContext.LoginLiveOrPlayback(Integer.parseInt(finalCourseClassTimeInfo.mCourseClassTimeId), 2, PlayType.PLAYBACK);
                     }
                 });
             }
@@ -1103,7 +1103,7 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                 if (courseClassTimeInfo == null) {
                     continue;
                 }
-                View view = LayoutInflater.from(mControlMainActivity).inflate(R.layout.modelcoursedetails_catalog_live_chapter1, null);
+                View view = LayoutInflater.from(mMainContext).inflate(R.layout.modelcoursedetails_catalog_live_chapter1, null);
                 TextView course_catalog_live_chapter_name = view.findViewById(R.id.course_catalog_live_chapter_name);
                 course_catalog_live_chapter_name.setText(courseClassTimeInfo.mCourseClassTimeName);
                 TextView course_catalog_live_chapter_time = view.findViewById(R.id.course_catalog_live_chapter_time);
@@ -1111,7 +1111,7 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                 course_catalog_label_content.addView(view);
                 if (mCourseInfo.mCourseClassTimeInfoAfterList.size() != 1 && i != (mCourseInfo.mCourseClassTimeInfoAfterList.size() - 1)) {
                     //添加横线
-                    View lineView = new View(mControlMainActivity);
+                    View lineView = new View(mMainContext);
                     lineView.setBackgroundColor(view.getResources().getColor(R.color.whitee5e5e5));
                     course_catalog_label_content.addView(lineView);
                     LinearLayout.LayoutParams ll = (LinearLayout.LayoutParams) lineView.getLayoutParams();
@@ -1122,7 +1122,7 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                 view.setOnClickListener(v -> {
                     //判断是否有播放权限
                     if (mCourseInfo.mCourseIsHave.equals("0")) {
-                        Toast.makeText(mControlMainActivity, "您还没有购买此课程", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mMainContext, "您还没有购买此课程", Toast.LENGTH_SHORT).show();
                         return;
                     }
                     //判断是否为失效课程
@@ -1140,11 +1140,11 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                             CourseValidityPeriod = date.getTime();
                         }
                         if (CourseValidityPeriod != 0 && CourseValidityPeriod < currentTime) {
-                            Toast.makeText(mControlMainActivity, "您购买的课程已过期", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(mMainContext, "您购买的课程已过期", Toast.LENGTH_SHORT).show();
                             return;
                         }
                     }
-                    Toast.makeText(mControlMainActivity, "直播课程还未开始呢", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mMainContext, "直播课程还未开始呢", Toast.LENGTH_SHORT).show();
                 });
             }
         }
@@ -1155,7 +1155,7 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
         if (mCourseDownloadDialog != null) {
             mCourseDownloadDialog.dismiss();
         }
-        mCourseDownloadDialog = new ControllerPopDialog(mControlMainActivity, R.style.customdialogstyle, R.layout.modelcoursedetails_download);
+        mCourseDownloadDialog = new ControllerPopDialog(mMainContext, R.style.customdialogstyle, R.layout.modelcoursedetails_download);
         mCourseDownloadDialog.setOnKeyListener(keylistener);
         mCourseDownloadDialog.show();
 //        TextView coursedetails_download_num = mCourseDownloadDialog.getWindow().findViewById(R.id.coursedetails_download_num);
@@ -1173,12 +1173,12 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                 if (courseSectionsInfo == null) {
                     continue;
                 }
-                View view = LayoutInflater.from(mControlMainActivity).inflate(R.layout.modelcoursedetails_download1, null);
+                View view = LayoutInflater.from(mMainContext).inflate(R.layout.modelcoursedetails_download1, null);
                 TextView coursedetails_download1_name = view.findViewById(R.id.coursedetails_download1_name);
                 coursedetails_download1_name.setText(courseSectionsInfo.mCourseSectionsName);
                 coursedetails_download1_name.setHint(courseSectionsInfo.mCourseSectionsId);
                 ImageView coursedetails_download1_image = view.findViewById(R.id.coursedetails_download1_image);
-                Cursor cursor = ModelSearchRecordSQLiteOpenHelper.getReadableDatabase(mControlMainActivity).rawQuery(  //查可用且没有被删除的数据库
+                Cursor cursor = ModelSearchRecordSQLiteOpenHelper.getReadableDatabase(mMainContext).rawQuery(  //查可用且没有被删除的数据库
                         "select video_len from video_download_table where chapter_id=" + courseChaptersInfo.mCourseChaptersId + " and section_id=" + courseSectionsInfo.mCourseSectionsId, null);
                 if (cursor != null) {
                     while (cursor.moveToNext()) {
@@ -1228,7 +1228,7 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                         coursedetails_download1_downloadprogress.setProgress(0);
                         //将此条数据插入到本地数据库中
                         long time = System.currentTimeMillis();
-                        Cursor cursor1 = ModelSearchRecordSQLiteOpenHelper.getReadableDatabase(mControlMainActivity).rawQuery(  //查可用且没有被删除的数据库
+                        Cursor cursor1 = ModelSearchRecordSQLiteOpenHelper.getReadableDatabase(mMainContext).rawQuery(  //查可用且没有被删除的数据库
                                 "select video_download_localname from video_download_table where chapter_id=" + courseChaptersInfo.mCourseChaptersId +
                                         " and section_id=" + courseSectionsInfo.mCourseSectionsId, null);
                         if (cursor1 != null) {
@@ -1240,14 +1240,14 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                             cursor1.close();
                             if (!localFileName.equals("")) {
                                 //先删除掉以前的记录
-                                ModelSearchRecordSQLiteOpenHelper.getWritableDatabase(mControlMainActivity).execSQL("delete from video_download_table where chapter_id=" + courseChaptersInfo.mCourseChaptersId +
+                                ModelSearchRecordSQLiteOpenHelper.getWritableDatabase(mMainContext).execSQL("delete from video_download_table where chapter_id=" + courseChaptersInfo.mCourseChaptersId +
                                         " and section_id=" + courseSectionsInfo.mCourseSectionsId);
                                 //删除本地文件
                                 ModelRootFileUtil.deleteFile(ModelRootFileUtil.getRootFile(ModelRootFileUtil.mRecordVideoFileDownloadDir) + "/" + localFileName);
                             }
                         }
                         //向数据库中插入一条新纪录
-                        ModelSearchRecordSQLiteOpenHelper.getWritableDatabase(mControlMainActivity).execSQL("INSERT INTO `video_download_table` \n" +
+                        ModelSearchRecordSQLiteOpenHelper.getWritableDatabase(mMainContext).execSQL("INSERT INTO `video_download_table` \n" +
                                 "(`video_download_time`,`video_download_url`,`video_download_name`,`video_download_localname`,`chapter_id`,`section_id`,`video_len`) VALUES \n" +
                                 "('" + time + "', '" + courseSectionsInfo.mCourseSectionsDownloadUrl + "', '" + courseSectionsInfo.mCourseSectionsName +
                                 "', '" + time + courseSectionsInfo.mCourseSectionsName + "', '" + courseChaptersInfo.mCourseChaptersId + "', '" +
@@ -1302,7 +1302,7 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                                 m_isFind = true;
                                 //将此条数据插入到本地数据库中
                                 long time = System.currentTimeMillis();
-                                Cursor cursor = ModelSearchRecordSQLiteOpenHelper.getReadableDatabase(mControlMainActivity).rawQuery(  //查可用且没有被删除的数据库
+                                Cursor cursor = ModelSearchRecordSQLiteOpenHelper.getReadableDatabase(mMainContext).rawQuery(  //查可用且没有被删除的数据库
                                         "select video_download_localname from video_download_table where chapter_id=" + courseChaptersInfo.mCourseChaptersId +
                                                 " and section_id=" + courseSectionsInfo.mCourseSectionsId, null);
                                 if (cursor != null) {
@@ -1314,14 +1314,14 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                                     cursor.close();
                                     if (!localFileName.equals("")) {
                                         //先删除掉以前的记录
-                                        ModelSearchRecordSQLiteOpenHelper.getWritableDatabase(mControlMainActivity).execSQL("delete from video_download_table where chapter_id=" + courseChaptersInfo.mCourseChaptersId +
+                                        ModelSearchRecordSQLiteOpenHelper.getWritableDatabase(mMainContext).execSQL("delete from video_download_table where chapter_id=" + courseChaptersInfo.mCourseChaptersId +
                                                 " and section_id=" + courseSectionsInfo.mCourseSectionsId);
                                         //删除本地文件
                                         ModelRootFileUtil.deleteFile(ModelRootFileUtil.getRootFile(ModelRootFileUtil.mRecordVideoFileDownloadDir) + "/" + localFileName);
                                     }
                                 }
                                 //将所有的未缓存视频加入缓存列表
-                                ModelSearchRecordSQLiteOpenHelper.getWritableDatabase(mControlMainActivity).execSQL("INSERT INTO `video_download_table` \n" +
+                                ModelSearchRecordSQLiteOpenHelper.getWritableDatabase(mMainContext).execSQL("INSERT INTO `video_download_table` \n" +
                                         "(`video_download_time`,`video_download_url`,`video_download_name`,`video_download_localname`,`chapter_id`,`section_id`,`video_len`) VALUES \n" +
                                         "('" + time + "', '" + courseSectionsInfo.mCourseSectionsDownloadUrl + "', '" + courseSectionsInfo.mCourseSectionsName +
                                         "', '" + time + courseSectionsInfo.mCourseSectionsName + "', '" + courseChaptersInfo.mCourseChaptersId + "', '" +
@@ -1355,7 +1355,7 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
         HideAllLayout();
         RelativeLayout course_main = modelCourse.findViewById(R.id.course_main);
         if (mDownloadManagerView == null) {
-            mDownloadManagerView = LayoutInflater.from(mControlMainActivity).inflate(R.layout.modelcoursedetails_download_manager, null);
+            mDownloadManagerView = LayoutInflater.from(mMainContext).inflate(R.layout.modelcoursedetails_download_manager, null);
         }
         int count = 0;
         LinearLayout course_downloadmanager_layout_content = mDownloadManagerView.findViewById(R.id.course_downloadmanager_layout_content);
@@ -1365,7 +1365,7 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
             if (courseChaptersInfo == null) {
                 continue;
             }
-            View view = LayoutInflater.from(mControlMainActivity).inflate(R.layout.modelcoursedetails_download_manager_child, null);
+            View view = LayoutInflater.from(mMainContext).inflate(R.layout.modelcoursedetails_download_manager_child, null);
             TextView course_downloadmanager_child_titletext = view.findViewById(R.id.course_downloadmanager_child_titletext);
             course_downloadmanager_child_titletext.setText(courseChaptersInfo.mCourseChaptersName);
             course_downloadmanager_child_titletext.setHint(courseChaptersInfo.mCourseChaptersId);
@@ -1381,7 +1381,7 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                 if (courseSectionsInfo == null) {
                     continue;
                 }
-                Cursor cursor = ModelSearchRecordSQLiteOpenHelper.getReadableDatabase(mControlMainActivity).rawQuery(  //查可用且没有被删除的数据库
+                Cursor cursor = ModelSearchRecordSQLiteOpenHelper.getReadableDatabase(mMainContext).rawQuery(  //查可用且没有被删除的数据库
                         "select video_len from video_download_table where chapter_id=" + courseChaptersInfo.mCourseChaptersId + " and section_id=" + courseSectionsInfo.mCourseSectionsId, null);
                 int video_len = -1;
                 if (cursor != null) {
@@ -1394,7 +1394,7 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                 if (video_len == -1) { //没有添加下载的不做处理
                     continue;
                 }
-                View view1 = LayoutInflater.from(mControlMainActivity).inflate(R.layout.modelcoursedetails_download_manager_child1, null);
+                View view1 = LayoutInflater.from(mMainContext).inflate(R.layout.modelcoursedetails_download_manager_child1, null);
                 TextView course_downloadmanager_child1_name = view1.findViewById(R.id.course_downloadmanager_child1_name);
                 course_downloadmanager_child1_name.setText(courseSectionsInfo.mCourseSectionsName);
                 course_downloadmanager_child1_name.setHint(courseSectionsInfo.mCourseSectionsId);
@@ -1549,8 +1549,8 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
         //删除
         TextView course_downloadmanager_delete = mDownloadManagerView.findViewById(R.id.course_downloadmanager_delete);
         course_downloadmanager_delete.setOnClickListener(v -> {
-            View view = mControlMainActivity.getLayoutInflater().inflate(R.layout.dialog_sure_cancel, null);
-            mMyDialog = new ControllerCenterDialog(mControlMainActivity, 0, 0, view, R.style.DialogTheme);
+            View view = mMainContext.getLayoutInflater().inflate(R.layout.dialog_sure_cancel, null);
+            mMyDialog = new ControllerCenterDialog(mMainContext, 0, 0, view, R.style.DialogTheme);
             mMyDialog.setCancelable(true);
             mMyDialog.show();
             TextView tip = view.findViewById(R.id.tip);
@@ -1577,7 +1577,7 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                         if (id == R.drawable.button_select_red) {//将选中的项目缓存全部清除
                             TextView course_downloadmanager_child1_name = childView1.findViewById(R.id.course_downloadmanager_child1_name);
                             long time = System.currentTimeMillis();
-                            Cursor cursor = ModelSearchRecordSQLiteOpenHelper.getReadableDatabase(mControlMainActivity).rawQuery(  //查可用且没有被删除的数据库
+                            Cursor cursor = ModelSearchRecordSQLiteOpenHelper.getReadableDatabase(mMainContext).rawQuery(  //查可用且没有被删除的数据库
                                     "select video_download_localname from video_download_table where section_id=" + course_downloadmanager_child1_name.getHint().toString(), null);
                             if (cursor != null) {
                                 String localFileName = "";
@@ -1588,7 +1588,7 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                                 cursor.close();
                                 if (!localFileName.equals("")) {
                                     //先删除掉以前的记录
-                                    ModelSearchRecordSQLiteOpenHelper.getWritableDatabase(mControlMainActivity).execSQL("delete from video_download_table where section_id=" + course_downloadmanager_child1_name.getHint().toString());
+                                    ModelSearchRecordSQLiteOpenHelper.getWritableDatabase(mMainContext).execSQL("delete from video_download_table where section_id=" + course_downloadmanager_child1_name.getHint().toString());
                                     //删除本地文件
                                     ModelRootFileUtil.deleteFile(ModelRootFileUtil.getRootFile(ModelRootFileUtil.mRecordVideoFileDownloadDir) + "/" + localFileName);
                                 }
@@ -1644,16 +1644,16 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
     //录播视频播放
     private void CourseCatalogRecordGo(String videoId, String SectionsId, String title, int mCourseSectionsTime1) {
         if (videoId == null) {
-            Toast.makeText(mControlMainActivity, "此课程暂无播放资源", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mMainContext, "此课程暂无播放资源", Toast.LENGTH_SHORT).show();
             return;
         }
         if (videoId.equals("")) {
-            Toast.makeText(mControlMainActivity, "此课程暂无播放资源", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mMainContext, "此课程暂无播放资源", Toast.LENGTH_SHORT).show();
             return;
         }
-        LoadingDialog.getInstance(mControlMainActivity).show();
+        LoadingDialog.getInstance(mMainContext).show();
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(mControlMainActivity.mIpadress)
+                .baseUrl(mMainContext.mIpadress)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(ModelObservableInterface.client)
                 .build();
@@ -1671,28 +1671,28 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
             @Override
             public void onResponse(Call<ModelObservableInterface.BaseBean> call, Response<ModelObservableInterface.BaseBean> response) {
                 if (response.body() == null) {
-                    Toast.makeText(mControlMainActivity, "此课程暂无播放资源", Toast.LENGTH_SHORT).show();
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    Toast.makeText(mMainContext, "此课程暂无播放资源", Toast.LENGTH_SHORT).show();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 ModelObservableInterface.BaseBean baseBean = response.body();
                 if (baseBean == null) {
-                    Toast.makeText(mControlMainActivity, "此课程暂无播放资源", Toast.LENGTH_SHORT).show();
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    Toast.makeText(mMainContext, "此课程暂无播放资源", Toast.LENGTH_SHORT).show();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 if (!HeaderInterceptor.IsErrorCode(baseBean.getErrorCode(), baseBean.getErrorMsg())) {
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 if (baseBean.getErrorCode() != 200) {
-                    Toast.makeText(mControlMainActivity, "此课程暂无播放资源", Toast.LENGTH_SHORT).show();
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    Toast.makeText(mMainContext, "此课程暂无播放资源", Toast.LENGTH_SHORT).show();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 if (baseBean.getData() == null) {
-                    Toast.makeText(mControlMainActivity, "此课程暂无播放资源", Toast.LENGTH_SHORT).show();
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    Toast.makeText(mMainContext, "此课程暂无播放资源", Toast.LENGTH_SHORT).show();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 Map<String, Object> map = baseBean.getData();
@@ -1701,28 +1701,28 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                 String AccessKeySecret = (String) map.get("AccessKeySecret");
 //                String resourse_name = (String) map.get("resourse_name");
                 if (SecurityToken == null || AccessKeyId == null || AccessKeySecret == null) {
-                    Toast.makeText(mControlMainActivity, "此课程暂无播放资源", Toast.LENGTH_SHORT).show();
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    Toast.makeText(mMainContext, "此课程暂无播放资源", Toast.LENGTH_SHORT).show();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
-                mControlMainActivity.onStsSuccess(videoId, AccessKeyId, AccessKeySecret, SecurityToken);
+                mMainContext.onStsSuccess(videoId, AccessKeyId, AccessKeySecret, SecurityToken);
                 AliyunVodPlayerView aliyunVodPlayerView = mDetailsView.findViewById(R.id.aliyunVodPlayerView);
                 RelativeLayout.LayoutParams rl = (RelativeLayout.LayoutParams) aliyunVodPlayerView.getLayoutParams();
                 rl.height = mDetailsView.getResources().getDimensionPixelSize(R.dimen.dp_244);
                 aliyunVodPlayerView.VideoIdSet(videoId, SectionsId, mCourseSectionsTime1);
-                mControlMainActivity.setmAliyunVodPlayerView(aliyunVodPlayerView);
+                mMainContext.setmAliyunVodPlayerView(aliyunVodPlayerView);
 //                cover = "http://video.huozhongedu.cn/bea996b56ca3466e81b2a37ebdf39756/snapshots/5c712f5ca526445d8e56b0fbe0235de3-00003.jpg";
 //                if (!cover.equals("")){
 //                    aliyunVodPlayerView.setCoverUri(cover);
 //                }
                 aliyunVodPlayerView.setTitleName(title);
-                LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                LoadingDialog.getInstance(mMainContext).dismiss();
             }
 
             @Override
             public void onFailure(Call<ModelObservableInterface.BaseBean> call, Throwable t) {
-                Toast.makeText(mControlMainActivity, "此课程暂无播放资源", Toast.LENGTH_SHORT).show();
-                LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                Toast.makeText(mMainContext, "此课程暂无播放资源", Toast.LENGTH_SHORT).show();
+                LoadingDialog.getInstance(mMainContext).dismiss();
                 return;
             }
         });
@@ -1731,13 +1731,13 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
     //获取课程详情
     private void getSingleCourseDetails() {
         if (mCourseInfo.mCourseId.equals("")) {
-            Toast.makeText(mControlMainActivity, "查询课程详情失败", Toast.LENGTH_SHORT).show();
-            mControlMainActivity.onClickCourseDetailsReturn(mDetailsView);
+            Toast.makeText(mMainContext, "查询课程详情失败", Toast.LENGTH_SHORT).show();
+            mMainContext.onClickCourseDetailsReturn(mDetailsView);
             return;
         }
-        LoadingDialog.getInstance(mControlMainActivity).show();
+        LoadingDialog.getInstance(mMainContext).show();
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(mControlMainActivity.mIpadress)
+                .baseUrl(mMainContext.mIpadress)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(ModelObservableInterface.client)
                 .build();
@@ -1747,8 +1747,8 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
         Gson gson = new Gson();
         HashMap<String, Integer> paramsMap1 = new HashMap<>();
         paramsMap1.put("course_id", Integer.valueOf(mCourseInfo.mCourseId));
-        if (!mControlMainActivity.mStuId.equals("")) {
-            paramsMap1.put("stu_id", Integer.valueOf(mControlMainActivity.mStuId));
+        if (!mMainContext.mStuId.equals("")) {
+            paramsMap1.put("stu_id", Integer.valueOf(mMainContext.mStuId));
         }
         String strEntity = gson.toJson(paramsMap1);
         RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json;charset=UTF-8"), strEntity);
@@ -1759,28 +1759,28 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                 int code = response.code();
                 if (code != 200) {
                     Log.e("TAG", "getSingleCourseDetails  onErrorCode: " + code);
-                    Toast.makeText(mControlMainActivity, "查询课程详情失败", Toast.LENGTH_SHORT).show();
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
-                    mControlMainActivity.onClickCourseDetailsReturn(mDetailsView);
+                    Toast.makeText(mMainContext, "查询课程详情失败", Toast.LENGTH_SHORT).show();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
+                    mMainContext.onClickCourseDetailsReturn(mDetailsView);
                     return;
                 }
                 ModelObservableInterface.BaseBean baseBean = response.body();
                 if (baseBean == null) {
-                    Toast.makeText(mControlMainActivity, "查询课程详情失败", Toast.LENGTH_SHORT).show();
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
-                    mControlMainActivity.onClickCourseDetailsReturn(mDetailsView);
+                    Toast.makeText(mMainContext, "查询课程详情失败", Toast.LENGTH_SHORT).show();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
+                    mMainContext.onClickCourseDetailsReturn(mDetailsView);
                     return;
                 }
                 if (!HeaderInterceptor.IsErrorCode(baseBean.getErrorCode(), baseBean.getErrorMsg())) {
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
-                    mControlMainActivity.onClickCourseDetailsReturn(mDetailsView);
+                    LoadingDialog.getInstance(mMainContext).dismiss();
+                    mMainContext.onClickCourseDetailsReturn(mDetailsView);
                     return;
                 }
                 Map<String, Object> courseDataBean = baseBean.getData();
                 if (courseDataBean == null) {
-                    Toast.makeText(mControlMainActivity, "查询课程详情失败", Toast.LENGTH_SHORT).show();
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
-                    mControlMainActivity.onClickCourseDetailsReturn(mDetailsView);
+                    Toast.makeText(mMainContext, "查询课程详情失败", Toast.LENGTH_SHORT).show();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
+                    mMainContext.onClickCourseDetailsReturn(mDetailsView);
                     return;
                 }
                 String invalid_date_date = String.valueOf(courseDataBean.get("invalid_date_date"));
@@ -1820,15 +1820,15 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     CourseDetailsInit(mCourseInfo);
                 }
-                LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                LoadingDialog.getInstance(mMainContext).dismiss();
             }
 
             @Override
             public void onFailure(Call<ModelObservableInterface.BaseBean> call, Throwable t) {
                 Log.e("TAG", "onError: " + t.getMessage() + "");
-                Toast.makeText(mControlMainActivity, "获取课程详情失败", Toast.LENGTH_LONG).show();
-                LoadingDialog.getInstance(mControlMainActivity).dismiss();
-                mControlMainActivity.onClickCourseDetailsReturn(mDetailsView);
+                Toast.makeText(mMainContext, "获取课程详情失败", Toast.LENGTH_LONG).show();
+                LoadingDialog.getInstance(mMainContext).dismiss();
+                mMainContext.onClickCourseDetailsReturn(mDetailsView);
             }
         });
     }
@@ -1836,20 +1836,20 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
     //收藏、取消收藏课程
     private void CollectOrNotCollectCourses() {
         if (mCourseInfo == null) {
-            Toast.makeText(mControlMainActivity, "系统错误", Toast.LENGTH_LONG).show();
+            Toast.makeText(mMainContext, "系统错误", Toast.LENGTH_LONG).show();
             return;
         }
-        if (mCourseInfo.mCourseId.equals("") || mControlMainActivity.mStuId.equals("")) {
+        if (mCourseInfo.mCourseId.equals("") || mMainContext.mStuId.equals("")) {
             if (!mCourseInfo.mCourseIsCollect.equals("1")) {
-                Toast.makeText(mControlMainActivity, "收藏失败", Toast.LENGTH_LONG).show();
+                Toast.makeText(mMainContext, "收藏失败", Toast.LENGTH_LONG).show();
             } else {
-                Toast.makeText(mControlMainActivity, "取消收藏失败", Toast.LENGTH_LONG).show();
+                Toast.makeText(mMainContext, "取消收藏失败", Toast.LENGTH_LONG).show();
             }
             return;
         }
-        LoadingDialog.getInstance(mControlMainActivity).show();
+        LoadingDialog.getInstance(mMainContext).show();
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(mControlMainActivity.mIpadress)
+                .baseUrl(mMainContext.mIpadress)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(ModelObservableInterface.client)
                 .build();
@@ -1864,7 +1864,7 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
             paramsMap1.put("collection_status", 0);
         }
         paramsMap1.put("course_id", Integer.valueOf(mCourseInfo.mCourseId));
-        paramsMap1.put("stu_id", Integer.valueOf(mControlMainActivity.mStuId));
+        paramsMap1.put("stu_id", Integer.valueOf(mMainContext.mStuId));
         String strEntity = gson.toJson(paramsMap1);
         RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json;charset=UTF-8"), strEntity);
         Call<ModelObservableInterface.BaseBean> call = modelObservableInterface.collectOrNotCollectCourses(body);
@@ -1875,25 +1875,25 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                 if (code != 200) {
                     Log.e("TAG", "getSingleCourseDetails  onErrorCode: " + code);
                     if (!mCourseInfo.mCourseIsCollect.equals("1")) {
-                        Toast.makeText(mControlMainActivity, "收藏失败", Toast.LENGTH_LONG).show();
+                        Toast.makeText(mMainContext, "收藏失败", Toast.LENGTH_LONG).show();
                     } else {
-                        Toast.makeText(mControlMainActivity, "取消收藏失败", Toast.LENGTH_LONG).show();
+                        Toast.makeText(mMainContext, "取消收藏失败", Toast.LENGTH_LONG).show();
                     }
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 if (response.body() == null) {
                     Log.e("TAG", "getSingleCourseDetails  onErrorCode: " + code);
                     if (!mCourseInfo.mCourseIsCollect.equals("1")) {
-                        Toast.makeText(mControlMainActivity, "收藏失败", Toast.LENGTH_LONG).show();
+                        Toast.makeText(mMainContext, "收藏失败", Toast.LENGTH_LONG).show();
                     } else {
-                        Toast.makeText(mControlMainActivity, "取消收藏失败", Toast.LENGTH_LONG).show();
+                        Toast.makeText(mMainContext, "取消收藏失败", Toast.LENGTH_LONG).show();
                     }
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 if (!HeaderInterceptor.IsErrorCode(response.body().getErrorCode(), response.body().getErrorMsg())) {
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 if (mCourseInfo.mCourseIsCollect.equals("1")) { //成功修改状态
@@ -1920,18 +1920,18 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                     course_details_bottomlayout_collectImage.setImageDrawable(mDetailsView.getResources().getDrawable(R.drawable.button_collect_disable));
                     course_details_bottomlayout_collectImage1.setImageDrawable(mDetailsView.getResources().getDrawable(R.drawable.button_collect_disable));
                 }
-                LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                LoadingDialog.getInstance(mMainContext).dismiss();
             }
 
             @Override
             public void onFailure(Call<ModelObservableInterface.BaseBean> call, Throwable t) {
                 Log.e("TAG", "onError: " + t.getMessage() + "");
                 if (!mCourseInfo.mCourseIsCollect.equals("1")) {
-                    Toast.makeText(mControlMainActivity, "收藏失败", Toast.LENGTH_LONG).show();
+                    Toast.makeText(mMainContext, "收藏失败", Toast.LENGTH_LONG).show();
                 } else {
-                    Toast.makeText(mControlMainActivity, "取消收藏失败", Toast.LENGTH_LONG).show();
+                    Toast.makeText(mMainContext, "取消收藏失败", Toast.LENGTH_LONG).show();
                 }
-                LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                LoadingDialog.getInstance(mMainContext).dismiss();
             }
         });
     }
@@ -1943,9 +1943,9 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
         }
         //将录播内容清空
         mCourseInfo.mCourseChaptersInfoList.clear();
-        LoadingDialog.getInstance(mControlMainActivity).show();
+        LoadingDialog.getInstance(mMainContext).show();
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(mControlMainActivity.mIpadress)
+                .baseUrl(mMainContext.mIpadress)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(ModelObservableInterface.client)
                 .build();
@@ -1955,8 +1955,8 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
         Gson gson = new Gson();
         HashMap<String, Integer> paramsMap = new HashMap<>();
         paramsMap.put("course_id", Integer.valueOf(mCourseInfo.mCourseId));
-        if (!mControlMainActivity.mStuId.equals("")) {
-            paramsMap.put("stu_id", Integer.valueOf(mControlMainActivity.mStuId));
+        if (!mMainContext.mStuId.equals("")) {
+            paramsMap.put("stu_id", Integer.valueOf(mMainContext.mStuId));
         }
         paramsMap.put("type", type);
         paramsMap.put("pageNum", 1);
@@ -1973,7 +1973,7 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                     Log.e("TAG", "getSingleCourseDetails  onErrorCode: " + code);
                     if (mCurrentCatalogTab.equals("Live")) {
                         CourseCatalogLiveInit(mCourseInfo, type);
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                     }
                     return;
                 }
@@ -1981,14 +1981,14 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                 if (courseCatalogLiveBeanNew == null) {
                     if (mCurrentCatalogTab.equals("Live")) {
                         CourseCatalogLiveInit(mCourseInfo, type);
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                     }
                     return;
                 }
                 if (!HeaderInterceptor.IsErrorCode(courseCatalogLiveBeanNew.getErrorCode(), courseCatalogLiveBeanNew.getErrorMsg())) {
                     if (mCurrentCatalogTab.equals("Live")) {
                         CourseCatalogLiveInit(mCourseInfo, type);
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                     }
                     return;
                 }
@@ -1996,14 +1996,14 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                 if (courseCatalogLiveData == null) {
                     if (mCurrentCatalogTab.equals("Live")) {
                         CourseCatalogLiveInit(mCourseInfo, type);
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                     }
                     return;
                 }
                 if (courseCatalogLiveData.total == null || courseCatalogLiveData.list == null) {
                     if (mCurrentCatalogTab.equals("Live")) {
                         CourseCatalogLiveInit(mCourseInfo, type);
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                     }
                     return;
                 }
@@ -2053,17 +2053,17 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                 }
                 if (mCurrentCatalogTab.equals("Live")) {
                     CourseCatalogLiveInit(mCourseInfo, type);
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                 }
             }
 
             @Override
             public void onFailure(Call<CourseCatalogLiveBeanNew> call, Throwable t) {
                 Log.e("TAG", "onError: " + t.getMessage() + "");
-                Toast.makeText(mControlMainActivity, "获取课程目录失败", Toast.LENGTH_LONG).show();
+                Toast.makeText(mMainContext, "获取课程目录失败", Toast.LENGTH_LONG).show();
                 if (mCurrentCatalogTab.equals("Live")) {
                     CourseCatalogLiveInit(mCourseInfo, type);
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                 }
             }
         });
@@ -2076,9 +2076,9 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
         }
         //将录播内容清空
         mCourseInfo.mCourseChaptersInfoList.clear();
-        LoadingDialog.getInstance(mControlMainActivity).show();
+        LoadingDialog.getInstance(mMainContext).show();
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(mControlMainActivity.mIpadress)
+                .baseUrl(mMainContext.mIpadress)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(ModelObservableInterface.client)
                 .build();
@@ -2088,8 +2088,8 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
         Gson gson = new Gson();
         HashMap<String, Integer> paramsMap = new HashMap<>();
         paramsMap.put("course_id", Integer.valueOf(mCourseInfo.mCourseId));
-        if (!mControlMainActivity.mStuId.equals("")) {
-            paramsMap.put("stu_id", Integer.valueOf(mControlMainActivity.mStuId));
+        if (!mMainContext.mStuId.equals("")) {
+            paramsMap.put("stu_id", Integer.valueOf(mMainContext.mStuId));
         }
         int pageNum = 1;
         if (type == 1) {
@@ -2126,7 +2126,7 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                     Log.e("TAG", "getSingleCourseDetails  onErrorCode: " + code);
                     if (mCurrentCatalogTab.equals("Live")) {
                         CourseCatalogLiveInit(mCourseInfo, type);
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                     }
                     return;
                 }
@@ -2134,14 +2134,14 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                 if (courseCatalogLiveBeanNew == null) {
                     if (mCurrentCatalogTab.equals("Live")) {
                         CourseCatalogLiveInit(mCourseInfo, type);
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                     }
                     return;
                 }
                 if (!HeaderInterceptor.IsErrorCode(courseCatalogLiveBeanNew.getErrorCode(), courseCatalogLiveBeanNew.getErrorMsg())) {
                     if (mCurrentCatalogTab.equals("Live")) {
                         CourseCatalogLiveInit(mCourseInfo, type);
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                     }
                     return;
                 }
@@ -2149,14 +2149,14 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                 if (courseCatalogLiveData == null) {
                     if (mCurrentCatalogTab.equals("Live")) {
                         CourseCatalogLiveInit(mCourseInfo, type);
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                     }
                     return;
                 }
                 if (courseCatalogLiveData.total == null || courseCatalogLiveData.list == null) {
                     if (mCurrentCatalogTab.equals("Live")) {
                         CourseCatalogLiveInit(mCourseInfo, type);
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                     }
                     return;
                 }
@@ -2196,17 +2196,17 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                 }
                 if (mCurrentCatalogTab.equals("Live")) {
                     CourseCatalogLiveInit(mCourseInfo, type);
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                 }
             }
 
             @Override
             public void onFailure(Call<CourseCatalogLiveBeanNew> call, Throwable t) {
                 Log.e("TAG", "onError: " + t.getMessage() + "");
-                Toast.makeText(mControlMainActivity, "获取课程目录失败", Toast.LENGTH_LONG).show();
+                Toast.makeText(mMainContext, "获取课程目录失败", Toast.LENGTH_LONG).show();
                 if (mCurrentCatalogTab.equals("Live")) {
                     CourseCatalogLiveInit(mCourseInfo, type);
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                 }
             }
         });
@@ -2217,9 +2217,9 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
         if (mCourseInfo.mCourseId.equals("")) {
             return;
         }
-        LoadingDialog.getInstance(mControlMainActivity).show();
+        LoadingDialog.getInstance(mMainContext).show();
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(mControlMainActivity.mIpadress)
+                .baseUrl(mMainContext.mIpadress)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(ModelObservableInterface.client)
                 .build();
@@ -2229,8 +2229,8 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
         Gson gson = new Gson();
         HashMap<String, Integer> paramsMap = new HashMap<>();
         paramsMap.put("course_id", Integer.valueOf(mCourseInfo.mCourseId));
-        if (!mControlMainActivity.mStuId.equals("")) {
-            paramsMap.put("stu_id", Integer.valueOf(mControlMainActivity.mStuId));
+        if (!mMainContext.mStuId.equals("")) {
+            paramsMap.put("stu_id", Integer.valueOf(mMainContext.mStuId));
         }
         paramsMap.put("pageNum", mCourseCatalogPage);
         paramsMap.put("pageSize", mCourseCatalogCount);
@@ -2244,30 +2244,30 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                 int code = response.code();
                 if (code != 200) {
                     Log.e("TAG", "getSingleCourseDetails  onErrorCode: " + code);
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 CourseCatalogBeanNew courseCatalogBeanNew = response.body();
                 if (courseCatalogBeanNew == null) {
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 if (!HeaderInterceptor.IsErrorCode(courseCatalogBeanNew.getErrorCode(), courseCatalogBeanNew.getErrorMsg())) {
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 CourseCatalogBeanNew.CourseCatalogDataBeanNew courseCatalogDataBeanNew = courseCatalogBeanNew.getData();
                 if (courseCatalogDataBeanNew == null) {
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 if (courseCatalogDataBeanNew.sectionNUM == null || courseCatalogDataBeanNew.chapterList == null) {
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 mRecCourseSum = courseCatalogDataBeanNew.sectionNUM; //录播课程总数
                 if (courseCatalogDataBeanNew.chapterList.total == null || courseCatalogDataBeanNew.chapterList.list == null) {
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 mCourseCatalogSum = courseCatalogDataBeanNew.chapterList.total;
@@ -2312,14 +2312,14 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                     CourseCatalogRecordInit(mCourseInfo);
                 }
                 mPage = "Catalog";
-                LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                LoadingDialog.getInstance(mMainContext).dismiss();
             }
 
             @Override
             public void onFailure(Call<CourseCatalogBeanNew> call, Throwable t) {
                 Log.e("TAG", "onError: " + t.getMessage() + "");
-                Toast.makeText(mControlMainActivity, "获取课程目录失败", Toast.LENGTH_LONG).show();
-                LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                Toast.makeText(mMainContext, "获取课程目录失败", Toast.LENGTH_LONG).show();
+                LoadingDialog.getInstance(mMainContext).dismiss();
             }
         });
     }
@@ -2329,9 +2329,9 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
         if (mCourseInfo.mCourseId.equals("")) {
             return;
         }
-        LoadingDialog.getInstance(mControlMainActivity).show();
+        LoadingDialog.getInstance(mMainContext).show();
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(mControlMainActivity.mIpadress)
+                .baseUrl(mMainContext.mIpadress)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(ModelObservableInterface.client)
                 .build();
@@ -2351,34 +2351,34 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                 int code = response.code();
                 if (code != 200) {
                     Log.e("TAG", "getSingleCourseDetails  onErrorCode: " + code);
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 materialsBean materialsBean = response.body();
                 if (materialsBean == null) {
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 if (!HeaderInterceptor.IsErrorCode(materialsBean.code, "")) {
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 List<ModelCourseCover.materialsBean.materialsBeanData> materialsDataBeanNew = materialsBean.getData();
                 if (materialsDataBeanNew == null) {
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 //获取课程资料文件
                 if (mDetailsView != null){
                     ControllerListViewForScrollView mlistview = mDetailsView.findViewById(R.id .course_materials_label_list_view);
-                    mlistview.setAdapter(new MyAdapter(mControlMainActivity,materialsDataBeanNew));
+                    mlistview.setAdapter(new MyAdapter(mMainContext,materialsDataBeanNew));
                     mlistview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                             TextView text = view.findViewById(R.id.text_name);
                             if (text.getHint() == null){
-                                Toast.makeText(mControlMainActivity,"无法获取该文件",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(mMainContext,"无法获取该文件",Toast.LENGTH_SHORT).show();
                                 return;
                             }
                             String string  = String.valueOf(text.getHint());
@@ -2388,29 +2388,29 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
 //                            string = "https://wangxiao3.oss-cn-shanghai.aliyuncs.com/test/4.xls";
                             //判断文件格式
                             if (string.contains(".pdf")||string.contains(".pdfx")){
-                                Intent intent = new Intent(mControlMainActivity,PDFActivity.class);
+                                Intent intent = new Intent(mMainContext,PDFActivity.class);
                                 intent.putExtra("url",string);
-                                mControlMainActivity.startActivity(intent);
+                                mMainContext.startActivity(intent);
                             }else if (string.contains(".doc")||string.contains(".docx")||string.contains(".xls")||string.contains(".xlsx")
                             ||string.contains(".ppt")||string.contains(".pptx")){
-                                Intent intent = new Intent(mControlMainActivity,OfficeActivity.class);
+                                Intent intent = new Intent(mMainContext,OfficeActivity.class);
                                 intent.putExtra("url",string);
-                                mControlMainActivity.startActivity(intent);
+                                mMainContext.startActivity(intent);
                             }else {
-                                Toast.makeText(mControlMainActivity,"文件格式不正确",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(mMainContext,"文件格式不正确",Toast.LENGTH_SHORT).show();
                             }
 
                         }
                     });
                 }
-                LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                LoadingDialog.getInstance(mMainContext).dismiss();
             }
 
             @Override
             public void onFailure(Call<materialsBean> call, Throwable t) {
                 Log.e("TAG", "onError: " + t.getMessage() + "");
-                Toast.makeText(mControlMainActivity, "获取课程资料失败", Toast.LENGTH_LONG).show();
-                LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                Toast.makeText(mMainContext, "获取课程资料失败", Toast.LENGTH_LONG).show();
+                LoadingDialog.getInstance(mMainContext).dismiss();
             }
         });
     }
@@ -2420,9 +2420,9 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
         if (mCourseInfo.mCourseId.equals("")) {
             return;
         }
-        LoadingDialog.getInstance(mControlMainActivity).show();
+        LoadingDialog.getInstance(mMainContext).show();
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(mControlMainActivity.mIpadress)
+                .baseUrl(mMainContext.mIpadress)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(ModelObservableInterface.client)
                 .build();
@@ -2432,8 +2432,8 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
         Gson gson = new Gson();
         HashMap<String, Integer> paramsMap = new HashMap<>();
         paramsMap.put("course_id", Integer.valueOf(mCourseInfo.mCourseId));
-        if (!mControlMainActivity.mStuId.equals("")) {
-            paramsMap.put("stu_id", Integer.valueOf(mControlMainActivity.mStuId));
+        if (!mMainContext.mStuId.equals("")) {
+            paramsMap.put("stu_id", Integer.valueOf(mMainContext.mStuId));
         }
         paramsMap.put("pageNum", mCourseCatalogPage);
         paramsMap.put("pageSize", mCourseCatalogCount);
@@ -2447,30 +2447,30 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                 int code = response.code();
                 if (code != 200) {
                     Log.e("TAG", "getSingleCourseDetails  onErrorCode: " + code);
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 CourseCatalogBeanNew courseCatalogBeanNew = response.body();
                 if (courseCatalogBeanNew == null) {
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 if (!HeaderInterceptor.IsErrorCode(courseCatalogBeanNew.getErrorCode(), courseCatalogBeanNew.getErrorMsg())) {
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 CourseCatalogBeanNew.CourseCatalogDataBeanNew courseCatalogDataBeanNew = courseCatalogBeanNew.getData();
                 if (courseCatalogDataBeanNew == null) {
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 if (courseCatalogDataBeanNew.sectionNUM == null || courseCatalogDataBeanNew.chapterList == null) {
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 mRecCourseSum = courseCatalogDataBeanNew.sectionNUM; //录播课程总数
                 if (courseCatalogDataBeanNew.chapterList.total == null || courseCatalogDataBeanNew.chapterList.list == null) {
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 mCourseCatalogSum = courseCatalogDataBeanNew.chapterList.total;
@@ -2513,14 +2513,14 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                         //修改body为录播
                     CourseCatalogRecordInit(mCourseInfo);
                 }
-                LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                LoadingDialog.getInstance(mMainContext).dismiss();
             }
 
             @Override
             public void onFailure(Call<CourseCatalogBeanNew> call, Throwable t) {
                 Log.e("TAG", "onError: " + t.getMessage() + "");
-                Toast.makeText(mControlMainActivity, "获取课程目录失败", Toast.LENGTH_LONG).show();
-                LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                Toast.makeText(mMainContext, "获取课程目录失败", Toast.LENGTH_LONG).show();
+                LoadingDialog.getInstance(mMainContext).dismiss();
             }
         });
     }
@@ -2546,9 +2546,9 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
         if (!isFind) {
             return;
         }
-        LoadingDialog.getInstance(mControlMainActivity).show();
+        LoadingDialog.getInstance(mMainContext).show();
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(mControlMainActivity.mIpadress)
+                .baseUrl(mMainContext.mIpadress)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(ModelObservableInterface.client)
                 .build();
@@ -2557,8 +2557,8 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
         Gson gson = new Gson();
         HashMap<String, Integer> paramsMap = new HashMap<>();
         paramsMap.put("chapter_id", Integer.valueOf(ChaptersId));
-        if (!mControlMainActivity.mStuId.equals("")) {
-            paramsMap.put("stu_id", Integer.valueOf(mControlMainActivity.mStuId));
+        if (!mMainContext.mStuId.equals("")) {
+            paramsMap.put("stu_id", Integer.valueOf(mMainContext.mStuId));
         }
         paramsMap.put("pageNum", courseSectionsPage);
         paramsMap.put("pageSize", mCourseCatalogCount);
@@ -2571,29 +2571,29 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                 int code = response.code();
                 if (code != 200) {
                     Log.e("TAG", "getSingleCourseDetails  onErrorCode: " + code);
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 CourseCatalogSectionBeanNew courseCatalogSectionBeanNew = response.body();
                 if (courseCatalogSectionBeanNew == null) {
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 if (!HeaderInterceptor.IsErrorCode(courseCatalogSectionBeanNew.getErrorCode(), courseCatalogSectionBeanNew.getErrorMsg())) {
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 CourseCatalogSectionBeanNew.CourseCatalogSectionData courseCatalogSectionData = courseCatalogSectionBeanNew.getData();
                 if (courseCatalogSectionData == null) {
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 if (courseCatalogSectionData.sectionList == null) {
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 if (courseCatalogSectionData.sectionList.total == null || courseCatalogSectionData.sectionList.list == null) {
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 for (CourseChaptersInfo courseChaptersInfo : mCourseInfo.mCourseChaptersInfoList) {
@@ -2627,14 +2627,14 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                     course_catalog_label_content.removeAllViews();
                     CourseCatalogRecordSectionsInit(course_catalog_label_content, ChaptersId);
                 }
-                LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                LoadingDialog.getInstance(mMainContext).dismiss();
             }
 
             @Override
             public void onFailure(Call<CourseCatalogSectionBeanNew> call, Throwable t) {
                 Log.e("TAG", "onError: " + t.getMessage() + "");
-                Toast.makeText(mControlMainActivity, "获取课程目录失败", Toast.LENGTH_LONG).show();
-                LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                Toast.makeText(mMainContext, "获取课程目录失败", Toast.LENGTH_LONG).show();
+                LoadingDialog.getInstance(mMainContext).dismiss();
             }
         });
     }

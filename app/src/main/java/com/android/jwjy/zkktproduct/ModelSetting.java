@@ -55,7 +55,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * 设置模块
  */
 public class ModelSetting extends Fragment {
-    private static ControlMainActivity mControlMainActivity;
+    private static MainActivity mMainContext;
     private TextView mTextView;
     //要显示的页面
     static private int FragmentPage;
@@ -70,9 +70,9 @@ public class ModelSetting extends Fragment {
     //个人信息返回数据
     private PersonalInfoBean.PersonalInfoDataBean mPersonalInfoDataBean;
 
-    public  static Fragment newInstance(ControlMainActivity content, String context, int iFragmentPage){
+    public  static Fragment newInstance(MainActivity content, String context, int iFragmentPage){
         mContext = context;
-        mControlMainActivity = content;
+        mMainContext = content;
         ModelSetting myFragment = new ModelSetting();
         FragmentPage = iFragmentPage;
         return  myFragment;
@@ -81,7 +81,7 @@ public class ModelSetting extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mview = inflater.inflate(FragmentPage,container,false);
-        DisplayMetrics dm = mControlMainActivity.getResources().getDisplayMetrics(); //获取屏幕分辨率
+        DisplayMetrics dm = mMainContext.getResources().getDisplayMetrics(); //获取屏幕分辨率
 //        height = dm.heightPixels;
         width = dm.widthPixels;
         getPersonalInfoDatas();
@@ -106,7 +106,7 @@ public class ModelSetting extends Fragment {
             setting_logout_button.setVisibility(View.VISIBLE);
             TextView setting_essentialinformation_textview = mview.findViewById(R.id.setting_essentialinformation_textview);
             setting_essentialinformation_textview.setText(R.string.title_essentialinformation);
-            if (mControlMainActivity.mStuId.equals("")) {
+            if (mMainContext.mStuId.equals("")) {
                 //没登录不显示退出登录按钮
                 setting_logout_button.setVisibility(View.INVISIBLE);
                 //基本信息 后面改为立即登录
@@ -188,7 +188,7 @@ public class ModelSetting extends Fragment {
         setting_logout_button.setVisibility(View.VISIBLE);
         TextView setting_essentialinformation_textview = mview.findViewById(R.id.setting_essentialinformation_textview);
         setting_essentialinformation_textview.setText(R.string.title_essentialinformation);
-        if (mControlMainActivity.mStuId.equals("")){
+        if (mMainContext.mStuId.equals("")){
             //没登录不显示退出登录按钮
             setting_logout_button.setVisibility(View.INVISIBLE);
             //基本信息 后面改为立即登录
@@ -539,13 +539,13 @@ public class ModelSetting extends Fragment {
         setting_allownonwifiplay_go.setChecked(true);
         setting_allownonwifiplay_go.setOnCheckedChangeListener((view,isChecked) ->{
             //TODO do your job
-            mControlMainActivity.onClickSettingAllowNonWifiPlay(isChecked);
+            mMainContext.onClickSettingAllowNonWifiPlay(isChecked);
         });
         TextView yijian = mview.findViewById(R.id.yijian);
         yijian.setClickable(true);
         yijian.setOnClickListener(v->{
             //点击意见反馈
-            Dialog dialog = new Dialog(mControlMainActivity, android.R.style.Theme_Dialog);
+            Dialog dialog = new Dialog(mMainContext, android.R.style.Theme_Dialog);
             dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
             dialog.setContentView(R.layout.dialog_input_sure_cancel);
             dialog.setCanceledOnTouchOutside(false);
@@ -554,7 +554,7 @@ public class ModelSetting extends Fragment {
             button_cancel.setOnClickListener(v1->{dialog.dismiss();});
             // 确认更新
             dialog.findViewById(R.id.button_sure).setOnClickListener(v1 -> {
-                Toast.makeText(mControlMainActivity,"意见已提交",Toast.LENGTH_SHORT).show();
+                Toast.makeText(mMainContext,"意见已提交",Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
             });
             dialog.show();
@@ -563,8 +563,8 @@ public class ModelSetting extends Fragment {
 
     //照片选择对话框
     private void SetttingButtonDialogInit() {
-        mCameraDialog = new Dialog(mControlMainActivity, R.style.BottomDialog);
-        LinearLayout root = (LinearLayout) LayoutInflater.from(mControlMainActivity).inflate(
+        mCameraDialog = new Dialog(mMainContext, R.style.BottomDialog);
+        LinearLayout root = (LinearLayout) LayoutInflater.from(mMainContext).inflate(
                 R.layout.modelsetting_buttondialog, null);
         mCameraDialog.setContentView(root);
         Window dialogWindow = mCameraDialog.getWindow();
@@ -875,15 +875,15 @@ public class ModelSetting extends Fragment {
         String now_stu_pass = setting_passwordupdatenew_edittext.getText().toString();
         String now_stu_pass1 = setting_passwordupdatenewagain_edittext.getText().toString();
         if (origin_stu_pass == null || now_stu_pass == null || now_stu_pass1 == null){
-            Toast.makeText(mControlMainActivity,"系统错误，请重新尝试！",Toast.LENGTH_LONG).show();
+            Toast.makeText(mMainContext,"系统错误，请重新尝试！",Toast.LENGTH_LONG).show();
             return ;
         }
         if (now_stu_pass1.length()<6 || now_stu_pass.length()<6 || origin_stu_pass.length()<6){
-            Toast.makeText(mControlMainActivity,"密码不能少于6位数，请重新输入！",Toast.LENGTH_LONG).show();
+            Toast.makeText(mMainContext,"密码不能少于6位数，请重新输入！",Toast.LENGTH_LONG).show();
             return ;
         }
         if (!now_stu_pass1.equals(now_stu_pass)){ //两次新密码输入不一致
-            Toast.makeText(mControlMainActivity,"新密码两次输入不一致，请重新输入！",Toast.LENGTH_LONG).show();
+            Toast.makeText(mMainContext,"新密码两次输入不一致，请重新输入！",Toast.LENGTH_LONG).show();
             return ;
         }
         UpdateStuPass(origin_stu_pass,now_stu_pass);
@@ -930,10 +930,10 @@ public class ModelSetting extends Fragment {
         lp.topMargin = width / 11;
         aboutus_appname.setLayoutParams(lp);
         //应用版本号
-        PackageManager manager = mControlMainActivity.getPackageManager();
+        PackageManager manager = mMainContext.getPackageManager();
         PackageInfo info = null;
         try {
-            info = manager.getPackageInfo(mControlMainActivity.getPackageName(), 0);
+            info = manager.getPackageInfo(mMainContext.getPackageName(), 0);
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
@@ -1059,12 +1059,12 @@ public class ModelSetting extends Fragment {
 
     //设置-获取个人信息
     public void getPersonalInfoDatas() {
-        if (mControlMainActivity.mStuId.equals("")){
+        if (mMainContext.mStuId.equals("")){
             return;
         }
-        LoadingDialog.getInstance(mControlMainActivity).show();
+        LoadingDialog.getInstance(mMainContext).show();
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(mControlMainActivity.mIpadress)
+                .baseUrl(mMainContext.mIpadress)
                 .client(ModelObservableInterface.client)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
@@ -1074,7 +1074,7 @@ public class ModelSetting extends Fragment {
         Gson gson = new Gson();
 
         HashMap<String,Integer> paramsMap= new HashMap<>();
-        paramsMap.put("stu_id",Integer.valueOf(mControlMainActivity.mStuId));
+        paramsMap.put("stu_id",Integer.valueOf(mMainContext.mStuId));
         String strEntity = gson.toJson(paramsMap);
         RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json;charset=UTF-8"),strEntity);
         Call<PersonalInfoBean> call = modelObservableInterface.queryModelSettingPersonInfo(body);
@@ -1083,19 +1083,19 @@ public class ModelSetting extends Fragment {
             public void onResponse(Call<PersonalInfoBean> call, Response<PersonalInfoBean> response) {
                 PersonalInfoBean personalInfoBean = response.body();
                 if (personalInfoBean == null){
-                    Toast.makeText(mControlMainActivity,"获取个人信息失败",Toast.LENGTH_LONG).show();
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    Toast.makeText(mMainContext,"获取个人信息失败",Toast.LENGTH_LONG).show();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 if (!HeaderInterceptor.IsErrorCode(personalInfoBean.code,personalInfoBean.msg)){
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 //网络请求数据成功
                 mPersonalInfoDataBean = personalInfoBean.getData();
                 if (mview == null){
-                    Toast.makeText(mControlMainActivity,"获取个人信息失败",Toast.LENGTH_LONG).show();
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    Toast.makeText(mMainContext,"获取个人信息失败",Toast.LENGTH_LONG).show();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 TextView essentialinformation_id_value_textview = mview.findViewById(R.id.essentialinformation_id_value_textview);
@@ -1144,22 +1144,22 @@ public class ModelSetting extends Fragment {
                         essentialinformation_idnumber_value_textview.setText(mPersonalInfoDataBean.ID_number);
                     }
                 }
-                LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                LoadingDialog.getInstance(mMainContext).dismiss();
             }
 
             @Override
             public void onFailure(Call<PersonalInfoBean> call, Throwable t) {
-                Toast.makeText(mControlMainActivity,"获取个人信息超时",Toast.LENGTH_LONG).show();
-                LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                Toast.makeText(mMainContext,"获取个人信息超时",Toast.LENGTH_LONG).show();
+                LoadingDialog.getInstance(mMainContext).dismiss();
             }
         });
     }
 
     //设置-设置个人信息
     private void setPersonalInfoDatas(String nickname, String username, String user_sign, String phone, String email, String idCardNum) {
-        LoadingDialog.getInstance(mControlMainActivity).show();
+        LoadingDialog.getInstance(mMainContext).show();
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(mControlMainActivity.mIpadress)
+                .baseUrl(mMainContext.mIpadress)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(ModelObservableInterface.client)
                 .build();
@@ -1177,7 +1177,7 @@ public class ModelSetting extends Fragment {
         paramsMap.put("ID_number",idCardNum);
         String strEntity = gson.toJson(paramsMap);
         HashMap<String,Integer> paramsMap1 = new HashMap<>();
-        paramsMap1.put("stu_id", Integer.valueOf(mControlMainActivity.mStuId));
+        paramsMap1.put("stu_id", Integer.valueOf(mMainContext.mStuId));
         String strEntity1 = gson.toJson(paramsMap1);
         strEntity1 = strEntity1.replace("{","");
         strEntity = strEntity.replace("}","," + strEntity1);
@@ -1187,46 +1187,46 @@ public class ModelSetting extends Fragment {
             @Override
             public void onResponse(Call<ModelObservableInterface.BaseBean> call, Response<ModelObservableInterface.BaseBean> response) {
                 if (response.code() != 200){
-                    Toast.makeText(mControlMainActivity,"修改个人信息失败",Toast.LENGTH_LONG).show();
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    Toast.makeText(mMainContext,"修改个人信息失败",Toast.LENGTH_LONG).show();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 ModelObservableInterface.BaseBean loginBean = response.body();//得到解析后的LoginBean对象
                 if (loginBean == null){
-                    Toast.makeText(mControlMainActivity,"修改个人信息失败",Toast.LENGTH_LONG).show();
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    Toast.makeText(mMainContext,"修改个人信息失败",Toast.LENGTH_LONG).show();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 if (!HeaderInterceptor.IsErrorCode(loginBean.getErrorCode(),loginBean.getErrorMsg())){
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 if (loginBean.getErrorCode() != 200 ){
-                    Toast.makeText(mControlMainActivity,"修改个人信息失败",Toast.LENGTH_LONG).show();
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    Toast.makeText(mMainContext,"修改个人信息失败",Toast.LENGTH_LONG).show();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
-                Toast.makeText(mControlMainActivity,"修改成功",Toast.LENGTH_LONG).show();
+                Toast.makeText(mMainContext,"修改成功",Toast.LENGTH_LONG).show();
                 getPersonalInfoDatas();
-                LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                LoadingDialog.getInstance(mMainContext).dismiss();
             }
 
             @Override
             public void onFailure(Call<ModelObservableInterface.BaseBean> call, Throwable t) {
-                Toast.makeText(mControlMainActivity,"修改个人信息失败",Toast.LENGTH_LONG).show();
-                LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                Toast.makeText(mMainContext,"修改个人信息失败",Toast.LENGTH_LONG).show();
+                LoadingDialog.getInstance(mMainContext).dismiss();
             }
         });
     }
 
     //检测手机号是否可用
     private void checkModifyingTel(String phone) {
-        if (mControlMainActivity.mStuId.equals("")){
+        if (mMainContext.mStuId.equals("")){
             return;
         }
-        LoadingDialog.getInstance(mControlMainActivity).show();
+        LoadingDialog.getInstance(mMainContext).show();
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(mControlMainActivity.mIpadress)
+                .baseUrl(mMainContext.mIpadress)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(ModelObservableInterface.client)
                 .build();
@@ -1239,7 +1239,7 @@ public class ModelSetting extends Fragment {
         paramsMap.put("tel",phone);
         String strEntity = gson.toJson(paramsMap);
         HashMap<String,Integer> paramsMap1 = new HashMap<>();
-        paramsMap1.put("stu_id", Integer.valueOf(mControlMainActivity.mStuId));
+        paramsMap1.put("stu_id", Integer.valueOf(mMainContext.mStuId));
         String strEntity1 = gson.toJson(paramsMap1);
         strEntity1 = strEntity1.replace("{","");
         strEntity = strEntity.replace("}","," + strEntity1);
@@ -1249,34 +1249,34 @@ public class ModelSetting extends Fragment {
             @Override
             public void onResponse(Call<ModelObservableInterface.BaseBean> call, Response<ModelObservableInterface.BaseBean> response) {
                 if (response.code() != 200){
-                    Toast.makeText(mControlMainActivity,"修改个人信息失败",Toast.LENGTH_LONG).show();
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    Toast.makeText(mMainContext,"修改个人信息失败",Toast.LENGTH_LONG).show();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 ModelObservableInterface.BaseBean loginBean = response.body();//得到解析后的LoginBean对象
                 if (loginBean == null){
-                    Toast.makeText(mControlMainActivity,"修改个人信息失败",Toast.LENGTH_LONG).show();
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    Toast.makeText(mMainContext,"修改个人信息失败",Toast.LENGTH_LONG).show();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 if (!HeaderInterceptor.IsErrorCode(loginBean.getErrorCode(),loginBean.getErrorMsg())){
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 if (loginBean.getErrorMsg().equals("ok")){
                     setPersonalInfoDatas(null,null,null,phone,null,null);
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 } else {
-                    Toast.makeText(mControlMainActivity,"修改失败，该手机号已被其他学员使用！",Toast.LENGTH_LONG).show();
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    Toast.makeText(mMainContext,"修改失败，该手机号已被其他学员使用！",Toast.LENGTH_LONG).show();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                 }
             }
 
             @Override
             public void onFailure(Call<ModelObservableInterface.BaseBean> call, Throwable t) {
-                Toast.makeText(mControlMainActivity,"修改个人信息失败",Toast.LENGTH_LONG).show();
-                LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                Toast.makeText(mMainContext,"修改个人信息失败",Toast.LENGTH_LONG).show();
+                LoadingDialog.getInstance(mMainContext).dismiss();
             }
         });
     }
@@ -1287,16 +1287,16 @@ public class ModelSetting extends Fragment {
         String verCode = "-1";
         try {
             // 获取packagemanager的实例
-            PackageManager packageManager = mControlMainActivity.getPackageManager();
+            PackageManager packageManager = mMainContext.getPackageManager();
             // getPackageName()是你当前类的包名，0代表是获取版本信息
             PackageInfo packInfo = packageManager.getPackageInfo(
-                    mControlMainActivity.getPackageName(), 0);
+                    mMainContext.getPackageName(), 0);
             verCode = packInfo.versionName;
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-        LoadingDialog.getInstance(mControlMainActivity).show();
+        LoadingDialog.getInstance(mMainContext).show();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://wangxiao.16zige.com/")
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
@@ -1319,7 +1319,7 @@ public class ModelSetting extends Fragment {
                     public void onNext(ModelObservableInterface.BaseBean value) {
                         //网络请求数据成功
                         if (value == null || mview == null){
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             TextView aboutus_checknewversion_new_textview = mview.findViewById(R.id.aboutus_checknewversion_new_textview);
                             aboutus_checknewversion_new_textview.setText(finalVerCode + "");
                             return;
@@ -1329,7 +1329,7 @@ public class ModelSetting extends Fragment {
                             String version_num = String.valueOf(data.get("version_num"));
                             String download_address = String.valueOf(data.get("download_address"));
                             if (version_num == null || download_address == null){
-                                LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                                LoadingDialog.getInstance(mMainContext).dismiss();
                                 TextView aboutus_checknewversion_new_textview = mview.findViewById(R.id.aboutus_checknewversion_new_textview);
                                 aboutus_checknewversion_new_textview.setText(finalVerCode + "");
                                 return;
@@ -1346,14 +1346,14 @@ public class ModelSetting extends Fragment {
                                 aboutus_checknewversion_new.setVisibility(View.VISIBLE);
                             }
                         }
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         Log.e("TAG", "onError: "+e.getMessage()+"" + "Http:" + "http://192.168.30.141:8080/app/homePage/queryHomePageInfo/");
-                        Toast.makeText(mControlMainActivity,"获取关于我们信息超时",Toast.LENGTH_LONG).show();
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        Toast.makeText(mMainContext,"获取关于我们信息超时",Toast.LENGTH_LONG).show();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                         TextView aboutus_checknewversion_new_textview = mview.findViewById(R.id.aboutus_checknewversion_new_textview);
                         aboutus_checknewversion_new_textview.setText(finalVerCode + "");
                     }
@@ -1379,7 +1379,7 @@ public class ModelSetting extends Fragment {
 //                        //网络请求数据成功
 //                        AboutUsInfoBean.AboutUsInfoDataBean aboutUsInfoDataBean = value.getData();
 //                        if (aboutUsInfoDataBean == null || mview == null){
-//                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+//                            LoadingDialog.getInstance(mMainContext).dismiss();
 //                            return;
 //                        }
 //                        if (aboutUsInfoDataBean.newversion != null) {
@@ -1394,14 +1394,14 @@ public class ModelSetting extends Fragment {
 //                            TextView aboutus_agreeTerms_1 = mview.findViewById(R.id.aboutus_agreeTerms_1);
 //                            aboutus_agreeTerms_1.setText(aboutUsInfoDataBean.privacypolicy);
 //                        }
-//                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+//                        LoadingDialog.getInstance(mMainContext).dismiss();
 //                    }
 //
 //                    @Override
 //                    public void onError(Throwable e) {
 //                        Log.e("TAG", "onError: "+e.getMessage()+"" + "Http:" + "http://192.168.30.141:8080/app/homePage/queryHomePageInfo/");
-//                        Toast.makeText(mControlMainActivity,"获取关于我们信息超时",Toast.LENGTH_LONG).show();
-//                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+//                        Toast.makeText(mMainContext,"获取关于我们信息超时",Toast.LENGTH_LONG).show();
+//                        LoadingDialog.getInstance(mMainContext).dismiss();
 //                    }
 //
 //                    @Override
@@ -1413,28 +1413,28 @@ public class ModelSetting extends Fragment {
 
     //上传头像
     public void ModifyingHead(String imgPath) {
-        if (mControlMainActivity.mStuId.equals("") || mControlMainActivity.mToken.equals("") ){
-            Toast.makeText(mControlMainActivity, "请先登录您的账号，再进行此操作!", Toast.LENGTH_SHORT).show();
+        if (mMainContext.mStuId.equals("") || mMainContext.mToken.equals("") ){
+            Toast.makeText(mMainContext, "请先登录您的账号，再进行此操作!", Toast.LENGTH_SHORT).show();
             return;
         }
         if (imgPath.equals("")){
-            Toast.makeText(mControlMainActivity, "您选择的图片未找到!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mMainContext, "您选择的图片未找到!", Toast.LENGTH_SHORT).show();
             return;
         }
-        LoadingDialog.getInstance(mControlMainActivity).show();
+        LoadingDialog.getInstance(mMainContext).show();
         OkHttpClient httpClient = new OkHttpClient.Builder()
                 .addInterceptor(chain -> {
                     String uu = UUID.randomUUID().toString();
                     Request request = chain.request()
                             .newBuilder()
                             .addHeader("Content-Type", "multipart/form-data; boundary=" + uu)
-                            .addHeader("Stuid", mControlMainActivity.mStuId)
-                            .addHeader("permissioncode", mControlMainActivity.mToken)
+                            .addHeader("Stuid", mMainContext.mStuId)
+                            .addHeader("permissioncode", mMainContext.mToken)
                             .build();
                     return chain.proceed(request);
                 }).build();
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(mControlMainActivity.mIpadress)
+                .baseUrl(mMainContext.mIpadress)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(httpClient)
                 .build();
@@ -1442,7 +1442,7 @@ public class ModelSetting extends Fragment {
         File file = new File(imgPath);
         Gson gson = new Gson();
         HashMap<String,Integer> paramsMap = new HashMap<>();
-        paramsMap.put("stu_id", Integer.valueOf(mControlMainActivity.mStuId));
+        paramsMap.put("stu_id", Integer.valueOf(mMainContext.mStuId));
         String strEntity = gson.toJson(paramsMap);
         RequestBody body = RequestBody.create(okhttp3.MediaType.parse("multipart/form-data"),strEntity);
         Map<String, RequestBody> params = new HashMap<>() ;
@@ -1455,32 +1455,32 @@ public class ModelSetting extends Fragment {
             public void onResponse(retrofit2.Call call, retrofit2.Response response) {
                 int code = response.code();
                 if (code == 200) {
-                    Toast.makeText(mControlMainActivity, "上传头像成功!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mMainContext, "上传头像成功!", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(mControlMainActivity, "上传头像失败!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mMainContext, "上传头像失败!", Toast.LENGTH_SHORT).show();
                 }
-                LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                LoadingDialog.getInstance(mMainContext).dismiss();
             }
 
             @Override
             public void onFailure(retrofit2.Call call, Throwable t) {
                 Log.d("Tag",t.getMessage().toString());
-//                mControlMainActivity.setmState("");
+//                mMainContext.setmState("");
 //                mIsPublish = true;
-                Toast.makeText(mControlMainActivity, "上传头像失败!", Toast.LENGTH_SHORT).show();
-                LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                Toast.makeText(mMainContext, "上传头像失败!", Toast.LENGTH_SHORT).show();
+                LoadingDialog.getInstance(mMainContext).dismiss();
             }
         });
     }
 
     //修改学员密码
     private void UpdateStuPass(String origin_stu_pass,String now_stu_pass) {
-        if (mControlMainActivity.mStuId.equals("") ||origin_stu_pass.equals("") || now_stu_pass.equals("")){
+        if (mMainContext.mStuId.equals("") ||origin_stu_pass.equals("") || now_stu_pass.equals("")){
             return;
         }
-        LoadingDialog.getInstance(mControlMainActivity).show();
+        LoadingDialog.getInstance(mMainContext).show();
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(mControlMainActivity.mIpadress)
+                .baseUrl(mMainContext.mIpadress)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(ModelObservableInterface.client)
                 .build();
@@ -1494,7 +1494,7 @@ public class ModelSetting extends Fragment {
         paramsMap.put("now_stu_pass",now_stu_pass);
         String strEntity = gson.toJson(paramsMap);
         HashMap<String,Integer> paramsMap1 = new HashMap<>();
-        paramsMap1.put("stu_id", Integer.valueOf(mControlMainActivity.mStuId));
+        paramsMap1.put("stu_id", Integer.valueOf(mMainContext.mStuId));
         String strEntity1 = gson.toJson(paramsMap1);
         strEntity1 = strEntity1.replace("{","");
         strEntity = strEntity.replace("}","," + strEntity1);
@@ -1505,34 +1505,34 @@ public class ModelSetting extends Fragment {
             public void onResponse(Call<ModelObservableInterface.BaseBean> call, Response<ModelObservableInterface.BaseBean> response) {
                 ModelObservableInterface.BaseBean loginBean = response.body();//得到解析后的LoginBean对象
                 if (loginBean == null){
-                    Toast.makeText(mControlMainActivity,"修改密码失败",Toast.LENGTH_LONG).show();
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    Toast.makeText(mMainContext,"修改密码失败",Toast.LENGTH_LONG).show();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 if (!HeaderInterceptor.IsErrorCode(loginBean.getErrorCode(),loginBean.getErrorMsg())){
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 if (loginBean.getErrorCode() == 200 ){
-                    Toast.makeText(mControlMainActivity,"修改密码成功",Toast.LENGTH_LONG).show();
+                    Toast.makeText(mMainContext,"修改密码成功",Toast.LENGTH_LONG).show();
                     getPersonalInfoDatas();
-                    mControlMainActivity.onClickSettingUpdatePasswordReturn(mview);
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    mMainContext.onClickSettingUpdatePasswordReturn(mview);
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 } else if (loginBean.getErrorCode() == 203 ){
-                    Toast.makeText(mControlMainActivity,loginBean.getErrorMsg(),Toast.LENGTH_LONG).show();
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    Toast.makeText(mMainContext,loginBean.getErrorMsg(),Toast.LENGTH_LONG).show();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 } else {
-                    Toast.makeText(mControlMainActivity,"修改密码失败",Toast.LENGTH_LONG).show();
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    Toast.makeText(mMainContext,"修改密码失败",Toast.LENGTH_LONG).show();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                 }
             }
 
             @Override
             public void onFailure(Call<ModelObservableInterface.BaseBean> call, Throwable t) {
-                Toast.makeText(mControlMainActivity,"修改密码失败",Toast.LENGTH_LONG).show();
-                LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                Toast.makeText(mMainContext,"修改密码失败",Toast.LENGTH_LONG).show();
+                LoadingDialog.getInstance(mMainContext).dismiss();
             }
         });
     }

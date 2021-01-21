@@ -29,13 +29,13 @@ import java.util.List;
 public class ControllerMyMessage1Adapter extends ArrayAdapter<ControllerMyMessage1Adapter.MyMessageInfo> {
     private final LayoutInflater mInflater;
     private final ViewBinderHelper binderHelper;
-    private Context mControlMainActivity;
+    private Context mMainContext;
     private ControllerMyMessage1AdapterInterface mCallback;
 
     public ControllerMyMessage1Adapter(ControllerMyMessage1AdapterInterface fragment,Context context, List<MyMessageInfo> objects) {
         super(context, R.layout.model_my_mymessage1, objects);
         mCallback = fragment;
-        mControlMainActivity = context;
+        mMainContext = context;
         mInflater = LayoutInflater.from(context);
         binderHelper = new ViewBinderHelper();
 
@@ -68,7 +68,7 @@ public class ControllerMyMessage1Adapter extends ArrayAdapter<ControllerMyMessag
         if (item != null) {
             binderHelper.bind(holder.swipeLayout, item.modelmy_mymessage1_name);
             //加载用户头像
-            Glide.with(mControlMainActivity).
+            Glide.with(mMainContext).
                     load(item.modelmy_mymessage1_coverurl).listener(new RequestListener<Drawable>() {
                 @Override
                 public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
@@ -82,7 +82,7 @@ public class ControllerMyMessage1Adapter extends ArrayAdapter<ControllerMyMessag
                     return false;
                 }
             })
-                    .error(mControlMainActivity.getResources().getDrawable(R.drawable.modelmy_myheaddefault)).into(holder.modelmy_mymessage1_cover);
+                    .error(mMainContext.getResources().getDrawable(R.drawable.modelmy_myheaddefault)).into(holder.modelmy_mymessage1_cover);
             //删除item的监听事件
             holder.deleteView.setOnClickListener(v -> {
                 if (mCallback != null){

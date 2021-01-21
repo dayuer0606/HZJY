@@ -142,13 +142,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Created by dayuer on 19/7/2.
  * 主程序
  */
-public class ControlMainActivity extends AppCompatActivity implements EasyPermissions.PermissionCallbacks, AliyunDownloadManagerInterface {
+public class MainActivity extends AppCompatActivity implements EasyPermissions.PermissionCallbacks, AliyunDownloadManagerInterface {
     //继承Activity 不会显示APP头上的标题
     private Fragment mModelHomePage,mModelMy,mModelOpenClass,mModelLogIn,mModelSetting,mModelCoursePacket,mModelCourse,mModelClassCheduleCard
             ,mModelQuestionBank,mModelNews,mModelCommunityAnswer;
     private String mPage = ""; //当前显示页面
     private String mBeforePage = ""; //上一个显示界面
-    private static ControlMainActivity mThis;
+    private static MainActivity mThis;
     private BottomNavigationView mBottomNavigationView;  //底部菜单
     /**
      * 6.0版本检测并申请开启摄像头、音频录制、扩展卡读写等权限*/
@@ -223,8 +223,8 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
 //        ModelViewUtils.setImmersionStateMode(this);
         setContentView(R.layout.activity_main);
         //初始化数据库（存储token等数据）
-        ModelSearchRecordSQLiteOpenHelper sqLiteOpenHelper = ModelSearchRecordSQLiteOpenHelper.getInstance(ControlMainActivity.this);
-        sqLiteOpenHelper.getWritableDatabase(ControlMainActivity.this);
+        ModelSearchRecordSQLiteOpenHelper sqLiteOpenHelper = ModelSearchRecordSQLiteOpenHelper.getInstance(MainActivity.this);
+        sqLiteOpenHelper.getWritableDatabase(MainActivity.this);
         //从本地查询token
         Cursor cursor = ModelSearchRecordSQLiteOpenHelper.getReadableDatabase(mThis).rawQuery(
                 "select * from token_table ", null);
@@ -2927,13 +2927,13 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             //第二个参数为 包名.fileprovider
-            uri = FileProvider.getUriForFile(ControlMainActivity.this, PublicCommonUtil.fileProvider, cameraSavePath);
+            uri = FileProvider.getUriForFile(MainActivity.this, PublicCommonUtil.fileProvider, cameraSavePath);
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         } else {
             uri = Uri.fromFile(cameraSavePath);
         }
         intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
-        ControlMainActivity.this.startActivityForResult(intent, CAMERA);
+        MainActivity.this.startActivityForResult(intent, CAMERA);
     }
     //激活相册操作
     private void goPhotoAlbum() {
@@ -2959,13 +2959,6 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
                 String beforePageS[] = mBeforePage.split("/");
                 if (beforePageS.length < 1){
                     return;
-                }
-                if (mModelCourse != null && beforePageS[beforePageS.length - 1].equals("课程") && mPage.equals("课程详情")){
-                    ((ModelCourse)mModelCourse).ModelCourseCoverQuestionPictureAdd(data);
-                } else if (mModelHomePage != null && beforePageS[beforePageS.length - 1].equals("首页") && mPage.equals("课程详情")){
-                    ((ModelHomePage)mModelHomePage).ModelCourseCoverQuestionPictureAdd(data);
-                } else if (mModelHomePage != null && beforePageS[beforePageS.length - 1].equals("我的课程") && mPage.equals("课程详情")){
-                    ((ModelMy)mModelMy).ModelCourseCoverQuestionPictureAdd(data);
                 }
 //                else if (mModelCommunityAnswer != null && beforePageS[beforePageS.length - 1].equals("首页") && mPage.equals("社区问答")){
 //                    ((ModelCommunityAnswer)mModelCommunityAnswer).CommunityAnswerPictureAdd(data);
@@ -3035,7 +3028,7 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             //如果是7.0剪裁图片 同理 需要把uri包装
             //通过FileProvider创建一个content类型的Uri
-            Uri inputUri = FileProvider.getUriForFile(ControlMainActivity.this,
+            Uri inputUri = FileProvider.getUriForFile(MainActivity.this,
                     PublicCommonUtil.fileProvider, mOutImage);
             startPhotoZoom(inputUri);//设置输入类型
         } else {
@@ -3145,7 +3138,7 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
                 bundle.putInt(LoginJumpActivity.MODE_TYPE, 0);
                 bundle.putInt(LoginJumpActivity.SMALL_TYPE, 0);
                 if (type == PlayType.LIVE) {
-                    ActivityUtil.jump(ControlMainActivity.this, LoginJumpActivity.class, bundle);
+                    ActivityUtil.jump(MainActivity.this, LoginJumpActivity.class, bundle);
                 } else {
                     requestPlaybackType(access_token, bundle);
                 }
@@ -3184,7 +3177,7 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
 //                            bundle.putInt(LoginJumpActivity.MODE_TYPE, modeType);
 //                            bundle.putInt(LoginJumpActivity.SMALL_TYPE, smallType);
 //                            if (type == PlayType.LIVE) {
-//                                ActivityUtil.jump(ControlMainActivity.this, LoginJumpActivity.class, bundle);
+//                                ActivityUtil.jump(MainActivity.this, LoginJumpActivity.class, bundle);
 //                            } else {
 //                                requestPlaybackType(token, bundle);
 //                            }
@@ -3208,7 +3201,7 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
             @Override
             public void success(PrePlaybackEntity result) {
                 bundle.putString(LoginJumpActivity.VIDEO_TYPE, result.getVideoType());
-                ActivityUtil.jump(ControlMainActivity.this, LoginJumpActivity.class, bundle);
+                ActivityUtil.jump(MainActivity.this, LoginJumpActivity.class, bundle);
             }
 
             @Override
@@ -3330,7 +3323,7 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
     //初始化阿里播放器布局
     private void initAliyunPlayerView() {
 //        mAliyunVodPlayerView = (AliyunVodPlayerView) findViewById(com.aliyun.vodplayer.R.id.video_view);
-//        mAliyunVodPlayerView = new AliyunVodPlayerView(ControlMainActivity.this);
+//        mAliyunVodPlayerView = new AliyunVodPlayerView(MainActivity.this);
         mAliyunVodPlayerView.setActivetyContext(this);
         //保持屏幕敞亮
         mAliyunVodPlayerView.setKeepScreenOn(true);
@@ -3371,7 +3364,7 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
         //设置错误事件监听
         mAliyunVodPlayerView.setOnErrorListener(new MyOnErrorListener(this));
         //设置当前屏幕亮度
-        mAliyunVodPlayerView.setScreenBrightness(BrightnessDialog.getActivityBrightness(ControlMainActivity.this));
+        mAliyunVodPlayerView.setScreenBrightness(BrightnessDialog.getActivityBrightness(MainActivity.this));
         //设置加载状态监听
         mAliyunVodPlayerView.setSeiDataListener(new MyOnSeiDataListener(this));
         //设置改变全屏显示事件监听
@@ -3404,15 +3397,15 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
 
     private static class MyPrepareListener implements IPlayer.OnPreparedListener {
 
-        private WeakReference<ControlMainActivity> activityWeakReference;
+        private WeakReference<MainActivity> activityWeakReference;
 
-        public MyPrepareListener(ControlMainActivity controlMainActivity) {
-            activityWeakReference = new WeakReference<>(controlMainActivity);
+        public MyPrepareListener(MainActivity MainActivity) {
+            activityWeakReference = new WeakReference<>(MainActivity);
         }
 
         @Override
         public void onPrepared() {
-            ControlMainActivity activity = activityWeakReference.get();
+            MainActivity activity = activityWeakReference.get();
             if (activity != null) {
                 activity.onPrepared();
             }
@@ -3424,20 +3417,20 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
 //        for (String log : logStrs) {
 //            tvLogs.append(log + "\n");
 //        }
-        FixedToastUtils.show(ControlMainActivity.this.getApplicationContext(), com.aliyun.vodplayer.R.string.toast_prepare_success);
+        FixedToastUtils.show(MainActivity.this.getApplicationContext(), com.aliyun.vodplayer.R.string.toast_prepare_success);
     }
 
     private static class MyStsListener implements VidStsUtil.OnStsResultListener {
 
-        private WeakReference<ControlMainActivity> weakActivity;
+        private WeakReference<MainActivity> weakActivity;
 
-        MyStsListener(ControlMainActivity act) {
+        MyStsListener(MainActivity act) {
             weakActivity = new WeakReference<>(act);
         }
 
         @Override
         public void onSuccess(String vid, final String akid, final String akSecret, final String token) {
-            ControlMainActivity activity = weakActivity.get();
+            MainActivity activity = weakActivity.get();
             if (activity != null) {
                 activity.onStsSuccess(vid, akid, akSecret, token);
             }
@@ -3445,7 +3438,7 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
 
         @Override
         public void onFail() {
-            ControlMainActivity activity = weakActivity.get();
+            MainActivity activity = weakActivity.get();
             if (activity != null) {
                 activity.onStsFail();
             }
@@ -3477,15 +3470,15 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
      * 判断是否有网络的监听
      */
     private class MyNetConnectedListener implements AliyunVodPlayerView.NetConnectedListener {
-        WeakReference<ControlMainActivity> weakReference;
+        WeakReference<MainActivity> weakReference;
 
-        public MyNetConnectedListener(ControlMainActivity activity) {
+        public MyNetConnectedListener(MainActivity activity) {
             weakReference = new WeakReference<>(activity);
         }
 
         @Override
         public void onReNetConnected(boolean isReconnect) {
-            ControlMainActivity activity = weakReference.get();
+            MainActivity activity = weakReference.get();
             if (activity != null) {
                 activity.onReNetConnected(isReconnect);
             }
@@ -3493,7 +3486,7 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
 
         @Override
         public void onNetUnConnected() {
-            ControlMainActivity activity = weakReference.get();
+            MainActivity activity = weakReference.get();
             if (activity != null) {
                 activity.onNetUnConnected();
             }
@@ -3534,16 +3527,16 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
     }
     private static class MyCompletionListener implements IPlayer.OnCompletionListener {
 
-        private WeakReference<ControlMainActivity> activityWeakReference;
+        private WeakReference<MainActivity> activityWeakReference;
 
-        public MyCompletionListener(ControlMainActivity controlMainActivity) {
-            activityWeakReference = new WeakReference<ControlMainActivity>(controlMainActivity);
+        public MyCompletionListener(MainActivity MainActivity) {
+            activityWeakReference = new WeakReference<MainActivity>(MainActivity);
         }
 
         @Override
         public void onCompletion() {
 
-            ControlMainActivity activity = activityWeakReference.get();
+            MainActivity activity = activityWeakReference.get();
             if (activity != null) {
                 activity.onCompletion();
             }
@@ -3555,7 +3548,7 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
 //        for (String log : logStrs) {
 //            tvLogs.append(log + "\n");
 //        }
-        FixedToastUtils.show(ControlMainActivity.this.getApplicationContext(), com.aliyun.vodplayer.R.string.toast_play_compleion);
+        FixedToastUtils.show(MainActivity.this.getApplicationContext(), com.aliyun.vodplayer.R.string.toast_play_compleion);
 
 //        int time1 = mAliyunVodPlayerView.getVideoPostion();
         int time = mAliyunVodPlayerView.CourseSectionsTimeGet();
@@ -3641,15 +3634,15 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
 
     public static class MyOnTimeExpiredErrorListener implements AliyunVodPlayerView.OnTimeExpiredErrorListener {
 
-        WeakReference<ControlMainActivity> weakReference;
+        WeakReference<MainActivity> weakReference;
 
-        public MyOnTimeExpiredErrorListener(ControlMainActivity activity) {
+        public MyOnTimeExpiredErrorListener(MainActivity activity) {
             weakReference = new WeakReference<>(activity);
         }
 
         @Override
         public void onTimeExpiredError() {
-            ControlMainActivity activity = weakReference.get();
+            MainActivity activity = weakReference.get();
             if (activity != null) {
                 activity.onTimExpiredError();
             }
@@ -3681,15 +3674,15 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
      */
     private static class RetryExpiredSts implements VidStsUtil.OnStsResultListener {
 
-        private WeakReference<ControlMainActivity> weakReference;
+        private WeakReference<MainActivity> weakReference;
 
-        public RetryExpiredSts(ControlMainActivity activity) {
+        public RetryExpiredSts(MainActivity activity) {
             weakReference = new WeakReference<>(activity);
         }
 
         @Override
         public void onSuccess(String vid, String akid, String akSecret, String token) {
-            ControlMainActivity activity = weakReference.get();
+            MainActivity activity = weakReference.get();
             if (activity != null) {
                 activity.onStsRetrySuccess(vid, akid, akSecret, token);
             }
@@ -3721,15 +3714,15 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
 
     private static class MyFrameInfoListener implements IPlayer.OnRenderingStartListener {
 
-        private WeakReference<ControlMainActivity> activityWeakReference;
+        private WeakReference<MainActivity> activityWeakReference;
 
-        public MyFrameInfoListener(ControlMainActivity controlMainActivity) {
-            activityWeakReference = new WeakReference<ControlMainActivity>(controlMainActivity);
+        public MyFrameInfoListener(MainActivity MainActivity) {
+            activityWeakReference = new WeakReference<MainActivity>(MainActivity);
         }
 
         @Override
         public void onRenderingStart() {
-            ControlMainActivity activity = activityWeakReference.get();
+            MainActivity activity = activityWeakReference.get();
             if (activity != null) {
                 activity.onFirstFrameStart();
             }
@@ -3772,16 +3765,16 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
 
     private static class MyChangeQualityListener implements OnChangeQualityListener {
 
-        private WeakReference<ControlMainActivity> activityWeakReference;
+        private WeakReference<MainActivity> activityWeakReference;
 
-        public MyChangeQualityListener(ControlMainActivity controlMainActivity) {
-            activityWeakReference = new WeakReference<ControlMainActivity>(controlMainActivity);
+        public MyChangeQualityListener(MainActivity MainActivity) {
+            activityWeakReference = new WeakReference<MainActivity>(MainActivity);
         }
 
         @Override
         public void onChangeQualitySuccess(String finalQuality) {
 
-            ControlMainActivity activity = activityWeakReference.get();
+            MainActivity activity = activityWeakReference.get();
             if (activity != null) {
                 activity.onChangeQualitySuccess(finalQuality);
             }
@@ -3789,7 +3782,7 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
 
         @Override
         public void onChangeQualityFail(int code, String msg) {
-            ControlMainActivity activity = activityWeakReference.get();
+            MainActivity activity = activityWeakReference.get();
             if (activity != null) {
                 activity.onChangeQualityFail(code, msg);
             }
@@ -3798,39 +3791,39 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
 
     private void onChangeQualitySuccess(String finalQuality) {
         logStrs.add(format.format(new Date()) + getString(com.aliyun.vodplayer.R.string.log_change_quality_success));
-        FixedToastUtils.show(ControlMainActivity.this.getApplicationContext(),
+        FixedToastUtils.show(MainActivity.this.getApplicationContext(),
                 getString(com.aliyun.vodplayer.R.string.log_change_quality_success));
     }
 
     void onChangeQualityFail(int code, String msg) {
         logStrs.add(format.format(new Date()) + getString(com.aliyun.vodplayer.R.string.log_change_quality_fail) + " : " + msg);
-        FixedToastUtils.show(ControlMainActivity.this.getApplicationContext(),
+        FixedToastUtils.show(MainActivity.this.getApplicationContext(),
                 getString(com.aliyun.vodplayer.R.string.log_change_quality_fail));
     }
     private static class MyStoppedListener implements OnStoppedListener {
 
-        private WeakReference<ControlMainActivity> activityWeakReference;
+        private WeakReference<MainActivity> activityWeakReference;
 
-        public MyStoppedListener(ControlMainActivity controlMainActivity) {
-            activityWeakReference = new WeakReference<ControlMainActivity>(controlMainActivity);
+        public MyStoppedListener(MainActivity MainActivity) {
+            activityWeakReference = new WeakReference<MainActivity>(MainActivity);
         }
 
         @Override
         public void onStop() {
-            ControlMainActivity activity = activityWeakReference.get();
+            MainActivity activity = activityWeakReference.get();
             if (activity != null) {
                 activity.onStopped();
             }
         }
     }
     private void onStopped() {
-        FixedToastUtils.show(ControlMainActivity.this.getApplicationContext(), com.aliyun.vodplayer.R.string.log_play_stopped);
+        FixedToastUtils.show(MainActivity.this.getApplicationContext(), com.aliyun.vodplayer.R.string.log_play_stopped);
     }
     private class MyPlayViewClickListener implements AliyunVodPlayerView.OnPlayerViewClickListener {
 
-        private WeakReference<ControlMainActivity> weakReference;
+        private WeakReference<MainActivity> weakReference;
 
-        public MyPlayViewClickListener(ControlMainActivity activity) {
+        public MyPlayViewClickListener(MainActivity activity) {
             weakReference = new WeakReference<>(activity);
         }
 
@@ -3845,9 +3838,9 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
             // 如果当前的Type是Download, 就显示Download对话框
             if (viewType == AliyunVodPlayerView.PlayViewType.Download) {
                 mCurrentDownloadScreenMode = screenMode;
-                ControlMainActivity controlMainActivity = weakReference.get();
-                if (controlMainActivity != null) {
-                    controlMainActivity.showAddDownloadView = true;
+                MainActivity MainActivity = weakReference.get();
+                if (MainActivity != null) {
+                    MainActivity.showAddDownloadView = true;
                 }
 
                 if (mAliyunVodPlayerView != null) {
@@ -3870,15 +3863,15 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
     }
     private static class MyOrientationChangeListener implements AliyunVodPlayerView.OnOrientationChangeListener {
 
-        private final WeakReference<ControlMainActivity> weakReference;
+        private final WeakReference<MainActivity> weakReference;
 
-        public MyOrientationChangeListener(ControlMainActivity activity) {
+        public MyOrientationChangeListener(MainActivity activity) {
             weakReference = new WeakReference<>(activity);
         }
 
         @Override
         public void orientationChange(boolean from, AliyunScreenMode currentMode) {
-            ControlMainActivity activity = weakReference.get();
+            MainActivity activity = weakReference.get();
 
             if (activity != null) {
                 activity.hideDownloadDialog(from, currentMode);
@@ -3909,15 +3902,15 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
         }
     }
     private static class MyShowMoreClickLisener implements ControlView.OnShowMoreClickListener {
-        WeakReference<ControlMainActivity> weakReference;
+        WeakReference<MainActivity> weakReference;
 
-        MyShowMoreClickLisener(ControlMainActivity activity) {
+        MyShowMoreClickLisener(MainActivity activity) {
             weakReference = new WeakReference<>(activity);
         }
 
         @Override
         public void showMore() {
-            ControlMainActivity activity = weakReference.get();
+            MainActivity activity = weakReference.get();
             if (activity != null) {
                 long currentClickTime = System.currentTimeMillis();
                 // 防止快速点击
@@ -3933,7 +3926,7 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
     }
 
     //显示更多
-    private void showMore(final ControlMainActivity activity) {
+    private void showMore(final MainActivity activity) {
         showMoreDialog = new AlivcShowMoreDialog(activity);
         AliyunShowMoreValue moreValue = new AliyunShowMoreValue();
         moreValue.setSpeed(mAliyunVodPlayerView.getCurrentSpeed());
@@ -4046,15 +4039,15 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
         window.setAttributes(lp);
     }
     private static class MyPlayStateBtnClickListener implements AliyunVodPlayerView.OnPlayStateBtnClickListener {
-        WeakReference<ControlMainActivity> weakReference;
+        WeakReference<MainActivity> weakReference;
 
-        MyPlayStateBtnClickListener(ControlMainActivity activity) {
+        MyPlayStateBtnClickListener(MainActivity activity) {
             weakReference = new WeakReference<>(activity);
         }
 
         @Override
         public void onPlayBtnClick(int playerState) {
-            ControlMainActivity activity = weakReference.get();
+            MainActivity activity = weakReference.get();
             if (activity != null) {
                 activity.onPlayStateSwitch(playerState);
             }
@@ -4072,15 +4065,15 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
         }
     }
     private static class MySeekCompleteListener implements IPlayer.OnSeekCompleteListener {
-        WeakReference<ControlMainActivity> weakReference;
+        WeakReference<MainActivity> weakReference;
 
-        MySeekCompleteListener(ControlMainActivity activity) {
+        MySeekCompleteListener(MainActivity activity) {
             weakReference = new WeakReference<>(activity);
         }
 
         @Override
         public void onSeekComplete() {
-            ControlMainActivity activity = weakReference.get();
+            MainActivity activity = weakReference.get();
             if (activity != null) {
                 activity.onSeekComplete();
             }
@@ -4092,15 +4085,15 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
     }
 
     private static class MySeekStartListener implements AliyunVodPlayerView.OnSeekStartListener {
-        WeakReference<ControlMainActivity> weakReference;
+        WeakReference<MainActivity> weakReference;
 
-        MySeekStartListener(ControlMainActivity activity) {
+        MySeekStartListener(MainActivity activity) {
             weakReference = new WeakReference<>(activity);
         }
 
         @Override
         public void onSeekStart(int position) {
-            ControlMainActivity activity = weakReference.get();
+            MainActivity activity = weakReference.get();
             if (activity != null) {
                 activity.onSeekStart(position);
             }
@@ -4168,19 +4161,19 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
     }
     private static class MyOnScreenBrightnessListener implements AliyunVodPlayerView.OnScreenBrightnessListener {
 
-        private WeakReference<ControlMainActivity> weakReference;
+        private WeakReference<MainActivity> weakReference;
 
-        public MyOnScreenBrightnessListener(ControlMainActivity activity) {
+        public MyOnScreenBrightnessListener(MainActivity activity) {
             weakReference = new WeakReference<>(activity);
         }
 
         @Override
         public void onScreenBrightness(int brightness) {
-            ControlMainActivity controlMainActivity = weakReference.get();
-            if (controlMainActivity != null) {
-                controlMainActivity.setWindowBrightness(brightness);
-                if (controlMainActivity.mAliyunVodPlayerView != null) {
-                    controlMainActivity.mAliyunVodPlayerView.setScreenBrightness(brightness);
+            MainActivity MainActivity = weakReference.get();
+            if (MainActivity != null) {
+                MainActivity.setWindowBrightness(brightness);
+                if (MainActivity.mAliyunVodPlayerView != null) {
+                    MainActivity.mAliyunVodPlayerView.setScreenBrightness(brightness);
                 }
             }
         }
@@ -4190,35 +4183,35 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
      */
     private static class MyOnErrorListener implements IPlayer.OnErrorListener {
 
-        private WeakReference<ControlMainActivity> weakReference;
+        private WeakReference<MainActivity> weakReference;
 
-        public MyOnErrorListener(ControlMainActivity activity) {
+        public MyOnErrorListener(MainActivity activity) {
             weakReference = new WeakReference<>(activity);
         }
 
         @Override
         public void onError(com.aliyun.player.bean.ErrorInfo errorInfo) {
-            ControlMainActivity controlMainActivity = weakReference.get();
-            if (controlMainActivity != null) {
-                controlMainActivity.onError(errorInfo);
+            MainActivity MainActivity = weakReference.get();
+            if (MainActivity != null) {
+                MainActivity.onError(errorInfo);
             }
         }
     }
 
     private static class MyOnSeiDataListener implements IPlayer.OnSeiDataListener{
-        private WeakReference<ControlMainActivity> weakReference;
+        private WeakReference<MainActivity> weakReference;
 
-        public MyOnSeiDataListener(ControlMainActivity activity) {
+        public MyOnSeiDataListener(MainActivity activity) {
             weakReference = new WeakReference<>(activity);
         }
 
         @Override
         public void onSeiData(int i, byte[] bytes) {
-            ControlMainActivity controlMainActivity = weakReference.get();
+            MainActivity MainActivity = weakReference.get();
             String seiMessage = new String(bytes);
-            if (controlMainActivity != null) {
+            if (MainActivity != null) {
                 String log = new SimpleDateFormat("HH:mm:ss.SS").format(new Date())+"SEI:type:"+i+",content:"+seiMessage+"\n";
-//                controlMainActivity.tvLogs.append(log);
+//                MainActivity.tvLogs.append(log);
             }
             Log.e("SEI:", "type:"+i+",content:"+seiMessage);
         }
@@ -4260,25 +4253,25 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
         setPlaySource();
     }
     private static class MyOnScreenModeListener implements OnChangeScreenModeListener {
-        private WeakReference<ControlMainActivity> weakReference;
+        private WeakReference<MainActivity> weakReference;
 
-        public MyOnScreenModeListener(ControlMainActivity activity) {
+        public MyOnScreenModeListener(MainActivity activity) {
             weakReference = new WeakReference<>(activity);
         }
 
         @Override
         public void onChangeScreenModeFull() {
-            ControlMainActivity controlMainActivity = weakReference.get();
-            if(controlMainActivity != null){
-                controlMainActivity.onChangeScreenModeFull();
+            MainActivity MainActivity = weakReference.get();
+            if(MainActivity != null){
+                MainActivity.onChangeScreenModeFull();
             }
         }
 
         @Override
         public void onChangeScreenModeSmall() {
-            ControlMainActivity controlMainActivity = weakReference.get();
-            if(controlMainActivity != null){
-                controlMainActivity.onChangeScreenModeSmall();
+            MainActivity MainActivity = weakReference.get();
+            if(MainActivity != null){
+                MainActivity.onChangeScreenModeSmall();
             }
         }
     }
@@ -4293,17 +4286,17 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
     }
 
     private static class MyOnRetuenListener implements OnReturnListener {
-        private WeakReference<ControlMainActivity> weakReference;
+        private WeakReference<MainActivity> weakReference;
 
-        public MyOnRetuenListener(ControlMainActivity activity) {
+        public MyOnRetuenListener(MainActivity activity) {
             weakReference = new WeakReference<>(activity);
         }
 
         @Override
         public void onReturn() {
-            ControlMainActivity controlMainActivity = weakReference.get();
-            if (controlMainActivity != null){
-                controlMainActivity.onReturn();
+            MainActivity MainActivity = weakReference.get();
+            if (MainActivity != null){
+                MainActivity.onReturn();
             }
         }
     }
@@ -4592,7 +4585,7 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
             @Override
             public void onDeleteDownloadInfo(final ArrayList<AlivcDownloadMediaInfo> alivcDownloadMediaInfos) {
                 // 视频删除的dialog
-                final AlivcDialog alivcDialog = new AlivcDialog(ControlMainActivity.this);
+                final AlivcDialog alivcDialog = new AlivcDialog(MainActivity.this);
                 alivcDialog.setDialogIcon(com.aliyun.vodplayer.R.drawable.icon_delete_tips);
                 alivcDialog.setMessage(getResources().getString(com.aliyun.vodplayer.R.string.alivc_delete_confirm));
                 alivcDialog.setOnConfirmclickListener(getResources().getString(com.aliyun.vodplayer.R.string.alivc_dialog_sure),
@@ -4621,7 +4614,7 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
                                     }
                                     downloadDataProvider.deleteAllDownloadInfo(alivcDownloadMediaInfos);
                                 } else {
-                                    FixedToastUtils.show(ControlMainActivity.this, "没有删除的视频选项...");
+                                    FixedToastUtils.show(MainActivity.this, "没有删除的视频选项...");
                                 }
                             }
                         });
@@ -4641,13 +4634,13 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
             public void onDownloadedItemClick(final int positin) {
                 ArrayList<AlivcDownloadMediaInfo> allDownloadMediaInfo = downloadView.getAllDownloadMediaInfo();
                 if (positin < 0) {
-                    FixedToastUtils.show(ControlMainActivity.this, "视频资源不存在");
+                    FixedToastUtils.show(MainActivity.this, "视频资源不存在");
                     return;
                 }
                 if (mModelMy != null){
                     boolean misPlay = ((ModelMy)mModelMy).MyCacheShow_Play();
                     if (!misPlay){
-                        FixedToastUtils.show(ControlMainActivity.this, "视频播放器不存在");
+                        FixedToastUtils.show(MainActivity.this, "视频播放器不存在");
                         return;
                     }
                     mBeforePage = mBeforePage + "/" + mPage;
@@ -4722,10 +4715,10 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
      */
     private static class MyDownloadInfoListener implements AliyunDownloadInfoListener {
 
-        private WeakReference<ControlMainActivity> weakReference;
+        private WeakReference<MainActivity> weakReference;
 
-        public MyDownloadInfoListener(ControlMainActivity controlMainActivity) {
-            weakReference = new WeakReference<>(controlMainActivity);
+        public MyDownloadInfoListener(MainActivity MainActivity) {
+            weakReference = new WeakReference<>(MainActivity);
         }
 
         @Override
@@ -4747,47 +4740,47 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
                     return 0;
                 }
             });
-            ControlMainActivity controlMainActivity = weakReference.get();
-            if (controlMainActivity != null) {
-                controlMainActivity.mDownloadInPrepare = false;
-                controlMainActivity.onDownloadPrepared(infos, controlMainActivity.showAddDownloadView);
+            MainActivity MainActivity = weakReference.get();
+            if (MainActivity != null) {
+                MainActivity.mDownloadInPrepare = false;
+                MainActivity.onDownloadPrepared(infos, MainActivity.showAddDownloadView);
             }
         }
 
         @Override
         public void onAdd(AliyunDownloadMediaInfo info) {
-            ControlMainActivity controlMainActivity = weakReference.get();
-            if (controlMainActivity != null) {
-                if (controlMainActivity.downloadDataProvider != null) {
-                    controlMainActivity.downloadDataProvider.addDownloadMediaInfo(info);
+            MainActivity MainActivity = weakReference.get();
+            if (MainActivity != null) {
+                if (MainActivity.downloadDataProvider != null) {
+                    MainActivity.downloadDataProvider.addDownloadMediaInfo(info);
                 }
-                Toast.makeText(controlMainActivity,"添加下载",Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity,"添加下载",Toast.LENGTH_SHORT).show();
             }
         }
 
         @Override
         public void onStart(AliyunDownloadMediaInfo info) {
-            ControlMainActivity controlMainActivity = weakReference.get();
-            if (controlMainActivity != null) {
-                if (controlMainActivity.dialogDownloadView != null) {
-                    controlMainActivity.dialogDownloadView.updateInfo(info);
+            MainActivity MainActivity = weakReference.get();
+            if (MainActivity != null) {
+                if (MainActivity.dialogDownloadView != null) {
+                    MainActivity.dialogDownloadView.updateInfo(info);
                 }
-                if (controlMainActivity.downloadView != null) {
-                    controlMainActivity.downloadView.updateInfo(info);
+                if (MainActivity.downloadView != null) {
+                    MainActivity.downloadView.updateInfo(info);
                 }
-//                Toast.makeText(controlMainActivity,"开始下载",Toast.LENGTH_SHORT).show();
+//                Toast.makeText(MainActivity,"开始下载",Toast.LENGTH_SHORT).show();
             }
         }
 
         @Override
         public void onProgress(AliyunDownloadMediaInfo info, int percent) {
-            ControlMainActivity controlMainActivity = weakReference.get();
-            if (controlMainActivity != null) {
-                if (controlMainActivity.dialogDownloadView != null) {
-                    controlMainActivity.dialogDownloadView.updateInfo(info);
+            MainActivity MainActivity = weakReference.get();
+            if (MainActivity != null) {
+                if (MainActivity.dialogDownloadView != null) {
+                    MainActivity.dialogDownloadView.updateInfo(info);
                 }
-                if (controlMainActivity.downloadView != null) {
-                    controlMainActivity.downloadView.updateInfo(info);
+                if (MainActivity.downloadView != null) {
+                    MainActivity.downloadView.updateInfo(info);
                 }
             }
             Log.e("download","progress:" + percent);
@@ -4795,59 +4788,59 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
 
         @Override
         public void onStop(AliyunDownloadMediaInfo info) {
-            ControlMainActivity controlMainActivity = weakReference.get();
-            if (controlMainActivity != null) {
-                if (controlMainActivity.dialogDownloadView != null) {
-                    controlMainActivity.dialogDownloadView.updateInfo(info);
+            MainActivity MainActivity = weakReference.get();
+            if (MainActivity != null) {
+                if (MainActivity.dialogDownloadView != null) {
+                    MainActivity.dialogDownloadView.updateInfo(info);
                 }
-                if (controlMainActivity.downloadView != null) {
-                    controlMainActivity.downloadView.updateInfo(info);
+                if (MainActivity.downloadView != null) {
+                    MainActivity.downloadView.updateInfo(info);
                 }
             }
         }
 
         @Override
         public void onCompletion(AliyunDownloadMediaInfo info) {
-            ControlMainActivity controlMainActivity = weakReference.get();
-            if (controlMainActivity != null) {
-                synchronized (controlMainActivity) {
-                    if (controlMainActivity.downloadView != null) {
-                        controlMainActivity.downloadView.updateInfoByComplete(info);
+            MainActivity MainActivity = weakReference.get();
+            if (MainActivity != null) {
+                synchronized (MainActivity) {
+                    if (MainActivity.downloadView != null) {
+                        MainActivity.downloadView.updateInfoByComplete(info);
                     }
-                    if (controlMainActivity.dialogDownloadView != null) {
-                        controlMainActivity.dialogDownloadView.updateInfoByComplete(info);
+                    if (MainActivity.dialogDownloadView != null) {
+                        MainActivity.dialogDownloadView.updateInfoByComplete(info);
                     }
-                    if (controlMainActivity.downloadDataProvider != null) {
-                        controlMainActivity.downloadDataProvider.addDownloadMediaInfo(info);
+                    if (MainActivity.downloadDataProvider != null) {
+                        MainActivity.downloadDataProvider.addDownloadMediaInfo(info);
                     }
-                    Toast.makeText(controlMainActivity,"下载完成",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity,"下载完成",Toast.LENGTH_SHORT).show();
                 }
             }
         }
 
         @Override
         public void onError(AliyunDownloadMediaInfo info, ErrorCode code, String msg, String requestId) {
-            ControlMainActivity controlMainActivity = weakReference.get();
-            if (controlMainActivity != null) {
-                controlMainActivity.mDownloadInPrepare = false;
-                if (controlMainActivity.downloadView != null) {
-                    controlMainActivity.downloadView.updateInfoByError(info);
+            MainActivity MainActivity = weakReference.get();
+            if (MainActivity != null) {
+                MainActivity.mDownloadInPrepare = false;
+                if (MainActivity.downloadView != null) {
+                    MainActivity.downloadView.updateInfoByError(info);
                 }
-                if (controlMainActivity.dialogDownloadView != null) {
-                    controlMainActivity.dialogDownloadView.updateInfoByError(info);
+                if (MainActivity.dialogDownloadView != null) {
+                    MainActivity.dialogDownloadView.updateInfoByError(info);
                 }
 
                 //鉴权过期
                 if (code.getValue() == ErrorCode.ERROR_SERVER_POP_UNKNOWN.getValue()) {
-                    controlMainActivity.refreshDownloadVidSts(info);
+                    MainActivity.refreshDownloadVidSts(info);
                 }
                 Message message = Message.obtain();
                 Bundle bundle = new Bundle();
                 bundle.putString(DOWNLOAD_ERROR_KEY, msg);
                 message.setData(bundle);
                 message.what = DOWNLOAD_ERROR;
-                controlMainActivity.playerHandler = new PlayerHandler(controlMainActivity);
-                controlMainActivity.playerHandler.sendMessage(message);
+                MainActivity.playerHandler = new PlayerHandler(MainActivity);
+                MainActivity.playerHandler.sendMessage(message);
             }
         }
 
@@ -4873,16 +4866,16 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
     }
 
     private static class PlayerHandler extends Handler {
-        //持有弱引用ControlMainActivity,GC回收时会被回收掉.
-        private final WeakReference<ControlMainActivity> mActivty;
+        //持有弱引用MainActivity,GC回收时会被回收掉.
+        private final WeakReference<MainActivity> mActivty;
 
-        public PlayerHandler(ControlMainActivity activity) {
+        public PlayerHandler(MainActivity activity) {
             mActivty = new WeakReference<>(activity);
         }
 
         @Override
         public void handleMessage(Message msg) {
-            ControlMainActivity activity = mActivty.get();
+            MainActivity activity = mActivty.get();
             super.handleMessage(msg);
             if (activity != null) {
                 switch (msg.what) {
@@ -4980,7 +4973,7 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
                     @Override
                     public void onDeleteDownloadInfo(final ArrayList<AlivcDownloadMediaInfo> alivcDownloadMediaInfos) {
                         // 视频删除的dialog
-                        final AlivcDialog alivcDialog = new AlivcDialog(ControlMainActivity.this);
+                        final AlivcDialog alivcDialog = new AlivcDialog(MainActivity.this);
                         alivcDialog.setDialogIcon(com.aliyun.vodplayer.R.drawable.icon_delete_tips);
                         alivcDialog.setMessage(getResources().getString(com.aliyun.vodplayer.R.string.alivc_delete_confirm));
                         alivcDialog.setOnConfirmclickListener(getResources().getString(com.aliyun.vodplayer.R.string.alivc_dialog_sure),
@@ -5005,7 +4998,7 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
                                             }
                                             downloadDataProvider.deleteAllDownloadInfo(alivcDownloadMediaInfos);
                                         } else {
-                                            FixedToastUtils.show(ControlMainActivity.this, "没有删除的视频选项...");
+                                            FixedToastUtils.show(MainActivity.this, "没有删除的视频选项...");
                                         }
                                     }
                                 });
@@ -5051,7 +5044,7 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
                         }
 
                         if (positin < 0) {
-                            FixedToastUtils.show(ControlMainActivity.this, "视频资源不存在");
+                            FixedToastUtils.show(MainActivity.this, "视频资源不存在");
                             return;
                         }
 
@@ -5100,11 +5093,11 @@ public class ControlMainActivity extends AppCompatActivity implements EasyPermis
             }
             aliyunDownloadMediaInfo = info;
             if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
-                int permission = ContextCompat.checkSelfPermission(ControlMainActivity.this,
+                int permission = ContextCompat.checkSelfPermission(MainActivity.this,
                         Manifest.permission.WRITE_EXTERNAL_STORAGE);
                 if (permission != PackageManager.PERMISSION_GRANTED) {
 
-//                    ActivityCompat.requestPermissions(ControlMainActivity.this, PERMISSIONS_STORAGE,
+//                    ActivityCompat.requestPermissions(MainActivity.this, PERMISSIONS_STORAGE,
 //                            REQUEST_EXTERNAL_STORAGE);
 
                 } else {

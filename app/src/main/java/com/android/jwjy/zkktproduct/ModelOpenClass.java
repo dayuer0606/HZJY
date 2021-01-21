@@ -47,7 +47,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * 公开课模块
  */
 public class ModelOpenClass extends Fragment implements View.OnClickListener {
-    private static ControlMainActivity mControlMainActivity;
+    private static MainActivity mMainContext;
     private static String mContext="xxxxxxxxxxxxx";
     //要显示的页面
     static private int FragmentPage;
@@ -65,9 +65,9 @@ public class ModelOpenClass extends Fragment implements View.OnClickListener {
     private int mOpenClassPageCount = 10;
     private int mOpenClassSum = 0; //公开课总数
 
-    public  static Fragment newInstance(ControlMainActivity content, String context, int iFragmentPage){
+    public  static Fragment newInstance(MainActivity content, String context, int iFragmentPage){
         mContext = context;
-        mControlMainActivity = content;
+        mMainContext = content;
         ModelOpenClass myFragment = new ModelOpenClass();
         FragmentPage = iFragmentPage;
         return  myFragment;
@@ -76,7 +76,7 @@ public class ModelOpenClass extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mview = inflater.inflate(FragmentPage,container,false);
-        DisplayMetrics dm = mControlMainActivity.getResources().getDisplayMetrics(); //获取屏幕分辨率
+        DisplayMetrics dm = mMainContext.getResources().getDisplayMetrics(); //获取屏幕分辨率
         height = dm.heightPixels;
         width = dm.widthPixels;
 
@@ -272,14 +272,14 @@ public class ModelOpenClass extends Fragment implements View.OnClickListener {
     }
     //获取openclass的数据
    public void getOpenClassBean(String type){
-       LoadingDialog.getInstance(mControlMainActivity).show();
+       LoadingDialog.getInstance(mMainContext).show();
        LinearLayout openclass_end = mview.findViewById(R.id.openclass_end);
        openclass_end.setVisibility(View.INVISIBLE);
        LinearLayout openclass_content = mview.findViewById(R.id.openclass_content);
        openclass_content.removeAllViews();
        Retrofit retrofit = new Retrofit.Builder()
                .addConverterFactory(GsonConverterFactory.create())
-               .baseUrl(mControlMainActivity.mIpadress)
+               .baseUrl(mMainContext.mIpadress)
                .client(ModelObservableInterface.client)
                .build();
        ModelObservableInterface modelObservableInterface = retrofit.create(ModelObservableInterface.class);
@@ -305,21 +305,21 @@ public class ModelOpenClass extends Fragment implements View.OnClickListener {
                         if (mSmart_openclass_layout != null){
                             mSmart_openclass_layout.finishRefresh();
                         }
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                         return;
                     }
                     if (!HeaderInterceptor.IsErrorCode(openclassBean.getCode(),"")){
                         if (mSmart_openclass_layout != null){
                             mSmart_openclass_layout.finishRefresh();
                         }
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                         return;
                     }
                     if (openclassBean.getCode() != 200){
                         if (mSmart_openclass_layout != null){
                             mSmart_openclass_layout.finishRefresh();
                         }
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                         return;
                     }
                     ModelOpenclassBean.DataBean data = openclassBean.getData();
@@ -327,7 +327,7 @@ public class ModelOpenClass extends Fragment implements View.OnClickListener {
                         if (mSmart_openclass_layout != null){
                             mSmart_openclass_layout.finishRefresh();
                         }
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                         return;
                     }
                     mOpenClassSum = data.getTotal();
@@ -336,7 +336,7 @@ public class ModelOpenClass extends Fragment implements View.OnClickListener {
                         if (mSmart_openclass_layout != null){
                             mSmart_openclass_layout.finishRefresh();
                         }
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                         return;
                     }
                     for (int i = 0; i < list.size(); i ++){
@@ -344,11 +344,11 @@ public class ModelOpenClass extends Fragment implements View.OnClickListener {
                         if (listBean == null){
                             continue;
                         }
-                        View view = LayoutInflater.from(mControlMainActivity).inflate(R.layout.openclass_layout1, null);
+                        View view = LayoutInflater.from(mMainContext).inflate(R.layout.openclass_layout1, null);
                         openclass_content.addView(view);
                         //加载公开课封面
                         ImageView openclass_cover = view.findViewById(R.id.openclass_cover);
-                        Glide.with(mControlMainActivity).load(listBean.getPc_cover()).listener(new RequestListener<Drawable>() {
+                        Glide.with(mMainContext).load(listBean.getPc_cover()).listener(new RequestListener<Drawable>() {
                             @Override
                             public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
                                 Log.d("Warn","加载失败 errorMsg:" + (e != null ? e.getMessage() : "null"));
@@ -359,7 +359,7 @@ public class ModelOpenClass extends Fragment implements View.OnClickListener {
                                 Log.d("Warn","成功  Drawable Name:" + resource.getClass().getCanonicalName());
                                 return false;
                             }
-                        }).error(mControlMainActivity.getResources().getDrawable(R.drawable.modelcoursecover)).into(openclass_cover);
+                        }).error(mMainContext.getResources().getDrawable(R.drawable.modelcoursecover)).into(openclass_cover);
                         //公开课名称
                         TextView openclass_classname = view.findViewById(R.id.openclass_classname);
                         openclass_classname.setText(listBean.getPc_name());
@@ -418,12 +418,12 @@ public class ModelOpenClass extends Fragment implements View.OnClickListener {
                             openclass1_state.setTextColor(view.getResources().getColor(R.color.color_69));
                             //为每个公开课设置监听
                             view.setOnClickListener(v->{
-                                mControlMainActivity.LoginLiveOrPlayback(listBean.public_class_id,1,PlayType.PLAYBACK);
+                                mMainContext.LoginLiveOrPlayback(listBean.public_class_id,1,PlayType.PLAYBACK);
                             });
                         } else { //直播中
                             //为每个公开课设置监听
                             view.setOnClickListener(v->{
-                                mControlMainActivity.LoginLiveOrPlayback(listBean.public_class_id,1,PlayType.LIVE);
+                                mMainContext.LoginLiveOrPlayback(listBean.public_class_id,1,PlayType.LIVE);
                             });
                         }
 
@@ -431,7 +431,7 @@ public class ModelOpenClass extends Fragment implements View.OnClickListener {
                     if (mSmart_openclass_layout != null){
                         mSmart_openclass_layout.finishRefresh();
                     }
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                 }
 
                 @Override
@@ -440,18 +440,18 @@ public class ModelOpenClass extends Fragment implements View.OnClickListener {
                     if (mSmart_openclass_layout != null){
                         mSmart_openclass_layout.finishRefresh();
                     }
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                 }
             });
    }
 
     //获取openclass的数据
     public void getOpenClassBeanMore(String type){
-        LoadingDialog.getInstance(mControlMainActivity).show();
+        LoadingDialog.getInstance(mMainContext).show();
         LinearLayout openclass_content = mview.findViewById(R.id.openclass_content);
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(mControlMainActivity.mIpadress)
+                .baseUrl(mMainContext.mIpadress)
                 .client(ModelObservableInterface.client)
                 .build();
         ModelObservableInterface modelObservableInterface = retrofit.create(ModelObservableInterface.class);
@@ -477,21 +477,21 @@ public class ModelOpenClass extends Fragment implements View.OnClickListener {
                             if (mSmart_openclass_layout != null){
                                 mSmart_openclass_layout.finishLoadMore();
                             }
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         if (!HeaderInterceptor.IsErrorCode(openclassBean.getCode(),"")){
                             if (mSmart_openclass_layout != null){
                                 mSmart_openclass_layout.finishLoadMore();
                             }
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         if (openclassBean.getCode() != 200){
                             if (mSmart_openclass_layout != null){
                                 mSmart_openclass_layout.finishLoadMore();
                             }
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         ModelOpenclassBean.DataBean data = openclassBean.getData();
@@ -499,7 +499,7 @@ public class ModelOpenClass extends Fragment implements View.OnClickListener {
                             if (mSmart_openclass_layout != null){
                                 mSmart_openclass_layout.finishLoadMore();
                             }
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         mOpenClassSum = data.getTotal();
@@ -508,7 +508,7 @@ public class ModelOpenClass extends Fragment implements View.OnClickListener {
                             if (mSmart_openclass_layout != null){
                                 mSmart_openclass_layout.finishLoadMore();
                             }
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         for (int i = 0; i < list.size(); i ++){
@@ -516,11 +516,11 @@ public class ModelOpenClass extends Fragment implements View.OnClickListener {
                             if (listBean == null){
                                 continue;
                             }
-                            View view = LayoutInflater.from(mControlMainActivity).inflate(R.layout.openclass_layout1, null);
+                            View view = LayoutInflater.from(mMainContext).inflate(R.layout.openclass_layout1, null);
                             openclass_content.addView(view);
                             //加载公开课封面
                             ImageView openclass_cover = view.findViewById(R.id.openclass_cover);
-                            Glide.with(mControlMainActivity).load(listBean.getPc_cover()).listener(new RequestListener<Drawable>() {
+                            Glide.with(mMainContext).load(listBean.getPc_cover()).listener(new RequestListener<Drawable>() {
                                 @Override
                                 public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
                                     Log.d("Warn","加载失败 errorMsg:" + (e != null ? e.getMessage() : "null"));
@@ -531,7 +531,7 @@ public class ModelOpenClass extends Fragment implements View.OnClickListener {
                                     Log.d("Warn","成功  Drawable Name:" + resource.getClass().getCanonicalName());
                                     return false;
                                 }
-                            }).error(mControlMainActivity.getResources().getDrawable(R.drawable.modelcoursecover)).into(openclass_cover);
+                            }).error(mMainContext.getResources().getDrawable(R.drawable.modelcoursecover)).into(openclass_cover);
                             //公开课名称
                             TextView openclass_classname = view.findViewById(R.id.openclass_classname);
                             openclass_classname.setText(listBean.getPc_name());
@@ -591,19 +591,19 @@ public class ModelOpenClass extends Fragment implements View.OnClickListener {
                                 openclass1_state.setTextColor(view.getResources().getColor(R.color.color_69));
                                 //为每个公开课设置监听
                                 view.setOnClickListener(v->{
-                                    mControlMainActivity.LoginLiveOrPlayback(listBean.public_class_id,1,PlayType.PLAYBACK);
+                                    mMainContext.LoginLiveOrPlayback(listBean.public_class_id,1,PlayType.PLAYBACK);
                                 });
                             } else { //直播中
                                 //为每个公开课设置监听
                                 view.setOnClickListener(v->{
-                                    mControlMainActivity.LoginLiveOrPlayback(listBean.public_class_id,1,PlayType.LIVE);
+                                    mMainContext.LoginLiveOrPlayback(listBean.public_class_id,1,PlayType.LIVE);
                                 });
                             }
                         }
                         if (mSmart_openclass_layout != null){
                             mSmart_openclass_layout.finishLoadMore();
                         }
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                     }
 
                     @Override
@@ -612,7 +612,7 @@ public class ModelOpenClass extends Fragment implements View.OnClickListener {
                         if (mSmart_openclass_layout != null){
                             mSmart_openclass_layout.finishLoadMore();
                         }
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                     }
                 });
     }

@@ -56,7 +56,7 @@ import static com.aliyun.svideo.common.utils.ThreadUtils.runOnUiThread;
  * 题库模块
  */
 public class ModelQuestionBank extends Fragment implements View.OnClickListener {
-    private static ControlMainActivity mControlMainActivity;
+    private static MainActivity mMainContext;
     private static String mContext = "xxxxxxxxxxxxx";
     //要显示的页面
     static private int FragmentPage;
@@ -143,9 +143,9 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
     private TimerTask mTask2 = null;
     private int mTime = 0;
 
-    public static Fragment newInstance(ControlMainActivity content, String context, int iFragmentPage) {
+    public static Fragment newInstance(MainActivity content, String context, int iFragmentPage) {
         mContext = context;
-        mControlMainActivity = content;
+        mMainContext = content;
         ModelQuestionBank myFragment = new ModelQuestionBank();
         FragmentPage = iFragmentPage;
         return myFragment;
@@ -155,7 +155,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mview = inflater.inflate(FragmentPage, container, false);
-        DisplayMetrics dm = mControlMainActivity.getResources().getDisplayMetrics(); //获取屏幕分辨率
+        DisplayMetrics dm = mMainContext.getResources().getDisplayMetrics(); //获取屏幕分辨率
         height = dm.heightPixels;
         width = dm.widthPixels;
         QuestionBankMainShow(mContext);
@@ -186,7 +186,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
             }
         });
         //让布局向上移来显示软键盘
-        mControlMainActivity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+        mMainContext.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         return mview;
     }
 
@@ -199,7 +199,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
         HideAllLayout();
         RelativeLayout fragmentquestionbank_main = mview.findViewById(R.id.fragmentquestionbank_main);
         if (mModelQuestionBankView == null) {
-            mModelQuestionBankView = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank, null);
+            mModelQuestionBankView = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank, null);
         }
         fragmentquestionbank_main.addView(mModelQuestionBankView);
         //题库标题和我的题库标题
@@ -224,7 +224,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
         questionbank_main_nodata.setLayoutParams(rl);
 //        if (misEmpty) {
 //            questionbank_main_nodata.removeAllViews();
-//            View view2 = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_pointout, null);
+//            View view2 = LayoutInflater.from(mMainContext).inflate(R.layout.model_pointout, null);
 //            questionbank_main_nodata.addView(view2);
 //            rl.height = RelativeLayout.LayoutParams.MATCH_PARENT;
 //            questionbank_main_nodata.setLayoutParams(rl);
@@ -243,17 +243,17 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
             return;
         }
         mIsMore = true;
-        mControlMainActivity.onClickQuestionBankMore();
+        mMainContext.onClickQuestionBankMore();
 //        HideAllLayout();
 //        RelativeLayout fragmentquestionbank_main = mview.findViewById(R.id.fragmentquestionbank_main);
 //        if (mModelQuestionBankView == null) {
-//            mModelQuestionBankView = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank, null);
+//            mModelQuestionBankView = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank, null);
 //        }
 //        fragmentquestionbank_main.addView(mModelQuestionBankView);
         LinearLayout questionbank_main_content = mModelQuestionBankView.findViewById(R.id.questionbank_main_content);
         questionbank_main_content.removeAllViews();
         //题库列表的描述
-        View view = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_1, null);
+        View view = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank_1, null);
         TextView modelquestionbank_mainquestionbank_id = view.findViewById(R.id.modelquestionbank_mainquestionbank_id);
         //基金法律标题
         TextView modelquestionbank_mainquestionbank_name = view.findViewById(R.id.modelquestionbank_mainquestionbank_name);
@@ -272,7 +272,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                 for (int i = 0; i < dataBean.getSub_library().size() ; i ++){
                     QuestionBankBean.DataBean.SubLibraryBean subLibraryBean = dataBean.getSub_library().get(i);
                     //子标题id和name
-                    View view1 = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_1_1, null);
+                    View view1 = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank_1_1, null);
                     TextView modelquestionbank_subquestionbank1 = view1.findViewById(R.id.modelquestionbank_subquestionbank1);
                     modelquestionbank_subquestionbank1.setHint(subLibraryBean.getIbs_id() + "");
                     //子题库名称
@@ -292,7 +292,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                         modelquestionbank_subquestionbank1.setClickable(true);
                         modelquestionbank_subquestionbank1.setOnClickListener(v -> {
                             //传入相关的id和name
-                            Toast.makeText(mControlMainActivity, "您没有此题库的做题权限！", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(mMainContext, "您没有此题库的做题权限！", Toast.LENGTH_SHORT).show();
                         });
                     }
                 }
@@ -307,7 +307,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                 for (int i = 0; i < dataBean1.getSub_library().size() ; i ++){
                     MyQuestionBankBean.MyQuestionBankSubDataBean subLibraryBean = dataBean1.getSub_library().get(i);
                     //子标题id和name
-                    View view1 = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_1_1, null);
+                    View view1 = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank_1_1, null);
                     TextView modelquestionbank_subquestionbank1 = view1.findViewById(R.id.modelquestionbank_subquestionbank1);
                     modelquestionbank_subquestionbank1.setHint(subLibraryBean.getIbs_id() + "");
                     //子题库名称
@@ -340,12 +340,12 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
         if (mview == null) {
             return;
         }
-        mControlMainActivity.onClickQuestionBankDetails();
+        mMainContext.onClickQuestionBankDetails();
         HideAllLayout();
         RelativeLayout fragmentquestionbank_main = mview.findViewById(R.id.fragmentquestionbank_main);
         if (mModelQuestionBankDetailsView == null) {
             //做题的三种模式
-            mModelQuestionBankDetailsView = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_sub_detials, null);
+            mModelQuestionBankDetailsView = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank_sub_detials, null);
             //章节练习
             TextView questionbank_sub_details_tab_chapterexercises = mModelQuestionBankDetailsView.findViewById(R.id.questionbank_sub_details_tab_chapterexercises);
             //快速做题
@@ -359,7 +359,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
             questionbank_sub_details_tab_chapterexercises.setOnClickListener(this);
             questionbank_sub_details_tab_quicktask.setOnClickListener(this);
             questionbank_sub_details_tab_simulated.setOnClickListener(this);
-            mPopupWindow = new PopupWindow(mControlMainActivity);
+            mPopupWindow = new PopupWindow(mMainContext);
             animUtil = new ModelAnimUtil();
             //章节练习的界面刷新
             mSmart_model_questionbank_sub_detials = mModelQuestionBankDetailsView.findViewById(R.id.Smart_model_questionbank_sub_detials);
@@ -472,14 +472,14 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
         LinearLayout questionbank_sub_details_content = mModelQuestionBankDetailsView.findViewById(R.id.questionbank_sub_details_content);
         questionbank_sub_details_content.removeAllViews();
         //点击开始
-        View view = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_sub_detials_quicktask, null);
+        View view = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank_sub_detials_quicktask, null);
         questionbank_sub_details_content.addView(view);
         ImageView questionbank_sub_details_quicktask_start = view.findViewById(R.id.questionbank_sub_details_quicktask_start);
         questionbank_sub_details_quicktask_start.setClickable(true);
         questionbank_sub_details_quicktask_start.setOnClickListener(v -> {
 //            if (myQuestionBankGoonDataBeans != null){
 //                if (myQuestionBankGoonDataBeans.size() != 0) {
-//                    Toast.makeText(mControlMainActivity, "您有未完成的试卷，请继续答题或提交未完成的试卷！", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(mMainContext, "您有未完成的试卷，请继续答题或提交未完成的试卷！", Toast.LENGTH_SHORT).show();
 //                    return;
 //                }
 //            }
@@ -509,7 +509,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                 }
                 isFind = true;
                 //节或者考点的网络请求    节的id或者name
-                View view1 = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_sub_detials_chapterexercises1, null);
+                View view1 = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank_sub_detials_chapterexercises1, null);
                 //title
                 TextView questionbank_sub_details_chapterexercises1_name = view1.findViewById(R.id.questionbank_sub_details_chapterexercises1_name);
                 questionbank_sub_details_chapterexercises1_name.setHint(jieBean.chapter_test_point_id + "");
@@ -523,7 +523,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                 questionbank_sub_details_chapterexercises1_name.setOnClickListener(v -> {
 //                    if (myQuestionBankGoonDataBeans != null){
 //                        if (myQuestionBankGoonDataBeans.size() != 0) {
-//                            Toast.makeText(mControlMainActivity, "您有未完成的试卷，请继续答题或提交未完成的试卷！", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(mMainContext, "您有未完成的试卷，请继续答题或提交未完成的试卷！", Toast.LENGTH_SHORT).show();
 //                            return;
 //                        }
 //                    }
@@ -547,7 +547,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
         ImageView questionbank_sub_details_chapterexercises_arrow_down = view.findViewById(R.id.questionbank_sub_details_chapterexercises_arrow_down);
         ModelExpandView questionbank_sub_details_chapterexercises_expandView = view.findViewById(R.id.questionbank_sub_details_chapterexercises_expandView);
         if (!isFind) {
-//            Toast.makeText(mControlMainActivity, "本章下面没有节或考点", Toast.LENGTH_SHORT);
+//            Toast.makeText(mMainContext, "本章下面没有节或考点", Toast.LENGTH_SHORT);
             //收缩隐藏布局
             RelativeLayout.LayoutParams rl = (RelativeLayout.LayoutParams) questionbank_sub_details_chapterexercises_expandView.getLayoutParams();
             rl.height = 0;
@@ -579,12 +579,12 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
         if (mview == null) {
             return;
         }
-        mControlMainActivity.onClickQuestionBankSetting();
+        mMainContext.onClickQuestionBankSetting();
         HideAllLayout();
         //全部题
         RelativeLayout fragmentquestionbank_main = mview.findViewById(R.id.fragmentquestionbank_main);
         if (mModelQuestionBankSettingView == null) {
-            mModelQuestionBankSettingView = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_questionsetting, null);
+            mModelQuestionBankSettingView = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank_questionsetting, null);
             //练习模式
             LinearLayout questionbank_questionsetting_questionmode_test = mModelQuestionBankSettingView.findViewById(R.id.questionbank_questionsetting_questionmode_test);
             //考题模式
@@ -991,11 +991,11 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
         if (mview == null) {
             return;
         }
-        mControlMainActivity.onClickQuestionBankDetails();
+        mMainContext.onClickQuestionBankDetails();
         HideAllLayout();
         RelativeLayout fragmentquestionbank_main = mview.findViewById(R.id.fragmentquestionbank_main);
         //交题科目5
-        mModelQuestionBankHandInView = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_handinpaper, null);
+        mModelQuestionBankHandInView = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank_handinpaper, null);
         fragmentquestionbank_main.addView(mModelQuestionBankHandInView);
         ControllerRoundProgressBar coursedetails_handinpaper_accuracyrateprogress = mModelQuestionBankHandInView.findViewById(R.id.coursedetails_handinpaper_accuracyrateprogress);
         if (!mTestPageIssueDataScore.equals("")){
@@ -1040,11 +1040,11 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
             if (questionBankAnswerSheetDataBean.type == 1) {
                 if (singleView == null) {
                     //单选题界面标题
-                    singleView = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_handinpaper1, null);
+                    singleView = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank_handinpaper1, null);
                     coursedetails_handinpaper_details.addView(singleView);
                 }
                 GridLayout coursedetails_handinpaper1_questionnumber = singleView.findViewById(R.id.coursedetails_handinpaper1_questionnumber);
-                View view = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_handinpaper2, null);
+                View view = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank_handinpaper2, null);
                 coursedetails_handinpaper1_questionnumber.addView(view);
                 TextView questionbank_handin2_select = view.findViewById(R.id.questionbank_handin2_select);
                 questionbank_handin2_select.setText("" + (i + 1));
@@ -1076,14 +1076,14 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                 });
             } else if (questionBankAnswerSheetDataBean.type == 2) {
                 if (mutilView == null) {
-                    mutilView = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_handinpaper1, null);
+                    mutilView = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank_handinpaper1, null);
                     coursedetails_handinpaper_details.addView(mutilView);
                     //单选框
                     TextView coursedetails_handinpaper1_questiontype = mutilView.findViewById(R.id.coursedetails_handinpaper1_questiontype);
                     coursedetails_handinpaper1_questiontype.setText("多选题");
                 }
                 GridLayout coursedetails_handinpaper1_questionnumber = mutilView.findViewById(R.id.coursedetails_handinpaper1_questionnumber);
-                View view = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_handinpaper2, null);
+                View view = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank_handinpaper2, null);
                 coursedetails_handinpaper1_questionnumber.addView(view);
                 TextView questionbank_handin2_select = view.findViewById(R.id.questionbank_handin2_select);
                 questionbank_handin2_select.setText("" + (i + 1));
@@ -1109,13 +1109,13 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                 });
             } else if (questionBankAnswerSheetDataBean.type == 4) {
                 if (shortAnswerView == null) {
-                    shortAnswerView = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_handinpaper1, null);
+                    shortAnswerView = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank_handinpaper1, null);
                     coursedetails_handinpaper_details.addView(shortAnswerView);
                     TextView coursedetails_handinpaper1_questiontype = shortAnswerView.findViewById(R.id.coursedetails_handinpaper1_questiontype);
                     coursedetails_handinpaper1_questiontype.setText("简答题");
                 }
                 GridLayout coursedetails_handinpaper1_questionnumber = shortAnswerView.findViewById(R.id.coursedetails_handinpaper1_questionnumber);
-                View view = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_handinpaper2, null);
+                View view = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank_handinpaper2, null);
                 coursedetails_handinpaper1_questionnumber.addView(view);
                 TextView questionbank_handin2_select = view.findViewById(R.id.questionbank_handin2_select);
                 questionbank_handin2_select.setText("" + (i + 1));
@@ -1147,13 +1147,13 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                 });
             } else if (questionBankAnswerSheetDataBean.type == 7) {
                 if (materialView == null) {
-                    materialView = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_handinpaper1, null);
+                    materialView = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank_handinpaper1, null);
                     coursedetails_handinpaper_details.addView(materialView);
                     TextView coursedetails_handinpaper1_questiontype = materialView.findViewById(R.id.coursedetails_handinpaper1_questiontype);
                     coursedetails_handinpaper1_questiontype.setText("材料题");
                 }
                 GridLayout coursedetails_handinpaper1_questionnumber = materialView.findViewById(R.id.coursedetails_handinpaper1_questionnumber);
-                View view = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_handinpaper2, null);
+                View view = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank_handinpaper2, null);
                 coursedetails_handinpaper1_questionnumber.addView(view);
                 TextView questionbank_handin2_select = view.findViewById(R.id.questionbank_handin2_select);
                 questionbank_handin2_select.setText("" + (i + 1));
@@ -1217,12 +1217,12 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
             return;
         }
         mCurrentAnswerMode = "test";
-        mControlMainActivity.onClickQuestionBankDetails();
+        mMainContext.onClickQuestionBankDetails();
         HideAllLayout();
         RelativeLayout fragmentquestionbank_main = mview.findViewById(R.id.fragmentquestionbank_main);
         if (mModelQuestionBankAnswerPaperView == null) {
             //练习模式分析内容
-            mModelQuestionBankAnswerPaperView = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_answerpaper, null);
+            mModelQuestionBankAnswerPaperView = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank_answerpaper, null);
         }
         fragmentquestionbank_main.addView(mModelQuestionBankAnswerPaperView);
         //此题所属章节名称（分析内容标题）
@@ -1246,8 +1246,8 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
 //        String finalQuestion_id_group1 = question_id_group;
         questionbank_answerpaper_commit.setOnClickListener(v -> {
             //判断啊当前是否删除
-            View view1 = mControlMainActivity.getLayoutInflater().inflate(R.layout.dialog_sure_cancel, null);
-            ControllerCenterDialog mMyDialog = new ControllerCenterDialog(mControlMainActivity, 0, 0, view1, R.style.DialogTheme);
+            View view1 = mMainContext.getLayoutInflater().inflate(R.layout.dialog_sure_cancel, null);
+            ControllerCenterDialog mMyDialog = new ControllerCenterDialog(mMainContext, 0, 0, view1, R.style.DialogTheme);
             mMyDialog.setCancelable(true);
             mMyDialog.show();
             TextView tip = view1.findViewById(R.id.tip);
@@ -1281,8 +1281,8 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
         questionbank_answerpaper_pause.setOnClickListener(v -> {
 
             getQuestionBankHandInBean(2,mTime);
-            View view1 = mControlMainActivity.getLayoutInflater().inflate(R.layout.dialog_sure, null);
-            ControllerCenterDialog mMyDialog = new ControllerCenterDialog(mControlMainActivity, 0, 0, view1, R.style.DialogTheme);
+            View view1 = mMainContext.getLayoutInflater().inflate(R.layout.dialog_sure, null);
+            ControllerCenterDialog mMyDialog = new ControllerCenterDialog(mMainContext, 0, 0, view1, R.style.DialogTheme);
             mMyDialog.setCancelable(false);
             mMyDialog.show();
             TextView tip = view1.findViewById(R.id.tip);
@@ -1319,7 +1319,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
         button_questionbank_beforquestion.setOnClickListener(v -> {
             TextView questionbank_answerpaper_questioncount = mModelQuestionBankAnswerPaperView.findViewById(R.id.questionbank_answerpaper_questioncount);
             if (questionbank_answerpaper_questioncount.getText().toString().equals("1") || questionbank_answerpaper_questioncount.getText().toString().equals("0")) {
-                Toast.makeText(mControlMainActivity, "前面没有题啦", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mMainContext, "前面没有题啦", Toast.LENGTH_SHORT).show();
             } else { //跳到上一道题
                 mCurrentIndex = mCurrentIndex - 1;
                 boolean isCailiao1 = false;
@@ -1363,7 +1363,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                 }
                 TextView questionbank_answerpaper_questioncount = mModelQuestionBankAnswerPaperView.findViewById(R.id.questionbank_answerpaper_questioncount);
                 if (questionbank_answerpaper_questioncount.getText().toString().equals("" + questionSum)) {
-                    Toast.makeText(mControlMainActivity, "此题已经是最后一道题啦", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mMainContext, "此题已经是最后一道题啦", Toast.LENGTH_SHORT).show();
                 } else { //跳到下一道题
                     mCurrentIndex = mCurrentIndex + 1;
                     boolean isCailiao1 = false;
@@ -1436,7 +1436,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
             coursedetails_answerpaper_analysisbutton.setOnClickListener(v -> {
                 int questionSize = 0;
                 if (mMyQuestionBankExercisesBean == null) {
-                    Toast.makeText(mControlMainActivity, "此题暂无解析！", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mMainContext, "此题暂无解析！", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 MyQuestionBankExercises.MyQuestionBankExercisesDataBean myQuestionBankExercisesDataBean = null;
@@ -1494,18 +1494,18 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                     }
                 }
                 if (myQuestionBankExercisesDataBean == null) {
-                    Toast.makeText(mControlMainActivity, "此题暂无解析！", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mMainContext, "此题暂无解析！", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (myQuestionBankExercisesDataBean.question_analysis == null){
                     myQuestionBankExercisesDataBean.question_analysis = "";
                 }
                 if (myQuestionBankExercisesDataBean.question_analysis == null || myQuestionBankExercisesDataBean.question_type == null) {
-                    Toast.makeText(mControlMainActivity, "此题暂无解析！", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mMainContext, "此题暂无解析！", Toast.LENGTH_SHORT).show();
                     return;
                 }
 //                if (myQuestionBankExercisesDataBean.question_analysis.equals("")) {
-//                    Toast.makeText(mControlMainActivity, "此题暂无解析！", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(mMainContext, "此题暂无解析！", Toast.LENGTH_SHORT).show();
 //                    return;
 //                }
                 LinearLayout.LayoutParams ll = (LinearLayout.LayoutParams) coursedetails_answerpaper_analysisbutton.getLayoutParams();
@@ -1517,7 +1517,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                         myQuestionBankExercisesDataBean.optionanswer = "";
                     }
                     //个人答案
-                    View view = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_answerpaper_analysis1, null);
+                    View view = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank_answerpaper_analysis1, null);
                     coursedetails_answerpaper_analysis.addView(view);
                     //修改内容为正确答案
                     String[] optionanswerS = myQuestionBankExercisesDataBean.optionanswer.split("#EDU;");
@@ -1534,7 +1534,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                         }
                     }
 //                    if (currentAnswer.equals("")) {
-//                        Toast.makeText(mControlMainActivity, "此题暂无解析！", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(mMainContext, "此题暂无解析！", Toast.LENGTH_SHORT).show();
 //                        return;
 //                    }
                     //正确答案
@@ -1545,7 +1545,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                     if (myQuestionBankExercisesDataBean.question_analysis == null) {
                         myQuestionBankExercisesDataBean.question_analysis = "";
                     }
-                    new ModelHtmlUtils(mControlMainActivity, questionbank_analysis1_content).setHtmlWithPic(myQuestionBankExercisesDataBean.question_analysis);
+                    new ModelHtmlUtils(mMainContext, questionbank_analysis1_content).setHtmlWithPic(myQuestionBankExercisesDataBean.question_analysis);
                     //个人答案
                     AnswerInfo answerInfo = mMyQuestionBankExercisesAnswerMap.get(myQuestionBankExercisesDataBean.question_id);
                     TextView questionbank_analysis1_yourAnswer = view.findViewById(R.id.questionbank_analysis1_yourAnswer);
@@ -1571,17 +1571,17 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                         questionbank_analysis1_yourAnswer.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view.getResources().getDimensionPixelSize(R.dimen.textsize20));
                     }
                 } else if (myQuestionBankExercisesDataBean.question_type == 4) {//简答题
-                    View view = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_answerpaper_analysis2, null);
+                    View view = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank_answerpaper_analysis2, null);
                     coursedetails_answerpaper_analysis.addView(view);
                     //修改内容为正确答案
                     TextView questionbank_analysis2_rightAnswer = view.findViewById(R.id.questionbank_analysis2_rightAnswer);
-                    new ModelHtmlUtils(mControlMainActivity, questionbank_analysis2_rightAnswer).setHtmlWithPic(myQuestionBankExercisesDataBean.optionanswer);
+                    new ModelHtmlUtils(mMainContext, questionbank_analysis2_rightAnswer).setHtmlWithPic(myQuestionBankExercisesDataBean.optionanswer);
                     //修改内容为此题的解析
                     TextView questionbank_analysis2_content = view.findViewById(R.id.questionbank_analysis2_content);
                     if (myQuestionBankExercisesDataBean.question_analysis == null) {
                         myQuestionBankExercisesDataBean.question_analysis = "";
                     }
-                    new ModelHtmlUtils(mControlMainActivity, questionbank_analysis2_content).setHtmlWithPic(myQuestionBankExercisesDataBean.question_analysis);
+                    new ModelHtmlUtils(mMainContext, questionbank_analysis2_content).setHtmlWithPic(myQuestionBankExercisesDataBean.question_analysis);
                     //修改内容为您的答案
                     TextView questionbank_analysis2_yourAnswer = view.findViewById(R.id.questionbank_analysis2_yourAnswer);
 //                EditText questionbank_answerpaper_shortansweredittext = view3.findViewById(R.id.questionbank_answerpaper_shortansweredittext);
@@ -1621,7 +1621,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
         ll.topMargin = 0;
         coursedetails_wrongquestion_analysisbutton.setLayoutParams(ll);
         if (questionBankMyFavoriteQuestionDataBean.question_type == 1 || questionBankMyFavoriteQuestionDataBean.question_type == 2) {//单选题或多选题
-            View view = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_answerpaper_analysis1, null);
+            View view = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank_answerpaper_analysis1, null);
             coursedetails_wrongquestion_analysis.addView(view);
             //修改内容为正确答案
             String[] optionanswerS = questionBankMyFavoriteQuestionDataBean.optionanswer.split("#EDU;");
@@ -1645,14 +1645,14 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
             if (questionBankMyFavoriteQuestionDataBean.question_analysis == null) {
                 questionBankMyFavoriteQuestionDataBean.question_analysis = "";
             }
-            new ModelHtmlUtils(mControlMainActivity, questionbank_analysis1_content).setHtmlWithPic(questionBankMyFavoriteQuestionDataBean.question_analysis);
+            new ModelHtmlUtils(mMainContext, questionbank_analysis1_content).setHtmlWithPic(questionBankMyFavoriteQuestionDataBean.question_analysis);
             //修改内容为您的答案
             TextView questionbank_analysis1_yourAnswer = view.findViewById(R.id.questionbank_analysis1_yourAnswer);
             if (mMyQuestionBankExercisesAnswerMap != null) {
                 AnswerInfo answerInfo = mMyQuestionBankExercisesAnswerMap.get(questionBankMyFavoriteQuestionDataBean.question_id);
                 if (answerInfo != null) {
                     if (answerInfo.answer != null) {
-                        new ModelHtmlUtils(mControlMainActivity, questionbank_analysis1_yourAnswer).setHtmlWithPic(answerInfo.answer);
+                        new ModelHtmlUtils(mMainContext, questionbank_analysis1_yourAnswer).setHtmlWithPic(answerInfo.answer);
                     }
                 }
             }
@@ -1670,27 +1670,27 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                 questionbank_analysis1_yourAnswer.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view.getResources().getDimensionPixelSize(R.dimen.textsize20));
             }
         } else if (questionBankMyFavoriteQuestionDataBean.question_type == 4) {//简答题
-            View view = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_answerpaper_analysis2, null);
+            View view = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank_answerpaper_analysis2, null);
             coursedetails_wrongquestion_analysis.addView(view);
             //修改内容为正确答案
             TextView questionbank_analysis2_rightAnswer = view.findViewById(R.id.questionbank_analysis2_rightAnswer);
             if (questionBankMyFavoriteQuestionDataBean.optionanswer == null) {
                 questionBankMyFavoriteQuestionDataBean.optionanswer = "";
             }
-            new ModelHtmlUtils(mControlMainActivity, questionbank_analysis2_rightAnswer).setHtmlWithPic(questionBankMyFavoriteQuestionDataBean.optionanswer);
+            new ModelHtmlUtils(mMainContext, questionbank_analysis2_rightAnswer).setHtmlWithPic(questionBankMyFavoriteQuestionDataBean.optionanswer);
             //修改内容为此题的解析
             TextView questionbank_analysis2_content = view.findViewById(R.id.questionbank_analysis2_content);
             if (questionBankMyFavoriteQuestionDataBean.question_analysis == null) {
                 questionBankMyFavoriteQuestionDataBean.question_analysis = "";
             }
-            new ModelHtmlUtils(mControlMainActivity, questionbank_analysis2_content).setHtmlWithPic(questionBankMyFavoriteQuestionDataBean.question_analysis);
+            new ModelHtmlUtils(mMainContext, questionbank_analysis2_content).setHtmlWithPic(questionBankMyFavoriteQuestionDataBean.question_analysis);
             //修改内容为您的答案
             TextView questionbank_analysis2_yourAnswer = view.findViewById(R.id.questionbank_analysis2_yourAnswer);
             if (mMyQuestionBankExercisesAnswerMap != null) {
                 AnswerInfo answerInfo = mMyQuestionBankExercisesAnswerMap.get(questionBankMyFavoriteQuestionDataBean.question_id);
                 if (answerInfo != null) {
                     if (answerInfo.answer != null) {
-                        new ModelHtmlUtils(mControlMainActivity, questionbank_analysis2_yourAnswer).setHtmlWithPic(answerInfo.answer);
+                        new ModelHtmlUtils(mMainContext, questionbank_analysis2_yourAnswer).setHtmlWithPic(answerInfo.answer);
                     }
                 }
             }
@@ -1720,7 +1720,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
         coursedetails_answerpaper_analysis.removeAllViews();
         int questionSize = 0;
         if (mMyQuestionBankExercisesBean == null) {
-            Toast.makeText(mControlMainActivity, "此题暂无解析！", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mMainContext, "此题暂无解析！", Toast.LENGTH_SHORT).show();
             return;
         }
         MyQuestionBankExercises.MyQuestionBankExercisesDataBean myQuestionBankExercisesDataBean = null;
@@ -1778,18 +1778,18 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
             }
         }
         if (myQuestionBankExercisesDataBean == null) {
-            Toast.makeText(mControlMainActivity, "此题暂无解析！", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mMainContext, "此题暂无解析！", Toast.LENGTH_SHORT).show();
             return;
         }
         if (myQuestionBankExercisesDataBean.question_analysis == null){
             myQuestionBankExercisesDataBean.question_analysis = "";
         }
         if (myQuestionBankExercisesDataBean.question_analysis == null || myQuestionBankExercisesDataBean.question_type == null) {
-            Toast.makeText(mControlMainActivity, "此题暂无解析！", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mMainContext, "此题暂无解析！", Toast.LENGTH_SHORT).show();
             return;
         }
 //            if (myQuestionBankExercisesDataBean.question_analysis.equals("")) {
-//                Toast.makeText(mControlMainActivity, "此题暂无解析！", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(mMainContext, "此题暂无解析！", Toast.LENGTH_SHORT).show();
 //                return;
 //            }
         LinearLayout.LayoutParams ll = (LinearLayout.LayoutParams) coursedetails_answerpaper_analysisbutton.getLayoutParams();
@@ -1801,7 +1801,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                 myQuestionBankExercisesDataBean.optionanswer = "";
             }
             //个人答案
-            View view = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_answerpaper_analysis1, null);
+            View view = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank_answerpaper_analysis1, null);
             coursedetails_answerpaper_analysis.addView(view);
             //修改内容为正确答案
             String[] optionanswerS = myQuestionBankExercisesDataBean.optionanswer.split("#EDU;");
@@ -1825,7 +1825,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
             if (myQuestionBankExercisesDataBean.question_analysis == null) {
                 myQuestionBankExercisesDataBean.question_analysis = "";
             }
-            new ModelHtmlUtils(mControlMainActivity, questionbank_analysis1_content).setHtmlWithPic(myQuestionBankExercisesDataBean.question_analysis);
+            new ModelHtmlUtils(mMainContext, questionbank_analysis1_content).setHtmlWithPic(myQuestionBankExercisesDataBean.question_analysis);
             //个人答案
             AnswerInfo answerInfo = mMyQuestionBankExercisesAnswerMap.get(myQuestionBankExercisesDataBean.question_id);
             TextView questionbank_analysis1_yourAnswer = view.findViewById(R.id.questionbank_analysis1_yourAnswer);
@@ -1851,17 +1851,17 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                 questionbank_analysis1_yourAnswer.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view.getResources().getDimensionPixelSize(R.dimen.textsize20));
             }
         } else if (myQuestionBankExercisesDataBean.question_type == 4) {//简答题
-            View view = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_answerpaper_analysis2, null);
+            View view = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank_answerpaper_analysis2, null);
             coursedetails_answerpaper_analysis.addView(view);
             //修改内容为正确答案
             TextView questionbank_analysis2_rightAnswer = view.findViewById(R.id.questionbank_analysis2_rightAnswer);
-            new ModelHtmlUtils(mControlMainActivity, questionbank_analysis2_rightAnswer).setHtmlWithPic(myQuestionBankExercisesDataBean.optionanswer);
+            new ModelHtmlUtils(mMainContext, questionbank_analysis2_rightAnswer).setHtmlWithPic(myQuestionBankExercisesDataBean.optionanswer);
             //修改内容为此题的解析
             TextView questionbank_analysis2_content = view.findViewById(R.id.questionbank_analysis2_content);
             if (myQuestionBankExercisesDataBean.question_analysis == null) {
                 myQuestionBankExercisesDataBean.question_analysis = "";
             }
-            new ModelHtmlUtils(mControlMainActivity, questionbank_analysis2_content).setHtmlWithPic(myQuestionBankExercisesDataBean.question_analysis);
+            new ModelHtmlUtils(mMainContext, questionbank_analysis2_content).setHtmlWithPic(myQuestionBankExercisesDataBean.question_analysis);
             //修改内容为您的答案
             TextView questionbank_analysis2_yourAnswer = view.findViewById(R.id.questionbank_analysis2_yourAnswer);
 //                EditText questionbank_answerpaper_shortansweredittext = view3.findViewById(R.id.questionbank_answerpaper_shortansweredittext);
@@ -1894,11 +1894,11 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
             return;
         }
         mCurrentAnswerMode = "exam";
-        mControlMainActivity.onClickQuestionBankDetails();
+        mMainContext.onClickQuestionBankDetails();
         HideAllLayout();
         RelativeLayout fragmentquestionbank_main = mview.findViewById(R.id.fragmentquestionbank_main);
         if (mModelQuestionBankAnswerPaperView == null) {
-            mModelQuestionBankAnswerPaperView = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_answerpaper, null);
+            mModelQuestionBankAnswerPaperView = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank_answerpaper, null);
         }
         fragmentquestionbank_main.addView(mModelQuestionBankAnswerPaperView);
         //此题所属章节名称
@@ -1922,8 +1922,8 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
         //点击交卷
         LinearLayout questionbank_answerpaper_commit = mModelQuestionBankAnswerPaperView.findViewById(R.id.questionbank_answerpaper_commit);
         questionbank_answerpaper_commit.setOnClickListener(v -> {
-            View view1 = mControlMainActivity.getLayoutInflater().inflate(R.layout.dialog_sure_cancel, null);
-            ControllerCenterDialog mMyDialog = new ControllerCenterDialog(mControlMainActivity, 0, 0, view1, R.style.DialogTheme);
+            View view1 = mMainContext.getLayoutInflater().inflate(R.layout.dialog_sure_cancel, null);
+            ControllerCenterDialog mMyDialog = new ControllerCenterDialog(mMainContext, 0, 0, view1, R.style.DialogTheme);
             mMyDialog.setCancelable(true);
             mMyDialog.show();
             TextView tip = view1.findViewById(R.id.tip);
@@ -1955,8 +1955,8 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
         ImageView questionbank_answerpaper_pause = mModelQuestionBankAnswerPaperView.findViewById(R.id.questionbank_answerpaper_pause);
         questionbank_answerpaper_pause.setOnClickListener(v -> {
             getQuestionBankHandInBean(2,mTime);
-            View view1 = mControlMainActivity.getLayoutInflater().inflate(R.layout.dialog_sure, null);
-            ControllerCenterDialog mMyDialog = new ControllerCenterDialog(mControlMainActivity, 0, 0, view1, R.style.DialogTheme);
+            View view1 = mMainContext.getLayoutInflater().inflate(R.layout.dialog_sure, null);
+            ControllerCenterDialog mMyDialog = new ControllerCenterDialog(mMainContext, 0, 0, view1, R.style.DialogTheme);
             mMyDialog.setCancelable(false);
             mMyDialog.show();
             TextView tip = view1.findViewById(R.id.tip);
@@ -1995,7 +1995,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
         button_questionbank_beforquestion.setOnClickListener(v -> {
             TextView questionbank_answerpaper_questioncount = mModelQuestionBankAnswerPaperView.findViewById(R.id.questionbank_answerpaper_questioncount);
             if (questionbank_answerpaper_questioncount.getText().toString().equals("1") || questionbank_answerpaper_questioncount.getText().toString().equals("0")) {
-                Toast.makeText(mControlMainActivity, "前面没有题啦", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mMainContext, "前面没有题啦", Toast.LENGTH_SHORT).show();
             } else { //跳到上一道题
                 mCurrentIndex = mCurrentIndex - 1;
                 if (mMyQuestionBankExercisesBean != null) {
@@ -2024,7 +2024,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                 }
                 TextView questionbank_answerpaper_questioncount = mModelQuestionBankAnswerPaperView.findViewById(R.id.questionbank_answerpaper_questioncount);
                 if (questionbank_answerpaper_questioncount.getText().toString().equals("" + questionSum)) {
-                    Toast.makeText(mControlMainActivity, "此题已经是最后一道题啦", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mMainContext, "此题已经是最后一道题啦", Toast.LENGTH_SHORT).show();
                 } else { //跳到下一道题
                     mCurrentIndex = mCurrentIndex + 1;
                     if (mMyQuestionBankExercisesBean != null) {
@@ -2078,11 +2078,11 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
             return;
         }
         mCurrentAnswerMode = "testpaper";
-        mControlMainActivity.onClickQuestionBankDetails();
+        mMainContext.onClickQuestionBankDetails();
         HideAllLayout();
         RelativeLayout fragmentquestionbank_main = mview.findViewById(R.id.fragmentquestionbank_main);
         if (mModelQuestionBankAnswerPaperView == null) {
-            mModelQuestionBankAnswerPaperView = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_answerpaper, null);
+            mModelQuestionBankAnswerPaperView = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank_answerpaper, null);
         }
         fragmentquestionbank_main.addView(mModelQuestionBankAnswerPaperView);
         //此题所属章节名称
@@ -2107,8 +2107,8 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
         //点击交卷
         LinearLayout questionbank_answerpaper_commit = mModelQuestionBankAnswerPaperView.findViewById(R.id.questionbank_answerpaper_commit);
         questionbank_answerpaper_commit.setOnClickListener(v -> {
-            View view1 = mControlMainActivity.getLayoutInflater().inflate(R.layout.dialog_sure_cancel, null);
-            ControllerCenterDialog mMyDialog = new ControllerCenterDialog(mControlMainActivity, 0, 0, view1, R.style.DialogTheme);
+            View view1 = mMainContext.getLayoutInflater().inflate(R.layout.dialog_sure_cancel, null);
+            ControllerCenterDialog mMyDialog = new ControllerCenterDialog(mMainContext, 0, 0, view1, R.style.DialogTheme);
             mMyDialog.setCancelable(true);
             mMyDialog.show();
             TextView tip = view1.findViewById(R.id.tip);
@@ -2139,8 +2139,8 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
         ImageView questionbank_answerpaper_pause = mModelQuestionBankAnswerPaperView.findViewById(R.id.questionbank_answerpaper_pause);
         questionbank_answerpaper_pause.setOnClickListener(v -> {
             getQuestionBankHandInTestPaperBean(2,mTime);
-            View view1 = mControlMainActivity.getLayoutInflater().inflate(R.layout.dialog_sure, null);
-            ControllerCenterDialog mMyDialog = new ControllerCenterDialog(mControlMainActivity, 0, 0, view1, R.style.DialogTheme);
+            View view1 = mMainContext.getLayoutInflater().inflate(R.layout.dialog_sure, null);
+            ControllerCenterDialog mMyDialog = new ControllerCenterDialog(mMainContext, 0, 0, view1, R.style.DialogTheme);
             mMyDialog.setCancelable(false);
             mMyDialog.show();
             TextView tip = view1.findViewById(R.id.tip);
@@ -2190,7 +2190,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
         button_questionbank_beforquestion.setOnClickListener(v -> {
             TextView questionbank_answerpaper_questioncount = mModelQuestionBankAnswerPaperView.findViewById(R.id.questionbank_answerpaper_questioncount);
             if (questionbank_answerpaper_questioncount.getText().toString().equals("1") || questionbank_answerpaper_questioncount.getText().toString().equals("0")) {
-                Toast.makeText(mControlMainActivity, "前面没有题啦", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mMainContext, "前面没有题啦", Toast.LENGTH_SHORT).show();
             } else { //跳到上一道题
                 mCurrentIndex = mCurrentIndex - 1;
                 TestPaper_QuestionViewAdd();
@@ -2204,7 +2204,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
             if (mMyTestPageIssueDataBeans != null) {
                 TextView questionbank_answerpaper_questioncount = mModelQuestionBankAnswerPaperView.findViewById(R.id.questionbank_answerpaper_questioncount);
                 if (questionbank_answerpaper_questioncount.getText().toString().equals("" + mMyTestPageIssueDataBeans.size())) {
-                    Toast.makeText(mControlMainActivity, "此题已经是最后一道题啦", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mMainContext, "此题已经是最后一道题啦", Toast.LENGTH_SHORT).show();
                 } else { //跳到下一道题
                     mCurrentIndex = mCurrentIndex + 1;
                     TestPaper_QuestionViewAdd();
@@ -2267,11 +2267,11 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
             return;
         }
         mCurrentAnswerMode = "handin";
-        mControlMainActivity.onClickQuestionBankDetails();
+        mMainContext.onClickQuestionBankDetails();
         HideAllLayout();
         RelativeLayout fragmentquestionbank_main = mview.findViewById(R.id.fragmentquestionbank_main);
         if (mModelQuestionBankHandInAnalysisView == null) {
-            mModelQuestionBankHandInAnalysisView = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_handin_analysis, null);
+            mModelQuestionBankHandInAnalysisView = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank_handin_analysis, null);
         }
         fragmentquestionbank_main.addView(mModelQuestionBankHandInAnalysisView);
         //此题所属章节名称
@@ -2397,7 +2397,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
         button_handin_analysis_beforquestion.setOnClickListener(v -> {
             TextView questionbank_handin_analysis_questioncount = mModelQuestionBankHandInAnalysisView.findViewById(R.id.questionbank_handin_analysis_questioncount);
             if (questionbank_handin_analysis_questioncount.getText().toString().equals("1") || questionbank_handin_analysis_questioncount.getText().toString().equals("0")) {
-                Toast.makeText(mControlMainActivity, "前面没有题啦", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mMainContext, "前面没有题啦", Toast.LENGTH_SHORT).show();
             } else { //跳到上一道题
                 mCurrentIndex = mCurrentIndex - 1;
                 int questionSize1 = 0;
@@ -2514,7 +2514,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
             if (finalQuestionSize != null) {
                 TextView questionbank_handin_analysis_questioncount = mModelQuestionBankHandInAnalysisView.findViewById(R.id.questionbank_handin_analysis_questioncount);
                 if (questionbank_handin_analysis_questioncount.getText().toString().equals("" + finalQuestionSize)) {
-                    Toast.makeText(mControlMainActivity, "此题已经是最后一道题啦", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mMainContext, "此题已经是最后一道题啦", Toast.LENGTH_SHORT).show();
                 } else { //跳到下一道题
                     mCurrentIndex = mCurrentIndex + 1;
                     int questionSize1 = 0;
@@ -2641,11 +2641,11 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
             return;
         }
         mCurrentAnswerMode = "wrong";
-        mControlMainActivity.onClickQuestionBankDetails();
+        mMainContext.onClickQuestionBankDetails();
         HideAllLayout();
         RelativeLayout fragmentquestionbank_main = mview.findViewById(R.id.fragmentquestionbank_main);
         if (mModelQuestionBankWrongQuestionView == null) {
-            mModelQuestionBankWrongQuestionView = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_wrongquestions, null);
+            mModelQuestionBankWrongQuestionView = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank_wrongquestions, null);
         }
         fragmentquestionbank_main.addView(mModelQuestionBankWrongQuestionView);
         //此题所属章节名称
@@ -2667,7 +2667,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
         button_wrongquestion_beforquestion.setOnClickListener(v -> {
             TextView questionbank_wrongquestion_questioncount = mModelQuestionBankWrongQuestionView.findViewById(R.id.questionbank_wrongquestion_questioncount);
             if (questionbank_wrongquestion_questioncount.getText().toString().equals("1") || questionbank_wrongquestion_questioncount.getText().toString().equals("0")) {
-                Toast.makeText(mControlMainActivity, "前面没有题啦", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mMainContext, "前面没有题啦", Toast.LENGTH_SHORT).show();
             } else { //跳到上一道题
                 mCurrentIndex = mCurrentIndex - 1;
                 WrongQuestionViewAdd(questionbank_wrongquestion_collection);
@@ -2681,7 +2681,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
             }
             TextView questionbank_wrongquestion_questioncount = mModelQuestionBankWrongQuestionView.findViewById(R.id.questionbank_wrongquestion_questioncount);
             if (questionbank_wrongquestion_questioncount.getText().toString().equals("" + mMyFavoriteQuestionDataBeans.size())) {
-                Toast.makeText(mControlMainActivity, "此题已经是最后一道题啦", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mMainContext, "此题已经是最后一道题啦", Toast.LENGTH_SHORT).show();
             } else { //跳到下一道题
                 mCurrentIndex = mCurrentIndex + 1;
                 WrongQuestionViewAdd(questionbank_wrongquestion_collection);
@@ -2709,11 +2709,11 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                 }
             }
             if (m_isError){  //如果答案不正确，弹出提示框
-                Toast.makeText(mControlMainActivity,"回答错误",Toast.LENGTH_SHORT).show();
+                Toast.makeText(mMainContext,"回答错误",Toast.LENGTH_SHORT).show();
             } else {
                 //弹出提示框，回答正确，是否跳转到下一题，如果是，从错题本中移除此题，并跳转到下一道题；如果不是，对话框消失
-                View view1 = mControlMainActivity.getLayoutInflater().inflate(R.layout.dialog_sure_cancel, null);
-                ControllerCenterDialog mMyDialog = new ControllerCenterDialog(mControlMainActivity, 0, 0, view1, R.style.DialogTheme);
+                View view1 = mMainContext.getLayoutInflater().inflate(R.layout.dialog_sure_cancel, null);
+                ControllerCenterDialog mMyDialog = new ControllerCenterDialog(mMainContext, 0, 0, view1, R.style.DialogTheme);
                 mMyDialog.setCancelable(true);
                 mMyDialog.show();
                 TextView tip = view1.findViewById(R.id.tip);
@@ -2750,11 +2750,11 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
             return;
         }
         mCurrentAnswerMode = "collection";
-        mControlMainActivity.onClickQuestionBankDetails();
+        mMainContext.onClickQuestionBankDetails();
         HideAllLayout();
         RelativeLayout fragmentquestionbank_main = mview.findViewById(R.id.fragmentquestionbank_main);
         if (mModelQuestionBankMyCollectionQuestionView == null) {
-            mModelQuestionBankMyCollectionQuestionView = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_mycollectionquestions, null);
+            mModelQuestionBankMyCollectionQuestionView = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank_mycollectionquestions, null);
         }
         fragmentquestionbank_main.addView(mModelQuestionBankMyCollectionQuestionView);
         //此题所属章节名称
@@ -2776,7 +2776,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
         button_mycollextionquestion_beforquestion.setOnClickListener(v -> {
             TextView questionbank_mycollextionquestion_questioncount = mModelQuestionBankMyCollectionQuestionView.findViewById(R.id.questionbank_mycollextionquestion_questioncount);
             if (questionbank_mycollextionquestion_questioncount.getText().toString().equals("1") || questionbank_mycollextionquestion_questioncount.getText().toString().equals("0")) {
-                Toast.makeText(mControlMainActivity, "前面没有题啦", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mMainContext, "前面没有题啦", Toast.LENGTH_SHORT).show();
             } else { //跳到上一道题
                 mCurrentIndex = mCurrentIndex - 1;
                 CollectionQuestionViewAdd(questionbank_mycollextionquestion_collection);
@@ -2786,12 +2786,12 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
         LinearLayout button_mycollextionquestion_nextquestion = mModelQuestionBankMyCollectionQuestionView.findViewById(R.id.button_mycollextionquestion_nextquestion);
         button_mycollextionquestion_nextquestion.setOnClickListener(V -> {
             if (mMyFavoriteQuestionDataBeans == null) {
-                Toast.makeText(mControlMainActivity, "数据错误", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mMainContext, "数据错误", Toast.LENGTH_SHORT).show();
                 return;
             }
             TextView questionbank_mycollextionquestion_questioncount = mModelQuestionBankMyCollectionQuestionView.findViewById(R.id.questionbank_mycollextionquestion_questioncount);
             if (questionbank_mycollextionquestion_questioncount.getText().toString().equals("" + mMyFavoriteQuestionDataBeans.size())) {
-                Toast.makeText(mControlMainActivity, "此题已经是最后一道题啦", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mMainContext, "此题已经是最后一道题啦", Toast.LENGTH_SHORT).show();
             } else { //跳到下一道题
                 mCurrentIndex = mCurrentIndex + 1;
                 CollectionQuestionViewAdd(questionbank_mycollextionquestion_collection);
@@ -2813,11 +2813,11 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
             return;
         }
         mCurrentAnswerMode = "requestionrecord";
-        mControlMainActivity.onClickQuestionBankDetails();
+        mMainContext.onClickQuestionBankDetails();
         HideAllLayout();
         RelativeLayout fragmentquestionbank_main = mview.findViewById(R.id.fragmentquestionbank_main);
         if (mModelQuestionBankQuestionRecordView == null) {
-            mModelQuestionBankQuestionRecordView = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_questionrecord, null);
+            mModelQuestionBankQuestionRecordView = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank_questionrecord, null);
             //章节练习
             TextView questionbank_questionrecords_tab_chapterexercises = mModelQuestionBankQuestionRecordView.findViewById(R.id.questionbank_questionrecords_tab_chapterexercises);
             //快速做题
@@ -2910,7 +2910,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                 continue;
             }
             //试卷名称  测试的名称   网络请求
-            View view = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_questionrecord1, null);
+            View view = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank_questionrecord1, null);
             //试卷名称
             TextView questionbank_questionrecords_testname = view.findViewById(R.id.questionbank_questionrecords_testname);
             String name = "";
@@ -2977,8 +2977,8 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
             String finalName = name;
             view.setOnClickListener(v -> {
                 //弹出提示框，回答正确，是否跳转到下一题，如果是，从错题本中移除此题，并跳转到下一道题；如果不是，对话框消失
-                View view1 = mControlMainActivity.getLayoutInflater().inflate(R.layout.dialog_sure_cancel, null);
-                ControllerCenterDialog mMyDialog = new ControllerCenterDialog(mControlMainActivity, 0, 0, view1, R.style.DialogTheme);
+                View view1 = mMainContext.getLayoutInflater().inflate(R.layout.dialog_sure_cancel, null);
+                ControllerCenterDialog mMyDialog = new ControllerCenterDialog(mMainContext, 0, 0, view1, R.style.DialogTheme);
                 mMyDialog.setCancelable(true);
                 mMyDialog.show();
                 TextView tip = view1.findViewById(R.id.tip);
@@ -2991,7 +2991,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                 button_cancel.setText("查看解析");
                 button_cancel.setOnClickListener(View -> {
                     //跳转到解析界面
-                    Toast.makeText(mControlMainActivity, "查看解析内容", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mMainContext, "查看解析内容", Toast.LENGTH_SHORT).show();
                     mAnswer_Id = questionBankAnswerRecordDataBeanList.answer_id;
                     if (mQuestionRecordCurrentTab.equals("ChapterExercises")){
                         getQuestionBankAnswerRecordLookChapter(finalName);
@@ -3007,7 +3007,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                 button_sure.setOnClickListener(View -> {//将试卷重新调出来，做题
 //                    if (myQuestionBankGoonDataBeans != null){
 //                        if (myQuestionBankGoonDataBeans.size() != 0) {
-//                            Toast.makeText(mControlMainActivity, "您有未完成的试卷，请继续答题或提交未完成的试卷！", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(mMainContext, "您有未完成的试卷，请继续答题或提交未完成的试卷！", Toast.LENGTH_SHORT).show();
 //                            return;
 //                        }
 //                    }
@@ -3032,14 +3032,14 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
     //添加问题界面
     private boolean QuestionViewAdd(MyQuestionBankExercises.MyQuestionBankExercisesBean myQuestionBankExercisesBean) {
         if (myQuestionBankExercisesBean == null){
-            Toast.makeText(mControlMainActivity, "获取试题失败", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mMainContext, "获取试题失败", Toast.LENGTH_SHORT).show();
             return false;
         }
         if (mCurrentIndex < 0 ){
-            Toast.makeText(mControlMainActivity, "获取试题失败", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mMainContext, "获取试题失败", Toast.LENGTH_SHORT).show();
             return false;
         }
-        View view2 = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_answerpaper_single, null);
+        View view2 = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank_answerpaper_single, null);
         LinearLayout coursedetails_answerpaper_details = mModelQuestionBankAnswerPaperView.findViewById(R.id.coursedetails_answerpaper_details);
         coursedetails_answerpaper_details.removeAllViews();
         coursedetails_answerpaper_details.addView(view2);
@@ -3107,11 +3107,11 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
             }
         }
         if (mCurrentIndex >= questionSum) { //不在数组范围直接返回
-            Toast.makeText(mControlMainActivity, "获取试题失败", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mMainContext, "获取试题失败", Toast.LENGTH_SHORT).show();
             return false;
         }
         if (myQuestionBankExercisesDataBean == null){
-            Toast.makeText(mControlMainActivity, "获取试题失败", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mMainContext, "获取试题失败", Toast.LENGTH_SHORT).show();
             return false;
         }
         ImageView questionbank_answerpaper_sign = mModelQuestionBankAnswerPaperView.findViewById(R.id.questionbank_answerpaper_sign);
@@ -3143,7 +3143,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
             } else if (mFontSize.equals("big")) {
                 questionbank_answerpaper_single_title.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view2.getResources().getDimensionPixelSize(R.dimen.textsize20));
             }
-            new ModelHtmlUtils(mControlMainActivity, questionbank_answerpaper_single_title).setHtmlWithPic(myQuestionBankExercisesDataBean.question_name);
+            new ModelHtmlUtils(mMainContext, questionbank_answerpaper_single_title).setHtmlWithPic(myQuestionBankExercisesDataBean.question_name);
             questionbank_answerpaper_single_title.setHint(myQuestionBankExercisesDataBean.question_id + "");
             //判断当前选择题的类型
             TextView questionbank_answerpaper_questiontype = mModelQuestionBankAnswerPaperView.findViewById(R.id.questionbank_answerpaper_questiontype);
@@ -3170,13 +3170,13 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                     return false;
                 }
                 for (int i = 0; i < optionanswerS.length; i ++) {
-                    View view3 = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_answerpaper_option, null);
+                    View view3 = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank_answerpaper_option, null);
                     String[] optionanswerS1 = optionanswerS[i].substring(1).split("#");
                     if (optionanswerS1.length != 3) {//question_analysisS1的结构应为#A#是#选择A
                         continue;
                     }
                     TextView questionbank_answerpaper_option_name = view3.findViewById(R.id.questionbank_answerpaper_option_name);
-                    new ModelHtmlUtils(mControlMainActivity, questionbank_answerpaper_option_name).setHtmlWithPic(optionanswerS1[0]);
+                    new ModelHtmlUtils(mMainContext, questionbank_answerpaper_option_name).setHtmlWithPic(optionanswerS1[0]);
                     questionbank_answerpaper_option_name.setHint(optionanswerS1[1]);
                     MyQuestionBankExercises.MyQuestionBankExercisesDataBean finalMyQuestionBankExercisesDataBean = myQuestionBankExercisesDataBean;
                     MyQuestionBankExercises.MyQuestionBankExercisesDataBean finalMyQuestionBankExercisesDataBean1 = myQuestionBankExercisesDataBean;
@@ -3258,7 +3258,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                         }
                     }
                     TextView questionbank_answerpaper_option_title = view3.findViewById(R.id.questionbank_answerpaper_option_title);
-                    new ModelHtmlUtils(mControlMainActivity, questionbank_answerpaper_option_title).setHtmlWithPic(optionanswerS1[2]);
+                    new ModelHtmlUtils(mMainContext, questionbank_answerpaper_option_title).setHtmlWithPic(optionanswerS1[2]);
                     if (mFontSize.equals("nomal")) {
                         questionbank_answerpaper_option_title.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view3.getResources().getDimensionPixelSize(R.dimen.textsize17));
                     } else if (mFontSize.equals("small")) {
@@ -3269,7 +3269,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                     questionbank_answerpaper_content.addView(view3);
                 }
             } else if (myQuestionBankExercisesDataBean.question_type == 4) {//如果是简答题
-                View view3 = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_answerpaper_shortanswer, null);
+                View view3 = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank_answerpaper_shortanswer, null);
                 questionbank_answerpaper_content.addView(view3);
                 EditText questionbank_answerpaper_shortansweredittext = view3.findViewById(R.id.questionbank_answerpaper_shortansweredittext);
                 if (mFontSize.equals("nomal")) {
@@ -3311,7 +3311,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                     }
                 });
             } else if (myQuestionBankExercisesDataBean.question_type == 7) {//如果是材料题
-                View contentView = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_answerpaper_shortanswer, null);
+                View contentView = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank_answerpaper_shortanswer, null);
                 questionbank_answerpaper_content.addView(contentView);
                 EditText contentViewedittext = contentView.findViewById(R.id.questionbank_answerpaper_shortansweredittext);
                 if (myQuestionBankExercisesDataBean.optionanswer != null) {
@@ -3323,7 +3323,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                     rl.height = 0;
                     rl.topMargin = 0;
                     contentViewedittext.setLayoutParams(rl);
-                    new ModelHtmlUtils(mControlMainActivity, questionbank_answerpaper_shortanswer).setHtmlWithPic(myQuestionBankExercisesDataBean.optionanswer);
+                    new ModelHtmlUtils(mMainContext, questionbank_answerpaper_shortanswer).setHtmlWithPic(myQuestionBankExercisesDataBean.optionanswer);
                     if (mFontSize.equals("nomal")) {
                         questionbank_answerpaper_shortanswer.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view2.getResources().getDimensionPixelSize(R.dimen.textsize17));
                     } else if (mFontSize.equals("small")) {
@@ -3357,16 +3357,16 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                             if (optionanswerS == null) {
                                 continue;
                             }
-                            View view5 = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_answerpaper_single, null);
+                            View view5 = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank_answerpaper_single, null);
                             questionbank_answerpaper_content.addView(view5);
                             TextView questionbank_answerpaper_single_titlesign = view5.findViewById(R.id.questionbank_answerpaper_single_titlesign);
                             questionbank_answerpaper_single_titlesign.setText("第" + (i + 1) + "题： " + type);
                             LinearLayout questionbank_answerpaper_content1 = view5.findViewById(R.id.questionbank_answerpaper_content);
                             TextView questionbank_answerpaper_single_title1 = view5.findViewById(R.id.questionbank_answerpaper_single_title);
-                            new ModelHtmlUtils(mControlMainActivity, questionbank_answerpaper_single_title1).setHtmlWithPic(MyQuestionBankExercisesDataBean1.question_name);
+                            new ModelHtmlUtils(mMainContext, questionbank_answerpaper_single_title1).setHtmlWithPic(MyQuestionBankExercisesDataBean1.question_name);
                             String currentAnswer = "";
                             for (String string : optionanswerS) {
-                                View view3 = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_answerpaper_option, null);
+                                View view3 = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank_answerpaper_option, null);
                                 String[] optionanswerS1 = string.substring(1).split("#");
                                 if (optionanswerS1.length != 3) {//question_analysisS1的结构应为#A#是#选择A
                                     continue;
@@ -3378,7 +3378,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                                     }
                                 }
                                 TextView questionbank_answerpaper_option_name = view3.findViewById(R.id.questionbank_answerpaper_option_name);
-                                new ModelHtmlUtils(mControlMainActivity, questionbank_answerpaper_option_name).setHtmlWithPic(optionanswerS1[0]);
+                                new ModelHtmlUtils(mMainContext, questionbank_answerpaper_option_name).setHtmlWithPic(optionanswerS1[0]);
                                 questionbank_answerpaper_option_name.setHint(optionanswerS1[1]);
                                 questionbank_answerpaper_option_name.setOnClickListener(v -> { // 选项的点击响应
                                     questionbank_answerpaper_option_name.setBackground(view3.getResources().getDrawable(R.drawable.textview_style_circle_blue649cf0));
@@ -3457,7 +3457,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                                     }
                                 }
                                 TextView questionbank_answerpaper_option_title = view3.findViewById(R.id.questionbank_answerpaper_option_title);
-                                new ModelHtmlUtils(mControlMainActivity, questionbank_answerpaper_option_title).setHtmlWithPic(optionanswerS1[2]);
+                                new ModelHtmlUtils(mMainContext, questionbank_answerpaper_option_title).setHtmlWithPic(optionanswerS1[2]);
                                 if (mFontSize.equals("nomal")) {
                                     questionbank_answerpaper_option_title.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view3.getResources().getDimensionPixelSize(R.dimen.textsize17));
                                 } else if (mFontSize.equals("small")) {
@@ -3481,7 +3481,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                                     questionbank_answerpaper_single_analysisbuttonrl.topMargin = 0;
                                     questionbank_answerpaper_single_analysisbutton.setLayoutParams(questionbank_answerpaper_single_analysisbuttonrl);
                                     LinearLayout questionbank_answerpaper_single_analysis = view5.findViewById(R.id.questionbank_answerpaper_single_analysis);
-                                    View view = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_answerpaper_analysis1, null);
+                                    View view = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank_answerpaper_analysis1, null);
                                     questionbank_answerpaper_single_analysis.addView(view);
                                     //修改内容为正确答案
                                     TextView questionbank_analysis1_rightAnswer = view.findViewById(R.id.questionbank_analysis1_rightAnswer);
@@ -3491,7 +3491,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                                     if (MyQuestionBankExercisesDataBean1.question_analysis == null) {
                                         MyQuestionBankExercisesDataBean1.question_analysis = "";
                                     }
-                                    new ModelHtmlUtils(mControlMainActivity, questionbank_analysis1_content).setHtmlWithPic(MyQuestionBankExercisesDataBean1.question_analysis);
+                                    new ModelHtmlUtils(mMainContext, questionbank_analysis1_content).setHtmlWithPic(MyQuestionBankExercisesDataBean1.question_analysis);
                                     //修改内容为您的答案
                                     TextView questionbank_analysis1_yourAnswer = view.findViewById(R.id.questionbank_analysis1_yourAnswer);
                                     AnswerInfo answerInfo = mMyQuestionBankExercisesAnswerMap.get(MyQuestionBankExercisesDataBean1.question_id);
@@ -3527,7 +3527,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                                 questionbank_answerpaper_single_title1.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view5.getResources().getDimensionPixelSize(R.dimen.textsize20));
                             }
                         } else if (MyQuestionBankExercisesDataBean1.question_type == 14) {//如果是简答题
-                            View view3 = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_answerpaper_shortanswer, null);
+                            View view3 = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank_answerpaper_shortanswer, null);
                             questionbank_answerpaper_content.addView(view3);
                             TextView questionbank_answerpaper_shortanswersign = view3.findViewById(R.id.questionbank_answerpaper_shortanswersign);
                             questionbank_answerpaper_shortanswersign.setText("第" + (i + 1) + "题： " + type);
@@ -3535,7 +3535,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                             RelativeLayout.LayoutParams rl = (RelativeLayout.LayoutParams) questionbank_answerpaper_shortanswer.getLayoutParams();
                             rl.height = RelativeLayout.LayoutParams.WRAP_CONTENT;
                             questionbank_answerpaper_shortanswer.setLayoutParams(rl);
-                            new ModelHtmlUtils(mControlMainActivity, questionbank_answerpaper_shortanswer).setHtmlWithPic(MyQuestionBankExercisesDataBean1.question_name);
+                            new ModelHtmlUtils(mMainContext, questionbank_answerpaper_shortanswer).setHtmlWithPic(MyQuestionBankExercisesDataBean1.question_name);
                             EditText questionbank_answerpaper_shortansweredittext = view3.findViewById(R.id.questionbank_answerpaper_shortansweredittext);
                             AnswerInfo answerInfo = mMyQuestionBankExercisesAnswerMap.get(MyQuestionBankExercisesDataBean1.question_id);
                             if (answerInfo != null) {
@@ -3580,23 +3580,23 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                                     questionbank_answerpaper_shortanswer_analysisbuttonrl.topMargin = 0;
                                     questionbank_answerpaper_shortanswer_analysisbutton.setLayoutParams(questionbank_answerpaper_shortanswer_analysisbuttonrl);
                                     LinearLayout questionbank_answerpaper_shortanswer_analysis = view3.findViewById(R.id.questionbank_answerpaper_shortanswer_analysis);
-                                    View view = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_answerpaper_analysis2, null);
+                                    View view = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank_answerpaper_analysis2, null);
                                     questionbank_answerpaper_shortanswer_analysis.addView(view);
                                     //修改内容为正确答案
                                     TextView questionbank_analysis2_rightAnswer = view.findViewById(R.id.questionbank_analysis2_rightAnswer);
-                                    new ModelHtmlUtils(mControlMainActivity, questionbank_analysis2_rightAnswer).setHtmlWithPic(MyQuestionBankExercisesDataBean1.optionanswer);
+                                    new ModelHtmlUtils(mMainContext, questionbank_analysis2_rightAnswer).setHtmlWithPic(MyQuestionBankExercisesDataBean1.optionanswer);
                                     //修改内容为此题的解析
                                     TextView questionbank_analysis2_content = view.findViewById(R.id.questionbank_analysis2_content);
                                     if (MyQuestionBankExercisesDataBean1.question_analysis == null) {
                                         MyQuestionBankExercisesDataBean1.question_analysis = "";
                                     }
-                                    new ModelHtmlUtils(mControlMainActivity, questionbank_analysis2_content).setHtmlWithPic(MyQuestionBankExercisesDataBean1.question_analysis);
+                                    new ModelHtmlUtils(mMainContext, questionbank_analysis2_content).setHtmlWithPic(MyQuestionBankExercisesDataBean1.question_analysis);
                                     //修改内容为您的答案
                                     TextView questionbank_analysis2_yourAnswer = view.findViewById(R.id.questionbank_analysis2_yourAnswer);
                                     AnswerInfo answerInfo1 = mMyQuestionBankExercisesAnswerMap.get(MyQuestionBankExercisesDataBean1.question_id);
                                     if (answerInfo1 != null) {
                                         if (answerInfo1.answer != null) {
-                                            new ModelHtmlUtils(mControlMainActivity, questionbank_analysis2_yourAnswer).setHtmlWithPic(answerInfo1.answer);
+                                            new ModelHtmlUtils(mMainContext, questionbank_analysis2_yourAnswer).setHtmlWithPic(answerInfo1.answer);
                                         } else {
                                             questionbank_analysis2_yourAnswer.setText("");
                                         }
@@ -3635,25 +3635,25 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
     //试卷答题-添加问题界面
     private void TestPaper_QuestionViewAdd() {
         if (mMyTestPageIssueDataBeans == null){
-            Toast.makeText(mControlMainActivity, "获取试题失败", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mMainContext, "获取试题失败", Toast.LENGTH_SHORT).show();
             return;
         }
         if (mCurrentIndex < 0 ){
-            Toast.makeText(mControlMainActivity, "获取试题失败", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mMainContext, "获取试题失败", Toast.LENGTH_SHORT).show();
             return;
         }
-        View view2 = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_answerpaper_single, null);
+        View view2 = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank_answerpaper_single, null);
         LinearLayout coursedetails_answerpaper_details = mModelQuestionBankAnswerPaperView.findViewById(R.id.coursedetails_answerpaper_details);
         coursedetails_answerpaper_details.removeAllViews();
         coursedetails_answerpaper_details.addView(view2);
         //字符串分割
         if (mCurrentIndex >= mMyTestPageIssueDataBeans.size()) { //不在数组范围直接返回
-            Toast.makeText(mControlMainActivity, "获取试题失败", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mMainContext, "获取试题失败", Toast.LENGTH_SHORT).show();
             return;
         }
         MyTestPageIssueBean.MyTestPageIssueDataBean myTestPageIssueDataBean = mMyTestPageIssueDataBeans.get(mCurrentIndex);
         if (myTestPageIssueDataBean == null){
-            Toast.makeText(mControlMainActivity, "获取试题失败", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mMainContext, "获取试题失败", Toast.LENGTH_SHORT).show();
             return;
         }
         ImageView questionbank_answerpaper_sign = mModelQuestionBankAnswerPaperView.findViewById(R.id.questionbank_answerpaper_sign);
@@ -3685,7 +3685,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
             } else if (mFontSize.equals("big")) {
                 questionbank_answerpaper_single_title.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view2.getResources().getDimensionPixelSize(R.dimen.textsize20));
             }
-            new ModelHtmlUtils(mControlMainActivity, questionbank_answerpaper_single_title).setHtmlWithPic(myTestPageIssueDataBean.question_name);
+            new ModelHtmlUtils(mMainContext, questionbank_answerpaper_single_title).setHtmlWithPic(myTestPageIssueDataBean.question_name);
             questionbank_answerpaper_single_title.setHint(myTestPageIssueDataBean.question_id + "");
             //判断当前选择题的类型
             TextView questionbank_answerpaper_questiontype = mModelQuestionBankAnswerPaperView.findViewById(R.id.questionbank_answerpaper_questiontype);
@@ -3712,13 +3712,13 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                     return;
                 }
                 for (int i = 0; i < optionanswerS.length; i ++) {
-                    View view3 = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_answerpaper_option, null);
+                    View view3 = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank_answerpaper_option, null);
                     String[] optionanswerS1 = optionanswerS[i].substring(1).split("#");
                     if (optionanswerS1.length != 3) {//question_analysisS1的结构应为#A#是#选择A
                         continue;
                     }
                     TextView questionbank_answerpaper_option_name = view3.findViewById(R.id.questionbank_answerpaper_option_name);
-                    new ModelHtmlUtils(mControlMainActivity, questionbank_answerpaper_option_name).setHtmlWithPic(optionanswerS1[0]);
+                    new ModelHtmlUtils(mMainContext, questionbank_answerpaper_option_name).setHtmlWithPic(optionanswerS1[0]);
                     questionbank_answerpaper_option_name.setHint(optionanswerS1[1]);
                     questionbank_answerpaper_option_name.setOnClickListener(v -> {
                         questionbank_answerpaper_option_name.setBackground(view3.getResources().getDrawable(R.drawable.textview_style_circle_blue649cf0));
@@ -3797,7 +3797,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                         }
                     }
                     TextView questionbank_answerpaper_option_title = view3.findViewById(R.id.questionbank_answerpaper_option_title);
-                    new ModelHtmlUtils(mControlMainActivity, questionbank_answerpaper_option_title).setHtmlWithPic(optionanswerS1[2]);
+                    new ModelHtmlUtils(mMainContext, questionbank_answerpaper_option_title).setHtmlWithPic(optionanswerS1[2]);
                     if (mFontSize.equals("nomal")) {
                         questionbank_answerpaper_option_title.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view3.getResources().getDimensionPixelSize(R.dimen.textsize17));
                     } else if (mFontSize.equals("small")) {
@@ -3808,7 +3808,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                     questionbank_answerpaper_content.addView(view3);
                 }
             } else if (myTestPageIssueDataBean.question_type == 4) {//如果是简答题
-                View view3 = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_answerpaper_shortanswer, null);
+                View view3 = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank_answerpaper_shortanswer, null);
                 questionbank_answerpaper_content.addView(view3);
                 EditText questionbank_answerpaper_shortansweredittext = view3.findViewById(R.id.questionbank_answerpaper_shortansweredittext);
                 if (mFontSize.equals("nomal")) {
@@ -3849,7 +3849,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                     }
                 });
             } else if (myTestPageIssueDataBean.question_type == 7) {//如果是材料题
-                View contentView = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_answerpaper_shortanswer, null);
+                View contentView = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank_answerpaper_shortanswer, null);
                 questionbank_answerpaper_content.addView(contentView);
                 EditText contentViewedittext = contentView.findViewById(R.id.questionbank_answerpaper_shortansweredittext);
                 if (myTestPageIssueDataBean.optionanswer != null) {
@@ -3861,7 +3861,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                     rl.height = 0;
                     rl.topMargin = 0;
                     contentViewedittext.setLayoutParams(rl);
-                    new ModelHtmlUtils(mControlMainActivity, questionbank_answerpaper_shortanswer).setHtmlWithPic(myTestPageIssueDataBean.optionanswer);
+                    new ModelHtmlUtils(mMainContext, questionbank_answerpaper_shortanswer).setHtmlWithPic(myTestPageIssueDataBean.optionanswer);
                     if (mFontSize.equals("nomal")) {
                         questionbank_answerpaper_shortanswer.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view2.getResources().getDimensionPixelSize(R.dimen.textsize17));
                     } else if (mFontSize.equals("small")) {
@@ -3892,16 +3892,16 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                             if (optionanswerS == null) {
                                 continue;
                             }
-                            View view5 = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_answerpaper_single, null);
+                            View view5 = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank_answerpaper_single, null);
                             questionbank_answerpaper_content.addView(view5);
                             TextView questionbank_answerpaper_single_titlesign = view5.findViewById(R.id.questionbank_answerpaper_single_titlesign);
                             questionbank_answerpaper_single_titlesign.setText("第" + (i + 1) + "题： " + type);
                             LinearLayout questionbank_answerpaper_content1 = view5.findViewById(R.id.questionbank_answerpaper_content);
                             TextView questionbank_answerpaper_single_title1 = view5.findViewById(R.id.questionbank_answerpaper_single_title);
-                            new ModelHtmlUtils(mControlMainActivity, questionbank_answerpaper_single_title1).setHtmlWithPic(MyTestPageIssueDataBean1.question_name);
+                            new ModelHtmlUtils(mMainContext, questionbank_answerpaper_single_title1).setHtmlWithPic(MyTestPageIssueDataBean1.question_name);
                             String currentAnswer = "";
                             for (String string : optionanswerS) {
-                                View view3 = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_answerpaper_option, null);
+                                View view3 = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank_answerpaper_option, null);
                                 String[] optionanswerS1 = string.substring(1).split("#");
                                 if (optionanswerS1.length != 3) {//question_analysisS1的结构应为#A#是#选择A
                                     continue;
@@ -3913,7 +3913,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                                     }
                                 }
                                 TextView questionbank_answerpaper_option_name = view3.findViewById(R.id.questionbank_answerpaper_option_name);
-                                new ModelHtmlUtils(mControlMainActivity, questionbank_answerpaper_option_name).setHtmlWithPic(optionanswerS1[0]);
+                                new ModelHtmlUtils(mMainContext, questionbank_answerpaper_option_name).setHtmlWithPic(optionanswerS1[0]);
                                 questionbank_answerpaper_option_name.setHint(optionanswerS1[1]);
                                 questionbank_answerpaper_option_name.setOnClickListener(v -> { // 选项的点击响应
                                     questionbank_answerpaper_option_name.setBackground(view3.getResources().getDrawable(R.drawable.textview_style_circle_blue649cf0));
@@ -3992,7 +3992,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                                     }
                                 }
                                 TextView questionbank_answerpaper_option_title = view3.findViewById(R.id.questionbank_answerpaper_option_title);
-                                new ModelHtmlUtils(mControlMainActivity, questionbank_answerpaper_option_title).setHtmlWithPic(optionanswerS1[2]);
+                                new ModelHtmlUtils(mMainContext, questionbank_answerpaper_option_title).setHtmlWithPic(optionanswerS1[2]);
                                 if (mFontSize.equals("nomal")) {
                                     questionbank_answerpaper_option_title.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view3.getResources().getDimensionPixelSize(R.dimen.textsize17));
                                 } else if (mFontSize.equals("small")) {
@@ -4011,7 +4011,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                                 questionbank_answerpaper_single_title1.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view5.getResources().getDimensionPixelSize(R.dimen.textsize20));
                             }
                         } else if (MyTestPageIssueDataBean1.question_type == 14) {//如果是简答题
-                            View view3 = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_answerpaper_shortanswer, null);
+                            View view3 = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank_answerpaper_shortanswer, null);
                             questionbank_answerpaper_content.addView(view3);
                             TextView questionbank_answerpaper_shortanswersign = view3.findViewById(R.id.questionbank_answerpaper_shortanswersign);
                             questionbank_answerpaper_shortanswersign.setText("第" + (i + 1) + "题： " + type);
@@ -4019,7 +4019,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                             RelativeLayout.LayoutParams rl = (RelativeLayout.LayoutParams) questionbank_answerpaper_shortanswer.getLayoutParams();
                             rl.height = RelativeLayout.LayoutParams.WRAP_CONTENT;
                             questionbank_answerpaper_shortanswer.setLayoutParams(rl);
-                            new ModelHtmlUtils(mControlMainActivity, questionbank_answerpaper_shortanswer).setHtmlWithPic(MyTestPageIssueDataBean1.question_name);
+                            new ModelHtmlUtils(mMainContext, questionbank_answerpaper_shortanswer).setHtmlWithPic(MyTestPageIssueDataBean1.question_name);
                             EditText questionbank_answerpaper_shortansweredittext = view3.findViewById(R.id.questionbank_answerpaper_shortansweredittext);
                             questionbank_answerpaper_shortansweredittext.addTextChangedListener(new TextWatcher() {
                                 @Override
@@ -4064,7 +4064,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
         if (questionSize == null || myQuestionBankExercisesDataBean == null){
             return;
         }
-        View view2 = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_answerpaper_single, null);
+        View view2 = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank_answerpaper_single, null);
         LinearLayout coursedetails_handin_analysis_details = mModelQuestionBankHandInAnalysisView.findViewById(R.id.coursedetails_handin_analysis_details);
         coursedetails_handin_analysis_details.removeAllViews();
         coursedetails_handin_analysis_details.addView(view2);
@@ -4095,7 +4095,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
         } else if (mFontSize.equals("big")) {
             questionbank_answerpaper_single_title.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view2.getResources().getDimensionPixelSize(R.dimen.textsize20));
         }
-        new ModelHtmlUtils(mControlMainActivity, questionbank_answerpaper_single_title).setHtmlWithPic(myQuestionBankExercisesDataBean.question_name);
+        new ModelHtmlUtils(mMainContext, questionbank_answerpaper_single_title).setHtmlWithPic(myQuestionBankExercisesDataBean.question_name);
         questionbank_answerpaper_single_title.setHint(myQuestionBankExercisesDataBean.question_id + "");
         //单选题或者多选题赋值
         TextView questionbank_handin_analysis_questiontype = mModelQuestionBankHandInAnalysisView.findViewById(R.id.questionbank_handin_analysis_questiontype);
@@ -4115,7 +4115,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
             String[] optionanswerS = myQuestionBankExercisesDataBean.optionanswer.split("#EDU;");
             if (optionanswerS != null) {
                 for (int i = 0; i < optionanswerS.length; i++) {
-                    View view3 = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_answerpaper_option, null);
+                    View view3 = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank_answerpaper_option, null);
                     String[] optionanswerS1 = optionanswerS[i].substring(1).split("#");
                     if (optionanswerS1.length != 3) {//question_analysisS1的结构应为#A#是#选择A
                         continue;
@@ -4124,7 +4124,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                     questionbank_answerpaper_option_name.setText(optionanswerS1[0]);
                     questionbank_answerpaper_option_name.setHint(optionanswerS1[1]);
                     TextView questionbank_answerpaper_option_title = view3.findViewById(R.id.questionbank_answerpaper_option_title);
-                    new ModelHtmlUtils(mControlMainActivity, questionbank_answerpaper_option_title).setHtmlWithPic(optionanswerS1[2]);
+                    new ModelHtmlUtils(mMainContext, questionbank_answerpaper_option_title).setHtmlWithPic(optionanswerS1[2]);
                     if (mFontSize.equals("nomal")) {
                         questionbank_answerpaper_option_title.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view2.getResources().getDimensionPixelSize(R.dimen.textsize17));
                     } else if (mFontSize.equals("small")) {
@@ -4145,7 +4145,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                 }
             }
         } else if (myQuestionBankExercisesDataBean.question_type == 4) {//如果是简答题
-            View view3 = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_answerpaper_shortanswer, null);
+            View view3 = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank_answerpaper_shortanswer, null);
             questionbank_answerpaper_content.addView(view3);
             EditText questionbank_answerpaper_shortansweredittext = view3.findViewById(R.id.questionbank_answerpaper_shortansweredittext);
             if (mFontSize.equals("nomal")) {
@@ -4161,7 +4161,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
             rl.topMargin = 0;
             questionbank_answerpaper_shortansweredittext.setLayoutParams(rl);
         } else if (myQuestionBankExercisesDataBean.question_type == 7) {//如果是材料题
-            View contentView = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_answerpaper_shortanswer, null);
+            View contentView = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank_answerpaper_shortanswer, null);
             questionbank_answerpaper_content.addView(contentView);
             EditText contentViewedittext = contentView.findViewById(R.id.questionbank_answerpaper_shortansweredittext);
             if (myQuestionBankExercisesDataBean.optionanswer != null) {
@@ -4173,7 +4173,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                 rl.height = 0;
                 rl.topMargin = 0;
                 contentViewedittext.setLayoutParams(rl);
-                new ModelHtmlUtils(mControlMainActivity, questionbank_answerpaper_shortanswer).setHtmlWithPic(myQuestionBankExercisesDataBean.optionanswer);
+                new ModelHtmlUtils(mMainContext, questionbank_answerpaper_shortanswer).setHtmlWithPic(myQuestionBankExercisesDataBean.optionanswer);
                 if (mFontSize.equals("nomal")) {
                     questionbank_answerpaper_shortanswer.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view2.getResources().getDimensionPixelSize(R.dimen.textsize17));
                 } else if (mFontSize.equals("small")) {
@@ -4207,16 +4207,16 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                         if (optionanswerS == null) {
                             continue;
                         }
-                        View view5 = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_answerpaper_single, null);
+                        View view5 = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank_answerpaper_single, null);
                         questionbank_answerpaper_content.addView(view5);
                         TextView questionbank_answerpaper_single_titlesign = view5.findViewById(R.id.questionbank_answerpaper_single_titlesign);
                         questionbank_answerpaper_single_titlesign.setText("第" + (i + 1) + "题： " + type);
                         LinearLayout questionbank_answerpaper_content1 = view5.findViewById(R.id.questionbank_answerpaper_content);
                         TextView questionbank_answerpaper_single_title1 = view5.findViewById(R.id.questionbank_answerpaper_single_title);
-                        new ModelHtmlUtils(mControlMainActivity, questionbank_answerpaper_single_title1).setHtmlWithPic(MyQuestionBankExercisesDataBean1.question_name);
+                        new ModelHtmlUtils(mMainContext, questionbank_answerpaper_single_title1).setHtmlWithPic(MyQuestionBankExercisesDataBean1.question_name);
                         String currentAnswer = "";
                         for (String string : optionanswerS) {
-                            View view3 = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_answerpaper_option, null);
+                            View view3 = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank_answerpaper_option, null);
                             String[] optionanswerS1 = string.substring(1).split("#");
                             if (optionanswerS1.length != 3) {//question_analysisS1的结构应为#A#是#选择A
                                 continue;
@@ -4228,7 +4228,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                                 }
                             }
                             TextView questionbank_answerpaper_option_name = view3.findViewById(R.id.questionbank_answerpaper_option_name);
-                            new ModelHtmlUtils(mControlMainActivity, questionbank_answerpaper_option_name).setHtmlWithPic(optionanswerS1[0]);
+                            new ModelHtmlUtils(mMainContext, questionbank_answerpaper_option_name).setHtmlWithPic(optionanswerS1[0]);
                             questionbank_answerpaper_option_name.setHint(optionanswerS1[1]);
                             AnswerInfo answerInfo = mMyQuestionBankExercisesAnswerMap.get(MyQuestionBankExercisesDataBean1.question_id);
                             if (answerInfo != null) {
@@ -4240,7 +4240,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                                 }
                             }
                             TextView questionbank_answerpaper_option_title = view3.findViewById(R.id.questionbank_answerpaper_option_title);
-                            new ModelHtmlUtils(mControlMainActivity, questionbank_answerpaper_option_title).setHtmlWithPic(optionanswerS1[2]);
+                            new ModelHtmlUtils(mMainContext, questionbank_answerpaper_option_title).setHtmlWithPic(optionanswerS1[2]);
                             if (mFontSize.equals("nomal")) {
                                 questionbank_answerpaper_option_title.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view3.getResources().getDimensionPixelSize(R.dimen.textsize17));
                             } else if (mFontSize.equals("small")) {
@@ -4251,7 +4251,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                             questionbank_answerpaper_content1.addView(view3);
                         }
                         LinearLayout questionbank_answerpaper_single_analysis = view5.findViewById(R.id.questionbank_answerpaper_single_analysis);
-                        View view = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_answerpaper_analysis1, null);
+                        View view = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank_answerpaper_analysis1, null);
                         questionbank_answerpaper_single_analysis.addView(view);
                         //修改内容为正确答案
                         TextView questionbank_analysis1_rightAnswer = view.findViewById(R.id.questionbank_analysis1_rightAnswer);
@@ -4261,7 +4261,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                         if (MyQuestionBankExercisesDataBean1.question_analysis == null) {
                             MyQuestionBankExercisesDataBean1.question_analysis = "";
                         }
-                        new ModelHtmlUtils(mControlMainActivity, questionbank_analysis1_content).setHtmlWithPic(MyQuestionBankExercisesDataBean1.question_analysis);
+                        new ModelHtmlUtils(mMainContext, questionbank_analysis1_content).setHtmlWithPic(MyQuestionBankExercisesDataBean1.question_analysis);
                         //修改内容为您的答案
                         TextView questionbank_analysis1_yourAnswer = view.findViewById(R.id.questionbank_analysis1_yourAnswer);
                         AnswerInfo answerInfo = mMyQuestionBankExercisesAnswerMap.get(MyQuestionBankExercisesDataBean1.question_id);
@@ -4290,7 +4290,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                             questionbank_answerpaper_single_title1.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view5.getResources().getDimensionPixelSize(R.dimen.textsize20));
                         }
                     } else if (MyQuestionBankExercisesDataBean1.question_type == 14) {//如果是简答题
-                        View view3 = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_answerpaper_shortanswer, null);
+                        View view3 = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank_answerpaper_shortanswer, null);
                         questionbank_answerpaper_content.addView(view3);
                         TextView questionbank_answerpaper_shortanswersign = view3.findViewById(R.id.questionbank_answerpaper_shortanswersign);
                         questionbank_answerpaper_shortanswersign.setText("第" + (i + 1) + "题： " + type);
@@ -4298,30 +4298,30 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                         RelativeLayout.LayoutParams rl = (RelativeLayout.LayoutParams) questionbank_answerpaper_shortanswer.getLayoutParams();
                         rl.height = RelativeLayout.LayoutParams.WRAP_CONTENT;
                         questionbank_answerpaper_shortanswer.setLayoutParams(rl);
-                        new ModelHtmlUtils(mControlMainActivity, questionbank_answerpaper_shortanswer).setHtmlWithPic(MyQuestionBankExercisesDataBean1.question_name);
+                        new ModelHtmlUtils(mMainContext, questionbank_answerpaper_shortanswer).setHtmlWithPic(MyQuestionBankExercisesDataBean1.question_name);
                         EditText questionbank_answerpaper_shortansweredittext = view3.findViewById(R.id.questionbank_answerpaper_shortansweredittext);
                         rl = (RelativeLayout.LayoutParams) questionbank_answerpaper_shortansweredittext.getLayoutParams();
                         rl.height = 0;
                         rl.topMargin = 0;
                         questionbank_answerpaper_shortansweredittext.setLayoutParams(rl);
                         LinearLayout questionbank_answerpaper_shortanswer_analysis = view3.findViewById(R.id.questionbank_answerpaper_shortanswer_analysis);
-                        View view = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_answerpaper_analysis2, null);
+                        View view = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank_answerpaper_analysis2, null);
                         questionbank_answerpaper_shortanswer_analysis.addView(view);
                         //修改内容为正确答案
                         TextView questionbank_analysis2_rightAnswer = view.findViewById(R.id.questionbank_analysis2_rightAnswer);
-                        new ModelHtmlUtils(mControlMainActivity, questionbank_analysis2_rightAnswer).setHtmlWithPic(MyQuestionBankExercisesDataBean1.optionanswer);
+                        new ModelHtmlUtils(mMainContext, questionbank_analysis2_rightAnswer).setHtmlWithPic(MyQuestionBankExercisesDataBean1.optionanswer);
                         //修改内容为此题的解析
                         TextView questionbank_analysis2_content = view.findViewById(R.id.questionbank_analysis2_content);
                         if (MyQuestionBankExercisesDataBean1.question_analysis == null) {
                             MyQuestionBankExercisesDataBean1.question_analysis = "";
                         }
-                        new ModelHtmlUtils(mControlMainActivity, questionbank_analysis2_content).setHtmlWithPic(MyQuestionBankExercisesDataBean1.question_analysis);
+                        new ModelHtmlUtils(mMainContext, questionbank_analysis2_content).setHtmlWithPic(MyQuestionBankExercisesDataBean1.question_analysis);
                         //修改内容为您的答案
                         TextView questionbank_analysis2_yourAnswer = view.findViewById(R.id.questionbank_analysis2_yourAnswer);
                         AnswerInfo answerInfo = mMyQuestionBankExercisesAnswerMap.get(MyQuestionBankExercisesDataBean1.question_id);
                         if (answerInfo != null) {
                             if (answerInfo.answer != null) {
-                                new ModelHtmlUtils(mControlMainActivity, questionbank_analysis2_yourAnswer).setHtmlWithPic(answerInfo.answer);
+                                new ModelHtmlUtils(mMainContext, questionbank_analysis2_yourAnswer).setHtmlWithPic(answerInfo.answer);
                             } else {
                                 questionbank_analysis2_yourAnswer.setText("");
                             }
@@ -4350,7 +4350,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
         LinearLayout coursedetails_handin_analysis_analysis = mModelQuestionBankHandInAnalysisView.findViewById(R.id.coursedetails_handin_analysis_analysis);
         coursedetails_handin_analysis_analysis.removeAllViews();
         if (myQuestionBankExercisesDataBean.question_type == 1 || myQuestionBankExercisesDataBean.question_type == 2) {//单选题或多选题
-            View view = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_answerpaper_analysis1, null);
+            View view = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank_answerpaper_analysis1, null);
             coursedetails_handin_analysis_analysis.addView(view);
             //修改内容为正确答案
             String[] optionanswerS = myQuestionBankExercisesDataBean.optionanswer.split("#EDU;");
@@ -4375,7 +4375,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
             if (myQuestionBankExercisesDataBean.question_analysis == null) {
                 myQuestionBankExercisesDataBean.question_analysis = "";
             }
-            new ModelHtmlUtils(mControlMainActivity, questionbank_analysis1_content).setHtmlWithPic(myQuestionBankExercisesDataBean.question_analysis);
+            new ModelHtmlUtils(mMainContext, questionbank_analysis1_content).setHtmlWithPic(myQuestionBankExercisesDataBean.question_analysis);
             //修改内容为您的答案
             TextView questionbank_analysis1_yourAnswer = view.findViewById(R.id.questionbank_analysis1_yourAnswer);
             AnswerInfo answerInfo = mMyQuestionBankExercisesAnswerMap.get(myQuestionBankExercisesDataBean.question_id);
@@ -4401,7 +4401,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                 questionbank_analysis1_yourAnswer.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view.getResources().getDimensionPixelSize(R.dimen.textsize20));
             }
         } else if (myQuestionBankExercisesDataBean.question_type == 4) {//简答题
-            View view = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_answerpaper_analysis2, null);
+            View view = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank_answerpaper_analysis2, null);
             coursedetails_handin_analysis_analysis.addView(view);
             //修改内容为正确答案
             TextView questionbank_analysis2_rightAnswer = view.findViewById(R.id.questionbank_analysis2_rightAnswer);
@@ -4411,13 +4411,13 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
             if (myQuestionBankExercisesDataBean.question_analysis == null) {
                 myQuestionBankExercisesDataBean.question_analysis = "";
             }
-            new ModelHtmlUtils(mControlMainActivity, questionbank_analysis2_content).setHtmlWithPic(myQuestionBankExercisesDataBean.question_analysis);
+            new ModelHtmlUtils(mMainContext, questionbank_analysis2_content).setHtmlWithPic(myQuestionBankExercisesDataBean.question_analysis);
             //修改内容为您的答案
             TextView questionbank_analysis2_yourAnswer = view.findViewById(R.id.questionbank_analysis2_yourAnswer);
             AnswerInfo answerInfo = mMyQuestionBankExercisesAnswerMap.get(myQuestionBankExercisesDataBean.question_id);
             if (answerInfo != null) {
                 if (answerInfo.answer != null) {
-                    new ModelHtmlUtils(mControlMainActivity, questionbank_analysis2_yourAnswer).setHtmlWithPic(answerInfo.answer);
+                    new ModelHtmlUtils(mMainContext, questionbank_analysis2_yourAnswer).setHtmlWithPic(answerInfo.answer);
                 } else {
                     questionbank_analysis2_yourAnswer.setText("");
                 }
@@ -4443,7 +4443,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
         if (mMyFavoriteQuestionDataBeans == null){
             return;
         }
-        View view2 = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_answerpaper_single, null);
+        View view2 = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank_answerpaper_single, null);
         LinearLayout coursedetails_wrongquestion_details = mModelQuestionBankWrongQuestionView.findViewById(R.id.coursedetails_wrongquestion_details);
         coursedetails_wrongquestion_details.removeAllViews();
         coursedetails_wrongquestion_details.addView(view2);
@@ -4476,7 +4476,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
         } else if (mFontSize.equals("big")) {
             questionbank_answerpaper_single_title.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view2.getResources().getDimensionPixelSize(R.dimen.textsize20));
         }
-        new ModelHtmlUtils(mControlMainActivity, questionbank_answerpaper_single_title).setHtmlWithPic(questionBankMyFavoriteQuestionDataBean.question_name);
+        new ModelHtmlUtils(mMainContext, questionbank_answerpaper_single_title).setHtmlWithPic(questionBankMyFavoriteQuestionDataBean.question_name);
         questionbank_answerpaper_single_title.setHint(questionBankMyFavoriteQuestionDataBean.question_id + "");
         TextView questionbank_wrongquestion_questiontype = mModelQuestionBankWrongQuestionView.findViewById(R.id.questionbank_wrongquestion_questiontype);
         if (questionBankMyFavoriteQuestionDataBean.question_type == 1) {
@@ -4494,7 +4494,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
             String[] optionanswerS = questionBankMyFavoriteQuestionDataBean.optionanswer.split("#EDU;");
             if (optionanswerS != null) {
                 for (int i = 0; i < optionanswerS.length; i++) {
-                    View view3 = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_answerpaper_option, null);
+                    View view3 = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank_answerpaper_option, null);
                     String[] optionanswerS1 = optionanswerS[i].substring(1).split("#");
                     if (optionanswerS1.length != 3) {//question_analysisS1的结构应为#A#是#选择A
                         continue;
@@ -4593,7 +4593,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                 }
             }
         } else if (questionBankMyFavoriteQuestionDataBean.question_type == 4) {//如果是简答题
-            View view3 = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_answerpaper_shortanswer, null);
+            View view3 = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank_answerpaper_shortanswer, null);
             questionbank_answerpaper_content.addView(view3);
             //请输入你的答案
             EditText questionbank_answerpaper_shortansweredittext = view3.findViewById(R.id.questionbank_answerpaper_shortansweredittext);
@@ -4637,7 +4637,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                 }
             }
         } else if (questionBankMyFavoriteQuestionDataBean.question_type == 7) {
-            View contentView = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_answerpaper_shortanswer, null);
+            View contentView = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank_answerpaper_shortanswer, null);
             questionbank_answerpaper_content.addView(contentView);
             EditText contentViewedittext = contentView.findViewById(R.id.questionbank_answerpaper_shortansweredittext);
             if (questionBankMyFavoriteQuestionDataBean.optionanswer != null) {
@@ -4649,7 +4649,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                 rl.height = 0;
                 rl.topMargin = 0;
                 contentViewedittext.setLayoutParams(rl);
-                new ModelHtmlUtils(mControlMainActivity, questionbank_answerpaper_shortanswer).setHtmlWithPic(questionBankMyFavoriteQuestionDataBean.optionanswer);
+                new ModelHtmlUtils(mMainContext, questionbank_answerpaper_shortanswer).setHtmlWithPic(questionBankMyFavoriteQuestionDataBean.optionanswer);
                 if (mFontSize.equals("nomal")) {
                     questionbank_answerpaper_shortanswer.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view2.getResources().getDimensionPixelSize(R.dimen.textsize17));
                 } else if (mFontSize.equals("small")) {
@@ -4680,16 +4680,16 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                         if (optionanswerS == null) {
                             continue;
                         }
-                        View view5 = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_answerpaper_single, null);
+                        View view5 = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank_answerpaper_single, null);
                         questionbank_answerpaper_content.addView(view5);
                         TextView questionbank_answerpaper_single_titlesign = view5.findViewById(R.id.questionbank_answerpaper_single_titlesign);
                         questionbank_answerpaper_single_titlesign.setText("第" + (i + 1) + "题： " + type);
                         LinearLayout questionbank_answerpaper_content1 = view5.findViewById(R.id.questionbank_answerpaper_content);
                         TextView questionbank_answerpaper_single_title1 = view5.findViewById(R.id.questionbank_answerpaper_single_title);
-                        new ModelHtmlUtils(mControlMainActivity, questionbank_answerpaper_single_title1).setHtmlWithPic(QuestionBankMyFavoriteQuestionDataBean1.question_name);
+                        new ModelHtmlUtils(mMainContext, questionbank_answerpaper_single_title1).setHtmlWithPic(QuestionBankMyFavoriteQuestionDataBean1.question_name);
                         String currentAnswer = "";
                         for (String string : optionanswerS) {
-                            View view3 = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_answerpaper_option, null);
+                            View view3 = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank_answerpaper_option, null);
                             String[] optionanswerS1 = string.substring(1).split("#");
                             if (optionanswerS1.length != 3) {//question_analysisS1的结构应为#A#是#选择A
                                 continue;
@@ -4701,7 +4701,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                                 }
                             }
                             TextView questionbank_answerpaper_option_name = view3.findViewById(R.id.questionbank_answerpaper_option_name);
-                            new ModelHtmlUtils(mControlMainActivity, questionbank_answerpaper_option_name).setHtmlWithPic(optionanswerS1[0]);
+                            new ModelHtmlUtils(mMainContext, questionbank_answerpaper_option_name).setHtmlWithPic(optionanswerS1[0]);
                             questionbank_answerpaper_option_name.setHint(optionanswerS1[1]);
                             questionbank_answerpaper_option_name.setOnClickListener(v -> { // 选项的点击响应
                                 questionbank_answerpaper_option_name.setBackground(view3.getResources().getDrawable(R.drawable.textview_style_circle_blue649cf0));
@@ -4780,7 +4780,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                                 }
                             }
                             TextView questionbank_answerpaper_option_title = view3.findViewById(R.id.questionbank_answerpaper_option_title);
-                            new ModelHtmlUtils(mControlMainActivity, questionbank_answerpaper_option_title).setHtmlWithPic(optionanswerS1[2]);
+                            new ModelHtmlUtils(mMainContext, questionbank_answerpaper_option_title).setHtmlWithPic(optionanswerS1[2]);
                             if (mFontSize.equals("nomal")) {
                                 questionbank_answerpaper_option_title.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view3.getResources().getDimensionPixelSize(R.dimen.textsize17));
                             } else if (mFontSize.equals("small")) {
@@ -4804,7 +4804,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                             questionbank_answerpaper_single_analysisbuttonrl.topMargin = 0;
                             questionbank_answerpaper_single_analysisbutton.setLayoutParams(questionbank_answerpaper_single_analysisbuttonrl);
                             LinearLayout questionbank_answerpaper_single_analysis = view5.findViewById(R.id.questionbank_answerpaper_single_analysis);
-                            View view = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_answerpaper_analysis1, null);
+                            View view = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank_answerpaper_analysis1, null);
                             questionbank_answerpaper_single_analysis.addView(view);
                             //修改内容为正确答案
                             TextView questionbank_analysis1_rightAnswer = view.findViewById(R.id.questionbank_analysis1_rightAnswer);
@@ -4814,7 +4814,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                             if (QuestionBankMyFavoriteQuestionDataBean1.question_analysis == null) {
                                 QuestionBankMyFavoriteQuestionDataBean1.question_analysis = "";
                             }
-                            new ModelHtmlUtils(mControlMainActivity, questionbank_analysis1_content).setHtmlWithPic(QuestionBankMyFavoriteQuestionDataBean1.question_analysis);
+                            new ModelHtmlUtils(mMainContext, questionbank_analysis1_content).setHtmlWithPic(QuestionBankMyFavoriteQuestionDataBean1.question_analysis);
                             //修改内容为您的答案
                             TextView questionbank_analysis1_yourAnswer = view.findViewById(R.id.questionbank_analysis1_yourAnswer);
                             AnswerInfo answerInfo = mMyQuestionBankExercisesAnswerMap.get(QuestionBankMyFavoriteQuestionDataBean1.question_id);
@@ -4849,7 +4849,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                             questionbank_answerpaper_single_title1.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view5.getResources().getDimensionPixelSize(R.dimen.textsize20));
                         }
                     } else if (QuestionBankMyFavoriteQuestionDataBean1.question_type == 14) {//如果是简答题
-                        View view3 = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_answerpaper_shortanswer, null);
+                        View view3 = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank_answerpaper_shortanswer, null);
                         questionbank_answerpaper_content.addView(view3);
                         TextView questionbank_answerpaper_shortanswersign = view3.findViewById(R.id.questionbank_answerpaper_shortanswersign);
                         questionbank_answerpaper_shortanswersign.setText("第" + (i + 1) + "题： " + type);
@@ -4857,7 +4857,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                         RelativeLayout.LayoutParams rl = (RelativeLayout.LayoutParams) questionbank_answerpaper_shortanswer.getLayoutParams();
                         rl.height = RelativeLayout.LayoutParams.WRAP_CONTENT;
                         questionbank_answerpaper_shortanswer.setLayoutParams(rl);
-                        new ModelHtmlUtils(mControlMainActivity, questionbank_answerpaper_shortanswer).setHtmlWithPic(QuestionBankMyFavoriteQuestionDataBean1.question_name);
+                        new ModelHtmlUtils(mMainContext, questionbank_answerpaper_shortanswer).setHtmlWithPic(QuestionBankMyFavoriteQuestionDataBean1.question_name);
                         EditText questionbank_answerpaper_shortansweredittext = view3.findViewById(R.id.questionbank_answerpaper_shortansweredittext);
                         questionbank_answerpaper_shortansweredittext.addTextChangedListener(new TextWatcher() {
                             @Override
@@ -4896,23 +4896,23 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                             questionbank_answerpaper_shortanswer_analysisbuttonrl.topMargin = 0;
                             questionbank_answerpaper_shortanswer_analysisbutton.setLayoutParams(questionbank_answerpaper_shortanswer_analysisbuttonrl);
                             LinearLayout questionbank_answerpaper_shortanswer_analysis = view3.findViewById(R.id.questionbank_answerpaper_shortanswer_analysis);
-                            View view = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_answerpaper_analysis2, null);
+                            View view = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank_answerpaper_analysis2, null);
                             questionbank_answerpaper_shortanswer_analysis.addView(view);
                             //修改内容为正确答案
                             TextView questionbank_analysis2_rightAnswer = view.findViewById(R.id.questionbank_analysis2_rightAnswer);
-                            new ModelHtmlUtils(mControlMainActivity, questionbank_analysis2_rightAnswer).setHtmlWithPic(QuestionBankMyFavoriteQuestionDataBean1.optionanswer);
+                            new ModelHtmlUtils(mMainContext, questionbank_analysis2_rightAnswer).setHtmlWithPic(QuestionBankMyFavoriteQuestionDataBean1.optionanswer);
                             //修改内容为此题的解析
                             TextView questionbank_analysis2_content = view.findViewById(R.id.questionbank_analysis2_content);
                             if (QuestionBankMyFavoriteQuestionDataBean1.question_analysis == null) {
                                 QuestionBankMyFavoriteQuestionDataBean1.question_analysis = "";
                             }
-                            new ModelHtmlUtils(mControlMainActivity, questionbank_analysis2_content).setHtmlWithPic(QuestionBankMyFavoriteQuestionDataBean1.question_analysis);
+                            new ModelHtmlUtils(mMainContext, questionbank_analysis2_content).setHtmlWithPic(QuestionBankMyFavoriteQuestionDataBean1.question_analysis);
                             //修改内容为您的答案
                             TextView questionbank_analysis2_yourAnswer = view.findViewById(R.id.questionbank_analysis2_yourAnswer);
                             AnswerInfo answerInfo = mMyQuestionBankExercisesAnswerMap.get(QuestionBankMyFavoriteQuestionDataBean1.question_id);
                             if (answerInfo != null) {
                                 if (answerInfo.answer != null) {
-                                    new ModelHtmlUtils(mControlMainActivity, questionbank_analysis2_yourAnswer).setHtmlWithPic(answerInfo.answer);
+                                    new ModelHtmlUtils(mMainContext, questionbank_analysis2_yourAnswer).setHtmlWithPic(answerInfo.answer);
                                 } else {
                                     questionbank_analysis2_yourAnswer.setText("");
                                 }
@@ -4961,7 +4961,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                 ll.topMargin = 0;
                 coursedetails_wrongquestion_analysisbutton.setLayoutParams(ll);
                 if (questionBankMyFavoriteQuestionDataBean.question_type == 1 || questionBankMyFavoriteQuestionDataBean.question_type == 2) {//单选题或多选题
-                    View view = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_answerpaper_analysis1, null);
+                    View view = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank_answerpaper_analysis1, null);
                     coursedetails_wrongquestion_analysis.addView(view);
                     //修改内容为正确答案
                     String[] optionanswerS = questionBankMyFavoriteQuestionDataBean.optionanswer.split("#EDU;");
@@ -4985,14 +4985,14 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                     if (questionBankMyFavoriteQuestionDataBean.question_analysis == null) {
                         questionBankMyFavoriteQuestionDataBean.question_analysis = "";
                     }
-                    new ModelHtmlUtils(mControlMainActivity, questionbank_analysis1_content).setHtmlWithPic(questionBankMyFavoriteQuestionDataBean.question_analysis);
+                    new ModelHtmlUtils(mMainContext, questionbank_analysis1_content).setHtmlWithPic(questionBankMyFavoriteQuestionDataBean.question_analysis);
                     //修改内容为您的答案
                     TextView questionbank_analysis1_yourAnswer = view.findViewById(R.id.questionbank_analysis1_yourAnswer);
                     if (mMyQuestionBankExercisesAnswerMap != null) {
                         AnswerInfo answerInfo = mMyQuestionBankExercisesAnswerMap.get(questionBankMyFavoriteQuestionDataBean.question_id);
                         if (answerInfo != null) {
                             if (answerInfo.answer != null) {
-                                new ModelHtmlUtils(mControlMainActivity, questionbank_analysis1_yourAnswer).setHtmlWithPic(answerInfo.answer);
+                                new ModelHtmlUtils(mMainContext, questionbank_analysis1_yourAnswer).setHtmlWithPic(answerInfo.answer);
                             }
                         }
                     }
@@ -5010,27 +5010,27 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                         questionbank_analysis1_yourAnswer.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view.getResources().getDimensionPixelSize(R.dimen.textsize20));
                     }
                 } else if (questionBankMyFavoriteQuestionDataBean.question_type == 4) {//简答题
-                    View view = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_answerpaper_analysis2, null);
+                    View view = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank_answerpaper_analysis2, null);
                     coursedetails_wrongquestion_analysis.addView(view);
                     //修改内容为正确答案
                     TextView questionbank_analysis2_rightAnswer = view.findViewById(R.id.questionbank_analysis2_rightAnswer);
                     if (questionBankMyFavoriteQuestionDataBean.optionanswer == null) {
                         questionBankMyFavoriteQuestionDataBean.optionanswer = "";
                     }
-                    new ModelHtmlUtils(mControlMainActivity, questionbank_analysis2_rightAnswer).setHtmlWithPic(questionBankMyFavoriteQuestionDataBean.optionanswer);
+                    new ModelHtmlUtils(mMainContext, questionbank_analysis2_rightAnswer).setHtmlWithPic(questionBankMyFavoriteQuestionDataBean.optionanswer);
                     //修改内容为此题的解析
                     TextView questionbank_analysis2_content = view.findViewById(R.id.questionbank_analysis2_content);
                     if (questionBankMyFavoriteQuestionDataBean.question_analysis == null) {
                         questionBankMyFavoriteQuestionDataBean.question_analysis = "";
                     }
-                    new ModelHtmlUtils(mControlMainActivity, questionbank_analysis2_content).setHtmlWithPic(questionBankMyFavoriteQuestionDataBean.question_analysis);
+                    new ModelHtmlUtils(mMainContext, questionbank_analysis2_content).setHtmlWithPic(questionBankMyFavoriteQuestionDataBean.question_analysis);
                     //修改内容为您的答案
                     TextView questionbank_analysis2_yourAnswer = view.findViewById(R.id.questionbank_analysis2_yourAnswer);
                     if (mMyQuestionBankExercisesAnswerMap != null) {
                         AnswerInfo answerInfo = mMyQuestionBankExercisesAnswerMap.get(questionBankMyFavoriteQuestionDataBean.question_id);
                         if (answerInfo != null) {
                             if (answerInfo.answer != null) {
-                                new ModelHtmlUtils(mControlMainActivity, questionbank_analysis2_yourAnswer).setHtmlWithPic(answerInfo.answer);
+                                new ModelHtmlUtils(mMainContext, questionbank_analysis2_yourAnswer).setHtmlWithPic(answerInfo.answer);
                             }
                         }
                     }
@@ -5057,11 +5057,11 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
         if (mview == null || mMyFavoriteQuestionDataBeans == null) {
             return;
         }
-        mControlMainActivity.onClickQuestionBankDetails();
+        mMainContext.onClickQuestionBankDetails();
         HideAllLayout();
         RelativeLayout fragmentquestionbank_main = mview.findViewById(R.id.fragmentquestionbank_main);
         if (mModelQuestionBankQuestionTypeView == null) {
-            mModelQuestionBankQuestionTypeView = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_questiontype, null);
+            mModelQuestionBankQuestionTypeView = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank_questiontype, null);
         }
         fragmentquestionbank_main.addView(mModelQuestionBankQuestionTypeView);
         int singleNum = 0;
@@ -5091,7 +5091,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
         int finalSingleNum = singleNum;
         questionbank_questiontype_singlebutton.setOnClickListener(v -> { //直接跳到单选题
             if (finalSingleNum == 0){
-                Toast.makeText(mControlMainActivity,"您没有单选题",Toast.LENGTH_SHORT).show();
+                Toast.makeText(mMainContext,"您没有单选题",Toast.LENGTH_SHORT).show();
                 return;
             }
             int count = 0;
@@ -5120,7 +5120,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
         int finalMuliNum = muliNum;
         questionbank_questiontype_mutilbutton.setOnClickListener(v -> { //直接跳到多选题
             if (finalMuliNum == 0){
-                Toast.makeText(mControlMainActivity,"您没有多选题",Toast.LENGTH_SHORT).show();
+                Toast.makeText(mMainContext,"您没有多选题",Toast.LENGTH_SHORT).show();
                 return;
             }
             int count = 0;
@@ -5149,7 +5149,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
         int finalShortNum = shortNum;
         questionbank_questiontype_shortanswerbutton.setOnClickListener(v -> { //直接跳到简答题
             if (finalShortNum == 0){
-                Toast.makeText(mControlMainActivity,"您没有简答题",Toast.LENGTH_SHORT).show();
+                Toast.makeText(mMainContext,"您没有简答题",Toast.LENGTH_SHORT).show();
                 return;
             }
             int count = 0;
@@ -5178,7 +5178,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
         int finalMaterNum = materNum;
         questionbank_questiontype_materialbutton.setOnClickListener(v -> { //直接跳到材料题
             if (finalMaterNum == 0){
-                Toast.makeText(mControlMainActivity,"您没有材料题",Toast.LENGTH_SHORT).show();
+                Toast.makeText(mMainContext,"您没有材料题",Toast.LENGTH_SHORT).show();
                 return;
             }
             int count = 0;
@@ -5208,7 +5208,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
         if (mMyFavoriteQuestionDataBeans == null){
             return;
         }
-        View view2 = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_answerpaper_single, null);
+        View view2 = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank_answerpaper_single, null);
         LinearLayout coursedetails_mycollextionquestion_details = mModelQuestionBankMyCollectionQuestionView.findViewById(R.id.coursedetails_mycollextionquestion_details);
         coursedetails_mycollextionquestion_details.removeAllViews();
         coursedetails_mycollextionquestion_details.addView(view2);
@@ -5240,7 +5240,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                 mIsCollect = false;
             }
         }
-        new ModelHtmlUtils(mControlMainActivity, questionbank_answerpaper_single_title).setHtmlWithPic(questionBankMyFavoriteQuestionDataBean.question_name);
+        new ModelHtmlUtils(mMainContext, questionbank_answerpaper_single_title).setHtmlWithPic(questionBankMyFavoriteQuestionDataBean.question_name);
         questionbank_answerpaper_single_title.setHint(questionBankMyFavoriteQuestionDataBean.question_id + "");
         TextView questionbank_mycollextionquestion_questiontype = mModelQuestionBankMyCollectionQuestionView.findViewById(R.id.questionbank_mycollextionquestion_questiontype);
         if (questionBankMyFavoriteQuestionDataBean.question_type == 1) {
@@ -5258,7 +5258,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
             String[] optionanswerS = questionBankMyFavoriteQuestionDataBean.optionanswer.split("#EDU;");
             if (optionanswerS != null) {
                 for (int i = 0; i < optionanswerS.length; i++) {
-                    View view3 = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_answerpaper_option, null);
+                    View view3 = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank_answerpaper_option, null);
                     String[] optionanswerS1 = optionanswerS[i].substring(1).split("#");
                     if (optionanswerS1.length != 3) {//question_analysisS1的结构应为#A#是#选择A
                         continue;
@@ -5267,7 +5267,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                     questionbank_answerpaper_option_name.setText(optionanswerS1[0]);
                     questionbank_answerpaper_option_name.setHint(optionanswerS1[1]);
                     TextView questionbank_answerpaper_option_title = view3.findViewById(R.id.questionbank_answerpaper_option_title);
-                    new ModelHtmlUtils(mControlMainActivity, questionbank_answerpaper_option_title).setHtmlWithPic(optionanswerS1[2]);
+                    new ModelHtmlUtils(mMainContext, questionbank_answerpaper_option_title).setHtmlWithPic(optionanswerS1[2]);
                     if (mFontSize.equals("nomal")) {
                         questionbank_answerpaper_option_title.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view2.getResources().getDimensionPixelSize(R.dimen.textsize17));
                     } else if (mFontSize.equals("small")) {
@@ -5285,7 +5285,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                 }
             }
         } else if (questionBankMyFavoriteQuestionDataBean.question_type == 4) {//如果是简答题
-            View view3 = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_answerpaper_shortanswer, null);
+            View view3 = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank_answerpaper_shortanswer, null);
             questionbank_answerpaper_content.addView(view3);
             EditText questionbank_answerpaper_shortansweredittext = view3.findViewById(R.id.questionbank_answerpaper_shortansweredittext);
             if (mFontSize.equals("nomal")) {
@@ -5301,7 +5301,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
             rl.topMargin = 0;
             questionbank_answerpaper_shortansweredittext.setLayoutParams(rl);
         } else if (questionBankMyFavoriteQuestionDataBean.question_type == 7) {//如果是材料题
-            View contentView = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_answerpaper_shortanswer, null);
+            View contentView = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank_answerpaper_shortanswer, null);
             questionbank_answerpaper_content.addView(contentView);
             EditText contentViewedittext = contentView.findViewById(R.id.questionbank_answerpaper_shortansweredittext);
             if (questionBankMyFavoriteQuestionDataBean.optionanswer != null) {
@@ -5313,7 +5313,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                 rl.height = 0;
                 rl.topMargin = 0;
                 contentViewedittext.setLayoutParams(rl);
-                new ModelHtmlUtils(mControlMainActivity, questionbank_answerpaper_shortanswer).setHtmlWithPic(questionBankMyFavoriteQuestionDataBean.optionanswer);
+                new ModelHtmlUtils(mMainContext, questionbank_answerpaper_shortanswer).setHtmlWithPic(questionBankMyFavoriteQuestionDataBean.optionanswer);
                 if (mFontSize.equals("nomal")) {
                     questionbank_answerpaper_shortanswer.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view2.getResources().getDimensionPixelSize(R.dimen.textsize17));
                 } else if (mFontSize.equals("small")) {
@@ -5344,16 +5344,16 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                         if (optionanswerS == null) {
                             continue;
                         }
-                        View view5 = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_answerpaper_single, null);
+                        View view5 = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank_answerpaper_single, null);
                         questionbank_answerpaper_content.addView(view5);
                         TextView questionbank_answerpaper_single_titlesign = view5.findViewById(R.id.questionbank_answerpaper_single_titlesign);
                         questionbank_answerpaper_single_titlesign.setText("第" + (i + 1) + "题： " + type);
                         LinearLayout questionbank_answerpaper_content1 = view5.findViewById(R.id.questionbank_answerpaper_content);
                         TextView questionbank_answerpaper_single_title1 = view5.findViewById(R.id.questionbank_answerpaper_single_title);
-                        new ModelHtmlUtils(mControlMainActivity, questionbank_answerpaper_single_title1).setHtmlWithPic(QuestionBankMyFavoriteQuestionDataBean1.question_name);
+                        new ModelHtmlUtils(mMainContext, questionbank_answerpaper_single_title1).setHtmlWithPic(QuestionBankMyFavoriteQuestionDataBean1.question_name);
                         String currentAnswer = "";
                         for (String string : optionanswerS) {
-                            View view3 = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_answerpaper_option, null);
+                            View view3 = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank_answerpaper_option, null);
                             String[] optionanswerS1 = string.substring(1).split("#");
                             if (optionanswerS1.length != 3) {//question_analysisS1的结构应为#A#是#选择A
                                 continue;
@@ -5365,7 +5365,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                                 }
                             }
                             TextView questionbank_answerpaper_option_name = view3.findViewById(R.id.questionbank_answerpaper_option_name);
-                            new ModelHtmlUtils(mControlMainActivity, questionbank_answerpaper_option_name).setHtmlWithPic(optionanswerS1[0]);
+                            new ModelHtmlUtils(mMainContext, questionbank_answerpaper_option_name).setHtmlWithPic(optionanswerS1[0]);
                             questionbank_answerpaper_option_name.setHint(optionanswerS1[1]);
                             AnswerInfo answerInfo = mMyQuestionBankExercisesAnswerMap.get(QuestionBankMyFavoriteQuestionDataBean1.question_id);
                             if (answerInfo != null) {
@@ -5377,7 +5377,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                                 }
                             }
                             TextView questionbank_answerpaper_option_title = view3.findViewById(R.id.questionbank_answerpaper_option_title);
-                            new ModelHtmlUtils(mControlMainActivity, questionbank_answerpaper_option_title).setHtmlWithPic(optionanswerS1[2]);
+                            new ModelHtmlUtils(mMainContext, questionbank_answerpaper_option_title).setHtmlWithPic(optionanswerS1[2]);
                             if (mFontSize.equals("nomal")) {
                                 questionbank_answerpaper_option_title.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view3.getResources().getDimensionPixelSize(R.dimen.textsize17));
                             } else if (mFontSize.equals("small")) {
@@ -5388,7 +5388,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                             questionbank_answerpaper_content1.addView(view3);
                         }
                         LinearLayout questionbank_answerpaper_single_analysis = view5.findViewById(R.id.questionbank_answerpaper_single_analysis);
-                        View view = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_answerpaper_analysis1, null);
+                        View view = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank_answerpaper_analysis1, null);
                         questionbank_answerpaper_single_analysis.addView(view);
                         //修改内容为正确答案
                         TextView questionbank_analysis1_rightAnswer = view.findViewById(R.id.questionbank_analysis1_rightAnswer);
@@ -5398,7 +5398,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                         if (QuestionBankMyFavoriteQuestionDataBean1.question_analysis == null) {
                             QuestionBankMyFavoriteQuestionDataBean1.question_analysis = "";
                         }
-                        new ModelHtmlUtils(mControlMainActivity, questionbank_analysis1_content).setHtmlWithPic(QuestionBankMyFavoriteQuestionDataBean1.question_analysis);
+                        new ModelHtmlUtils(mMainContext, questionbank_analysis1_content).setHtmlWithPic(QuestionBankMyFavoriteQuestionDataBean1.question_analysis);
                         //修改内容为您的答案
                         TextView questionbank_analysis1_yourAnswer = view.findViewById(R.id.questionbank_analysis1_yourAnswer);
                         AnswerInfo answerInfo = mMyQuestionBankExercisesAnswerMap.get(QuestionBankMyFavoriteQuestionDataBean1.question_id);
@@ -5427,7 +5427,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                             questionbank_answerpaper_single_title1.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view5.getResources().getDimensionPixelSize(R.dimen.textsize20));
                         }
                     } else if (QuestionBankMyFavoriteQuestionDataBean1.question_type == 14) {//如果是简答题
-                        View view3 = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_answerpaper_shortanswer, null);
+                        View view3 = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank_answerpaper_shortanswer, null);
                         questionbank_answerpaper_content.addView(view3);
                         TextView questionbank_answerpaper_shortanswersign = view3.findViewById(R.id.questionbank_answerpaper_shortanswersign);
                         questionbank_answerpaper_shortanswersign.setText("第" + (i + 1) + "题： " + type);
@@ -5435,30 +5435,30 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                         RelativeLayout.LayoutParams rl = (RelativeLayout.LayoutParams) questionbank_answerpaper_shortanswer.getLayoutParams();
                         rl.height = RelativeLayout.LayoutParams.WRAP_CONTENT;
                         questionbank_answerpaper_shortanswer.setLayoutParams(rl);
-                        new ModelHtmlUtils(mControlMainActivity, questionbank_answerpaper_shortanswer).setHtmlWithPic(QuestionBankMyFavoriteQuestionDataBean1.question_name);
+                        new ModelHtmlUtils(mMainContext, questionbank_answerpaper_shortanswer).setHtmlWithPic(QuestionBankMyFavoriteQuestionDataBean1.question_name);
                         EditText questionbank_answerpaper_shortansweredittext = view3.findViewById(R.id.questionbank_answerpaper_shortansweredittext);
                         rl = (RelativeLayout.LayoutParams) questionbank_answerpaper_shortansweredittext.getLayoutParams();
                         rl.height = 0;
                         rl.topMargin = 0;
                         questionbank_answerpaper_shortansweredittext.setLayoutParams(rl);
                         LinearLayout questionbank_answerpaper_shortanswer_analysis = view3.findViewById(R.id.questionbank_answerpaper_shortanswer_analysis);
-                        View view = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_answerpaper_analysis2, null);
+                        View view = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank_answerpaper_analysis2, null);
                         questionbank_answerpaper_shortanswer_analysis.addView(view);
                         //修改内容为正确答案
                         TextView questionbank_analysis2_rightAnswer = view.findViewById(R.id.questionbank_analysis2_rightAnswer);
-                        new ModelHtmlUtils(mControlMainActivity, questionbank_analysis2_rightAnswer).setHtmlWithPic(QuestionBankMyFavoriteQuestionDataBean1.optionanswer);
+                        new ModelHtmlUtils(mMainContext, questionbank_analysis2_rightAnswer).setHtmlWithPic(QuestionBankMyFavoriteQuestionDataBean1.optionanswer);
                         //修改内容为此题的解析
                         TextView questionbank_analysis2_content = view.findViewById(R.id.questionbank_analysis2_content);
                         if (QuestionBankMyFavoriteQuestionDataBean1.question_analysis == null) {
                             QuestionBankMyFavoriteQuestionDataBean1.question_analysis = "";
                         }
-                        new ModelHtmlUtils(mControlMainActivity, questionbank_analysis2_content).setHtmlWithPic(QuestionBankMyFavoriteQuestionDataBean1.question_analysis);
+                        new ModelHtmlUtils(mMainContext, questionbank_analysis2_content).setHtmlWithPic(QuestionBankMyFavoriteQuestionDataBean1.question_analysis);
                         //修改内容为您的答案
                         TextView questionbank_analysis2_yourAnswer = view.findViewById(R.id.questionbank_analysis2_yourAnswer);
                         AnswerInfo answerInfo = mMyQuestionBankExercisesAnswerMap.get(QuestionBankMyFavoriteQuestionDataBean1.question_id);
                         if (answerInfo != null) {
                             if (answerInfo.answer != null) {
-                                new ModelHtmlUtils(mControlMainActivity, questionbank_analysis2_yourAnswer).setHtmlWithPic(answerInfo.answer);
+                                new ModelHtmlUtils(mMainContext, questionbank_analysis2_yourAnswer).setHtmlWithPic(answerInfo.answer);
                             } else {
                                 questionbank_analysis2_yourAnswer.setText("");
                             }
@@ -5489,7 +5489,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
 
         //我的收藏题网络请求获取的三个参数  optionanswer  question_type question_type
         if (questionBankMyFavoriteQuestionDataBean.question_type == 1 || questionBankMyFavoriteQuestionDataBean.question_type == 2) {//单选题或多选题
-            View view = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_answerpaper_analysis1, null);
+            View view = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank_answerpaper_analysis1, null);
             coursedetails_mycollextionquestion_analysis.addView(view);
             //修改内容为正确答案  分割字符串数组
             String[] optionanswerS = questionBankMyFavoriteQuestionDataBean.optionanswer.split("#EDU;");
@@ -5513,13 +5513,13 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
             if (questionBankMyFavoriteQuestionDataBean.question_analysis == null){
                 questionBankMyFavoriteQuestionDataBean.question_analysis = "";
             }
-            new ModelHtmlUtils(mControlMainActivity, questionbank_analysis1_content).setHtmlWithPic(questionBankMyFavoriteQuestionDataBean.question_analysis);
+            new ModelHtmlUtils(mMainContext, questionbank_analysis1_content).setHtmlWithPic(questionBankMyFavoriteQuestionDataBean.question_analysis);
             //修改内容为您的答案
             TextView questionbank_analysis1_yourAnswer = view.findViewById(R.id.questionbank_analysis1_yourAnswer);
             if (questionBankMyFavoriteQuestionDataBean.wrong_answer == null){
                 questionBankMyFavoriteQuestionDataBean.wrong_answer = "";
             }
-            new ModelHtmlUtils(mControlMainActivity, questionbank_analysis1_yourAnswer).setHtmlWithPic(questionBankMyFavoriteQuestionDataBean.wrong_answer);
+            new ModelHtmlUtils(mMainContext, questionbank_analysis1_yourAnswer).setHtmlWithPic(questionBankMyFavoriteQuestionDataBean.wrong_answer);
             //修改内容的字体大小
             if (mFontSize.equals("nomal")) {
                 questionbank_analysis1_rightAnswer.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view.getResources().getDimensionPixelSize(R.dimen.textsize17));
@@ -5536,26 +5536,26 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
             }
         } else if (questionBankMyFavoriteQuestionDataBean.question_type == 4) {//简答题
             //简答题的解析
-            View view = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_answerpaper_analysis2, null);
+            View view = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank_answerpaper_analysis2, null);
             coursedetails_mycollextionquestion_analysis.addView(view);
             //修改内容为正确答案
             TextView questionbank_analysis2_rightAnswer = view.findViewById(R.id.questionbank_analysis2_rightAnswer);
             if (questionBankMyFavoriteQuestionDataBean.optionanswer == null){
                 questionBankMyFavoriteQuestionDataBean.optionanswer = "";
             }
-            new ModelHtmlUtils(mControlMainActivity, questionbank_analysis2_rightAnswer).setHtmlWithPic(questionBankMyFavoriteQuestionDataBean.optionanswer);
+            new ModelHtmlUtils(mMainContext, questionbank_analysis2_rightAnswer).setHtmlWithPic(questionBankMyFavoriteQuestionDataBean.optionanswer);
             //修改内容为此题的解析
             TextView questionbank_analysis2_content = view.findViewById(R.id.questionbank_analysis2_content);
             if (questionBankMyFavoriteQuestionDataBean.question_analysis == null){
                 questionBankMyFavoriteQuestionDataBean.question_analysis = "";
             }
-            new ModelHtmlUtils(mControlMainActivity, questionbank_analysis2_content).setHtmlWithPic(questionBankMyFavoriteQuestionDataBean.question_analysis);
+            new ModelHtmlUtils(mMainContext, questionbank_analysis2_content).setHtmlWithPic(questionBankMyFavoriteQuestionDataBean.question_analysis);
             //修改内容为您的答案
             TextView questionbank_analysis2_yourAnswer = view.findViewById(R.id.questionbank_analysis2_yourAnswer);
             if (questionBankMyFavoriteQuestionDataBean.wrong_answer == null){
                 questionBankMyFavoriteQuestionDataBean.wrong_answer = "";
             }
-            new ModelHtmlUtils(mControlMainActivity, questionbank_analysis2_yourAnswer).setHtmlWithPic(questionBankMyFavoriteQuestionDataBean.wrong_answer);
+            new ModelHtmlUtils(mMainContext, questionbank_analysis2_yourAnswer).setHtmlWithPic(questionBankMyFavoriteQuestionDataBean.wrong_answer);
             if (mFontSize.equals("nomal")) {
                 questionbank_analysis2_rightAnswer.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view.getResources().getDimensionPixelSize(R.dimen.textsize17));
                 questionbank_analysis2_content.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view.getResources().getDimensionPixelSize(R.dimen.textsize17));
@@ -5575,17 +5575,17 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
     //添加答题卡界面
     private void AnswerQuestionCardViewAdd(List<QuestionBankAnswerSheetBean.QuestionBankAnswerSheetDataBean> questionBankAnswerSheetDataBeans) {
         if (mview == null) {
-            Toast.makeText(mControlMainActivity,"查询答题卡信息失败！",Toast.LENGTH_SHORT).show();
+            Toast.makeText(mMainContext,"查询答题卡信息失败！",Toast.LENGTH_SHORT).show();
             return;
         }
         if (mCurrentIndex < 0 || mCurrentIndex >= questionBankAnswerSheetDataBeans.size()) { //不在数组范围直接返回
-            Toast.makeText(mControlMainActivity,"查询答题卡信息失败！",Toast.LENGTH_SHORT).show();
+            Toast.makeText(mMainContext,"查询答题卡信息失败！",Toast.LENGTH_SHORT).show();
             return;
         }
-        mControlMainActivity.onClickQuestionBankAnswerQuestionCard();
+        mMainContext.onClickQuestionBankAnswerQuestionCard();
         HideAllLayout();
         RelativeLayout fragmentquestionbank_main = mview.findViewById(R.id.fragmentquestionbank_main);
-        mModelQuestionBankAnswerQuestionCardView = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_answerquestioncard, null);
+        mModelQuestionBankAnswerQuestionCardView = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank_answerquestioncard, null);
         fragmentquestionbank_main.addView(mModelQuestionBankAnswerQuestionCardView);
         LinearLayout coursedetails_answerquestioncard_details = mModelQuestionBankAnswerQuestionCardView.findViewById(R.id.coursedetails_answerquestioncard_details);
         coursedetails_answerquestioncard_details.removeAllViews();
@@ -5604,11 +5604,11 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
             }
             if (questionBankAnswerSheetDataBean.type == 1) {
                 if (singleView == null) {
-                    singleView = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_answerquestioncard1, null);
+                    singleView = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank_answerquestioncard1, null);
                     coursedetails_answerquestioncard_details.addView(singleView);
                 }
                 GridLayout coursedetails_answerquestioncard_questionnumber = singleView.findViewById(R.id.coursedetails_answerquestioncard_questionnumber);
-                View view = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_answerquestioncard2, null);
+                View view = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank_answerquestioncard2, null);
                 coursedetails_answerquestioncard_questionnumber.addView(view);
                 //题标序号
                 TextView questionbank_answerquestioncard2_select = view.findViewById(R.id.questionbank_answerquestioncard2_select);
@@ -5640,13 +5640,13 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                 });
             } else if (questionBankAnswerSheetDataBean.type == 2) {
                 if (mutilView == null) {
-                    mutilView = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_answerquestioncard1, null);
+                    mutilView = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank_answerquestioncard1, null);
                     coursedetails_answerquestioncard_details.addView(mutilView);
                     TextView coursedetails_handinpaper1_questiontype = mutilView.findViewById(R.id.coursedetails_answerquestioncard_questiontype);
                     coursedetails_handinpaper1_questiontype.setText("多选题");
                 }
                 GridLayout coursedetails_answerquestioncard_questionnumber = mutilView.findViewById(R.id.coursedetails_answerquestioncard_questionnumber);
-                View view = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_answerquestioncard2, null);
+                View view = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank_answerquestioncard2, null);
                 coursedetails_answerquestioncard_questionnumber.addView(view);
                 TextView questionbank_answerquestioncard2_select = view.findViewById(R.id.questionbank_answerquestioncard2_select);
                 questionbank_answerquestioncard2_select.setText("" + (count + 1));
@@ -5677,13 +5677,13 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                 });
             } else if (questionBankAnswerSheetDataBean.type == 4) {
                 if (shortAnswerView == null) {
-                    shortAnswerView = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_answerquestioncard1, null);
+                    shortAnswerView = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank_answerquestioncard1, null);
                     coursedetails_answerquestioncard_details.addView(shortAnswerView);
                     TextView coursedetails_handinpaper1_questiontypeshortAnswerView = shortAnswerView.findViewById(R.id.coursedetails_answerquestioncard_questiontype);
                     coursedetails_handinpaper1_questiontypeshortAnswerView.setText("简答题");
                 }
                 GridLayout coursedetails_answerquestioncard_questionnumber = shortAnswerView.findViewById(R.id.coursedetails_answerquestioncard_questionnumber);
-                View view = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_answerquestioncard2, null);
+                View view = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank_answerquestioncard2, null);
                 coursedetails_answerquestioncard_questionnumber.addView(view);
                 TextView questionbank_answerquestioncard2_select = view.findViewById(R.id.questionbank_answerquestioncard2_select);
                 questionbank_answerquestioncard2_select.setText("" + (count + 1));
@@ -5714,13 +5714,13 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                 });
             } else if (questionBankAnswerSheetDataBean.type == 7) {
                 if (materialView == null) {
-                    materialView = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_answerquestioncard1, null);
+                    materialView = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank_answerquestioncard1, null);
                     coursedetails_answerquestioncard_details.addView(materialView);
                     TextView coursedetails_handinpaper1_questiontypematerialView = materialView.findViewById(R.id.coursedetails_answerquestioncard_questiontype);
                     coursedetails_handinpaper1_questiontypematerialView.setText("材料题");
                 }
                 GridLayout coursedetails_answerquestioncard_questionnumber = materialView.findViewById(R.id.coursedetails_answerquestioncard_questionnumber);
-                View view = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_answerquestioncard2, null);
+                View view = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank_answerquestioncard2, null);
                 coursedetails_answerquestioncard_questionnumber.addView(view);
                 TextView questionbank_answerquestioncard2_select = view.findViewById(R.id.questionbank_answerquestioncard2_select);
                 questionbank_answerquestioncard2_select.setText("" + (count + 1));
@@ -5929,7 +5929,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
     //显示pop的文件
     private void showPop() {
         // 设置布局文件
-        mPopupWindow.setContentView(LayoutInflater.from(mControlMainActivity).inflate(R.layout.pop_add, null));
+        mPopupWindow.setContentView(LayoutInflater.from(mMainContext).inflate(R.layout.pop_add, null));
         // 为了避免部分机型不显示，我们需要重新设置一下宽高
         mPopupWindow.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
         mPopupWindow.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -5972,7 +5972,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
 
     private void ShowPopFontSize(ImageView imageView) {
         if (mPointoutPopupWindow == null) {
-            mPointoutPopupWindow = new PopupWindow(mControlMainActivity);
+            mPointoutPopupWindow = new PopupWindow(mMainContext);
             mPointoutAnimUtil = new ModelAnimUtil();
         }
         // 三个参数分别为：起始值 结束值 时长，那么整个动画回调过来的值就是从0.5f--1f的
@@ -5988,7 +5988,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
         });
         mPointoutAnimUtil.startAnimator();
         //字号大小的设置
-        View view = LayoutInflater.from(mControlMainActivity).inflate(R.layout.pop_pointout, null);
+        View view = LayoutInflater.from(mMainContext).inflate(R.layout.pop_pointout, null);
         // 设置布局文件
         mPointoutPopupWindow.setContentView(view);
         // 为了避免部分机型不显示，我们需要重新设置一下宽高
@@ -6111,13 +6111,13 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
      * 此方法用于改变背景的透明度，从而达到“变暗”的效果
      */
     private void backgroundAlpha(float bgAlpha) {
-        WindowManager.LayoutParams lp = mControlMainActivity.getWindow().getAttributes();
+        WindowManager.LayoutParams lp = mMainContext.getWindow().getAttributes();
         // 0.0-1.0
         lp.alpha = bgAlpha;
-        mControlMainActivity.getWindow().setAttributes(lp);
+        mMainContext.getWindow().setAttributes(lp);
         // everything behind this window will be dimmed.
         // 此方法用来设置浮动层，防止部分手机变暗无效
-        mControlMainActivity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+        mMainContext.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
     }
 
     @Override
@@ -6934,24 +6934,24 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
 
     //题库-做题记录
     public void  getQuestionBankAnswerRecord(){
-        if (mControlMainActivity.mStuId.equals("") || mIbs_id.equals("")){
-            Toast.makeText(mControlMainActivity,"查询做题记录失败！",Toast.LENGTH_SHORT).show();
+        if (mMainContext.mStuId.equals("") || mIbs_id.equals("")){
+            Toast.makeText(mMainContext,"查询做题记录失败！",Toast.LENGTH_SHORT).show();
             if (mSmart_model_questionbank_questionrecord != null){
                 mSmart_model_questionbank_questionrecord.finishRefresh();
             }
             return;
         }
-        LoadingDialog.getInstance(mControlMainActivity).show();
+        LoadingDialog.getInstance(mMainContext).show();
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(mControlMainActivity.mIpadress)
+                .baseUrl(mMainContext.mIpadress)
                 .client(ModelObservableInterface.client)
                 .build();
         ModelObservableInterface queryMyCourseList = retrofit.create(ModelObservableInterface.class);
         mCurrentPage = 1;
         Gson gson = new Gson();
         HashMap<String, Integer> paramsMap = new HashMap<>();
-        paramsMap.put("student_id", Integer.valueOf(mControlMainActivity.mStuId));//做题记录的参数
+        paramsMap.put("student_id", Integer.valueOf(mMainContext.mStuId));//做题记录的参数
         paramsMap.put("pageNum", mCurrentPage);
         paramsMap.put("pageSize", mPageCount);
         paramsMap.put("ibs_id", Integer.valueOf(mIbs_id));
@@ -6970,42 +6970,42 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                     public void onResponse(Call<QuestionBankAnswerRecordBean> call, Response<QuestionBankAnswerRecordBean> response) {
                         QuestionBankAnswerRecordBean questionBankAnswerRecordBean = response.body();
                         if (questionBankAnswerRecordBean == null){
-                            Toast.makeText(mControlMainActivity,"查询做题记录失败！",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(mMainContext,"查询做题记录失败！",Toast.LENGTH_SHORT).show();
                             if (mSmart_model_questionbank_questionrecord != null){
                                 mSmart_model_questionbank_questionrecord.finishRefresh();
                             }
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         if (!HeaderInterceptor.IsErrorCode(questionBankAnswerRecordBean.code,questionBankAnswerRecordBean.msg)){
                             if (mSmart_model_questionbank_questionrecord != null){
                                 mSmart_model_questionbank_questionrecord.finishRefresh();
                             }
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         if (questionBankAnswerRecordBean.code != 200){
-                            Toast.makeText(mControlMainActivity,"查询做题记录失败！",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(mMainContext,"查询做题记录失败！",Toast.LENGTH_SHORT).show();
                             if (mSmart_model_questionbank_questionrecord != null){
                                 mSmart_model_questionbank_questionrecord.finishRefresh();
                             }
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         if (questionBankAnswerRecordBean.data == null){
-                            Toast.makeText(mControlMainActivity,"查询做题记录失败！",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(mMainContext,"查询做题记录失败！",Toast.LENGTH_SHORT).show();
                             if (mSmart_model_questionbank_questionrecord != null){
                                 mSmart_model_questionbank_questionrecord.finishRefresh();
                             }
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         if (questionBankAnswerRecordBean.data.total == null || questionBankAnswerRecordBean.data.list == null){
-                            Toast.makeText(mControlMainActivity,"查询做题记录失败！",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(mMainContext,"查询做题记录失败！",Toast.LENGTH_SHORT).show();
                             if (mSmart_model_questionbank_questionrecord != null){
                                 mSmart_model_questionbank_questionrecord.finishRefresh();
                             }
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         mSum = questionBankAnswerRecordBean.data.total;
@@ -7021,17 +7021,17 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                         if (mSmart_model_questionbank_questionrecord != null){
                             mSmart_model_questionbank_questionrecord.finishRefresh();
                         }
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                     }
 
                     @Override
                     public void onFailure(Call<QuestionBankAnswerRecordBean> call, Throwable t) {
                         Log.e(TAG, "onFailure: "+t.getMessage());
-                        Toast.makeText(mControlMainActivity,"查询做题记录失败！",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mMainContext,"查询做题记录失败！",Toast.LENGTH_SHORT).show();
                         if (mSmart_model_questionbank_questionrecord != null){
                             mSmart_model_questionbank_questionrecord.finishRefresh();
                         }
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                         return;
                     }
                 });
@@ -7039,24 +7039,24 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
 
     //题库-做题记录-加载更多
     public void  getQuestionBankAnswerRecordMore(){
-        if (mControlMainActivity.mStuId.equals("") || mIbs_id.equals("")){
-            Toast.makeText(mControlMainActivity,"查询做题记录失败！",Toast.LENGTH_SHORT).show();
+        if (mMainContext.mStuId.equals("") || mIbs_id.equals("")){
+            Toast.makeText(mMainContext,"查询做题记录失败！",Toast.LENGTH_SHORT).show();
             if (mSmart_model_questionbank_questionrecord != null){
                 mSmart_model_questionbank_questionrecord.finishLoadMore();
             }
             return;
         }
-        LoadingDialog.getInstance(mControlMainActivity).show();
+        LoadingDialog.getInstance(mMainContext).show();
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(mControlMainActivity.mIpadress)
+                .baseUrl(mMainContext.mIpadress)
                 .client(ModelObservableInterface.client)
                 .build();
         ModelObservableInterface queryMyCourseList = retrofit.create(ModelObservableInterface.class);
         mCurrentPage = mCurrentPage + 1;
         Gson gson = new Gson();
         HashMap<String, Integer> paramsMap = new HashMap<>();
-        paramsMap.put("student_id", Integer.valueOf(mControlMainActivity.mStuId));//做题记录的参数
+        paramsMap.put("student_id", Integer.valueOf(mMainContext.mStuId));//做题记录的参数
         paramsMap.put("pageNum", mCurrentPage);
         paramsMap.put("pageSize", mPageCount);
         paramsMap.put("ibs_id", Integer.valueOf(mIbs_id));
@@ -7075,42 +7075,42 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                     public void onResponse(Call<QuestionBankAnswerRecordBean> call, Response<QuestionBankAnswerRecordBean> response) {
                         QuestionBankAnswerRecordBean questionBankAnswerRecordBean = response.body();
                         if (questionBankAnswerRecordBean == null){
-                            Toast.makeText(mControlMainActivity,"查询做题记录失败！",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(mMainContext,"查询做题记录失败！",Toast.LENGTH_SHORT).show();
                             if (mSmart_model_questionbank_questionrecord != null){
                                 mSmart_model_questionbank_questionrecord.finishLoadMore();
                             }
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         if (!HeaderInterceptor.IsErrorCode(questionBankAnswerRecordBean.code,questionBankAnswerRecordBean.msg)){
                             if (mSmart_model_questionbank_questionrecord != null){
                                 mSmart_model_questionbank_questionrecord.finishLoadMore();
                             }
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         if (questionBankAnswerRecordBean.code != 200){
-                            Toast.makeText(mControlMainActivity,"查询做题记录失败！",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(mMainContext,"查询做题记录失败！",Toast.LENGTH_SHORT).show();
                             if (mSmart_model_questionbank_questionrecord != null){
                                 mSmart_model_questionbank_questionrecord.finishLoadMore();
                             }
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         if (questionBankAnswerRecordBean.data == null){
-                            Toast.makeText(mControlMainActivity,"查询做题记录失败！",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(mMainContext,"查询做题记录失败！",Toast.LENGTH_SHORT).show();
                             if (mSmart_model_questionbank_questionrecord != null){
                                 mSmart_model_questionbank_questionrecord.finishLoadMore();
                             }
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         if (questionBankAnswerRecordBean.data.total == null || questionBankAnswerRecordBean.data.list == null){
-                            Toast.makeText(mControlMainActivity,"查询做题记录失败！",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(mMainContext,"查询做题记录失败！",Toast.LENGTH_SHORT).show();
                             if (mSmart_model_questionbank_questionrecord != null){
                                 mSmart_model_questionbank_questionrecord.finishLoadMore();
                             }
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         mSum = questionBankAnswerRecordBean.data.total;
@@ -7122,7 +7122,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                                 continue;
                             }
                             //试卷名称  测试的名称   网络请求
-                            View view = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_questionrecord1, null);
+                            View view = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank_questionrecord1, null);
                             //试卷名称
                             TextView questionbank_questionrecords_testname = view.findViewById(R.id.questionbank_questionrecords_testname);
                             String name = "";
@@ -7190,8 +7190,8 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                             String finalName = name;
                             view.setOnClickListener(v -> {
                                 //弹出提示框，
-                                View view1 = mControlMainActivity.getLayoutInflater().inflate(R.layout.dialog_sure_cancel, null);
-                                ControllerCenterDialog mMyDialog = new ControllerCenterDialog(mControlMainActivity, 0, 0, view1, R.style.DialogTheme);
+                                View view1 = mMainContext.getLayoutInflater().inflate(R.layout.dialog_sure_cancel, null);
+                                ControllerCenterDialog mMyDialog = new ControllerCenterDialog(mMainContext, 0, 0, view1, R.style.DialogTheme);
                                 mMyDialog.setCancelable(true);
                                 mMyDialog.show();
                                 TextView tip = view1.findViewById(R.id.tip);
@@ -7204,7 +7204,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                                 button_cancel.setText("查看解析");
                                 button_cancel.setOnClickListener(View -> {
                                     //跳转到解析界面
-                                    Toast.makeText(mControlMainActivity, "查看解析内容", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(mMainContext, "查看解析内容", Toast.LENGTH_SHORT).show();
                                     mAnswer_Id = questionBankAnswerRecordDataBeanList.answer_id;
                                     if (mQuestionRecordCurrentTab.equals("ChapterExercises")){
                                         getQuestionBankAnswerRecordLookChapter(finalName);
@@ -7220,7 +7220,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                                 button_sure.setOnClickListener(View -> {//将试卷重新调出来，做题
 //                                    if (myQuestionBankGoonDataBeans != null){
 //                                        if (myQuestionBankGoonDataBeans.size() != 0) {
-//                                            Toast.makeText(mControlMainActivity, "您有未完成的试卷，请继续答题或提交未完成的试卷！", Toast.LENGTH_SHORT).show();
+//                                            Toast.makeText(mMainContext, "您有未完成的试卷，请继续答题或提交未完成的试卷！", Toast.LENGTH_SHORT).show();
 //                                            return;
 //                                        }
 //                                    }
@@ -7243,17 +7243,17 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                         if (mSmart_model_questionbank_questionrecord != null){
                             mSmart_model_questionbank_questionrecord.finishLoadMore();
                         }
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                     }
 
                     @Override
                     public void onFailure(Call<QuestionBankAnswerRecordBean> call, Throwable t) {
                         Log.e(TAG, "onFailure: "+t.getMessage());
-                        Toast.makeText(mControlMainActivity,"查询做题记录失败！",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mMainContext,"查询做题记录失败！",Toast.LENGTH_SHORT).show();
                         if (mSmart_model_questionbank_questionrecord != null){
                             mSmart_model_questionbank_questionrecord.finishLoadMore();
                         }
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                         return;
                     }
                 });
@@ -7262,13 +7262,13 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
     //题库-做题记录-再做一遍
     public void  getQuestionBankAnswerRecordAgain(String name){
         if (mAnswer_Id == null){
-            Toast.makeText(mControlMainActivity,"试卷信息查询失败！",Toast.LENGTH_SHORT).show();
+            Toast.makeText(mMainContext,"试卷信息查询失败！",Toast.LENGTH_SHORT).show();
             return;
         }
-        LoadingDialog.getInstance(mControlMainActivity).show();
+        LoadingDialog.getInstance(mMainContext).show();
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(mControlMainActivity.mIpadress)
+                .baseUrl(mMainContext.mIpadress)
                 .client(ModelObservableInterface.client)
                 .build();
         ModelObservableInterface queryMyCourseList = retrofit.create(ModelObservableInterface.class);
@@ -7283,22 +7283,22 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                     public void onResponse(Call<MyTestPageIssueBean> call, Response<MyTestPageIssueBean> response) {
                         MyTestPageIssueBean myTestPageIssueBean = response.body();
                         if (myTestPageIssueBean == null){
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
-                            Toast.makeText(mControlMainActivity,"试卷信息查询失败！",Toast.LENGTH_SHORT).show();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
+                            Toast.makeText(mMainContext,"试卷信息查询失败！",Toast.LENGTH_SHORT).show();
                             return;
                         }
                         if (!HeaderInterceptor.IsErrorCode(myTestPageIssueBean.code,myTestPageIssueBean.msg)){
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         if (myTestPageIssueBean.code != 200){
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
-                            Toast.makeText(mControlMainActivity,"试卷信息查询失败！",Toast.LENGTH_SHORT).show();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
+                            Toast.makeText(mMainContext,"试卷信息查询失败！",Toast.LENGTH_SHORT).show();
                             return;
                         }
                         if (myTestPageIssueBean.data == null){
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
-                            Toast.makeText(mControlMainActivity,"试卷信息查询失败！",Toast.LENGTH_SHORT).show();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
+                            Toast.makeText(mMainContext,"试卷信息查询失败！",Toast.LENGTH_SHORT).show();
                             return;
                         }
                         mMyTestPageIssueDataBeans = myTestPageIssueBean.data;
@@ -7317,14 +7317,14 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                         }
                         mCurrentChapterName = name;
                         QuestionBankDetailsQuestionModeTestPaperShow();
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                     }
 
                     @Override
                     public void onFailure(Call<MyTestPageIssueBean> call, Throwable t) {
                         Log.e(TAG, "onFailure: "+t.getMessage());
-                        Toast.makeText(mControlMainActivity,"试卷信息查询失败！",Toast.LENGTH_SHORT).show();
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        Toast.makeText(mMainContext,"试卷信息查询失败！",Toast.LENGTH_SHORT).show();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                         return;
                     }
                 });
@@ -7333,13 +7333,13 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
     //题库-做题记录-查看解析试卷
     public void  getQuestionBankAnswerRecordLook(String name){
         if (mAnswer_Id == null){
-            Toast.makeText(mControlMainActivity,"试卷信息查询失败！",Toast.LENGTH_SHORT).show();
+            Toast.makeText(mMainContext,"试卷信息查询失败！",Toast.LENGTH_SHORT).show();
             return;
         }
-        LoadingDialog.getInstance(mControlMainActivity).show();
+        LoadingDialog.getInstance(mMainContext).show();
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(mControlMainActivity.mIpadress)
+                .baseUrl(mMainContext.mIpadress)
                 .client(ModelObservableInterface.client)
                 .build();
         ModelObservableInterface queryMyCourseList = retrofit.create(ModelObservableInterface.class);
@@ -7354,22 +7354,22 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                     public void onResponse(Call<MyTestPageIssueBean> call, Response<MyTestPageIssueBean> response) {
                         MyTestPageIssueBean myTestPageIssueBean = response.body();
                         if (myTestPageIssueBean == null){
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
-                            Toast.makeText(mControlMainActivity,"试卷信息查询失败！",Toast.LENGTH_SHORT).show();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
+                            Toast.makeText(mMainContext,"试卷信息查询失败！",Toast.LENGTH_SHORT).show();
                             return;
                         }
                         if (!HeaderInterceptor.IsErrorCode(myTestPageIssueBean.code,myTestPageIssueBean.msg)){
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         if (myTestPageIssueBean.code != 200){
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
-                            Toast.makeText(mControlMainActivity,"试卷信息查询失败！",Toast.LENGTH_SHORT).show();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
+                            Toast.makeText(mMainContext,"试卷信息查询失败！",Toast.LENGTH_SHORT).show();
                             return;
                         }
                         if (myTestPageIssueBean.data == null){
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
-                            Toast.makeText(mControlMainActivity,"试卷信息查询失败！",Toast.LENGTH_SHORT).show();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
+                            Toast.makeText(mMainContext,"试卷信息查询失败！",Toast.LENGTH_SHORT).show();
                             return;
                         }
                         mMyTestPageIssueDataBeans = myTestPageIssueBean.data;
@@ -7446,14 +7446,14 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                         }
 
                         QuestionBankDetailsQuestionModeHandInShow();
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                     }
 
                     @Override
                     public void onFailure(Call<MyTestPageIssueBean> call, Throwable t) {
                         Log.e(TAG, "onFailure: "+t.getMessage());
-                        Toast.makeText(mControlMainActivity,"试卷信息查询失败！",Toast.LENGTH_SHORT).show();
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        Toast.makeText(mMainContext,"试卷信息查询失败！",Toast.LENGTH_SHORT).show();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                         return;
                     }
                 });
@@ -7462,13 +7462,13 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
     //题库-做题记录-查看解析章节考点、快速出题
     public void  getQuestionBankAnswerRecordLookChapter(String name){
         if (mAnswer_Id == null){
-            Toast.makeText(mControlMainActivity,"试卷信息查询失败！",Toast.LENGTH_SHORT).show();
+            Toast.makeText(mMainContext,"试卷信息查询失败！",Toast.LENGTH_SHORT).show();
             return;
         }
-        LoadingDialog.getInstance(mControlMainActivity).show();
+        LoadingDialog.getInstance(mMainContext).show();
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(mControlMainActivity.mIpadress)
+                .baseUrl(mMainContext.mIpadress)
                 .client(ModelObservableInterface.client)
                 .build();
         ModelObservableInterface queryMyCourseList = retrofit.create(ModelObservableInterface.class);
@@ -7483,22 +7483,22 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                     public void onResponse(Call<MyQuestionBankExercises> call, Response<MyQuestionBankExercises> response) {
                         MyQuestionBankExercises myQuestionBankExercises = response.body();
                         if (myQuestionBankExercises == null){
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
-                            Toast.makeText(mControlMainActivity,"试卷信息查询失败！",Toast.LENGTH_SHORT).show();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
+                            Toast.makeText(mMainContext,"试卷信息查询失败！",Toast.LENGTH_SHORT).show();
                             return;
                         }
                         if (!HeaderInterceptor.IsErrorCode(myQuestionBankExercises.code,myQuestionBankExercises.msg)){
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         if (myQuestionBankExercises.code != 200){
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
-                            Toast.makeText(mControlMainActivity,"试卷信息查询失败！",Toast.LENGTH_SHORT).show();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
+                            Toast.makeText(mMainContext,"试卷信息查询失败！",Toast.LENGTH_SHORT).show();
                             return;
                         }
                         if (myQuestionBankExercises.data == null){
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
-                            Toast.makeText(mControlMainActivity,"试卷信息查询失败！",Toast.LENGTH_SHORT).show();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
+                            Toast.makeText(mMainContext,"试卷信息查询失败！",Toast.LENGTH_SHORT).show();
                             return;
                         }
                         mMyTestPageIssueDataBeans = null;
@@ -7610,14 +7610,14 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                             }
                         }
                         QuestionBankDetailsQuestionModeHandInShow();
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                     }
 
                     @Override
                     public void onFailure(Call<MyQuestionBankExercises> call, Throwable t) {
                         Log.e(TAG, "onFailure: "+t.getMessage());
-                        Toast.makeText(mControlMainActivity,"试卷信息查询失败！",Toast.LENGTH_SHORT).show();
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        Toast.makeText(mMainContext,"试卷信息查询失败！",Toast.LENGTH_SHORT).show();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                         return;
                     }
                 });
@@ -7714,13 +7714,13 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
     //题库-答题卡
     public void getQuestionBankAnswerSheet(int type) {
         if (mAnswer_Id == null){
-            Toast.makeText(mControlMainActivity,"查询答题卡信息失败！",Toast.LENGTH_SHORT).show();
+            Toast.makeText(mMainContext,"查询答题卡信息失败！",Toast.LENGTH_SHORT).show();
             return;
         }
-        LoadingDialog.getInstance(mControlMainActivity).show();
+        LoadingDialog.getInstance(mMainContext).show();
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(mControlMainActivity.mIpadress)
+                .baseUrl(mMainContext.mIpadress)
                 .client(ModelObservableInterface.client)
                 .build();
         ModelObservableInterface queryMyCourseList = retrofit.create(ModelObservableInterface.class);
@@ -7735,27 +7735,27 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                     public void onResponse(Call<QuestionBankAnswerSheetBean> call, Response<QuestionBankAnswerSheetBean> response) {
                         QuestionBankAnswerSheetBean questionBankAnswerSheetBean = response.body();
                         if (questionBankAnswerSheetBean == null) {
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
-                            Toast.makeText(mControlMainActivity,"查询答题卡信息失败！",Toast.LENGTH_SHORT).show();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
+                            Toast.makeText(mMainContext,"查询答题卡信息失败！",Toast.LENGTH_SHORT).show();
                             return;
                         }
                         if (!HeaderInterceptor.IsErrorCode(questionBankAnswerSheetBean.code,questionBankAnswerSheetBean.msg)){
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         if (questionBankAnswerSheetBean.code != 200){
-                            Toast.makeText(mControlMainActivity,"查询答题卡信息失败！",Toast.LENGTH_SHORT).show();
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            Toast.makeText(mMainContext,"查询答题卡信息失败！",Toast.LENGTH_SHORT).show();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         if (questionBankAnswerSheetBean.data == null){
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
-                            Toast.makeText(mControlMainActivity,"查询答题卡信息失败！",Toast.LENGTH_SHORT).show();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
+                            Toast.makeText(mMainContext,"查询答题卡信息失败！",Toast.LENGTH_SHORT).show();
                             return;
                         }
                         if (questionBankAnswerSheetBean.mode == null){
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
-                            Toast.makeText(mControlMainActivity,"查询答题卡信息失败！",Toast.LENGTH_SHORT).show();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
+                            Toast.makeText(mMainContext,"查询答题卡信息失败！",Toast.LENGTH_SHORT).show();
                             return;
                         }
                         //判断是不是练习模式
@@ -7784,36 +7784,36 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                         } else if (type == 2) { //答题后答题卡
                             QuestionBankDetailsHandInPaperShow(questionBankAnswerSheetBean.data);
                         }
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                     }
 
                     @Override
                     public void onFailure(Call<QuestionBankAnswerSheetBean> call, Throwable t) {
                         Log.e(TAG, "onFailure: " + t.getMessage());
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                     }
                 });
     }
 
     //判断当前的任务是否继续
     public void getMyQuestionBankGoon() {
-        if (mIbs_id.equals("") || mControlMainActivity.mStuId.equals("")){
+        if (mIbs_id.equals("") || mMainContext.mStuId.equals("")){
             myQuestionBankGoonDataBeans = null;
             //问答详情  传值id和name
             QuestionBankDetailsShow();
             return;
         }
-        LoadingDialog.getInstance(mControlMainActivity).show();
+        LoadingDialog.getInstance(mMainContext).show();
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(mControlMainActivity.mIpadress)
+                .baseUrl(mMainContext.mIpadress)
                 .client(ModelObservableInterface.client)
                 .build();
         ModelObservableInterface queryMyCourseList = retrofit.create(ModelObservableInterface.class);
         Gson gson = new Gson();
         HashMap<String, Integer> paramsMap = new HashMap<>();
         paramsMap.put("ibs_id", Integer.valueOf(mIbs_id));//	子题库的id
-        paramsMap.put("stu_id", Integer.valueOf(mControlMainActivity.mStuId));
+        paramsMap.put("stu_id", Integer.valueOf(mMainContext.mStuId));
         String strEntity = gson.toJson(paramsMap);
         RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json;charset=UTF-8"), strEntity);
         queryMyCourseList.queryMyQuestionBankGoon(body)
@@ -7826,27 +7826,27 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                             myQuestionBankGoonDataBeans = null;
                             //问答详情  传值id和name
                             QuestionBankDetailsShow();
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         if (!HeaderInterceptor.IsErrorCode(bankGoonBean.code,bankGoonBean.msg)){
                             myQuestionBankGoonDataBeans = null;
                             //问答详情  传值id和name
                             QuestionBankDetailsShow();
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         if (bankGoonBean.code != 211) {
                             myQuestionBankGoonDataBeans = null;
                             //问答详情  传值id和name
                             QuestionBankDetailsShow();
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         myQuestionBankGoonDataBeans = bankGoonBean.data;
                         //问答详情  传值id和name
                         QuestionBankDetailsShow();
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                     }
 
                     @Override
@@ -7854,7 +7854,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                         myQuestionBankGoonDataBeans = null;
                         //问答详情  传值id和name
                         QuestionBankDetailsShow();
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                     }
                 });
     }
@@ -7863,10 +7863,10 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
         if (mAnswer_Id == null){
             return;
         }
-        LoadingDialog.getInstance(mControlMainActivity).show();
+        LoadingDialog.getInstance(mMainContext).show();
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(mControlMainActivity.mIpadress)
+                .baseUrl(mMainContext.mIpadress)
                 .client(ModelObservableInterface.client)
                 .build();
         ModelObservableInterface queryMyCourseList = retrofit.create(ModelObservableInterface.class);
@@ -7882,25 +7882,25 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                     public void onResponse(Call<MyQuestionBankExercises> call, Response<MyQuestionBankExercises> response) {
                         MyQuestionBankExercises myQuestionBankExercises = response.body();
                         if (myQuestionBankExercises == null){
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         if (!HeaderInterceptor.IsErrorCode(myQuestionBankExercises.code,myQuestionBankExercises.msg)){
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         if (myQuestionBankExercises.code != 200){
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         if (myQuestionBankExercises.used_answer_time == null){
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         mMyQuestionBankExercisesBean = myQuestionBankExercises.data;
                         if (mMyQuestionBankExercisesBean == null){
-                            Toast.makeText(mControlMainActivity,"出题失败！",Toast.LENGTH_SHORT).show();
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            Toast.makeText(mMainContext,"出题失败！",Toast.LENGTH_SHORT).show();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         mMyQuestionBankExercisesAnswerMap.clear();
@@ -8014,25 +8014,25 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                         } else if (type == 2){
                             QuestionBankDetailsQuestionModeTestShow();
                         }
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                     }
 
                     @Override
                     public void onFailure(Call<MyQuestionBankExercises> call, Throwable t) {
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                     }
                 });
     }
 
     public void getQueryPageContinueTime (String name){
         if (mAnswer_Id == null){
-            Toast.makeText(mControlMainActivity,"做题记录查询失败！",Toast.LENGTH_SHORT).show();
+            Toast.makeText(mMainContext,"做题记录查询失败！",Toast.LENGTH_SHORT).show();
             return;
         }
-        LoadingDialog.getInstance(mControlMainActivity).show();
+        LoadingDialog.getInstance(mMainContext).show();
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(mControlMainActivity.mIpadress)
+                .baseUrl(mMainContext.mIpadress)
                 .client(ModelObservableInterface.client)
                 .build();
         ModelObservableInterface queryMyCourseList = retrofit.create(ModelObservableInterface.class);
@@ -8048,29 +8048,29 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                     public void onResponse(Call<MyTestPageIssueBean> call, Response<MyTestPageIssueBean> response) {
                         MyTestPageIssueBean myTestPageIssueBean = response.body();
                         if (myTestPageIssueBean == null){
-                            Toast.makeText(mControlMainActivity,"做题记录查询失败！",Toast.LENGTH_SHORT).show();
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            Toast.makeText(mMainContext,"做题记录查询失败！",Toast.LENGTH_SHORT).show();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         if (!HeaderInterceptor.IsErrorCode(myTestPageIssueBean.code,myTestPageIssueBean.msg)){
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         if (myTestPageIssueBean.code != 200){
-                            Toast.makeText(mControlMainActivity,"做题记录查询失败！",Toast.LENGTH_SHORT).show();
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            Toast.makeText(mMainContext,"做题记录查询失败！",Toast.LENGTH_SHORT).show();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         if (myTestPageIssueBean.used_answer_time == null){
-                            Toast.makeText(mControlMainActivity,"做题记录查询失败！",Toast.LENGTH_SHORT).show();
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            Toast.makeText(mMainContext,"做题记录查询失败！",Toast.LENGTH_SHORT).show();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         mMyTestPageIssueDataBeans = myTestPageIssueBean.data;
                         mTestPageIssueDataTypeScore = myTestPageIssueBean.question_type_score;
                         if (mMyTestPageIssueDataBeans == null){
-                            Toast.makeText(mControlMainActivity,"做题记录查询失败！",Toast.LENGTH_SHORT).show();
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            Toast.makeText(mMainContext,"做题记录查询失败！",Toast.LENGTH_SHORT).show();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         mMyQuestionBankExercisesAnswerMap.clear();
@@ -8143,12 +8143,12 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                         mTime = myTestPageIssueBean.answer_time * 60 - myTestPageIssueBean.used_answer_time;
                         mCurrentChapterName = name;
                         QuestionBankDetailsQuestionModeTestPaperShow();
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                     }
 
                     @Override
                     public void onFailure(Call<MyTestPageIssueBean> call, Throwable t) {
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                     }
                 });
     }
@@ -8315,24 +8315,24 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
 
     //题库  我的收藏题
     public void getQuestionBankMyFavoriteQuestion(Integer type){ //类型 1错题2收藏
-        if (mControlMainActivity.mStuId.equals("") || mIbs_id.equals("")){
+        if (mMainContext.mStuId.equals("") || mIbs_id.equals("")){
             if (type == 1){
-                Toast.makeText(mControlMainActivity,"查询错题失败！",Toast.LENGTH_SHORT).show();
+                Toast.makeText(mMainContext,"查询错题失败！",Toast.LENGTH_SHORT).show();
             } else if (type == 2){
-                Toast.makeText(mControlMainActivity,"查询收藏的题失败！",Toast.LENGTH_SHORT).show();
+                Toast.makeText(mMainContext,"查询收藏的题失败！",Toast.LENGTH_SHORT).show();
             }
             return;
         }
-        LoadingDialog.getInstance(mControlMainActivity).show();
+        LoadingDialog.getInstance(mMainContext).show();
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(mControlMainActivity.mIpadress)
+                .baseUrl(mMainContext.mIpadress)
                 .client(ModelObservableInterface.client)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         ModelObservableInterface modelObservableInterface = retrofit.create(ModelObservableInterface.class);
         Gson gson = new Gson();
         HashMap<String, Integer> paramsMap = new HashMap<>();
-        paramsMap.put("student_id", Integer.valueOf(mControlMainActivity.mStuId));
+        paramsMap.put("student_id", Integer.valueOf(mMainContext.mStuId));
         paramsMap.put("ibs_id", Integer.valueOf(mIbs_id));//	子题库的id
         paramsMap.put("type", type);
         String strEntity = gson.toJson(paramsMap);
@@ -8344,33 +8344,33 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                         QuestionBankMyFavoriteQuestionBean questionBankMyFavoriteQuestionBean = response.body();
                         if (questionBankMyFavoriteQuestionBean == null) {
                             if (type == 1) {
-                                Toast.makeText(mControlMainActivity, "查询错题失败！", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(mMainContext, "查询错题失败！", Toast.LENGTH_SHORT).show();
                             } else if (type == 2) {
-                                Toast.makeText(mControlMainActivity, "查询收藏的题失败！", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(mMainContext, "查询收藏的题失败！", Toast.LENGTH_SHORT).show();
                             }
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         if (!HeaderInterceptor.IsErrorCode(questionBankMyFavoriteQuestionBean.code,questionBankMyFavoriteQuestionBean.msg)){
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         if (questionBankMyFavoriteQuestionBean.code != 200) {
                             if (type == 1) {
-                                Toast.makeText(mControlMainActivity, "查询错题失败！", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(mMainContext, "查询错题失败！", Toast.LENGTH_SHORT).show();
                             } else if (type == 2) {
-                                Toast.makeText(mControlMainActivity, "查询收藏的题失败！", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(mMainContext, "查询收藏的题失败！", Toast.LENGTH_SHORT).show();
                             }
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         if (questionBankMyFavoriteQuestionBean.data == null) {
                             if (type == 1) {
-                                Toast.makeText(mControlMainActivity, "查询错题失败！", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(mMainContext, "查询错题失败！", Toast.LENGTH_SHORT).show();
                             } else if (type == 2) {
-                                Toast.makeText(mControlMainActivity, "查询收藏的题失败！", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(mMainContext, "查询收藏的题失败！", Toast.LENGTH_SHORT).show();
                             }
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         mMyFavoriteQuestionDataBeans = questionBankMyFavoriteQuestionBean.data;
@@ -8444,36 +8444,36 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                             mCurrentChapterName = "收藏的题";
                             QuestionBankDetailsQuestionModeMyCollectionQuestionShow();
                         }
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                     }
 
                     @Override
                     public void onFailure(Call<QuestionBankMyFavoriteQuestionBean> call, Throwable t) {
                         Log.e(TAG, "ModelQuestionBank”s Failure: "+t.getMessage());
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                     }
                 });
     }
 
     //queryMyQuestionBankChapterTest 题库章节考点
     public void getMyQuestionBankChapterTest() {
-        if (mIbs_id.equals("") || mControlMainActivity.mStuId.equals("")){
-            Toast.makeText(mControlMainActivity,"查询章节列表失败",Toast.LENGTH_SHORT).show();
+        if (mIbs_id.equals("") || mMainContext.mStuId.equals("")){
+            Toast.makeText(mMainContext,"查询章节列表失败",Toast.LENGTH_SHORT).show();
             return;
         }
-        LoadingDialog.getInstance(mControlMainActivity).show();
+        LoadingDialog.getInstance(mMainContext).show();
         LinearLayout questionbank_sub_details_content = mModelQuestionBankDetailsView.findViewById(R.id.questionbank_sub_details_content);
         questionbank_sub_details_content.removeAllViews();
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(mControlMainActivity.mIpadress)
+                .baseUrl(mMainContext.mIpadress)
                 .client(ModelObservableInterface.client)
                 .build();
         ModelObservableInterface queryMyCourseList = retrofit.create(ModelObservableInterface.class);
         Gson gson = new Gson();
         HashMap<String, Integer> paramsMap = new HashMap<>();
         paramsMap.put("ibs_id", Integer.valueOf(mIbs_id));//	子题库的id
-        paramsMap.put("student_id", Integer.valueOf(mControlMainActivity.mStuId));
+        paramsMap.put("student_id", Integer.valueOf(mMainContext.mStuId));
         String strEntity = gson.toJson(paramsMap);
         RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json;charset=UTF-8"), strEntity);
         queryMyCourseList.queryMyQuestionBankChapterTest(body)
@@ -8483,18 +8483,18 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                     public void onResponse(Call<MyQuestionBankChapterTestBean> call, Response<MyQuestionBankChapterTestBean> response) {
                         MyQuestionBankChapterTestBean chapterTestBean = response.body();
                         if (chapterTestBean == null) {
-                            Toast.makeText(mControlMainActivity,"查询章节列表失败",Toast.LENGTH_SHORT).show();
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            Toast.makeText(mMainContext,"查询章节列表失败",Toast.LENGTH_SHORT).show();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         if (!HeaderInterceptor.IsErrorCode(chapterTestBean.getCode(),chapterTestBean.getMsg())){
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         int code = chapterTestBean.getCode();
                         if (code != 200) {
-                            Toast.makeText(mControlMainActivity,"查询章节列表失败",Toast.LENGTH_SHORT).show();
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            Toast.makeText(mMainContext,"查询章节列表失败",Toast.LENGTH_SHORT).show();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         String msg = chapterTestBean.getMsg();
@@ -8513,7 +8513,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                         DoRecord_num = chapterTestBean.DoRecord_num;
                         List<MyQuestionBankChapterTestBean.DataBean> data = chapterTestBean.getData();
                         if (data == null){
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         for (int i = 0; i < data.size(); i ++) {
@@ -8521,7 +8521,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                                 continue;
                             }
                             //章赋值//ModelExpandListView展开列表   章节练习网络请求
-                            View view = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_sub_detials_chapterexercises, null);
+                            View view = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank_sub_detials_chapterexercises, null);
                             //基金法律法规
                             TextView questionbank_sub_details_chapterexercises_name = view.findViewById(R.id.questionbank_sub_details_chapterexercises_name);
                             questionbank_sub_details_chapterexercises_name.setText(data.get(i).getName());  //章名字
@@ -8587,7 +8587,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                             questionbank_sub_details_chapterexercises_name.setOnClickListener(v -> {
 //                                if (myQuestionBankGoonDataBeans != null) {
 //                                    if (myQuestionBankGoonDataBeans.size() != 0) {
-//                                        Toast.makeText(mControlMainActivity, "您有未完成的试卷，请继续答题或提交未完成的试卷！", Toast.LENGTH_SHORT).show();
+//                                        Toast.makeText(mMainContext, "您有未完成的试卷，请继续答题或提交未完成的试卷！", Toast.LENGTH_SHORT).show();
 //                                        return;
 //                                    }
 //                                }
@@ -8597,14 +8597,14 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                             });
                             questionbank_sub_details_content.addView(view);
                         }
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                     }
 
                     @Override
                     public void onFailure(Call<MyQuestionBankChapterTestBean> call, Throwable t) {
                         Log.e(TAG, "onFailure: " + t.getMessage());
-                        Toast.makeText(mControlMainActivity,"查询章节列表失败",Toast.LENGTH_SHORT).show();
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        Toast.makeText(mMainContext,"查询章节列表失败",Toast.LENGTH_SHORT).show();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                         return;
                     }
                 });
@@ -8612,20 +8612,20 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
 
     //题库-设置    做题设置-查询题型错题和未做的题数
     public void getQueryTopicSetting(Integer chapter_test_point_id) {
-        if (mControlMainActivity.mStuId.equals("") || chapter_test_point_id == null || mIbs_id.equals("")){
-            Toast.makeText(mControlMainActivity,"查询做题设置失败",Toast.LENGTH_SHORT).show();
+        if (mMainContext.mStuId.equals("") || chapter_test_point_id == null || mIbs_id.equals("")){
+            Toast.makeText(mMainContext,"查询做题设置失败",Toast.LENGTH_SHORT).show();
             return;
         }
-        LoadingDialog.getInstance(mControlMainActivity).show();
+        LoadingDialog.getInstance(mMainContext).show();
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(mControlMainActivity.mIpadress)
+                .baseUrl(mMainContext.mIpadress)
                 .client(ModelObservableInterface.client)
                 .build();
         ModelObservableInterface modelObservableInterface = retrofit.create(ModelObservableInterface.class);
         Gson gson = new Gson();
         HashMap<String, Integer> paramsMap = new HashMap<>();
-        paramsMap.put("stu_id", Integer.valueOf(mControlMainActivity.mStuId));//学生id
+        paramsMap.put("stu_id", Integer.valueOf(mMainContext.mStuId));//学生id
         paramsMap.put("chapter_test_point_id", chapter_test_point_id);
         paramsMap.put("ibs_id", Integer.valueOf(mIbs_id));
         String strEntity = gson.toJson(paramsMap);
@@ -8637,31 +8637,31 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                     public void onResponse(Call<QueryTopicSettingBean> call, Response<QueryTopicSettingBean> response) {
                         QueryTopicSettingBean queryTopicSettingBean = response.body();
                         if (queryTopicSettingBean == null) {
-                            Toast.makeText(mControlMainActivity,"查询做题设置失败",Toast.LENGTH_SHORT).show();
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            Toast.makeText(mMainContext,"查询做题设置失败",Toast.LENGTH_SHORT).show();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         if (!HeaderInterceptor.IsErrorCode(queryTopicSettingBean.getCode(),queryTopicSettingBean.getMsg())){
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
 //                        String msg = queryTopicSettingBean.getMsg();
                         int code = queryTopicSettingBean.getCode();
                         if (code != 200) {
-                            Toast.makeText(mControlMainActivity,"查询做题设置失败",Toast.LENGTH_SHORT).show();
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            Toast.makeText(mMainContext,"查询做题设置失败",Toast.LENGTH_SHORT).show();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         QueryTopicSettingBean.QueryTopicSettingDataBean queryTopicSettingDataBean = queryTopicSettingBean.getData();
                         if (queryTopicSettingDataBean == null){
-                            Toast.makeText(mControlMainActivity,"查询做题设置失败",Toast.LENGTH_SHORT).show();
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            Toast.makeText(mMainContext,"查询做题设置失败",Toast.LENGTH_SHORT).show();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         if (queryTopicSettingDataBean.duoXuan == null || queryTopicSettingDataBean.danXuan == null
                                 || queryTopicSettingDataBean.jianDa == null || queryTopicSettingDataBean.caiLiao == null){
-                            Toast.makeText(mControlMainActivity,"查询做题设置失败",Toast.LENGTH_SHORT).show();
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            Toast.makeText(mMainContext,"查询做题设置失败",Toast.LENGTH_SHORT).show();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         mSingleChoiceState = "disable";  //单选状态
@@ -8688,13 +8688,13 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                         mModelQuestionBankSettingView = null;
                         //初始化做题设置界面并展示
                         QuestionBankQuestionSettingShow(queryTopicSettingDataBean);
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                     }
 
                     @Override
                     public void onFailure(Call<QueryTopicSettingBean> call, Throwable t) {
                         Log.e(TAG, "onFail我的错误是+" + t.getMessage());
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                     }
 
                 });
@@ -8702,35 +8702,35 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
 
     //MyQuestionBankflag       题库标记和取消标记  提交错题
     public void getMyQuestionBankflag(ImageView questionbank_answerpaper_sign,String tf_collection,String tf_marked,String tf_wrong) {
-        if (mControlMainActivity.mStuId.equals("")){
+        if (mMainContext.mStuId.equals("")){
             if (tf_collection.equals("1")){
-                Toast.makeText(mControlMainActivity, "收藏试题失败", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mMainContext, "收藏试题失败", Toast.LENGTH_SHORT).show();
             } else if (tf_collection.equals("2")){
-                Toast.makeText(mControlMainActivity, "取消收藏试题失败", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mMainContext, "取消收藏试题失败", Toast.LENGTH_SHORT).show();
             } else if (tf_marked.equals("1")){
-                Toast.makeText(mControlMainActivity, "标记试题失败", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mMainContext, "标记试题失败", Toast.LENGTH_SHORT).show();
             } else if (tf_marked.equals("2")){
-                Toast.makeText(mControlMainActivity, "取消标记试题失败", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mMainContext, "取消标记试题失败", Toast.LENGTH_SHORT).show();
             } else if (tf_wrong.equals("2")){
-                Toast.makeText(mControlMainActivity, "提交错题失败", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mMainContext, "提交错题失败", Toast.LENGTH_SHORT).show();
             }
             return;
         }
         if (mCurrentIndex < 0 ){
             if (tf_collection.equals("1")){
-                Toast.makeText(mControlMainActivity, "收藏试题失败", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mMainContext, "收藏试题失败", Toast.LENGTH_SHORT).show();
             } else if (tf_collection.equals("2")){
-                Toast.makeText(mControlMainActivity, "取消收藏试题失败", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mMainContext, "取消收藏试题失败", Toast.LENGTH_SHORT).show();
             } else if (tf_marked.equals("1")){
-                Toast.makeText(mControlMainActivity, "标记试题失败", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mMainContext, "标记试题失败", Toast.LENGTH_SHORT).show();
             } else if (tf_marked.equals("2")){
-                Toast.makeText(mControlMainActivity, "取消标记试题失败", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mMainContext, "取消标记试题失败", Toast.LENGTH_SHORT).show();
             } else if (tf_wrong.equals("2")){
-                Toast.makeText(mControlMainActivity, "提交错题失败", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mMainContext, "提交错题失败", Toast.LENGTH_SHORT).show();
             }
             return;
         }
-        LoadingDialog.getInstance(mControlMainActivity).show();
+        LoadingDialog.getInstance(mMainContext).show();
         Integer question_id = null;
         //字符串分割
         final int[] questionSum = {0};
@@ -8788,34 +8788,34 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
             }
             if (mCurrentIndex >= questionSum[0]) { //不在数组范围直接返回
                 if (tf_collection.equals("1")) {
-                    Toast.makeText(mControlMainActivity, "收藏试题失败", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mMainContext, "收藏试题失败", Toast.LENGTH_SHORT).show();
                 } else if (tf_collection.equals("2")) {
-                    Toast.makeText(mControlMainActivity, "取消收藏试题失败", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mMainContext, "取消收藏试题失败", Toast.LENGTH_SHORT).show();
                 } else if (tf_marked.equals("1")) {
-                    Toast.makeText(mControlMainActivity, "标记试题失败", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mMainContext, "标记试题失败", Toast.LENGTH_SHORT).show();
                 } else if (tf_marked.equals("2")) {
-                    Toast.makeText(mControlMainActivity, "取消标记试题失败", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mMainContext, "取消标记试题失败", Toast.LENGTH_SHORT).show();
                 } else if (tf_wrong.equals("2")){
-                    Toast.makeText(mControlMainActivity, "提交错题失败", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mMainContext, "提交错题失败", Toast.LENGTH_SHORT).show();
                 }
-                LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                LoadingDialog.getInstance(mMainContext).dismiss();
                 return;
             }
         } else if (mMyTestPageIssueDataBeans != null){
             questionSum[0] = mMyTestPageIssueDataBeans.size();
             if (mCurrentIndex >= questionSum[0]) { //不在数组范围直接返回
                 if (tf_collection.equals("1")) {
-                    Toast.makeText(mControlMainActivity, "收藏试题失败", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mMainContext, "收藏试题失败", Toast.LENGTH_SHORT).show();
                 } else if (tf_collection.equals("2")) {
-                    Toast.makeText(mControlMainActivity, "取消收藏试题失败", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mMainContext, "取消收藏试题失败", Toast.LENGTH_SHORT).show();
                 } else if (tf_marked.equals("1")) {
-                    Toast.makeText(mControlMainActivity, "标记试题失败", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mMainContext, "标记试题失败", Toast.LENGTH_SHORT).show();
                 } else if (tf_marked.equals("2")) {
-                    Toast.makeText(mControlMainActivity, "取消标记试题失败", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mMainContext, "取消标记试题失败", Toast.LENGTH_SHORT).show();
                 } else if (tf_wrong.equals("2")){
-                    Toast.makeText(mControlMainActivity, "提交错题失败", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mMainContext, "提交错题失败", Toast.LENGTH_SHORT).show();
                 }
-                LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                LoadingDialog.getInstance(mMainContext).dismiss();
                 return;
             }
             question_id = mMyTestPageIssueDataBeans.get(mCurrentIndex).question_id;
@@ -8823,39 +8823,39 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
             questionSum[0] = mMyFavoriteQuestionDataBeans.size();
             if (mCurrentIndex >= questionSum[0]) { //不在数组范围直接返回
                 if (tf_collection.equals("1")) {
-                    Toast.makeText(mControlMainActivity, "收藏试题失败", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mMainContext, "收藏试题失败", Toast.LENGTH_SHORT).show();
                 } else if (tf_collection.equals("2")) {
-                    Toast.makeText(mControlMainActivity, "取消收藏试题失败", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mMainContext, "取消收藏试题失败", Toast.LENGTH_SHORT).show();
                 } else if (tf_marked.equals("1")) {
-                    Toast.makeText(mControlMainActivity, "标记试题失败", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mMainContext, "标记试题失败", Toast.LENGTH_SHORT).show();
                 } else if (tf_marked.equals("2")) {
-                    Toast.makeText(mControlMainActivity, "取消标记试题失败", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mMainContext, "取消标记试题失败", Toast.LENGTH_SHORT).show();
                 } else if (tf_wrong.equals("2")){
-                    Toast.makeText(mControlMainActivity, "提交错题失败", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mMainContext, "提交错题失败", Toast.LENGTH_SHORT).show();
                 }
-                LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                LoadingDialog.getInstance(mMainContext).dismiss();
                 return;
             }
             question_id = mMyFavoriteQuestionDataBeans.get(mCurrentIndex).question_id;
         }
         if (question_id == null){
             if (tf_collection.equals("1")){
-                Toast.makeText(mControlMainActivity, "收藏试题失败", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mMainContext, "收藏试题失败", Toast.LENGTH_SHORT).show();
             } else if (tf_collection.equals("2")){
-                Toast.makeText(mControlMainActivity, "取消收藏试题失败", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mMainContext, "取消收藏试题失败", Toast.LENGTH_SHORT).show();
             } else if (tf_marked.equals("1")){
-                Toast.makeText(mControlMainActivity, "标记试题失败", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mMainContext, "标记试题失败", Toast.LENGTH_SHORT).show();
             } else if (tf_marked.equals("2")){
-                Toast.makeText(mControlMainActivity, "取消标记试题失败", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mMainContext, "取消标记试题失败", Toast.LENGTH_SHORT).show();
             } else if (tf_wrong.equals("2")){
-                Toast.makeText(mControlMainActivity, "提交错题失败", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mMainContext, "提交错题失败", Toast.LENGTH_SHORT).show();
             }
-            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+            LoadingDialog.getInstance(mMainContext).dismiss();
             return;
         }
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(mControlMainActivity.mIpadress)
+                .baseUrl(mMainContext.mIpadress)
                 .client(ModelObservableInterface.client)
                 .build();
         ModelObservableInterface queryMyCourseList = retrofit.create(ModelObservableInterface.class);
@@ -8865,7 +8865,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
         if (!tf_collection.equals("")) {
             paramsMap.put("tf_collection", tf_collection);
         }
-        paramsMap.put("stu_id", mControlMainActivity.mStuId);
+        paramsMap.put("stu_id", mMainContext.mStuId);
         if (!tf_marked.equals("")) {
             paramsMap.put("tf_marked", tf_marked);
         }
@@ -8893,51 +8893,51 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                         ModelObservableInterface.BaseBean baseBean = response.body();
                         if (baseBean == null) {
                             if (tf_collection.equals("1")){
-                                Toast.makeText(mControlMainActivity, "收藏试题失败", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(mMainContext, "收藏试题失败", Toast.LENGTH_SHORT).show();
                             } else if (tf_collection.equals("2")){
-                                Toast.makeText(mControlMainActivity, "取消收藏试题失败", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(mMainContext, "取消收藏试题失败", Toast.LENGTH_SHORT).show();
                             } else if (tf_marked.equals("1")){
-                                Toast.makeText(mControlMainActivity, "标记试题失败", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(mMainContext, "标记试题失败", Toast.LENGTH_SHORT).show();
                             } else if (tf_marked.equals("2")){
-                                Toast.makeText(mControlMainActivity, "取消标记试题失败", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(mMainContext, "取消标记试题失败", Toast.LENGTH_SHORT).show();
                             } else if (tf_wrong.equals("2")){
-                                Toast.makeText(mControlMainActivity, "提交错题失败", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(mMainContext, "提交错题失败", Toast.LENGTH_SHORT).show();
                             }
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         if (!HeaderInterceptor.IsErrorCode(baseBean.getErrorCode(),baseBean.getErrorMsg())){
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         if (baseBean.getErrorCode() != 200){
                             if (tf_collection.equals("1")){
-                                Toast.makeText(mControlMainActivity, "收藏试题失败", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(mMainContext, "收藏试题失败", Toast.LENGTH_SHORT).show();
                             } else if (tf_collection.equals("2")){
-                                Toast.makeText(mControlMainActivity, "取消收藏试题失败", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(mMainContext, "取消收藏试题失败", Toast.LENGTH_SHORT).show();
                             } else if (tf_marked.equals("1")){
-                                Toast.makeText(mControlMainActivity, "标记试题失败", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(mMainContext, "标记试题失败", Toast.LENGTH_SHORT).show();
                             } else if (tf_marked.equals("2")){
-                                Toast.makeText(mControlMainActivity, "取消标记试题失败", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(mMainContext, "取消标记试题失败", Toast.LENGTH_SHORT).show();
                             } else if (tf_wrong.equals("2")){
-                                Toast.makeText(mControlMainActivity, "提交错题失败", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(mMainContext, "提交错题失败", Toast.LENGTH_SHORT).show();
                             }
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         if (mCurrentIndex < 0 ){
                             if (tf_collection.equals("1")){
-                                Toast.makeText(mControlMainActivity, "收藏试题失败", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(mMainContext, "收藏试题失败", Toast.LENGTH_SHORT).show();
                             } else if (tf_collection.equals("2")){
-                                Toast.makeText(mControlMainActivity, "取消收藏试题失败", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(mMainContext, "取消收藏试题失败", Toast.LENGTH_SHORT).show();
                             } else if (tf_marked.equals("1")){
-                                Toast.makeText(mControlMainActivity, "标记试题失败", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(mMainContext, "标记试题失败", Toast.LENGTH_SHORT).show();
                             } else if (tf_marked.equals("2")){
-                                Toast.makeText(mControlMainActivity, "取消标记试题失败", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(mMainContext, "取消标记试题失败", Toast.LENGTH_SHORT).show();
                             } else if (tf_wrong.equals("2")){
-                                Toast.makeText(mControlMainActivity, "提交错题失败", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(mMainContext, "提交错题失败", Toast.LENGTH_SHORT).show();
                             }
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         if (tf_collection.equals("1")){
@@ -8945,29 +8945,29 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                                 questionbank_answerpaper_sign.setBackground(mModelQuestionBankView.getResources().getDrawable(R.drawable.button_collect_enable));
                             }
                             mIsCollect = true;
-                            Toast.makeText(mControlMainActivity, "收藏试题成功", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(mMainContext, "收藏试题成功", Toast.LENGTH_SHORT).show();
                         } else if (tf_collection.equals("2")){
                             if (questionbank_answerpaper_sign != null) {
                                 questionbank_answerpaper_sign.setBackground(mModelQuestionBankView.getResources().getDrawable(R.drawable.button_collect_disable_black));
                             }
                             mIsCollect = false;
-                            Toast.makeText(mControlMainActivity, "取消收藏试题成功", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(mMainContext, "取消收藏试题成功", Toast.LENGTH_SHORT).show();
                         } else if (tf_marked.equals("1")){
                             if (questionbank_answerpaper_sign != null) {
                                 questionbank_answerpaper_sign.setBackground(mModelQuestionBankView.getResources().getDrawable(R.drawable.button_questionbank_sign_blue));
                             }
                             mIsSign = true;
-                            Toast.makeText(mControlMainActivity, "标记试题成功", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(mMainContext, "标记试题成功", Toast.LENGTH_SHORT).show();
                         } else if (tf_marked.equals("2")){
                             if (questionbank_answerpaper_sign != null) {
                                 questionbank_answerpaper_sign.setBackground(mModelQuestionBankView.getResources().getDrawable(R.drawable.button_questionbank_sign));
                             }
                             mIsSign = false;
-                            Toast.makeText(mControlMainActivity, "取消标记试题成功", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(mMainContext, "取消标记试题成功", Toast.LENGTH_SHORT).show();
                         } else if (tf_wrong.equals("2")){
                             TextView questionbank_wrongquestion_questioncount = mModelQuestionBankWrongQuestionView.findViewById(R.id.questionbank_wrongquestion_questioncount);
                             if (questionbank_wrongquestion_questioncount.getText().toString().equals("" + mMyFavoriteQuestionDataBeans.size())) {
-//                                Toast.makeText(mControlMainActivity, "此题已经是最后一道题啦", Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(mMainContext, "此题已经是最后一道题啦", Toast.LENGTH_SHORT).show();
                                 mMyFavoriteQuestionDataBeans.remove(mCurrentIndex);
                                 mCurrentIndex = mCurrentIndex - 1;
                                 WrongQuestionViewAdd(questionbank_answerpaper_sign);
@@ -8976,8 +8976,8 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
 //                                mCurrentIndex = mCurrentIndex + 1;
                                 WrongQuestionViewAdd(questionbank_answerpaper_sign);
                             }
-                            Toast.makeText(mControlMainActivity, "提交错题成功", Toast.LENGTH_SHORT).show();
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            Toast.makeText(mMainContext, "提交错题成功", Toast.LENGTH_SHORT).show();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         //字符串分割
@@ -8989,7 +8989,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                                     } else if (tf_marked.equals("1") || tf_marked.equals("2")) {
                                         mMyQuestionBankExercisesBean.danxuantiQuestion.get(mCurrentIndex).tf_marked = Integer.valueOf(tf_marked);
                                     }
-                                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                                    LoadingDialog.getInstance(mMainContext).dismiss();
                                     return;
                                 }
                             }
@@ -9005,7 +9005,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                                         } else if (tf_marked.equals("1") || tf_marked.equals("2")) {
                                             mMyQuestionBankExercisesBean.duoxuantiQuestion.get(count).tf_marked = Integer.valueOf(tf_marked);
                                         }
-                                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                                        LoadingDialog.getInstance(mMainContext).dismiss();
                                         return;
                                     }
                                 }
@@ -9025,7 +9025,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                                         } else if (tf_marked.equals("1") || tf_marked.equals("2")) {
                                             mMyQuestionBankExercisesBean.jinadatitiQuestion.get(count).tf_marked = Integer.valueOf(tf_marked);
                                         }
-                                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                                        LoadingDialog.getInstance(mMainContext).dismiss();
                                         return;
                                     }
                                 }
@@ -9048,7 +9048,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                                         } else if (tf_marked.equals("1") || tf_marked.equals("2")) {
                                             mMyQuestionBankExercisesBean.cailiaotiQuestion.get(count).tf_marked = Integer.valueOf(tf_marked);
                                         }
-                                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                                        LoadingDialog.getInstance(mMainContext).dismiss();
                                         return;
                                     }
                                 }
@@ -9070,39 +9070,39 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                                 }
                             }
                         }
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                     }
 
                     @Override
                     public void onFailure(Call<ModelObservableInterface.BaseBean> call, Throwable t) {
                         Log.e(TAG, "onFailure: " + t.getMessage());
                         if (tf_collection.equals("1")){
-                            Toast.makeText(mControlMainActivity, "收藏试题失败", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(mMainContext, "收藏试题失败", Toast.LENGTH_SHORT).show();
                         } else if (tf_collection.equals("2")){
-                            Toast.makeText(mControlMainActivity, "取消收藏试题失败", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(mMainContext, "取消收藏试题失败", Toast.LENGTH_SHORT).show();
                         } else if (tf_marked.equals("1")){
-                            Toast.makeText(mControlMainActivity, "标记试题失败", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(mMainContext, "标记试题失败", Toast.LENGTH_SHORT).show();
                         } else if (tf_marked.equals("2")){
-                            Toast.makeText(mControlMainActivity, "取消标记试题失败", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(mMainContext, "取消标记试题失败", Toast.LENGTH_SHORT).show();
                         } else if (tf_wrong.equals("2")){
-                            Toast.makeText(mControlMainActivity, "提交错题失败", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(mMainContext, "提交错题失败", Toast.LENGTH_SHORT).show();
                         }
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                     }
                 });
     }
 
     //题库 交卷接口
     public void getQuestionBankHandInBean(int state,double used_answer_time) {
-        if (mAnswer_Id == null ||mControlMainActivity.mStuId.equals("") || mMyQuestionBankExercisesBean == null){
+        if (mAnswer_Id == null ||mMainContext.mStuId.equals("") || mMyQuestionBankExercisesBean == null){
             if (state == 1){
-                Toast.makeText(mControlMainActivity,"交卷失败！",Toast.LENGTH_SHORT).show();
+                Toast.makeText(mMainContext,"交卷失败！",Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(mControlMainActivity,"做题记录提交失败！",Toast.LENGTH_SHORT).show();
+                Toast.makeText(mMainContext,"做题记录提交失败！",Toast.LENGTH_SHORT).show();
             }
             return;
         }
-        LoadingDialog.getInstance(mControlMainActivity).show();
+        LoadingDialog.getInstance(mMainContext).show();
         String error_num = "";
         if (mMyQuestionBankExercisesBean.danxuantiQuestion != null) {
             for (int num = 0; num < mMyQuestionBankExercisesBean.danxuantiQuestion.size(); num++) {
@@ -9225,7 +9225,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
         }
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(mControlMainActivity.mIpadress)
+                .baseUrl(mMainContext.mIpadress)
                 .client(ModelObservableInterface.client)
                 .build();
         ModelObservableInterface queryMyCourseList = retrofit.create(ModelObservableInterface.class);
@@ -9238,7 +9238,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                 ",\"error_num\":\"" + error_num +
                 "\",\"state\":" + state +   //1已完成,2正在答题
                 ",\"used_answer_time\":" + used_answer_time +
-                ",\"stu_id\":" + mControlMainActivity.mStuId +
+                ",\"stu_id\":" + mMainContext.mStuId +
                 "}";
         RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json;charset=UTF-8"), strEntity);
         queryMyCourseList.queryMyQuestionBankHandIn(body)
@@ -9248,61 +9248,61 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                         ModelObservableInterface.BaseBean baseBean = response.body();
                         if (baseBean == null){
                             if (state == 1){
-                                Toast.makeText(mControlMainActivity,"交卷失败！",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(mMainContext,"交卷失败！",Toast.LENGTH_SHORT).show();
                             } else {
-                                Toast.makeText(mControlMainActivity,"做题记录提交失败！",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(mMainContext,"做题记录提交失败！",Toast.LENGTH_SHORT).show();
                             }
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         if (!HeaderInterceptor.IsErrorCode(baseBean.getErrorCode(),baseBean.getErrorMsg())){
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         if (baseBean.getErrorCode() != 200){
                             if (state == 1){
-                                Toast.makeText(mControlMainActivity,"交卷失败！",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(mMainContext,"交卷失败！",Toast.LENGTH_SHORT).show();
                             } else {
-                                Toast.makeText(mControlMainActivity,"做题记录提交失败！",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(mMainContext,"做题记录提交失败！",Toast.LENGTH_SHORT).show();
                             }
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
 
                         if (state == 1){
-                            Toast.makeText(mControlMainActivity,"交卷成功！",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(mMainContext,"交卷成功！",Toast.LENGTH_SHORT).show();
                             mTestPageIssueDataScore = "";
                             getQuestionBankAnswerSheet(2);
                         } else {
-                            Toast.makeText(mControlMainActivity,"做题记录提交成功！",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(mMainContext,"做题记录提交成功！",Toast.LENGTH_SHORT).show();
                         }
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                     }
 
                     @Override
                     public void onFailure(Call<ModelObservableInterface.BaseBean> call, Throwable t) {
                         Log.e(TAG, "onFailure: " + t.getMessage());
                         if (state == 1){
-                            Toast.makeText(mControlMainActivity,"交卷失败！",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(mMainContext,"交卷失败！",Toast.LENGTH_SHORT).show();
                         } else {
-                            Toast.makeText(mControlMainActivity,"做题记录提交失败！",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(mMainContext,"做题记录提交失败！",Toast.LENGTH_SHORT).show();
                         }
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                     }
                 });
     }
 
     //题库-考试 交卷接口
     public void getQuestionBankHandInTestPaperBean(int state,double used_answer_time) {
-        if (mAnswer_Id == null ||mControlMainActivity.mStuId.equals("") || mMyTestPageIssueDataBeans == null){
+        if (mAnswer_Id == null ||mMainContext.mStuId.equals("") || mMyTestPageIssueDataBeans == null){
             if (state == 1){
-                Toast.makeText(mControlMainActivity,"交卷失败！",Toast.LENGTH_SHORT).show();
+                Toast.makeText(mMainContext,"交卷失败！",Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(mControlMainActivity,"做题记录提交失败！",Toast.LENGTH_SHORT).show();
+                Toast.makeText(mMainContext,"做题记录提交失败！",Toast.LENGTH_SHORT).show();
             }
             return;
         }
-        LoadingDialog.getInstance(mControlMainActivity).show();
+        LoadingDialog.getInstance(mMainContext).show();
         float score = 0;
         String error_num = "";
         if (mTestPageIssueDataTypeScore == null){
@@ -9413,7 +9413,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
         }
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(mControlMainActivity.mIpadress)
+                .baseUrl(mMainContext.mIpadress)
                 .client(ModelObservableInterface.client)
                 .build();
         ModelObservableInterface queryMyCourseList = retrofit.create(ModelObservableInterface.class);
@@ -9427,7 +9427,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                 ",\"error_num\":\"" + error_num +
                 "\",\"state\":" + state +   //1已完成,2正在答题
                 ",\"used_answer_time\":" + used_answer_time +
-                ",\"stu_id\":" + mControlMainActivity.mStuId +
+                ",\"stu_id\":" + mMainContext.mStuId +
                 "}";
         mTestPageIssueDataScore = String.valueOf(score);
         RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json;charset=UTF-8"), strEntity);
@@ -9438,45 +9438,45 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                         ModelObservableInterface.BaseBean baseBean = response.body();
                         if (baseBean == null){
                             if (state == 1){
-                                Toast.makeText(mControlMainActivity,"交卷失败！",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(mMainContext,"交卷失败！",Toast.LENGTH_SHORT).show();
                             } else {
-                                Toast.makeText(mControlMainActivity,"做题记录提交失败！",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(mMainContext,"做题记录提交失败！",Toast.LENGTH_SHORT).show();
                             }
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         if (!HeaderInterceptor.IsErrorCode(baseBean.getErrorCode(),baseBean.getErrorMsg())){
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         if (baseBean.getErrorCode() != 200){
                             if (state == 1){
-                                Toast.makeText(mControlMainActivity,"交卷失败！",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(mMainContext,"交卷失败！",Toast.LENGTH_SHORT).show();
                             } else {
-                                Toast.makeText(mControlMainActivity,"做题记录提交失败！",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(mMainContext,"做题记录提交失败！",Toast.LENGTH_SHORT).show();
                             }
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
 
                         if (state == 1){
-                            Toast.makeText(mControlMainActivity,"交卷成功！",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(mMainContext,"交卷成功！",Toast.LENGTH_SHORT).show();
                             getQuestionBankAnswerSheet(2);
                         } else {
-                            Toast.makeText(mControlMainActivity,"做题记录提交成功！",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(mMainContext,"做题记录提交成功！",Toast.LENGTH_SHORT).show();
                         }
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                     }
 
                     @Override
                     public void onFailure(Call<ModelObservableInterface.BaseBean> call, Throwable t) {
                         Log.e(TAG, "onFailure: " + t.getMessage());
                         if (state == 1){
-                            Toast.makeText(mControlMainActivity,"交卷失败！",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(mMainContext,"交卷失败！",Toast.LENGTH_SHORT).show();
                         } else {
-                            Toast.makeText(mControlMainActivity,"做题记录提交失败！",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(mMainContext,"做题记录提交失败！",Toast.LENGTH_SHORT).show();
                         }
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                     }
                 });
     }
@@ -9908,14 +9908,14 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
 
     //题库-出题   练习模式
     public void getqueryMyQuestionBankIssue() {
-        if (mControlMainActivity.mStuId.equals("") || mChapter_test_point_id == null){
-            Toast.makeText(mControlMainActivity,"出题失败！",Toast.LENGTH_SHORT).show();
+        if (mMainContext.mStuId.equals("") || mChapter_test_point_id == null){
+            Toast.makeText(mMainContext,"出题失败！",Toast.LENGTH_SHORT).show();
             return;
         }
-        LoadingDialog.getInstance(mControlMainActivity).show();
+        LoadingDialog.getInstance(mMainContext).show();
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(mControlMainActivity.mIpadress)
+                .baseUrl(mMainContext.mIpadress)
                 .client(ModelObservableInterface.client)
                 .build();
         ModelObservableInterface modelObservableInterface = retrofit.create(ModelObservableInterface.class);
@@ -9949,7 +9949,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
             questionNum = "100";
         }
         String strEntity = "{" +
-                " \"stu_id\": " + mControlMainActivity.mStuId +
+                " \"stu_id\": " + mMainContext.mStuId +
                 ",\"chapter_test_point_id\": " + mChapter_test_point_id +
                 ",\"question_type_group\":\"" + question_type_group +
                 "\",\"classification\":" + classification +
@@ -9964,35 +9964,35 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                     public void onResponse(Call<MyQuestionBankExercises> call, Response<MyQuestionBankExercises> response) {
                         MyQuestionBankExercises myQuestionBankExercises = response.body();
                         if (myQuestionBankExercises == null){
-                            Toast.makeText(mControlMainActivity,"出题失败！",Toast.LENGTH_SHORT).show();
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            Toast.makeText(mMainContext,"出题失败！",Toast.LENGTH_SHORT).show();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         int code = myQuestionBankExercises.code;
                         if (!HeaderInterceptor.IsErrorCode(myQuestionBankExercises.code,myQuestionBankExercises.msg)){
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         if (code != 200){
-                            Toast.makeText(mControlMainActivity,"出题失败！",Toast.LENGTH_SHORT).show();
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            Toast.makeText(mMainContext,"出题失败！",Toast.LENGTH_SHORT).show();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         if (myQuestionBankExercises.answer_id == null){
-                            Toast.makeText(mControlMainActivity,"出题失败！",Toast.LENGTH_SHORT).show();
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            Toast.makeText(mMainContext,"出题失败！",Toast.LENGTH_SHORT).show();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         if (myQuestionBankExercises.answer_id.equals("")){
-                            Toast.makeText(mControlMainActivity,"出题失败！",Toast.LENGTH_SHORT).show();
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            Toast.makeText(mMainContext,"出题失败！",Toast.LENGTH_SHORT).show();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         mAnswer_Id = Integer.valueOf(myQuestionBankExercises.answer_id);
                         mMyQuestionBankExercisesBean = myQuestionBankExercises.data;
                         if (mMyQuestionBankExercisesBean == null){
-                            Toast.makeText(mControlMainActivity,"出题失败！",Toast.LENGTH_SHORT).show();
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            Toast.makeText(mMainContext,"出题失败！",Toast.LENGTH_SHORT).show();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         mMyQuestionBankExercisesAnswerMap.clear();
@@ -10003,26 +10003,26 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                         mCurrentIndex = 0;
                         mTime = 0;
                         QuestionBankDetailsQuestionModeTestShow();
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                     }
 
                     @Override
                     public void onFailure(Call<MyQuestionBankExercises> call, Throwable t) {
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                     }
                 });
     }
 
     //题库-出题   考试模式
     public void getqueryMyQuestionBankExamIssue() {
-        if (mControlMainActivity.mStuId.equals("") || mChapter_test_point_id == null){
-            Toast.makeText(mControlMainActivity,"出题失败！",Toast.LENGTH_SHORT).show();
+        if (mMainContext.mStuId.equals("") || mChapter_test_point_id == null){
+            Toast.makeText(mMainContext,"出题失败！",Toast.LENGTH_SHORT).show();
             return;
         }
-        LoadingDialog.getInstance(mControlMainActivity).show();
+        LoadingDialog.getInstance(mMainContext).show();
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(mControlMainActivity.mIpadress)
+                .baseUrl(mMainContext.mIpadress)
                 .client(ModelObservableInterface.client)
                 .build();
         ModelObservableInterface modelObservableInterface = retrofit.create(ModelObservableInterface.class);
@@ -10056,7 +10056,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
             questionNum = "100";
         }
         String strEntity = "{" +
-                " \"stu_id\": " + mControlMainActivity.mStuId +
+                " \"stu_id\": " + mMainContext.mStuId +
                 ",\"chapter_test_point_id\": " + mChapter_test_point_id +
                 ",\"question_type_group\":\"" + question_type_group +
                 "\",\"classification\":" + classification +
@@ -10071,35 +10071,35 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                     public void onResponse(Call<MyQuestionBankExercises> call, Response<MyQuestionBankExercises> response) {
                         MyQuestionBankExercises myQuestionBankExercises = response.body();
                         if (myQuestionBankExercises == null){
-                            Toast.makeText(mControlMainActivity,"出题失败！",Toast.LENGTH_SHORT).show();
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            Toast.makeText(mMainContext,"出题失败！",Toast.LENGTH_SHORT).show();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         if (!HeaderInterceptor.IsErrorCode(myQuestionBankExercises.code,myQuestionBankExercises.msg)){
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         int code = myQuestionBankExercises.code;
                         if (code != 200){
-                            Toast.makeText(mControlMainActivity,"出题失败！",Toast.LENGTH_SHORT).show();
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            Toast.makeText(mMainContext,"出题失败！",Toast.LENGTH_SHORT).show();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         if (myQuestionBankExercises.answer_id == null){
-                            Toast.makeText(mControlMainActivity,"出题失败！",Toast.LENGTH_SHORT).show();
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            Toast.makeText(mMainContext,"出题失败！",Toast.LENGTH_SHORT).show();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         if (myQuestionBankExercises.answer_id.equals("")){
-                            Toast.makeText(mControlMainActivity,"出题失败！",Toast.LENGTH_SHORT).show();
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            Toast.makeText(mMainContext,"出题失败！",Toast.LENGTH_SHORT).show();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         mAnswer_Id = Integer.valueOf(myQuestionBankExercises.answer_id);
                         mMyQuestionBankExercisesBean = myQuestionBankExercises.data;
                         if (mMyQuestionBankExercisesBean == null){
-                            Toast.makeText(mControlMainActivity,"出题失败！",Toast.LENGTH_SHORT).show();
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            Toast.makeText(mMainContext,"出题失败！",Toast.LENGTH_SHORT).show();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         mMyQuestionBankExercisesAnswerMap.clear();
@@ -10110,31 +10110,31 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                         mCurrentIndex = 0;
                         mTime = 0;
                         QuestionBankDetailsQuestionModeExamShow();
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                     }
 
                     @Override
                     public void onFailure(Call<MyQuestionBankExercises> call, Throwable t) {
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                     }
                 });
     }
 
     //题库-试卷出题
     public void getQueryTestPageIssue(String test_paper_name,Integer test_paper_id) {
-        if (mControlMainActivity.mStuId.equals("") || mIbs_id.equals("")){
-            Toast.makeText(mControlMainActivity, "出题失败", Toast.LENGTH_SHORT).show();
+        if (mMainContext.mStuId.equals("") || mIbs_id.equals("")){
+            Toast.makeText(mMainContext, "出题失败", Toast.LENGTH_SHORT).show();
             return;
         }
-        LoadingDialog.getInstance(mControlMainActivity).show();
+        LoadingDialog.getInstance(mMainContext).show();
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(mControlMainActivity.mIpadress)
+                .baseUrl(mMainContext.mIpadress)
                 .client(ModelObservableInterface.client)
                 .build();
         ModelObservableInterface modelObservableInterface = retrofit.create(ModelObservableInterface.class);
         String strEntity = "{" +
-                " \"stu_id\": " + mControlMainActivity.mStuId +
+                " \"stu_id\": " + mMainContext.mStuId +
                 ",\"test_paper_id\": " + test_paper_id +
                 "}";
         RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json;charset=UTF-8"), strEntity);
@@ -10145,36 +10145,36 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                     public void onResponse(Call<MyTestPageIssueBean> call, Response<MyTestPageIssueBean> response) {
                         MyTestPageIssueBean myTestPageIssueBean = response.body();
                         if (myTestPageIssueBean == null){
-                            Toast.makeText(mControlMainActivity,"出题失败！",Toast.LENGTH_SHORT).show();
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            Toast.makeText(mMainContext,"出题失败！",Toast.LENGTH_SHORT).show();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         if (!HeaderInterceptor.IsErrorCode(myTestPageIssueBean.code,myTestPageIssueBean.msg)){
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         int code = myTestPageIssueBean.code;
                         if (code != 200){
-                            Toast.makeText(mControlMainActivity,"出题失败！",Toast.LENGTH_SHORT).show();
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            Toast.makeText(mMainContext,"出题失败！",Toast.LENGTH_SHORT).show();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         if (myTestPageIssueBean.answer_id == null){
-                            Toast.makeText(mControlMainActivity,"出题失败！",Toast.LENGTH_SHORT).show();
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            Toast.makeText(mMainContext,"出题失败！",Toast.LENGTH_SHORT).show();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         if (myTestPageIssueBean.answer_id.equals("")){
-                            Toast.makeText(mControlMainActivity,"出题失败！",Toast.LENGTH_SHORT).show();
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            Toast.makeText(mMainContext,"出题失败！",Toast.LENGTH_SHORT).show();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         mAnswer_Id = Integer.valueOf(myTestPageIssueBean.answer_id);
                         mMyTestPageIssueDataBeans = myTestPageIssueBean.data;
                         mTestPageIssueDataTypeScore = myTestPageIssueBean.question_type_score;
                         if (mMyTestPageIssueDataBeans == null){
-                            Toast.makeText(mControlMainActivity,"出题失败！",Toast.LENGTH_SHORT).show();
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            Toast.makeText(mMainContext,"出题失败！",Toast.LENGTH_SHORT).show();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         mMyQuestionBankExercisesAnswerMap.clear();
@@ -10186,31 +10186,31 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                         mTime = myTestPageIssueBean.answer_time * 60;
                         mCurrentChapterName = test_paper_name;
                         QuestionBankDetailsQuestionModeTestPaperShow();
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                     }
 
                     @Override
                     public void onFailure(Call<MyTestPageIssueBean> call, Throwable t) {
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                     }
                 });
     }
 
     //题库-快速出题
     public void getqueryMyQuestionBankQuickIssue() {
-        if (mControlMainActivity.mStuId.equals("") || mIbs_id.equals("")){
-            Toast.makeText(mControlMainActivity, "出题失败", Toast.LENGTH_SHORT).show();
+        if (mMainContext.mStuId.equals("") || mIbs_id.equals("")){
+            Toast.makeText(mMainContext, "出题失败", Toast.LENGTH_SHORT).show();
             return;
         }
-        LoadingDialog.getInstance(mControlMainActivity).show();
+        LoadingDialog.getInstance(mMainContext).show();
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(mControlMainActivity.mIpadress)
+                .baseUrl(mMainContext.mIpadress)
                 .client(ModelObservableInterface.client)
                 .build();
         ModelObservableInterface modelObservableInterface = retrofit.create(ModelObservableInterface.class);
         String strEntity = "{" +
-                " \"stu_id\": " + mControlMainActivity.mStuId +
+                " \"stu_id\": " + mMainContext.mStuId +
                 ",\"ibs_id\": " + mIbs_id +
                 "}";
         RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json;charset=UTF-8"), strEntity);
@@ -10221,35 +10221,35 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                     public void onResponse(Call<MyQuestionBankExercises> call, Response<MyQuestionBankExercises> response) {
                         MyQuestionBankExercises myQuestionBankExercises = response.body();
                         if (myQuestionBankExercises == null){
-                            Toast.makeText(mControlMainActivity,"出题失败！",Toast.LENGTH_SHORT).show();
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            Toast.makeText(mMainContext,"出题失败！",Toast.LENGTH_SHORT).show();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         if (!HeaderInterceptor.IsErrorCode(myQuestionBankExercises.code,myQuestionBankExercises.msg)){
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         int code = myQuestionBankExercises.code;
                         if (code != 200){
-                            Toast.makeText(mControlMainActivity,"出题失败！",Toast.LENGTH_SHORT).show();
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            Toast.makeText(mMainContext,"出题失败！",Toast.LENGTH_SHORT).show();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         if (myQuestionBankExercises.answer_id == null){
-                            Toast.makeText(mControlMainActivity,"出题失败！",Toast.LENGTH_SHORT).show();
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            Toast.makeText(mMainContext,"出题失败！",Toast.LENGTH_SHORT).show();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         if (myQuestionBankExercises.answer_id.equals("")){
-                            Toast.makeText(mControlMainActivity,"出题失败！",Toast.LENGTH_SHORT).show();
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            Toast.makeText(mMainContext,"出题失败！",Toast.LENGTH_SHORT).show();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         mAnswer_Id = Integer.valueOf(myQuestionBankExercises.answer_id);
                         mMyQuestionBankExercisesBean = myQuestionBankExercises.data;
                         if (mMyQuestionBankExercisesBean == null){
-                            Toast.makeText(mControlMainActivity,"出题失败！",Toast.LENGTH_SHORT).show();
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            Toast.makeText(mMainContext,"出题失败！",Toast.LENGTH_SHORT).show();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         mMyQuestionBankExercisesAnswerMap.clear();
@@ -10261,12 +10261,12 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                         mTime = 0;
                         mCurrentChapterName = "快速做题";
                         QuestionBankDetailsQuestionModeExamShow();
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                     }
 
                     @Override
                     public void onFailure(Call<MyQuestionBankExercises> call, Throwable t) {
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                     }
                 });
     }
@@ -10274,19 +10274,19 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
     //题库----查看试卷
     public void getQuestionBankTestPaper() {
         if (mIbs_id.equals("")){
-            Toast.makeText(mControlMainActivity,"查询试卷列表失败",Toast.LENGTH_SHORT).show();
+            Toast.makeText(mMainContext,"查询试卷列表失败",Toast.LENGTH_SHORT).show();
             questionbank_sub_details_content = mModelQuestionBankDetailsView.findViewById(R.id.questionbank_sub_details_content);
             questionbank_sub_details_content.removeAllViews();
-            View view3 = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_pointout, null);
+            View view3 = LayoutInflater.from(mMainContext).inflate(R.layout.model_pointout, null);
             questionbank_sub_details_content.addView(view3);
             return;
         }
-        LoadingDialog.getInstance(mControlMainActivity).show();
+        LoadingDialog.getInstance(mMainContext).show();
         questionbank_sub_details_content = mModelQuestionBankDetailsView.findViewById(R.id.questionbank_sub_details_content);
         questionbank_sub_details_content.removeAllViews();
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(mControlMainActivity.mIpadress)
+                .baseUrl(mMainContext.mIpadress)
                 .client(ModelObservableInterface.client)
                 .build();
         ModelObservableInterface queryMyCourseList = retrofit.create(ModelObservableInterface.class);
@@ -10302,38 +10302,38 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                     public void onResponse(Call<QuestionBankTestPaperBean> call, Response<QuestionBankTestPaperBean> response) {
                         QuestionBankTestPaperBean testPaperBean = response.body();
                         if (testPaperBean == null) {
-                            View view3 = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_pointout, null);
+                            View view3 = LayoutInflater.from(mMainContext).inflate(R.layout.model_pointout, null);
                             questionbank_sub_details_content.addView(view3);
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
-                            Toast.makeText(mControlMainActivity,"查询试卷列表失败",Toast.LENGTH_SHORT).show();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
+                            Toast.makeText(mMainContext,"查询试卷列表失败",Toast.LENGTH_SHORT).show();
                             return;
                         }
                         if (!HeaderInterceptor.IsErrorCode(testPaperBean.code,"")){
-                            View view3 = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_pointout, null);
+                            View view3 = LayoutInflater.from(mMainContext).inflate(R.layout.model_pointout, null);
                             questionbank_sub_details_content.addView(view3);
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         if (testPaperBean.code == 214){
-                            View view3 = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_pointout, null);
+                            View view3 = LayoutInflater.from(mMainContext).inflate(R.layout.model_pointout, null);
                             questionbank_sub_details_content.addView(view3);
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
-                            Toast.makeText(mControlMainActivity,"暂无模拟真题",Toast.LENGTH_SHORT).show();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
+                            Toast.makeText(mMainContext,"暂无模拟真题",Toast.LENGTH_SHORT).show();
                             return;
                         }
                         if (testPaperBean.code != 200){
-                            View view3 = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_pointout, null);
+                            View view3 = LayoutInflater.from(mMainContext).inflate(R.layout.model_pointout, null);
                             questionbank_sub_details_content.addView(view3);
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
-                            Toast.makeText(mControlMainActivity,"查询试卷列表失败",Toast.LENGTH_SHORT).show();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
+                            Toast.makeText(mMainContext,"查询试卷列表失败",Toast.LENGTH_SHORT).show();
                             return;
                         }
                         List<QuestionBankTestPaperBean.QuestionBankTestPaperDataBean> questionBankTestPaperDataBeans = testPaperBean.data;
                         if (questionBankTestPaperDataBeans == null){
-                            View view3 = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_pointout, null);
+                            View view3 = LayoutInflater.from(mMainContext).inflate(R.layout.model_pointout, null);
                             questionbank_sub_details_content.addView(view3);
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
-                            Toast.makeText(mControlMainActivity,"查询试卷列表失败",Toast.LENGTH_SHORT).show();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
+                            Toast.makeText(mMainContext,"查询试卷列表失败",Toast.LENGTH_SHORT).show();
                             return;
                         }
                         for (int i = 0; i < questionBankTestPaperDataBeans.size(); i ++){
@@ -10342,7 +10342,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                                 continue;
                             }
                             //模拟真题界面
-                            View view = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_sub_detials_simulate, null);
+                            View view = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank_sub_detials_simulate, null);
                             //模拟真题界面-name   title标题
                             TextView questionbank_simulated_name = view.findViewById(R.id.questionbank_simulated_name);
                             questionbank_simulated_name.setText(questionBankTestPaperDataBean.test_paper_name);
@@ -10359,7 +10359,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                             questionbank_simulated_go.setOnClickListener(v -> {
 //                                if (myQuestionBankGoonDataBeans != null){
 //                                    if (myQuestionBankGoonDataBeans.size() != 0) {
-//                                        Toast.makeText(mControlMainActivity, "您有未完成的试卷，请继续答题或提交未完成的试卷！", Toast.LENGTH_SHORT).show();
+//                                        Toast.makeText(mMainContext, "您有未完成的试卷，请继续答题或提交未完成的试卷！", Toast.LENGTH_SHORT).show();
 //                                        return;
 //                                    }
 //                                }
@@ -10372,7 +10372,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                             questionbank_simulated_goimage.setOnClickListener(v -> {
 //                                if (myQuestionBankGoonDataBeans != null){
 //                                    if (myQuestionBankGoonDataBeans.size() != 0) {
-//                                        Toast.makeText(mControlMainActivity, "您有未完成的试卷，请继续答题或提交未完成的试卷！", Toast.LENGTH_SHORT).show();
+//                                        Toast.makeText(mMainContext, "您有未完成的试卷，请继续答题或提交未完成的试卷！", Toast.LENGTH_SHORT).show();
 //                                        return;
 //                                    }
 //                                }
@@ -10381,16 +10381,16 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                             });
                             questionbank_sub_details_content.addView(view);
                         }
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                     }
 
                     @Override
                     public void onFailure(Call<QuestionBankTestPaperBean> call, Throwable t) {
                         Log.e(TAG, "onFailure: " + t.getMessage());
-                        View view3 = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_pointout, null);
+                        View view3 = LayoutInflater.from(mMainContext).inflate(R.layout.model_pointout, null);
                         questionbank_sub_details_content.addView(view3);
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
-                        Toast.makeText(mControlMainActivity,"查询试卷列表失败",Toast.LENGTH_SHORT).show();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
+                        Toast.makeText(mMainContext,"查询试卷列表失败",Toast.LENGTH_SHORT).show();
                         return;
                     }
                 });
@@ -10398,23 +10398,23 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
 
     //我的题库----题库列表   网络请求
     public void MyQuestionBankBeanList() {
-        if (mControlMainActivity.mStuId.equals("")){
+        if (mMainContext.mStuId.equals("")){
             if (mSmart_model_questionbank != null){
                 mSmart_model_questionbank.finishRefresh();
             }
             return;
         }
-        LoadingDialog.getInstance(mControlMainActivity).show();
+        LoadingDialog.getInstance(mMainContext).show();
         mIsMore = false;
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(mControlMainActivity.mIpadress)
+                .baseUrl(mMainContext.mIpadress)
                 .client(ModelObservableInterface.client)
                 .build();
         ModelObservableInterface queryMyCourseList = retrofit.create(ModelObservableInterface.class);
         Gson gson = new Gson();
         HashMap<String, Integer> paramsMap = new HashMap<>();
-        paramsMap.put("stu_id", Integer.valueOf(mControlMainActivity.mStuId));//学生id
+        paramsMap.put("stu_id", Integer.valueOf(mMainContext.mStuId));//学生id
         paramsMap.put("TF_new", 1);//学生id
         String strEntity = gson.toJson(paramsMap);
         RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json;charset=UTF-8"), strEntity);
@@ -10424,28 +10424,28 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                     public void onResponse(Call<MyQuestionBankBean> call, Response<MyQuestionBankBean> response) {
                         MyQuestionBankBean bankBean = response.body();
                         if (bankBean == null) {
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             if (mSmart_model_questionbank != null){
                                 mSmart_model_questionbank.finishRefresh();
                             }
                             return;
                         }
                         if (!HeaderInterceptor.IsErrorCode(bankBean.getCode(),bankBean.getMsg())){
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             if (mSmart_model_questionbank != null){
                                 mSmart_model_questionbank.finishRefresh();
                             }
                             return;
                         }
                         if (bankBean.code != 200){
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             if (mSmart_model_questionbank != null){
                                 mSmart_model_questionbank.finishRefresh();
                             }
                             return;
                         }
                         if (bankBean.data == null){
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             if (mSmart_model_questionbank != null){
                                 mSmart_model_questionbank.finishRefresh();
                             }
@@ -10458,7 +10458,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                             }
                             //题库界面赋值
                             //题库子条目标签
-                            View item_bank_view = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_1, null);
+                            View item_bank_view = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank_1, null);
                             //题库子条目id
                             TextView modelquestionbank_mainquestionbank_id = item_bank_view.findViewById(R.id.modelquestionbank_mainquestionbank_id);
                             modelquestionbank_mainquestionbank_id.setText(dataBean.getItem_bank_id() + "");
@@ -10491,7 +10491,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                                     break;
                                 }
                                 //子题库的数据
-                                View item_bank_view1 = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_1_1, null);
+                                View item_bank_view1 = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank_1_1, null);
                                 TextView modelquestionbank_subquestionbank1 = item_bank_view1.findViewById(R.id.modelquestionbank_subquestionbank1);
                                 modelquestionbank_subquestionbank1.setHint(subLibraryBean.getIbs_id() + "");
                                 modelquestionbank_subquestionbank1.setText(subLibraryBean.getIbs_name());
@@ -10506,7 +10506,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                             LinearLayout questionbank_main_content = mModelQuestionBankView.findViewById(R.id.questionbank_main_content);
                             questionbank_main_content.addView(item_bank_view);
                         }
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                         if (mSmart_model_questionbank != null){
                             mSmart_model_questionbank.finishRefresh();
                         }
@@ -10514,7 +10514,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
 
                     @Override
                     public void onFailure(Call<MyQuestionBankBean> call, Throwable t) {
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                         if (mSmart_model_questionbank != null){
                             mSmart_model_questionbank.finishRefresh();
                         }
@@ -10524,17 +10524,17 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
 
     //首页-----题库列表(包括子题库)
     public void getQuestionBankBeanList() {
-        LoadingDialog.getInstance(mControlMainActivity).show();
+        LoadingDialog.getInstance(mMainContext).show();
         mIsMore = false;
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(mControlMainActivity.mIpadress)
+                .baseUrl(mMainContext.mIpadress)
                 .client(ModelObservableInterface.client)
                 .build();
         ModelObservableInterface modelObservableInterface = retrofit.create(ModelObservableInterface.class);
         String strEntity = "{\"TF_new\":\"1\"}";
-        if (!mControlMainActivity.mStuId.equals("")) {
-            strEntity = "{\"stu_id\":" + mControlMainActivity.mStuId + ",\"TF_new\":\"1\"}";
+        if (!mMainContext.mStuId.equals("")) {
+            strEntity = "{\"stu_id\":" + mMainContext.mStuId + ",\"TF_new\":\"1\"}";
         }
         RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json;charset=UTF-8"), strEntity);
         modelObservableInterface.queryQuestionBankList(body)
@@ -10547,13 +10547,13 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                             if (mSmart_model_questionbank != null) {
                                 mSmart_model_questionbank.finishRefresh();
                             }
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         String msg = questionBankBean.getMsg();
                         int code = questionBankBean.getCode();
                         if (!HeaderInterceptor.IsErrorCode(code,msg)){
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             if (mSmart_model_questionbank != null) {
                                 mSmart_model_questionbank.finishRefresh();
                             }
@@ -10573,7 +10573,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                             }
                             //题库界面赋值
                             //题库子条目标签
-                            View item_bank_view = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_1, null);
+                            View item_bank_view = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank_1, null);
                             //题库id
                             TextView modelquestionbank_mainquestionbank_id = item_bank_view.findViewById(R.id.modelquestionbank_mainquestionbank_id);
                             modelquestionbank_mainquestionbank_id.setText(dataBean.getItem_bank_id() + "");
@@ -10603,7 +10603,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                                 if (j >= 2){
                                     break;
                                 }
-                                View item_bank_view1 = LayoutInflater.from(mControlMainActivity).inflate(R.layout.model_questionbank_1_1, null);
+                                View item_bank_view1 = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank_1_1, null);
                                 TextView modelquestionbank_subquestionbank1 = item_bank_view1.findViewById(R.id.modelquestionbank_subquestionbank1);
                                 modelquestionbank_subquestionbank1.setHint(subLibraryBean.getIbs_id() + "");
                                 modelquestionbank_subquestionbank1.setText(subLibraryBean.getIbs_name());
@@ -10623,14 +10623,14 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                                     modelquestionbank_subquestionbank1.setClickable(true);
                                     modelquestionbank_subquestionbank1.setOnClickListener(v -> {
                                         //传入相关的id和name
-                                        Toast.makeText(mControlMainActivity, "您没有此题库的做题权限！", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(mMainContext, "您没有此题库的做题权限！", Toast.LENGTH_SHORT).show();
                                     });
                                 }
                             }
                             LinearLayout questionbank_main_content = mModelQuestionBankView.findViewById(R.id.questionbank_main_content);
                             questionbank_main_content.addView(item_bank_view);
                         }
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                         if (mSmart_model_questionbank != null) {
                             mSmart_model_questionbank.finishRefresh();
                         }
@@ -10639,7 +10639,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                     @Override
                     public void onFailure(Call<QuestionBankBean> call, Throwable t) {
                         Log.e(TAG, "onFail我的错误是+" + t.getMessage());
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                         if (mSmart_model_questionbank != null) {
                             mSmart_model_questionbank.finishRefresh();
                         }

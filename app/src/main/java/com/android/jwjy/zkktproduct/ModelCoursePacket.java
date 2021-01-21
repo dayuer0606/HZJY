@@ -38,7 +38,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * 课程包
  */
 public class ModelCoursePacket extends Fragment implements ModelCoursePacketCover.ModelCoursePacketCoverOnClickListener {
-    private static ControlMainActivity mControlMainActivity;
+    private static MainActivity mMainContext;
     private static String mContext = "xxxxxxxxxxxxx";
     //要显示的页面
     static private int FragmentPage;
@@ -66,9 +66,9 @@ public class ModelCoursePacket extends Fragment implements ModelCoursePacketCove
     private int mPageCount = 10;
     private int mCoursePacketSum = 0; //课程包总数
 
-    public static Fragment newInstance(ControlMainActivity content, String context, int iFragmentPage) {
+    public static Fragment newInstance(MainActivity content, String context, int iFragmentPage) {
         mContext = context;
-        mControlMainActivity = content;
+        mMainContext = content;
         ModelCoursePacket myFragment = new ModelCoursePacket();
         FragmentPage = iFragmentPage;
         return myFragment;
@@ -77,7 +77,7 @@ public class ModelCoursePacket extends Fragment implements ModelCoursePacketCove
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mView = inflater.inflate(FragmentPage, container, false);
-        DisplayMetrics dm = mControlMainActivity.getResources().getDisplayMetrics(); //获取屏幕分辨率
+        DisplayMetrics dm = mMainContext.getResources().getDisplayMetrics(); //获取屏幕分辨率
         height = dm.heightPixels;
         width = dm.widthPixels;
         if (mContext.equals("课程包:")) {
@@ -109,7 +109,7 @@ public class ModelCoursePacket extends Fragment implements ModelCoursePacketCove
         });
         // 5. 设置点击返回按键后的操作（通过回调接口）
         searchView.setOnClickBack(() -> {
-            mControlMainActivity.Page_MoreCoursePacket();
+            mMainContext.Page_MoreCoursePacket();
         });
 
 //        LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) coursepacket_store_house_ptr_frame.getLayoutParams();
@@ -280,7 +280,7 @@ public class ModelCoursePacket extends Fragment implements ModelCoursePacketCove
     }
 
     protected void initPopupWindow() {
-        View popupWindowView = mControlMainActivity.getLayoutInflater().inflate(R.layout.model_coursepacket_selectpop, null);
+        View popupWindowView = mMainContext.getLayoutInflater().inflate(R.layout.model_coursepacket_selectpop, null);
         int height1 = (int) (getScreenHeight() - mView.getResources().getDimension(R.dimen.dp45) - getStateBar());
         //内容，高度，宽度
         popupWindow = new PopupWindow(popupWindowView, (int) mView.getResources().getDimension(R.dimen.dp_280), height1, true);
@@ -289,7 +289,7 @@ public class ModelCoursePacket extends Fragment implements ModelCoursePacketCove
         //菜单背景色
         ColorDrawable dw = new ColorDrawable(0xffffffff);
         popupWindow.setBackgroundDrawable(dw);
-        popupWindow.showAtLocation(mControlMainActivity.getLayoutInflater().inflate(R.layout.activity_main, null), Gravity.RIGHT, 0, 500);
+        popupWindow.showAtLocation(mMainContext.getLayoutInflater().inflate(R.layout.activity_main, null), Gravity.RIGHT, 0, 500);
         popupWindow.setBackgroundDrawable(null);
         //设置背景半透明
         backgroundAlpha(0.9f);
@@ -310,7 +310,7 @@ public class ModelCoursePacket extends Fragment implements ModelCoursePacketCove
         mCoursePacketSelectTemp = mCoursePacketSelect;     //一级
         //必须有的标签-全部:默认选中全部   1级列表标签
         {
-            View view = mControlMainActivity.getLayoutInflater().inflate(R.layout.model_coursepacket_selectpop_child, null);
+            View view = mMainContext.getLayoutInflater().inflate(R.layout.model_coursepacket_selectpop_child, null);
             TextView coursepacket_selectpop_child_signname = view.findViewById(R.id.coursepacket_selectpop_child_signname);
             coursepacket_selectpop_child_signname.setText("全部");
             coursepacket_selectpop_child_signname.setHint("-1");
@@ -349,7 +349,7 @@ public class ModelCoursePacket extends Fragment implements ModelCoursePacketCove
         mCoursePacketSelectSortTemp = mCoursePacketSelectSort;
         //必须有的标签-综合:默认选中综合
         {
-            View view = mControlMainActivity.getLayoutInflater().inflate(R.layout.model_coursepacket_selectpop_child, null);
+            View view = mMainContext.getLayoutInflater().inflate(R.layout.model_coursepacket_selectpop_child, null);
             TextView coursepacket_selectpop_child_signname = view.findViewById(R.id.coursepacket_selectpop_child_signname);
             coursepacket_selectpop_child_signname.setText("综合");
             coursepacket_selectpop_child_signname.setHint("-1");
@@ -383,7 +383,7 @@ public class ModelCoursePacket extends Fragment implements ModelCoursePacketCove
         }
         //必须有的标签-按热度
         {
-            View view = mControlMainActivity.getLayoutInflater().inflate(R.layout.model_coursepacket_selectpop_child, null);
+            View view = mMainContext.getLayoutInflater().inflate(R.layout.model_coursepacket_selectpop_child, null);
             TextView coursepacket_selectpop_child_signname = view.findViewById(R.id.coursepacket_selectpop_child_signname);
             coursepacket_selectpop_child_signname.setText("按热度");
             coursepacket_selectpop_child_signname.setHint("0");
@@ -516,14 +516,14 @@ public class ModelCoursePacket extends Fragment implements ModelCoursePacketCove
      *   
      */
     public void backgroundAlpha(float bgAlpha) {
-        WindowManager.LayoutParams lp = mControlMainActivity.getWindow().getAttributes();
+        WindowManager.LayoutParams lp = mMainContext.getWindow().getAttributes();
         lp.alpha = bgAlpha; //0.0-1.0
-        mControlMainActivity.getWindow().setAttributes(lp);
+        mMainContext.getWindow().setAttributes(lp);
     }
 
     //获取屏幕高度 不包含虚拟按键=
     public static int getScreenHeight() {
-        DisplayMetrics dm = mControlMainActivity.getResources().getDisplayMetrics();
+        DisplayMetrics dm = mMainContext.getResources().getDisplayMetrics();
         return dm.heightPixels;
     }
 
@@ -549,16 +549,16 @@ public class ModelCoursePacket extends Fragment implements ModelCoursePacketCove
         LinearLayout coursepacket_linearlayout = mView.findViewById(R.id.coursepacket_linearlayout);
         coursepacket_linearlayout.removeAllViews();
         coursepacket_details1.addView(view);
-        mControlMainActivity.onClickCoursePacketDetails();
+        mMainContext.onClickCoursePacketDetails();
     }
 
     //数据的条件筛选
     private void getConditionQuery(String project_id,int fever,int hour) {
-        LoadingDialog.getInstance(mControlMainActivity).show();
+        LoadingDialog.getInstance(mMainContext).show();
         LinearLayout coursepacket_end = mView.findViewById(R.id.coursepacket_end);
         coursepacket_end.setVisibility(View.INVISIBLE);
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(mControlMainActivity.mIpadress)
+                .baseUrl(mMainContext.mIpadress)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(ModelObservableInterface.client)
                 .build();
@@ -584,7 +584,7 @@ public class ModelCoursePacket extends Fragment implements ModelCoursePacketCove
                     if (mSmart_fragment_coursepacket != null){
                         mSmart_fragment_coursepacket.finishRefresh();
                     }
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     Log.e("TAG", "queryAllCourseInfo  onErrorCode: " + code);
                     return;
                 }
@@ -593,14 +593,14 @@ public class ModelCoursePacket extends Fragment implements ModelCoursePacketCove
                     if (mSmart_fragment_coursepacket != null){
                         mSmart_fragment_coursepacket.finishRefresh();
                     }
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 if (!HeaderInterceptor.IsErrorCode(coursePacketBean.code,"")){
                     if (mSmart_fragment_coursepacket != null){
                         mSmart_fragment_coursepacket.finishRefresh();
                     }
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 CoursePacketBean.CoursePacketDataBean coursePacketDataBean = coursePacketBean.getData();
@@ -608,7 +608,7 @@ public class ModelCoursePacket extends Fragment implements ModelCoursePacketCove
                     if (mSmart_fragment_coursepacket != null){
                         mSmart_fragment_coursepacket.finishRefresh();
                     }
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 List<CoursePacketBean.DataBean> coursePacketListBeansList = coursePacketDataBean.getData();
@@ -616,7 +616,7 @@ public class ModelCoursePacket extends Fragment implements ModelCoursePacketCove
                     if (mSmart_fragment_coursepacket != null){
                         mSmart_fragment_coursepacket.finishRefresh();
                     }
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 mCoursePacketSum = coursePacketDataBean.getTotal();
@@ -643,7 +643,7 @@ public class ModelCoursePacket extends Fragment implements ModelCoursePacketCove
                     coursePacketInfo.mCoursePacketCourseNum = String.valueOf(dataBean.courseNum);
                     coursePacketInfo.mCoursePacketPriceOld = String.valueOf(dataBean.total_price);//数据原来的价格
                     coursePacketInfo.mCoursePacketLearnPersonNum= String.valueOf(dataBean.buying_base_number);//购买人数
-                    View modelCoursePacketView = modelCoursePacketCover.ModelCoursePacketCover(mControlMainActivity, coursePacketInfo);
+                    View modelCoursePacketView = modelCoursePacketCover.ModelCoursePacketCover(mMainContext, coursePacketInfo);
                     coursepacket_linearlayout.addView(modelCoursePacketView);
                     line = modelCoursePacketView.findViewById(R.id.coursepacket_line1);
                 }
@@ -653,27 +653,27 @@ public class ModelCoursePacket extends Fragment implements ModelCoursePacketCove
                 if (mSmart_fragment_coursepacket != null){
                     mSmart_fragment_coursepacket.finishRefresh();
                 }
-                LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                LoadingDialog.getInstance(mMainContext).dismiss();
             }
 
             @Override
             public void onFailure(Call<CoursePacketBean> call, Throwable t) {
                 Log.e("TAG", "onError: " + t.getMessage()+"" );
-                Toast.makeText(mControlMainActivity,"获取课程包列表数据失败",Toast.LENGTH_LONG).show();
+                Toast.makeText(mMainContext,"获取课程包列表数据失败",Toast.LENGTH_LONG).show();
                 if (mSmart_fragment_coursepacket != null){
                     mSmart_fragment_coursepacket.finishRefresh();
                 }
-                LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                LoadingDialog.getInstance(mMainContext).dismiss();
             }
         });
     }
 
     private void getConditionQueryMore(String project_id,int fever,int hour) {
-        LoadingDialog.getInstance(mControlMainActivity).show();
+        LoadingDialog.getInstance(mMainContext).show();
         LinearLayout coursepacket_end = mView.findViewById(R.id.coursepacket_end);
         coursepacket_end.setVisibility(View.INVISIBLE);
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(mControlMainActivity.mIpadress)
+                .baseUrl(mMainContext.mIpadress)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(ModelObservableInterface.client)
                 .build();
@@ -699,7 +699,7 @@ public class ModelCoursePacket extends Fragment implements ModelCoursePacketCove
                     if (mSmart_fragment_coursepacket != null){
                         mSmart_fragment_coursepacket.finishLoadMore();
                     }
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     Log.e("TAG", "queryAllCourseInfo  onErrorCode: " + code);
                     return;
                 }
@@ -708,14 +708,14 @@ public class ModelCoursePacket extends Fragment implements ModelCoursePacketCove
                     if (mSmart_fragment_coursepacket != null){
                         mSmart_fragment_coursepacket.finishLoadMore();
                     }
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 if (!HeaderInterceptor.IsErrorCode(coursePacketBean.code,"")){
                     if (mSmart_fragment_coursepacket != null){
                         mSmart_fragment_coursepacket.finishLoadMore();
                     }
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 CoursePacketBean.CoursePacketDataBean coursePacketDataBean = coursePacketBean.getData();
@@ -723,7 +723,7 @@ public class ModelCoursePacket extends Fragment implements ModelCoursePacketCove
                     if (mSmart_fragment_coursepacket != null){
                         mSmart_fragment_coursepacket.finishLoadMore();
                     }
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 List<CoursePacketBean.DataBean> coursePacketListBeansList = coursePacketDataBean.getData();
@@ -731,7 +731,7 @@ public class ModelCoursePacket extends Fragment implements ModelCoursePacketCove
                     if (mSmart_fragment_coursepacket != null){
                         mSmart_fragment_coursepacket.finishLoadMore();
                     }
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 View line = null;
@@ -756,7 +756,7 @@ public class ModelCoursePacket extends Fragment implements ModelCoursePacketCove
                     coursePacketInfo.mCoursePacketCourseNum = String.valueOf(dataBean.courseNum);
                     coursePacketInfo.mCoursePacketPriceOld = String.valueOf(dataBean.total_price);//数据原来的价格
                     coursePacketInfo.mCoursePacketLearnPersonNum= String.valueOf(dataBean.buying_base_number);//购买人数
-                    View modelCoursePacketView = modelCoursePacketCover.ModelCoursePacketCover(mControlMainActivity, coursePacketInfo);
+                    View modelCoursePacketView = modelCoursePacketCover.ModelCoursePacketCover(mMainContext, coursePacketInfo);
                     coursepacket_linearlayout.addView(modelCoursePacketView);
                     line = modelCoursePacketView.findViewById(R.id.coursepacket_line1);
                 }
@@ -766,28 +766,28 @@ public class ModelCoursePacket extends Fragment implements ModelCoursePacketCove
                 if (mSmart_fragment_coursepacket != null){
                     mSmart_fragment_coursepacket.finishLoadMore();
                 }
-                LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                LoadingDialog.getInstance(mMainContext).dismiss();
             }
 
             @Override
             public void onFailure(Call<CoursePacketBean> call, Throwable t) {
                 Log.e("TAG", "onError: " + t.getMessage()+"" );
-                Toast.makeText(mControlMainActivity,"获取课程包列表数据失败",Toast.LENGTH_LONG).show();
+                Toast.makeText(mMainContext,"获取课程包列表数据失败",Toast.LENGTH_LONG).show();
                 if (mSmart_fragment_coursepacket != null){
                     mSmart_fragment_coursepacket.finishLoadMore();
                 }
-                LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                LoadingDialog.getInstance(mMainContext).dismiss();
             }
         });
     }
 
     //课程包的关键字搜索
     private void getModelSreachViewData(String packetName){
-        LoadingDialog.getInstance(mControlMainActivity).show();
+        LoadingDialog.getInstance(mMainContext).show();
         LinearLayout coursepacket_end = mView.findViewById(R.id.coursepacket_end);
         coursepacket_end.setVisibility(View.INVISIBLE);
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(mControlMainActivity.mIpadress)
+                .baseUrl(mMainContext.mIpadress)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(ModelObservableInterface.client)
                 .build();
@@ -813,7 +813,7 @@ public class ModelCoursePacket extends Fragment implements ModelCoursePacketCove
                     if (mSmart_fragment_coursepacket != null){
                         mSmart_fragment_coursepacket.finishRefresh();
                     }
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     Log.e("TAG", "queryAllCourseInfo  onErrorCode: " + code);
                     return;
                 }
@@ -822,14 +822,14 @@ public class ModelCoursePacket extends Fragment implements ModelCoursePacketCove
                     if (mSmart_fragment_coursepacket != null){
                         mSmart_fragment_coursepacket.finishRefresh();
                     }
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 if (!HeaderInterceptor.IsErrorCode(coursePacketBean.getCode(),"")){
                     if (mSmart_fragment_coursepacket != null){
                         mSmart_fragment_coursepacket.finishRefresh();
                     }
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 CoursePacketBean.CoursePacketDataBean coursePacketDataBean = coursePacketBean.getData();
@@ -837,7 +837,7 @@ public class ModelCoursePacket extends Fragment implements ModelCoursePacketCove
                     if (mSmart_fragment_coursepacket != null){
                         mSmart_fragment_coursepacket.finishRefresh();
                     }
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 List<CoursePacketBean.DataBean> coursePacketListBeansList = coursePacketDataBean.getData();
@@ -845,7 +845,7 @@ public class ModelCoursePacket extends Fragment implements ModelCoursePacketCove
                     if (mSmart_fragment_coursepacket != null){
                         mSmart_fragment_coursepacket.finishRefresh();
                     }
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 mCoursePacketSum = coursePacketDataBean.getTotal();
@@ -872,7 +872,7 @@ public class ModelCoursePacket extends Fragment implements ModelCoursePacketCove
                     coursePacketInfo.mCoursePacketCourseNum = String.valueOf(dataBean.courseNum);
                     coursePacketInfo.mCoursePacketPriceOld = String.valueOf(dataBean.total_price);//数据原来的价格
                     coursePacketInfo.mCoursePacketLearnPersonNum= String.valueOf(dataBean.buying_base_number);//购买人数
-                    View modelCoursePacketView = modelCoursePacketCover.ModelCoursePacketCover(mControlMainActivity, coursePacketInfo);
+                    View modelCoursePacketView = modelCoursePacketCover.ModelCoursePacketCover(mMainContext, coursePacketInfo);
                     coursepacket_linearlayout.addView(modelCoursePacketView);
                     line = modelCoursePacketView.findViewById(R.id.coursepacket_line1);
                 }
@@ -882,28 +882,28 @@ public class ModelCoursePacket extends Fragment implements ModelCoursePacketCove
                 if (mSmart_fragment_coursepacket != null){
                     mSmart_fragment_coursepacket.finishRefresh();
                 }
-                LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                LoadingDialog.getInstance(mMainContext).dismiss();
             }
 
             @Override
             public void onFailure(Call<CoursePacketBean> call, Throwable t) {
                 Log.e("TAG", "onError: " + t.getMessage()+"" );
-                Toast.makeText(mControlMainActivity,"获取课程包列表数据失败",Toast.LENGTH_LONG).show();
+                Toast.makeText(mMainContext,"获取课程包列表数据失败",Toast.LENGTH_LONG).show();
                 if (mSmart_fragment_coursepacket != null){
                     mSmart_fragment_coursepacket.finishRefresh();
                 }
-                LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                LoadingDialog.getInstance(mMainContext).dismiss();
             }
         });
     }
 
     //课程包列表请求
     private void getModelCoursePacketDatas() {
-        LoadingDialog.getInstance(mControlMainActivity).show();
+        LoadingDialog.getInstance(mMainContext).show();
         LinearLayout coursepacket_end = mView.findViewById(R.id.coursepacket_end);
         coursepacket_end.setVisibility(View.INVISIBLE);
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(mControlMainActivity.mIpadress)
+                .baseUrl(mMainContext.mIpadress)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(ModelObservableInterface.client)
                 .build();
@@ -924,7 +924,7 @@ public class ModelCoursePacket extends Fragment implements ModelCoursePacketCove
                     if (mSmart_fragment_coursepacket != null){
                         mSmart_fragment_coursepacket.finishRefresh();
                     }
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     Log.e("TAG", "queryAllCourseInfo  onErrorCode: " + code);
                     return;
                 }
@@ -933,14 +933,14 @@ public class ModelCoursePacket extends Fragment implements ModelCoursePacketCove
                     if (mSmart_fragment_coursepacket != null){
                         mSmart_fragment_coursepacket.finishRefresh();
                     }
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 if (!HeaderInterceptor.IsErrorCode(coursePacketBean.getCode(),"")){
                     if (mSmart_fragment_coursepacket != null){
                         mSmart_fragment_coursepacket.finishRefresh();
                     }
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 CoursePacketBean.CoursePacketDataBean coursePacketDataBean = coursePacketBean.getData();
@@ -948,7 +948,7 @@ public class ModelCoursePacket extends Fragment implements ModelCoursePacketCove
                     if (mSmart_fragment_coursepacket != null){
                         mSmart_fragment_coursepacket.finishRefresh();
                     }
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 List<CoursePacketBean.DataBean> coursePacketListBeansList = coursePacketDataBean.getData();
@@ -956,7 +956,7 @@ public class ModelCoursePacket extends Fragment implements ModelCoursePacketCove
                     if (mSmart_fragment_coursepacket != null){
                         mSmart_fragment_coursepacket.finishRefresh();
                     }
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 mCoursePacketSum = coursePacketDataBean.getTotal();
@@ -983,7 +983,7 @@ public class ModelCoursePacket extends Fragment implements ModelCoursePacketCove
                     coursePacketInfo.mCoursePacketCourseNum = String.valueOf(dataBean.courseNum);
                     coursePacketInfo.mCoursePacketPriceOld = String.valueOf(dataBean.total_price);//数据原来的价格
                     coursePacketInfo.mCoursePacketLearnPersonNum= String.valueOf(dataBean.buying_base_number);//购买人数
-                    View modelCoursePacketView = modelCoursePacketCover.ModelCoursePacketCover(mControlMainActivity, coursePacketInfo);
+                    View modelCoursePacketView = modelCoursePacketCover.ModelCoursePacketCover(mMainContext, coursePacketInfo);
                     coursepacket_linearlayout.addView(modelCoursePacketView);
                     line = modelCoursePacketView.findViewById(R.id.coursepacket_line1);
                 }
@@ -993,27 +993,27 @@ public class ModelCoursePacket extends Fragment implements ModelCoursePacketCove
                 if (mSmart_fragment_coursepacket != null){
                     mSmart_fragment_coursepacket.finishRefresh();
                 }
-                LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                LoadingDialog.getInstance(mMainContext).dismiss();
             }
 
             @Override
             public void onFailure(Call<CoursePacketBean> call, Throwable t) {
                 Log.e("TAG", "onError: " + t.getMessage()+"" );
-                Toast.makeText(mControlMainActivity,"获取课程包列表数据失败",Toast.LENGTH_LONG).show();
+                Toast.makeText(mMainContext,"获取课程包列表数据失败",Toast.LENGTH_LONG).show();
                 if (mSmart_fragment_coursepacket != null){
                     mSmart_fragment_coursepacket.finishRefresh();
                 }
-                LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                LoadingDialog.getInstance(mMainContext).dismiss();
             }
         });
     }
 
     private void getModelCoursePacketDatasMore() {
-        LoadingDialog.getInstance(mControlMainActivity).show();
+        LoadingDialog.getInstance(mMainContext).show();
         LinearLayout coursepacket_end = mView.findViewById(R.id.coursepacket_end);
         coursepacket_end.setVisibility(View.INVISIBLE);
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(mControlMainActivity.mIpadress)
+                .baseUrl(mMainContext.mIpadress)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(ModelObservableInterface.client)
                 .build();
@@ -1034,7 +1034,7 @@ public class ModelCoursePacket extends Fragment implements ModelCoursePacketCove
                     if (mSmart_fragment_coursepacket != null){
                         mSmart_fragment_coursepacket.finishLoadMore();
                     }
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     Log.e("TAG", "queryAllCourseInfo  onErrorCode: " + code);
                     return;
                 }
@@ -1043,14 +1043,14 @@ public class ModelCoursePacket extends Fragment implements ModelCoursePacketCove
                     if (mSmart_fragment_coursepacket != null){
                         mSmart_fragment_coursepacket.finishLoadMore();
                     }
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 if (!HeaderInterceptor.IsErrorCode(coursePacketBean.getCode(),"")){
                     if (mSmart_fragment_coursepacket != null){
                         mSmart_fragment_coursepacket.finishLoadMore();
                     }
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 CoursePacketBean.CoursePacketDataBean coursePacketDataBean = coursePacketBean.getData();
@@ -1058,7 +1058,7 @@ public class ModelCoursePacket extends Fragment implements ModelCoursePacketCove
                     if (mSmart_fragment_coursepacket != null){
                         mSmart_fragment_coursepacket.finishLoadMore();
                     }
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 List<CoursePacketBean.DataBean> coursePacketListBeansList = coursePacketDataBean.getData();
@@ -1066,7 +1066,7 @@ public class ModelCoursePacket extends Fragment implements ModelCoursePacketCove
                     if (mSmart_fragment_coursepacket != null){
                         mSmart_fragment_coursepacket.finishLoadMore();
                     }
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 View line = null;
@@ -1091,7 +1091,7 @@ public class ModelCoursePacket extends Fragment implements ModelCoursePacketCove
                     coursePacketInfo.mCoursePacketCourseNum = String.valueOf(dataBean.courseNum);
                     coursePacketInfo.mCoursePacketPriceOld = String.valueOf(dataBean.total_price);//数据原来的价格
                     coursePacketInfo.mCoursePacketLearnPersonNum= String.valueOf(dataBean.buying_base_number);//购买人数
-                    View modelCoursePacketView = modelCoursePacketCover.ModelCoursePacketCover(mControlMainActivity, coursePacketInfo);
+                    View modelCoursePacketView = modelCoursePacketCover.ModelCoursePacketCover(mMainContext, coursePacketInfo);
                     coursepacket_linearlayout.addView(modelCoursePacketView);
                     line = modelCoursePacketView.findViewById(R.id.coursepacket_line1);
                 }
@@ -1101,26 +1101,26 @@ public class ModelCoursePacket extends Fragment implements ModelCoursePacketCove
                 if (mSmart_fragment_coursepacket != null){
                     mSmart_fragment_coursepacket.finishLoadMore();
                 }
-                LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                LoadingDialog.getInstance(mMainContext).dismiss();
             }
 
             @Override
             public void onFailure(Call<CoursePacketBean> call, Throwable t) {
                 Log.e("TAG", "onError: " + t.getMessage()+"" );
-                Toast.makeText(mControlMainActivity,"获取课程包列表数据失败",Toast.LENGTH_LONG).show();
+                Toast.makeText(mMainContext,"获取课程包列表数据失败",Toast.LENGTH_LONG).show();
                 if (mSmart_fragment_coursepacket != null){
                     mSmart_fragment_coursepacket.finishLoadMore();
                 }
-                LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                LoadingDialog.getInstance(mMainContext).dismiss();
             }
         });
     }
 
     //获取所有一级目录
     private void getAllProject(View popupWindowView) {
-        LoadingDialog.getInstance(mControlMainActivity).show();
+        LoadingDialog.getInstance(mMainContext).show();
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(mControlMainActivity.mIpadress)
+                .baseUrl(mMainContext.mIpadress)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(ModelObservableInterface.client)
                 .build();
@@ -1134,16 +1134,16 @@ public class ModelCoursePacket extends Fragment implements ModelCoursePacketCove
                 int code = response.code();
                 if (code != 200){
                     Log.e("TAG", "getAllProject  onErrorCode: " + code);
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 ModelCourse.ProjectBean baseBean = response.body();
                 if (baseBean == null){
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 if (!HeaderInterceptor.IsErrorCode(baseBean.getErrorCode(),baseBean.getErrorMsg())){
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 List<ModelCourse.ProjectBean.ProjectDataBean> data = baseBean.getData();
@@ -1152,7 +1152,7 @@ public class ModelCoursePacket extends Fragment implements ModelCoursePacketCove
                     if (projectDataBean == null){
                         continue;
                     }
-                    View view = mControlMainActivity.getLayoutInflater().inflate(R.layout.model_coursepacket_selectpop_child, null);
+                    View view = mMainContext.getLayoutInflater().inflate(R.layout.model_coursepacket_selectpop_child, null);
                     TextView coursepacket_selectpop_child_signname = view.findViewById(R.id.coursepacket_selectpop_child_signname);
                     ControllerWarpLinearLayout coursepacket_select_warpLinearLayout1 = popupWindowView.findViewById(R.id.coursepacket_select_warpLinearLayout1);
                     coursepacket_select_warpLinearLayout1.addView(view);
@@ -1189,14 +1189,14 @@ public class ModelCoursePacket extends Fragment implements ModelCoursePacketCove
                         mCoursePacketSelectTemp = mCoursePacketSelect;
                     }
                 }
-                LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                LoadingDialog.getInstance(mMainContext).dismiss();
             }
 
             @Override
             public void onFailure(Call<ModelCourse.ProjectBean> call, Throwable t) {
                 Log.e("TAG", "onError: " + t.getMessage()+"" );
-                Toast.makeText(mControlMainActivity,"获取项目列表失败",Toast.LENGTH_LONG).show();
-                LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                Toast.makeText(mMainContext,"获取项目列表失败",Toast.LENGTH_LONG).show();
+                LoadingDialog.getInstance(mMainContext).dismiss();
             }
         });
     }

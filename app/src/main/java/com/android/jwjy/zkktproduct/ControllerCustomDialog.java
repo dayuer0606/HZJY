@@ -28,7 +28,7 @@ import static android.content.Context.INPUT_METHOD_SERVICE;
 public class ControllerCustomDialog extends Dialog {
     private EditText et_input;  //输入框
     private ImageView course_question_respond_layout_commit_button ; //发布按钮
-    private ControlMainActivity mControlMainActivity;
+    private MainActivity mMainContext;
     private String mContent = ""; //框中显示内容
     private boolean mIsUseImage = false;  //是否使用图片
     private OnClickPublishOrImage mOnClickPublishOrImage = null;
@@ -38,7 +38,7 @@ public class ControllerCustomDialog extends Dialog {
 
     public ControllerCustomDialog(@NonNull Context context, int themeResId,String content,boolean isUseImage) {
         super(context, themeResId);
-        mControlMainActivity = (ControlMainActivity) context;
+        mMainContext = (MainActivity) context;
         if (content != null){
             mContent = content;
         }
@@ -87,7 +87,7 @@ public class ControllerCustomDialog extends Dialog {
         course_question_respond_layout_commit_button = findViewById(R.id.course_question_respond_layout_commit_button);
         course_question_respond_layout_commit_button.setOnClickListener(v->{
             if (et_input.getText().toString().equals("")){
-                Toast.makeText(mControlMainActivity,"输入内容不允许为空！",Toast.LENGTH_SHORT).show();
+                Toast.makeText(mMainContext,"输入内容不允许为空！",Toast.LENGTH_SHORT).show();
                 return;
             }
             if (mOnClickPublishOrImage != null && !et_input.getText().toString().equals("")){{ //输入框必须有内容才能发布
@@ -128,7 +128,7 @@ public class ControllerCustomDialog extends Dialog {
             @Override
             public void run() {
                 InputMethodManager imm = (InputMethodManager)
-                                mControlMainActivity.getApplication()
+                                mMainContext.getApplication()
                                         .getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.showSoftInput(editText,0);
                 editText.setSelection(editText.getText().length());
@@ -139,8 +139,8 @@ public class ControllerCustomDialog extends Dialog {
      * 隐藏键盘
      */
     protected void hideInput() {
-        InputMethodManager imm = (InputMethodManager) mControlMainActivity.getSystemService(INPUT_METHOD_SERVICE);
-        View v = mControlMainActivity.getWindow().peekDecorView();
+        InputMethodManager imm = (InputMethodManager) mMainContext.getSystemService(INPUT_METHOD_SERVICE);
+        View v = mMainContext.getWindow().peekDecorView();
         if (null != v) {
             imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
         }

@@ -44,15 +44,15 @@ public class ModelClassCheduleCard extends Fragment implements
     private static String mContext;
     //    private List<WeekDay> mWeekDayList ;
     private View mView = null,mClasschedulecardView = null;
-    private static ControlMainActivity mControlMainActivity;
+    private static MainActivity mMainContext;
     private ModelGroupRecyclerView recyclerView;
     private CalendarView calendarView ;
 
     //要显示的页面
 //    private int FragmentPage;
-    public  static  Fragment newInstance(ControlMainActivity content, String context, int iFragmentPage){
+    public  static  Fragment newInstance(MainActivity content, String context, int iFragmentPage){
         mContext = context;
-        mControlMainActivity = content;
+        mMainContext = content;
         ModelClassCheduleCard myFragment = new ModelClassCheduleCard();
         FragmentPage = iFragmentPage;
         return  myFragment;
@@ -78,7 +78,7 @@ public class ModelClassCheduleCard extends Fragment implements
         }
         HideAllLayout();
 //        if (mClasschedulecardView == null) {
-            mClasschedulecardView = LayoutInflater.from(mControlMainActivity).inflate(R.layout.fragment_classchedulecard1, null);
+            mClasschedulecardView = LayoutInflater.from(mMainContext).inflate(R.layout.fragment_classchedulecard1, null);
             calendarView = mClasschedulecardView.findViewById(R.id.calendarView);
 //        calendarView.setThemeColor(Color.YELLOW,Color.YELLOW);
             calendarView.setOnDateSelectedListener(this);
@@ -126,7 +126,7 @@ public class ModelClassCheduleCard extends Fragment implements
         LinearLayout classchedulecard_content = mView.findViewById(R.id.classchedulecard_content);
         classchedulecard_content.addView(mClasschedulecardView);
         recyclerView = mClasschedulecardView.findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(mControlMainActivity));
+        recyclerView.setLayoutManager(new LinearLayoutManager(mMainContext));
         ModelGroupItemDecoration modelGroupItemDecoration = new ModelGroupItemDecoration<String,ClassBean>();
         modelGroupItemDecoration.setTextColor(getResources().getColor(R.color.black999999));
         modelGroupItemDecoration.setTextSize(getResources().getDimensionPixelSize(R.dimen.textsize12));
@@ -197,7 +197,7 @@ public class ModelClassCheduleCard extends Fragment implements
                 getQueryAllSchoolTimeTableFromOneStu(map,Monday + " 00:00:00",Sunday + " 24:00:00");
             } catch (ParseException e) {
                 e.printStackTrace();
-                Toast.makeText(mControlMainActivity,"课程表信息获取失败",Toast.LENGTH_SHORT).show();
+                Toast.makeText(mMainContext,"课程表信息获取失败",Toast.LENGTH_SHORT).show();
             }
 
         }
@@ -214,18 +214,18 @@ public class ModelClassCheduleCard extends Fragment implements
     }
 
     private void getQueryAllSchoolTimeTableFromOneStu(LinkedHashMap<String, List<ClassBean>> map,String begin_time,String end_time){
-        if (mControlMainActivity.mStuId.equals("")){
-            Toast.makeText(mControlMainActivity,"您还没有安排课程",Toast.LENGTH_SHORT).show();
+        if (mMainContext.mStuId.equals("")){
+            Toast.makeText(mMainContext,"您还没有安排课程",Toast.LENGTH_SHORT).show();
             return;
         }
-        LoadingDialog.getInstance(mControlMainActivity).show();
+        LoadingDialog.getInstance(mMainContext).show();
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(mControlMainActivity.mIpadress)
+                .baseUrl(mMainContext.mIpadress)
                 .client(ModelObservableInterface.client)
                 .build();
         ModelObservableInterface queryMyCourseList = retrofit.create(ModelObservableInterface.class);
-        String strEntity = "{\"stu_id\":" + mControlMainActivity.mStuId + "," +
+        String strEntity = "{\"stu_id\":" + mMainContext.mStuId + "," +
                 "\"begin_time\":\"" + begin_time + "\"," +
                 "\"end_time\":\"" + end_time + "\"}";
         RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json;charset=UTF-8"), strEntity);
@@ -235,29 +235,29 @@ public class ModelClassCheduleCard extends Fragment implements
                     @Override
                     public void onResponse(Call<SchoolTimeTableBean> call, Response<SchoolTimeTableBean> response) {
                         if (response == null){
-                            Toast.makeText(mControlMainActivity,"查询课程表失败",Toast.LENGTH_SHORT).show();
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            Toast.makeText(mMainContext,"查询课程表失败",Toast.LENGTH_SHORT).show();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         if (response.body() == null){
-                            Toast.makeText(mControlMainActivity,"查询课程表失败",Toast.LENGTH_SHORT).show();
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            Toast.makeText(mMainContext,"查询课程表失败",Toast.LENGTH_SHORT).show();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         SchoolTimeTableBean schoolTimeTableBean = response.body();
                         if (!HeaderInterceptor.IsErrorCode(schoolTimeTableBean.getCode(),"")){
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         if (schoolTimeTableBean.code != 200){
-                            Toast.makeText(mControlMainActivity,"查询课程表失败",Toast.LENGTH_SHORT).show();
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            Toast.makeText(mMainContext,"查询课程表失败",Toast.LENGTH_SHORT).show();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         List<SchoolTimeTableBean.SchoolTimeTableDataBean> schoolTimeTableDataBeans = schoolTimeTableBean.data;
                         if (schoolTimeTableDataBeans == null){
-                            Toast.makeText(mControlMainActivity,"查询课程表失败",Toast.LENGTH_SHORT).show();
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            Toast.makeText(mMainContext,"查询课程表失败",Toast.LENGTH_SHORT).show();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         for (SchoolTimeTableBean.SchoolTimeTableDataBean schoolTimeTableDataBean:schoolTimeTableDataBeans) {
@@ -338,7 +338,7 @@ public class ModelClassCheduleCard extends Fragment implements
                         }
                         //此方法在巨大的数据量上不影响遍历性能，推荐使用
                         calendarView.setSchemeDate(CalendarList);
-                        ModelClassAdapter modelClassAdapter =  new ModelClassAdapter(mControlMainActivity,map1,titles);
+                        ModelClassAdapter modelClassAdapter =  new ModelClassAdapter(mMainContext,map1,titles);
                         modelClassAdapter.setOnItemClickListener((position, itemId,item) -> {
                             if (item == null){
                                 return;
@@ -348,22 +348,22 @@ public class ModelClassCheduleCard extends Fragment implements
                             }
                             //点击每个课程信息的回调
                             if (item.getStatus().equals("进行中")) {
-                                mControlMainActivity.LoginLiveOrPlayback(item.getCourse_times_id(), 2, PlayType.LIVE);
+                                mMainContext.LoginLiveOrPlayback(item.getCourse_times_id(), 2, PlayType.LIVE);
                             } else if (item.getStatus().equals("已结束")) {
-                                mControlMainActivity.LoginLiveOrPlayback(item.getCourse_times_id(), 2, PlayType.PLAYBACK);
+                                mMainContext.LoginLiveOrPlayback(item.getCourse_times_id(), 2, PlayType.PLAYBACK);
                             } else {
-                                mControlMainActivity.LoginLiveOrPlayback(item.getCourse_times_id(), 2, PlayType.LIVE);
+                                mMainContext.LoginLiveOrPlayback(item.getCourse_times_id(), 2, PlayType.LIVE);
                             }
                         });
                         recyclerView.setAdapter( modelClassAdapter);
                         recyclerView.notifyDataSetChanged();
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                     }
 
                     @Override
                     public void onFailure(Call<SchoolTimeTableBean> call, Throwable t) {
-                        Toast.makeText(mControlMainActivity,"查询课程表失败",Toast.LENGTH_SHORT).show();
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        Toast.makeText(mMainContext,"查询课程表失败",Toast.LENGTH_SHORT).show();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                         return;
                     }
                 });

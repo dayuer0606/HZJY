@@ -14,7 +14,7 @@ import android.view.WindowManager;
  */
 
 public class ControllerPopDialog extends Dialog {
-    private ControlMainActivity mControlMainActivity;
+    private MainActivity mMainContext;
     private int mLayout = 0;
 //    public ControllerPopDialog(@NonNull Context context) {
 //        this(context, 0);
@@ -22,7 +22,7 @@ public class ControllerPopDialog extends Dialog {
 
     public ControllerPopDialog(@NonNull Context context, int themeResId,int layout) {
         super(context, themeResId);
-        mControlMainActivity = (ControlMainActivity) context;
+        mMainContext = (MainActivity) context;
         mLayout = layout;
     }
 

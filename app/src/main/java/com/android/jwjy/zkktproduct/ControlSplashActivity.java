@@ -33,7 +33,7 @@ public class ControlSplashActivity extends Activity {
                     editor.commit();
                     finish();
                 }else{
-                    startActivity(new Intent(ControlSplashActivity.this,ControlMainActivity.class));
+                    startActivity(new Intent(ControlSplashActivity.this,MainActivity.class));
                     finish();
                 }
             }

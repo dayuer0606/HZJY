@@ -46,7 +46,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * 新闻模块
  */
 public class ModelNews extends Fragment implements View.OnClickListener {
-    private static ControlMainActivity mControlMainActivity;
+    private static MainActivity mMainContext;
     private static String mContext = "xxxxxxxxxxxxx";
     //要显示的页面
     static private int FragmentPage;
@@ -64,9 +64,9 @@ public class ModelNews extends Fragment implements View.OnClickListener {
     private String mCurrentPage = "newslist";
 
 
-    public static Fragment newInstance(ControlMainActivity content, String context, int iFragmentPage) {
+    public static Fragment newInstance(MainActivity content, String context, int iFragmentPage) {
         mContext = context;
-        mControlMainActivity = content;
+        mMainContext = content;
         myFragment = new ModelNews();
         FragmentPage = iFragmentPage;
         return myFragment;
@@ -76,7 +76,7 @@ public class ModelNews extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mview = inflater.inflate(FragmentPage, container, false);
-        DisplayMetrics dm = mControlMainActivity.getResources().getDisplayMetrics(); //获取屏幕分辨率
+        DisplayMetrics dm = mMainContext.getResources().getDisplayMetrics(); //获取屏幕分辨率
         height = dm.heightPixels;
         width = dm.widthPixels;
         NewsMainShow();
@@ -142,10 +142,10 @@ public class ModelNews extends Fragment implements View.OnClickListener {
         if (newsId == null){
             return;
         }
-        LoadingDialog.getInstance(mControlMainActivity).show();
+        LoadingDialog.getInstance(mMainContext).show();
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(mControlMainActivity.mIpadress)
+                .baseUrl(mMainContext.mIpadress)
                 .client(ModelObservableInterface.client)
                 .build();
         ModelObservableInterface modelObservableInterface = retrofit.create(ModelObservableInterface.class);
@@ -160,31 +160,31 @@ public class ModelNews extends Fragment implements View.OnClickListener {
                     public void onResponse(Call<ModelNewsDetilsBean> call, Response<ModelNewsDetilsBean> response) {
                         ModelNewsDetilsBean detilsBean = response.body();
                         if (detilsBean == null){
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         if (!HeaderInterceptor.IsErrorCode(detilsBean.getCode(),"")){
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         int code = detilsBean.getCode();
                         if (code != 200){
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         ModelNewsDetilsBean.DataBean data = detilsBean.getData();
                         if (data == null){
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         HideAllLayout();
-                        View newsView = LayoutInflater.from(mControlMainActivity).inflate(R.layout.news_layout2, null);
+                        View newsView = LayoutInflater.from(mMainContext).inflate(R.layout.news_layout2, null);
                         //新闻标题
                         TextView news2_newstitle = newsView.findViewById(R.id.news2_newstitle);
                         news2_newstitle.setText(data.getNews_title());
                         //新闻详情的内容  HTML格式
                         TextView news2_news = newsView.findViewById(R.id.news2_news);
-                        new ModelHtmlUtils(mControlMainActivity, news2_news).setHtmlWithPic(data.news_content);
+                        new ModelHtmlUtils(mMainContext, news2_news).setHtmlWithPic(data.news_content);
                         TextView news2_newsdata = newsView.findViewById(R.id.news2_newsdata);
                         Date date = null;
                         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
@@ -211,15 +211,15 @@ public class ModelNews extends Fragment implements View.OnClickListener {
                         news2_looknum.setText(data.visit_num + "");
                         LinearLayout news_content = mview.findViewById(R.id.news_content);
                         news_content.addView(newsView);
-                        mControlMainActivity.Page_NewsDetails();
+                        mMainContext.Page_NewsDetails();
                         mCurrentPage = "newsdetails";
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                     }
 
                     @Override
                     public void onFailure(Call<ModelNewsDetilsBean> call, Throwable t) {
                         Log.e(TAG, "onFailure: " + t.getMessage());
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                     }
                 });
     }
@@ -227,7 +227,7 @@ public class ModelNews extends Fragment implements View.OnClickListener {
 
     //新闻资讯
     public void getModelNews() {
-        LoadingDialog.getInstance(mControlMainActivity).show();
+        LoadingDialog.getInstance(mMainContext).show();
         mCurrentPage = "newslist";
         LinearLayout news_end = mview.findViewById(R.id.news_end);
         news_end.setVisibility(View.INVISIBLE);
@@ -235,7 +235,7 @@ public class ModelNews extends Fragment implements View.OnClickListener {
         news_content.removeAllViews();
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(mControlMainActivity.mIpadress)
+                .baseUrl(mMainContext.mIpadress)
                 .client(ModelObservableInterface.client)
                 .build();
         ModelObservableInterface modelObservableInterface = retrofit.create(ModelObservableInterface.class);
@@ -257,14 +257,14 @@ public class ModelNews extends Fragment implements View.OnClickListener {
                                 if (mSmart_new_layout != null) {
                                     mSmart_new_layout.finishRefresh();
                                 }
-                                LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                                LoadingDialog.getInstance(mMainContext).dismiss();
                                 return;
                             }
                             if (code != 200){
                                 if (mSmart_new_layout != null) {
                                     mSmart_new_layout.finishRefresh();
                                 }
-                                LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                                LoadingDialog.getInstance(mMainContext).dismiss();
                                 return;
                             }
                             ModelNewsBean.DataBean data = newsBean.getData();
@@ -272,7 +272,7 @@ public class ModelNews extends Fragment implements View.OnClickListener {
                                 if (mSmart_new_layout != null) {
                                     mSmart_new_layout.finishRefresh();
                                 }
-                                LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                                LoadingDialog.getInstance(mMainContext).dismiss();
                                 return;
                             }
                             mNewsSum = data.getTotal();
@@ -281,7 +281,7 @@ public class ModelNews extends Fragment implements View.OnClickListener {
                                 if (mSmart_new_layout != null) {
                                     mSmart_new_layout.finishRefresh();
                                 }
-                                LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                                LoadingDialog.getInstance(mMainContext).dismiss();
                                 return;
                             }
                             View line = null;
@@ -290,7 +290,7 @@ public class ModelNews extends Fragment implements View.OnClickListener {
                                 if (listBean == null){
                                     continue;
                                 }
-                                View view = LayoutInflater.from(mControlMainActivity).inflate(R.layout.news_layout1, null);
+                                View view = LayoutInflater.from(mMainContext).inflate(R.layout.news_layout1, null);
                                 news_content.addView(view);
                                 view.setOnClickListener(v -> {
                                     //获取详情的网络数据
@@ -298,7 +298,7 @@ public class ModelNews extends Fragment implements View.OnClickListener {
                                 });
                                 //加载新闻封面
                                 ImageView news1_cover1 = view.findViewById(R.id.news1_cover);
-                                Glide.with(mControlMainActivity).load(listBean.getNews_cover()).listener(new RequestListener<Drawable>() {
+                                Glide.with(mMainContext).load(listBean.getNews_cover()).listener(new RequestListener<Drawable>() {
                                     @Override
                                     public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
                                         Log.d("Warn", "加载失败 errorMsg:" + (e != null ? e.getMessage() : "null"));
@@ -310,7 +310,7 @@ public class ModelNews extends Fragment implements View.OnClickListener {
                                         Log.d("Warn", "成功  Drawable Name:" + resource.getClass().getCanonicalName());
                                         return false;
                                     }
-                                }).error(mControlMainActivity.getResources().getDrawable(R.drawable.modelcoursecover)).into(news1_cover1);
+                                }).error(mMainContext.getResources().getDrawable(R.drawable.modelcoursecover)).into(news1_cover1);
                                 //新闻名称
                                 TextView news1_classname1 = view.findViewById(R.id.news1_classname);
                                 news1_classname1.setText(listBean.getNews_title());
@@ -357,7 +357,7 @@ public class ModelNews extends Fragment implements View.OnClickListener {
                             if (mSmart_new_layout != null) {
                                 mSmart_new_layout.finishRefresh();
                             }
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                         }
                     }
 
@@ -367,18 +367,18 @@ public class ModelNews extends Fragment implements View.OnClickListener {
                         if (mSmart_new_layout != null) {
                             mSmart_new_layout.finishRefresh();
                         }
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                     }
                 });
     }
 
     //新闻资讯
     public void getModelNewsMore() {
-        LoadingDialog.getInstance(mControlMainActivity).show();
+        LoadingDialog.getInstance(mMainContext).show();
         LinearLayout news_content = mview.findViewById(R.id.news_content);
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(mControlMainActivity.mIpadress)
+                .baseUrl(mMainContext.mIpadress)
                 .client(ModelObservableInterface.client)
                 .build();
         ModelObservableInterface modelObservableInterface = retrofit.create(ModelObservableInterface.class);
@@ -399,7 +399,7 @@ public class ModelNews extends Fragment implements View.OnClickListener {
                                 if (mSmart_new_layout != null) {
                                     mSmart_new_layout.finishLoadMore();
                                 }
-                                LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                                LoadingDialog.getInstance(mMainContext).dismiss();
                                 return;
                             }
                             int code = newsBean.getCode();
@@ -407,7 +407,7 @@ public class ModelNews extends Fragment implements View.OnClickListener {
                                 if (mSmart_new_layout != null) {
                                     mSmart_new_layout.finishLoadMore();
                                 }
-                                LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                                LoadingDialog.getInstance(mMainContext).dismiss();
                                 return;
                             }
                             ModelNewsBean.DataBean data = newsBean.getData();
@@ -415,7 +415,7 @@ public class ModelNews extends Fragment implements View.OnClickListener {
                                 if (mSmart_new_layout != null) {
                                     mSmart_new_layout.finishLoadMore();
                                 }
-                                LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                                LoadingDialog.getInstance(mMainContext).dismiss();
                                 return;
                             }
                             mNewsSum = data.getTotal();
@@ -424,7 +424,7 @@ public class ModelNews extends Fragment implements View.OnClickListener {
                                 if (mSmart_new_layout != null) {
                                     mSmart_new_layout.finishLoadMore();
                                 }
-                                LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                                LoadingDialog.getInstance(mMainContext).dismiss();
                                 return;
                             }
                             View line = null;
@@ -433,7 +433,7 @@ public class ModelNews extends Fragment implements View.OnClickListener {
                                 if (listBean == null){
                                     continue;
                                 }
-                                View view = LayoutInflater.from(mControlMainActivity).inflate(R.layout.news_layout1, null);
+                                View view = LayoutInflater.from(mMainContext).inflate(R.layout.news_layout1, null);
                                 view.setOnClickListener(v -> {
                                     //获取详情的网络数据
                                     getModelNewsDetils(listBean.news_id);
@@ -441,7 +441,7 @@ public class ModelNews extends Fragment implements View.OnClickListener {
                                 news_content.addView(view);
                                 //加载新闻封面
                                 ImageView news1_cover1 = view.findViewById(R.id.news1_cover);
-                                Glide.with(mControlMainActivity).load(listBean.getNews_cover()).listener(new RequestListener<Drawable>() {
+                                Glide.with(mMainContext).load(listBean.getNews_cover()).listener(new RequestListener<Drawable>() {
                                     @Override
                                     public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
                                         Log.d("Warn", "加载失败 errorMsg:" + (e != null ? e.getMessage() : "null"));
@@ -453,7 +453,7 @@ public class ModelNews extends Fragment implements View.OnClickListener {
                                         Log.d("Warn", "成功  Drawable Name:" + resource.getClass().getCanonicalName());
                                         return false;
                                     }
-                                }).error(mControlMainActivity.getResources().getDrawable(R.drawable.modelcoursecover)).into(news1_cover1);
+                                }).error(mMainContext.getResources().getDrawable(R.drawable.modelcoursecover)).into(news1_cover1);
                                 //新闻名称
                                 TextView news1_classname1 = view.findViewById(R.id.news1_classname);
                                 news1_classname1.setText(listBean.getNews_title());
@@ -501,7 +501,7 @@ public class ModelNews extends Fragment implements View.OnClickListener {
                                 mSmart_new_layout.finishLoadMore();
                             }
                         }
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                     }
 
                     @Override
@@ -510,7 +510,7 @@ public class ModelNews extends Fragment implements View.OnClickListener {
                         if (mSmart_new_layout != null) {
                             mSmart_new_layout.finishLoadMore();
                         }
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                     }
                 });
     }

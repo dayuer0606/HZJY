@@ -53,7 +53,7 @@ public class ModelHomePage extends Fragment{
     private boolean mIsUseFunctionShow = true;
     private View mView = null;
 
-    private static ControlMainActivity mControlMainActivity;
+    private static MainActivity mMainContext;
     private LayoutInflater inflater;
     private ViewGroup container;
 
@@ -74,8 +74,8 @@ public class ModelHomePage extends Fragment{
     }
     //要显示的页面
 //    private int FragmentPage;
-    public  static  Fragment newInstance(ControlMainActivity content, String context, int iFragmentPage){
-        mControlMainActivity = content;
+    public  static  Fragment newInstance(MainActivity content, String context, int iFragmentPage){
+        mMainContext = content;
         ModelHomePage myFragment = new ModelHomePage();
         FragmentPage = iFragmentPage;
         return  myFragment;
@@ -107,7 +107,7 @@ public class ModelHomePage extends Fragment{
         }
         HideAllLayout();
         LinearLayout homepage_layout_main = mView.findViewById(R.id.homepage_layout_main);
-        View view = LayoutInflater.from(mControlMainActivity).inflate(R.layout.homepage_layout1, null);
+        View view = LayoutInflater.from(mMainContext).inflate(R.layout.homepage_layout1, null);
         homepage_layout_main.addView(view);
         //Smart_homepage_layout1
         mSmart_homepage_layout1 = view.findViewById(R.id.Smart_homepage_layout1);
@@ -124,7 +124,7 @@ public class ModelHomePage extends Fragment{
                 getHomePageDatas();
             }
         });
-        DisplayMetrics dm = mControlMainActivity.getResources().getDisplayMetrics(); //获取屏幕分辨率
+        DisplayMetrics dm = mMainContext.getResources().getDisplayMetrics(); //获取屏幕分辨率
         int height = dm.heightPixels;
         int width = dm.widthPixels;
         if (mIsUseImageSlideShow) {
@@ -145,7 +145,7 @@ public class ModelHomePage extends Fragment{
             int size = FunctionButtonInfoList.size();
             GridView mfunctionButton = view.findViewById(R.id.functionButton);
             changeGridView(size,mfunctionButton);
-            mAdapter = new SimpleAdapter(mControlMainActivity, FunctionButtonInfoList,
+            mAdapter = new SimpleAdapter(mMainContext, FunctionButtonInfoList,
                     R.layout.homepage_layout_functionbutton, new String[] {"FunctionalModule","ButtonName"}, new int[] {R.id.TextView_functionbutton,R.id.TextView_functionbuttonname});
             mfunctionButton.setAdapter(mAdapter);
             mfunctionButton.setOnItemClickListener((adapterView, view1, i, l) -> {
@@ -155,23 +155,23 @@ public class ModelHomePage extends Fragment{
                 }
                 //判断点击什么按钮，跳转什么功能界面1：课程包 2：公开课 3：题库 4：问答 5：课程表 6：新闻资讯 7：课程 8：我的
                 if (mFunctionalModule.getText().toString().equals("课程包")){
-                    mControlMainActivity.Page_MoreCoursePacket();
+                    mMainContext.Page_MoreCoursePacket();
                 } else if (mFunctionalModule.getText().toString().equals("公开课")){
-//                        mControlMainActivity.LoginLiveOrPlayback("391068","dadada","",PlayType.LIVE);
-//                        mControlMainActivity.LoginLiveOrPlayback("365061","dadada","799723",PlayType.PLAYBACK);
-                    mControlMainActivity.Page_OpenClass();
+//                        mMainContext.LoginLiveOrPlayback("391068","dadada","",PlayType.LIVE);
+//                        mMainContext.LoginLiveOrPlayback("365061","dadada","799723",PlayType.PLAYBACK);
+                    mMainContext.Page_OpenClass();
                 } else if (mFunctionalModule.getText().toString().equals("题库")){
-                    mControlMainActivity.Page_QuestionBank();
+                    mMainContext.Page_QuestionBank();
                 } else if (mFunctionalModule.getText().toString().equals("问答")){
-                    mControlMainActivity.Page_CommunityAnswer();
+                    mMainContext.Page_CommunityAnswer();
                 } else if (mFunctionalModule.getText().toString().equals("课程表")){
-                    mControlMainActivity.Page_ClassCheduleCard();
+                    mMainContext.Page_ClassCheduleCard();
                 } else if (mFunctionalModule.getText().toString().equals("新闻资讯")){
-                    mControlMainActivity.Page_News();
+                    mMainContext.Page_News();
                 } else if (mFunctionalModule.getText().toString().equals("课程")){
-                    mControlMainActivity.Page_Course();
+                    mMainContext.Page_Course();
                 } else if (mFunctionalModule.getText().toString().equals("我的")){
-                    mControlMainActivity.Page_My();
+                    mMainContext.Page_My();
                 }
             });
         }
@@ -185,14 +185,14 @@ public class ModelHomePage extends Fragment{
                 continue;
             }
             ModelCourseCover modelCourseCover = new ModelCourseCover();
-            View modelCourseView = modelCourseCover.ModelCourseCover(mControlMainActivity,courseInfo);
+            View modelCourseView = modelCourseCover.ModelCourseCover(mMainContext,courseInfo);
             modelCourseView.setOnClickListener(v->{ //点击某一课程
                 ModelCourseCover modelCourseCover1 = new ModelCourseCover();
-                View modelCourseView1 = modelCourseCover1.ModelCourseCover(mControlMainActivity,courseInfo);
+                View modelCourseView1 = modelCourseCover1.ModelCourseCover(mMainContext,courseInfo);
                 modelCourseCover1.CourseDetailsShow();
                 HideAllLayout();
                 homepage_layout_main.addView(modelCourseView1);
-                mControlMainActivity.onClickCourseDetails();
+                mMainContext.onClickCourseDetails();
                 mModelCourseCover = modelCourseCover1;
             });
             courseModelLinearLayout.addView(modelCourseView);
@@ -217,14 +217,14 @@ public class ModelHomePage extends Fragment{
                 continue;
             }
             ModelCoursePacketCover modelCoursePacketCover = new ModelCoursePacketCover();
-            View modelCoursePacketView = modelCoursePacketCover.ModelCoursePacketCover(mControlMainActivity,CoursePacketInfo);
+            View modelCoursePacketView = modelCoursePacketCover.ModelCoursePacketCover(mMainContext,CoursePacketInfo);
             modelCoursePacketView.setOnClickListener(v->{ //点击某一课程包
                 ModelCoursePacketCover modelCoursePacketCover1 = new ModelCoursePacketCover();
-                View modelCoursePacketView1 = modelCoursePacketCover1.ModelCoursePacketCover(mControlMainActivity,CoursePacketInfo);
+                View modelCoursePacketView1 = modelCoursePacketCover1.ModelCoursePacketCover(mMainContext,CoursePacketInfo);
                 modelCoursePacketCover1.CoursePacketDetailsShow();
                 HideAllLayout();
                 homepage_layout_main.addView(modelCoursePacketView1);
-                mControlMainActivity.onClickCoursePacketDetails();
+                mMainContext.onClickCoursePacketDetails();
             });
             coursePacketModelLinearLayout.addView(modelCoursePacketView);
         }
@@ -241,9 +241,9 @@ public class ModelHomePage extends Fragment{
      */
     private void changeGridView(int size,GridView mfunctionButton) {
         // item宽度
-        int itemWidth = DensityUtil.dip2px(mControlMainActivity, 50);
+        int itemWidth = DensityUtil.dip2px(mMainContext, 50);
         // item之间的间隔
-        int itemPaddingH = DensityUtil.dip2px(mControlMainActivity, 15);
+        int itemPaddingH = DensityUtil.dip2px(mMainContext, 15);
         // 计算GridView宽度
         int gridviewWidth = size * (itemWidth + itemPaddingH);
 
@@ -405,18 +405,11 @@ public class ModelHomePage extends Fragment{
         return;
     }
 
-    public void ModelCourseCoverQuestionPictureAdd(Intent data){ //添加图片成功后，转到图片界面
-        if (mModelCourseCover != null){
-            mModelCourseCover.ModelCourseCoverQuestionPictureAdd(data);
-        }
-        return;
-    }
-
     //获取首页数据
     private void getHomePageDatas() {
-        LoadingDialog.getInstance(mControlMainActivity).show();
+        LoadingDialog.getInstance(mMainContext).show();
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(mControlMainActivity.mIpadress)
+                .baseUrl(mMainContext.mIpadress)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(ModelObservableInterface.client)
@@ -451,7 +444,7 @@ public class ModelHomePage extends Fragment{
                         if (mSmart_homepage_layout1 != null) {
                             mSmart_homepage_layout1.finishRefresh();
                         }
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                         if (mHomePageDataBean != null) {
                             Log.e("TAG", "onError1: " + mHomePageDataBean.toString());
                         } else {
@@ -461,12 +454,12 @@ public class ModelHomePage extends Fragment{
 
                     @Override
                     public void onError(Throwable e) {
-                        Toast.makeText(mControlMainActivity,"刷新数据失败",Toast.LENGTH_LONG).show();
+                        Toast.makeText(mMainContext,"刷新数据失败",Toast.LENGTH_LONG).show();
                         //需要结束刷新头
                         if (mSmart_homepage_layout1 != null) {
                             mSmart_homepage_layout1.finishRefresh();
                         }
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                     }
 
                     @Override

@@ -38,7 +38,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * 登录模块
  */
 public class ModelLogIn extends Fragment {
-    private static ControlMainActivity mControlMainActivity;
+    private static MainActivity mMainContext;
     //要显示的页面
     static private int FragmentPage;
     private View mview ;
@@ -51,8 +51,8 @@ public class ModelLogIn extends Fragment {
     private CountDownTimer mRegisterSMSCodeCountDownTimer = null;
     private CountDownTimer mLoginSMSCodeCountDownTimer = null;
 
-    public  static Fragment newInstance(ControlMainActivity context,int iFragmentPage){
-        mControlMainActivity = context;
+    public  static Fragment newInstance(MainActivity context,int iFragmentPage){
+        mMainContext = context;
         ModelLogIn myFragment = new ModelLogIn();
         FragmentPage = iFragmentPage;
         return  myFragment;
@@ -61,7 +61,7 @@ public class ModelLogIn extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mview = inflater.inflate(FragmentPage,container,false);
-        DisplayMetrics dm = mControlMainActivity.getResources().getDisplayMetrics(); //获取屏幕分辨率
+        DisplayMetrics dm = mMainContext.getResources().getDisplayMetrics(); //获取屏幕分辨率
         height = dm.heightPixels;
         width = dm.widthPixels;
         LogInMainInit();
@@ -135,14 +135,14 @@ public class ModelLogIn extends Fragment {
     //主页-获取验证码倒计时
     public void SMSCodeGet(){
         if (mview == null){
-            Toast.makeText(mControlMainActivity,"系统错误！",Toast.LENGTH_LONG).show();
+            Toast.makeText(mMainContext,"系统错误！",Toast.LENGTH_LONG).show();
             return;
         }
         EditText login_forgetpassword_username_edittext = mview.findViewById(R.id.login_forgetpassword_username_edittext);
         String tel = login_forgetpassword_username_edittext.getText().toString();
         //判断手机号格式是否正确
-        if (!mControlMainActivity.isTelNumber(tel)){
-            Toast.makeText(mControlMainActivity,"手机号码格式不正确，请检查后重试！",Toast.LENGTH_LONG).show();
+        if (!mMainContext.isTelNumber(tel)){
+            Toast.makeText(mMainContext,"手机号码格式不正确，请检查后重试！",Toast.LENGTH_LONG).show();
             return;
         }
         TextView forgetpassword_getsmscode = mview.findViewById(R.id.forgetpassword_getsmscode);
@@ -189,14 +189,14 @@ public class ModelLogIn extends Fragment {
     //注册-获取验证码倒计时
     public void RegisterSMSCodeGet(){
         if (mview == null){
-            Toast.makeText(mControlMainActivity,"系统错误！",Toast.LENGTH_LONG).show();
+            Toast.makeText(mMainContext,"系统错误！",Toast.LENGTH_LONG).show();
             return;
         }
         EditText login_register_username_edittext = mview.findViewById(R.id.login_register_username_edittext);
         String tel = login_register_username_edittext.getText().toString();
         //判断手机号格式是否正确
-        if (!mControlMainActivity.isTelNumber(tel)){
-            Toast.makeText(mControlMainActivity,"手机号码格式不正确，请检查后重试！",Toast.LENGTH_LONG).show();
+        if (!mMainContext.isTelNumber(tel)){
+            Toast.makeText(mMainContext,"手机号码格式不正确，请检查后重试！",Toast.LENGTH_LONG).show();
             return;
         }
         TextView register_getsmscode = mview.findViewById(R.id.register_getsmscode);
@@ -776,12 +776,12 @@ public class ModelLogIn extends Fragment {
     //登录
     public void LogIn(String username,String password){
         if (password.length() < 6){
-            Toast.makeText(mControlMainActivity,"密码不能少于6位",Toast.LENGTH_LONG).show();
+            Toast.makeText(mMainContext,"密码不能少于6位",Toast.LENGTH_LONG).show();
             return;
         }
-        LoadingDialog.getInstance(mControlMainActivity).show();
+        LoadingDialog.getInstance(mMainContext).show();
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(mControlMainActivity.mIpadress)
+                .baseUrl(mMainContext.mIpadress)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(ModelObservableInterface.client)
                 .build();
@@ -802,56 +802,56 @@ public class ModelLogIn extends Fragment {
             public void onResponse(Call<ModelObservableInterface.BaseBean> call, Response<ModelObservableInterface.BaseBean> response) {
                 ModelObservableInterface.BaseBean loginBean = response.body();//得到解析后的LoginBean对象
                 if (loginBean == null){
-                    Toast.makeText(mControlMainActivity,"登录失败",Toast.LENGTH_LONG).show();
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    Toast.makeText(mMainContext,"登录失败",Toast.LENGTH_LONG).show();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 if (!HeaderInterceptor.IsErrorCode(loginBean.getErrorCode(),loginBean.getErrorMsg())){
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 if (loginBean.getErrorCode() == 205){
-                    Toast.makeText(mControlMainActivity,"密码错误",Toast.LENGTH_LONG).show();
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    Toast.makeText(mMainContext,"密码错误",Toast.LENGTH_LONG).show();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 } else if (loginBean.getErrorCode() == 207){
                     if (loginBean.getMsg() == null){
-                        Toast.makeText(mControlMainActivity, "登录失败", Toast.LENGTH_LONG).show();
+                        Toast.makeText(mMainContext, "登录失败", Toast.LENGTH_LONG).show();
                     } else {
-                        Toast.makeText(mControlMainActivity, loginBean.getErrorMsg(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(mMainContext, loginBean.getErrorMsg(), Toast.LENGTH_LONG).show();
                     }
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 } else if (loginBean.getErrorCode() == 208){
-                    Toast.makeText(mControlMainActivity,"密码错误",Toast.LENGTH_LONG).show();
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    Toast.makeText(mMainContext,"密码错误",Toast.LENGTH_LONG).show();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 if (loginBean.getData() == null){
-                    Toast.makeText(mControlMainActivity,"登录失败",Toast.LENGTH_LONG).show();
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    Toast.makeText(mMainContext,"登录失败",Toast.LENGTH_LONG).show();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 if (loginBean.getData().get("stu_id") == null){
-                    Toast.makeText(mControlMainActivity,"登录失败",Toast.LENGTH_LONG).show();
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    Toast.makeText(mMainContext,"登录失败",Toast.LENGTH_LONG).show();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 //如果登录成功，跳转到我的界面，并存储token
                 String token = String.valueOf(loginBean.getData().get("token"));
                 String stu_id = String.valueOf(loginBean.getData().get("stu_id"));
                 if (!stu_id.equals("")) {
-                    mControlMainActivity.LogInSuccess(token,stu_id);
+                    mMainContext.LogInSuccess(token,stu_id);
                 } else {
-                    Toast.makeText(mControlMainActivity,"登录失败",Toast.LENGTH_LONG).show();
+                    Toast.makeText(mMainContext,"登录失败",Toast.LENGTH_LONG).show();
                 }
-                LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                LoadingDialog.getInstance(mMainContext).dismiss();
             }
 
             @Override
             public void onFailure(Call<ModelObservableInterface.BaseBean> call, Throwable t) {
-                Toast.makeText(mControlMainActivity,"登录超时",Toast.LENGTH_LONG).show();
-                LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                Toast.makeText(mMainContext,"登录超时",Toast.LENGTH_LONG).show();
+                LoadingDialog.getInstance(mMainContext).dismiss();
             }
         });
     }
@@ -859,7 +859,7 @@ public class ModelLogIn extends Fragment {
     //注册
     public void Register(){
         if (mview == null){
-            Toast.makeText(mControlMainActivity,"系统错误",Toast.LENGTH_LONG).show();
+            Toast.makeText(mMainContext,"系统错误",Toast.LENGTH_LONG).show();
             return;
         }
         //判断密码是否为6~12位数字或字母
@@ -869,35 +869,35 @@ public class ModelLogIn extends Fragment {
         EditText login_register_smscode_edittext = mview.findViewById(R.id.login_register_smscode_edittext);
         if (login_register_repeatpassword_edittext == null || login_register_password_edittext == null ||
                 login_register_username_edittext == null || login_register_smscode_edittext == null){
-            Toast.makeText(mControlMainActivity,"系统错误",Toast.LENGTH_LONG).show();
+            Toast.makeText(mMainContext,"系统错误",Toast.LENGTH_LONG).show();
             return;
         }
         String username = login_register_username_edittext.getText().toString();
         if (username.equals("")){
-            Toast.makeText(mControlMainActivity,"用户名不能为空",Toast.LENGTH_LONG).show();
+            Toast.makeText(mMainContext,"用户名不能为空",Toast.LENGTH_LONG).show();
             return;
         }
         String phonecode = login_register_smscode_edittext.getText().toString();
         if (phonecode.equals("")){
-            Toast.makeText(mControlMainActivity,"请输入验证码",Toast.LENGTH_LONG).show();
+            Toast.makeText(mMainContext,"请输入验证码",Toast.LENGTH_LONG).show();
             return;
         }
         if (!login_register_repeatpassword_edittext.getText().toString().equals(login_register_password_edittext.getText().toString())){
-            Toast.makeText(mControlMainActivity,"两次输入的密码不一致",Toast.LENGTH_LONG).show();
+            Toast.makeText(mMainContext,"两次输入的密码不一致",Toast.LENGTH_LONG).show();
             return;
         }
         String password = login_register_repeatpassword_edittext.getText().toString();
 //        if (!isLetterDigit(password)){
-//            Toast.makeText(mControlMainActivity,"密码格式不正确，请改为包含大小写字母及数字且在6-12位",Toast.LENGTH_LONG).show();
+//            Toast.makeText(mMainContext,"密码格式不正确，请改为包含大小写字母及数字且在6-12位",Toast.LENGTH_LONG).show();
 //            return;
 //        }
         if (password.length()<6){
-            Toast.makeText(mControlMainActivity,"密码不能少于6位",Toast.LENGTH_LONG).show();
+            Toast.makeText(mMainContext,"密码不能少于6位",Toast.LENGTH_LONG).show();
             return;
         }
-        LoadingDialog.getInstance(mControlMainActivity).show();
+        LoadingDialog.getInstance(mMainContext).show();
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(mControlMainActivity.mIpadress)
+                .baseUrl(mMainContext.mIpadress)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(ModelObservableInterface.client)
                 .build();
@@ -918,42 +918,42 @@ public class ModelLogIn extends Fragment {
             public void onResponse(Call<ModelObservableInterface.BaseBean> call, Response<ModelObservableInterface.BaseBean> response) {
                 ModelObservableInterface.BaseBean loginBean = response.body();//得到解析后的LoginBean对象
                 if (loginBean == null){
-                    Toast.makeText(mControlMainActivity,"注册失败",Toast.LENGTH_LONG).show();
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    Toast.makeText(mMainContext,"注册失败",Toast.LENGTH_LONG).show();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 if (!HeaderInterceptor.IsErrorCode(loginBean.getErrorCode(),loginBean.getErrorMsg())){
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 //网络请求数据成功
                 int code = loginBean.getErrorCode();
                 //如果注册成功，跳转到登录界面
                 if (code == 200) {
-                    mControlMainActivity.onClickImmediatelyLogin("login");
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    mMainContext.onClickImmediatelyLogin("login");
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                 } else if (code == 201) {
-                    Toast.makeText(mControlMainActivity,"该手机号已存在",Toast.LENGTH_LONG).show();
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    Toast.makeText(mMainContext,"该手机号已存在",Toast.LENGTH_LONG).show();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 } else if (code == 203) {
-                    Toast.makeText(mControlMainActivity,"注册失败",Toast.LENGTH_LONG).show();
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    Toast.makeText(mMainContext,"注册失败",Toast.LENGTH_LONG).show();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 } else if (code == 205) {
-                    Toast.makeText(mControlMainActivity,"手机号验证码错误",Toast.LENGTH_LONG).show();
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    Toast.makeText(mMainContext,"手机号验证码错误",Toast.LENGTH_LONG).show();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 } else {
-                    Toast.makeText(mControlMainActivity,"注册失败",Toast.LENGTH_LONG).show();
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    Toast.makeText(mMainContext,"注册失败",Toast.LENGTH_LONG).show();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
             }
 
             @Override
             public void onFailure(Call<ModelObservableInterface.BaseBean> call, Throwable t) {
-                Toast.makeText(mControlMainActivity,"注册超时",Toast.LENGTH_LONG).show();
+                Toast.makeText(mMainContext,"注册超时",Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -961,7 +961,7 @@ public class ModelLogIn extends Fragment {
     //忘记密码
     public void RetrievePassword(){
         if (mview == null){
-            Toast.makeText(mControlMainActivity,"系统错误",Toast.LENGTH_LONG).show();
+            Toast.makeText(mMainContext,"系统错误",Toast.LENGTH_LONG).show();
             return;
         }
         //判断密码是否为6~12位数字或字母
@@ -970,31 +970,31 @@ public class ModelLogIn extends Fragment {
         EditText login_forgetpassword_smscode_edittext = mview.findViewById(R.id.login_forgetpassword_smscode_edittext);
         if (login_forgetpassword_password_edittext == null || login_forgetpassword_username_edittext == null ||
                 login_forgetpassword_smscode_edittext == null){
-            Toast.makeText(mControlMainActivity,"系统错误",Toast.LENGTH_LONG).show();
+            Toast.makeText(mMainContext,"系统错误",Toast.LENGTH_LONG).show();
             return;
         }
         String username = login_forgetpassword_username_edittext.getText().toString();
         if (username.equals("")){
-            Toast.makeText(mControlMainActivity,"用户名不能为空",Toast.LENGTH_LONG).show();
+            Toast.makeText(mMainContext,"用户名不能为空",Toast.LENGTH_LONG).show();
             return;
         }
         String phonecode = login_forgetpassword_smscode_edittext.getText().toString();
         if (phonecode.equals("")){
-            Toast.makeText(mControlMainActivity,"请输入验证码",Toast.LENGTH_LONG).show();
+            Toast.makeText(mMainContext,"请输入验证码",Toast.LENGTH_LONG).show();
             return;
         }
         String password = login_forgetpassword_password_edittext.getText().toString();
 //        if (!isLetterDigit(password)){
-//            Toast.makeText(mControlMainActivity,"密码格式不正确，请改为包含大小写字母及数字且在6-12位",Toast.LENGTH_LONG).show();
+//            Toast.makeText(mMainContext,"密码格式不正确，请改为包含大小写字母及数字且在6-12位",Toast.LENGTH_LONG).show();
 //            return;
 //        }
         if (password.length()<6){
-            Toast.makeText(mControlMainActivity,"密码不能少于6位",Toast.LENGTH_LONG).show();
+            Toast.makeText(mMainContext,"密码不能少于6位",Toast.LENGTH_LONG).show();
             return;
         }
-        LoadingDialog.getInstance(mControlMainActivity).show();
+        LoadingDialog.getInstance(mMainContext).show();
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(mControlMainActivity.mIpadress)
+                .baseUrl(mMainContext.mIpadress)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(ModelObservableInterface.client)
                 .build();
@@ -1014,38 +1014,38 @@ public class ModelLogIn extends Fragment {
             public void onResponse(Call<ModelObservableInterface.BaseBean> call, Response<ModelObservableInterface.BaseBean> response) {
                 ModelObservableInterface.BaseBean loginBean = response.body();//得到解析后的LoginBean对象
                 if (loginBean == null){
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
-                    Toast.makeText(mControlMainActivity,"找回密码失败",Toast.LENGTH_LONG).show();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
+                    Toast.makeText(mMainContext,"找回密码失败",Toast.LENGTH_LONG).show();
                     return;
                 }
                 if (!HeaderInterceptor.IsErrorCode(loginBean.getErrorCode(),loginBean.getErrorMsg())){
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 //网络请求数据成功
                 int code = loginBean.getErrorCode();
                 //如果注册成功，跳转到登录界面
                 if (code == 200) {
-                    mControlMainActivity.onClickImmediatelyLogin("login");
+                    mMainContext.onClickImmediatelyLogin("login");
                 } else {
-                    Toast.makeText(mControlMainActivity,"找回密码失败",Toast.LENGTH_LONG).show();
+                    Toast.makeText(mMainContext,"找回密码失败",Toast.LENGTH_LONG).show();
                 }
-                LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                LoadingDialog.getInstance(mMainContext).dismiss();
             }
 
             @Override
             public void onFailure(Call<ModelObservableInterface.BaseBean> call, Throwable t) {
-                Toast.makeText(mControlMainActivity,"找回密码超时",Toast.LENGTH_LONG).show();
-                LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                Toast.makeText(mMainContext,"找回密码超时",Toast.LENGTH_LONG).show();
+                LoadingDialog.getInstance(mMainContext).dismiss();
             }
         });
     }
 
     //获取验证码
     private void VerificationCode(String tel){
-        LoadingDialog.getInstance(mControlMainActivity).show();
+        LoadingDialog.getInstance(mMainContext).show();
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(mControlMainActivity.mIpadress)
+                .baseUrl(mMainContext.mIpadress)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(ModelObservableInterface.client)
                 .build();
@@ -1061,7 +1061,7 @@ public class ModelLogIn extends Fragment {
             public void onResponse(Call<ModelObservableInterface.BaseBean> call, Response<ModelObservableInterface.BaseBean> response) {
                 ModelObservableInterface.BaseBean loginBean = response.body();//得到解析后的LoginBean对象
                 if (loginBean == null){
-                    Toast.makeText(mControlMainActivity,"获取验证码失败",Toast.LENGTH_LONG).show();
+                    Toast.makeText(mMainContext,"获取验证码失败",Toast.LENGTH_LONG).show();
                     //停止倒计时
                     if (mLoginSMSCodeCountDownTimer != null){
                         mLoginSMSCodeCountDownTimer.onFinish();
@@ -1071,18 +1071,18 @@ public class ModelLogIn extends Fragment {
                         mRegisterSMSCodeCountDownTimer.onFinish();
                         mRegisterSMSCodeCountDownTimer = null;
                     }
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 if (!HeaderInterceptor.IsErrorCode(loginBean.getErrorCode(),loginBean.getErrorMsg())){
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 //网络请求数据成功
                 int code = loginBean.getErrorCode();
                 //如果注册成功，跳转到登录界面
                 if (code != 200) {
-                    Toast.makeText(mControlMainActivity,"获取验证码失败",Toast.LENGTH_LONG).show();
+                    Toast.makeText(mMainContext,"获取验证码失败",Toast.LENGTH_LONG).show();
                     //停止倒计时
                     if (mLoginSMSCodeCountDownTimer != null){
                         mLoginSMSCodeCountDownTimer.onFinish();
@@ -1096,12 +1096,12 @@ public class ModelLogIn extends Fragment {
                     HeaderInterceptor.cookie = response.headers().get("set-cookie");
                     Log.e("NetWork=>headers", HeaderInterceptor.cookie);
                 }
-                LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                LoadingDialog.getInstance(mMainContext).dismiss();
             }
 
             @Override
             public void onFailure(Call<ModelObservableInterface.BaseBean> call, Throwable t) {
-                Toast.makeText(mControlMainActivity,"获取验证码超时",Toast.LENGTH_LONG).show();
+                Toast.makeText(mMainContext,"获取验证码超时",Toast.LENGTH_LONG).show();
                 Log.e("httperror","" + t.getStackTrace().toString());
                 //停止倒计时
                 if (mLoginSMSCodeCountDownTimer != null){
@@ -1112,16 +1112,16 @@ public class ModelLogIn extends Fragment {
                     mRegisterSMSCodeCountDownTimer.onFinish();
                     mRegisterSMSCodeCountDownTimer = null;
                 }
-                LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                LoadingDialog.getInstance(mMainContext).dismiss();
             }
         });
     }
 
     //判断手机号是否可用
     private void VerifyPhoneNumber(String tel){
-        LoadingDialog.getInstance(mControlMainActivity).show();
+        LoadingDialog.getInstance(mMainContext).show();
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(mControlMainActivity.mIpadress)
+                .baseUrl(mMainContext.mIpadress)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(ModelObservableInterface.client)
                 .build();
@@ -1137,7 +1137,7 @@ public class ModelLogIn extends Fragment {
             public void onResponse(Call<ModelObservableInterface.BaseBean> call, Response<ModelObservableInterface.BaseBean> response) {
                 ModelObservableInterface.BaseBean loginBean = response.body();//得到解析后的LoginBean对象
                 if (loginBean == null){
-                    Toast.makeText(mControlMainActivity,"手机号码不可用",Toast.LENGTH_LONG).show();
+                    Toast.makeText(mMainContext,"手机号码不可用",Toast.LENGTH_LONG).show();
                     //停止倒计时
                     if (mLoginSMSCodeCountDownTimer != null){
                         mLoginSMSCodeCountDownTimer.onFinish();
@@ -1147,18 +1147,18 @@ public class ModelLogIn extends Fragment {
                         mRegisterSMSCodeCountDownTimer.onFinish();
                         mRegisterSMSCodeCountDownTimer = null;
                     }
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 if (!HeaderInterceptor.IsErrorCode(loginBean.getErrorCode(),loginBean.getErrorMsg())){
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 //网络请求数据成功
                 int code = loginBean.getErrorCode();
                 //如果注册成功，跳转到登录界面
                 if (code != 200 ) {
-                    Toast.makeText(mControlMainActivity,"手机号码不可用",Toast.LENGTH_LONG).show();
+                    Toast.makeText(mMainContext,"手机号码不可用",Toast.LENGTH_LONG).show();
                     //停止倒计时
                     if (mLoginSMSCodeCountDownTimer != null){
                         mLoginSMSCodeCountDownTimer.onFinish();
@@ -1171,12 +1171,12 @@ public class ModelLogIn extends Fragment {
                 } else {
                     VerificationCode(tel);
                 }
-                LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                LoadingDialog.getInstance(mMainContext).dismiss();
             }
 
             @Override
             public void onFailure(Call<ModelObservableInterface.BaseBean> call, Throwable t) {
-                Toast.makeText(mControlMainActivity,"验证手机号码超时",Toast.LENGTH_LONG).show();
+                Toast.makeText(mMainContext,"验证手机号码超时",Toast.LENGTH_LONG).show();
                 //停止倒计时
                 if (mLoginSMSCodeCountDownTimer != null){
                     mLoginSMSCodeCountDownTimer.onFinish();
@@ -1186,7 +1186,7 @@ public class ModelLogIn extends Fragment {
                     mRegisterSMSCodeCountDownTimer.onFinish();
                     mRegisterSMSCodeCountDownTimer = null;
                 }
-                LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                LoadingDialog.getInstance(mMainContext).dismiss();
             }
         });
     }

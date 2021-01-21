@@ -52,7 +52,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class ModelOrderDetails implements View.OnClickListener {
     private View mOrderBuyView,mOrderBankCardView,mOrderResultView,mOrderCouponChooseView;
-    private ControlMainActivity mControlMainActivity = null;
+    private MainActivity mMainContext = null;
     //当前选中的支付方式
     private String mCurrentPayType = "bankcard";
     //当前选中的选择优惠券标签(默认为可用优惠券)
@@ -96,22 +96,22 @@ public class ModelOrderDetails implements View.OnClickListener {
                         // 该笔订单是否真实支付成功，需要依赖服务端的异步通知。
                         HideAllLayout();
                         LinearLayout modeldetails_main = modelOrderDetailsView.findViewById(R.id.modeldetails_main);
-                        View resultView = LayoutInflater.from(mControlMainActivity).inflate(R.layout.modelorderpay_payresult1, null);
+                        View resultView = LayoutInflater.from(mMainContext).inflate(R.layout.modelorderpay_payresult1, null);
                         modeldetails_main.addView(resultView);
                         TextView orderpay_payresult = resultView.findViewById(R.id.orderpay_payresult);
                         orderpay_payresult.setText("订单成功");
                         ImageView orderpay_payresult_icon = resultView.findViewById(R.id.orderpay_payresult_icon);
                         orderpay_payresult_icon.setBackground(resultView.getResources().getDrawable(R.drawable.img_orderresult_success));
-                        mControlMainActivity.onClickOrderResult();
+                        mMainContext.onClickOrderResult();
                     } else {
                         // 该笔订单真实的支付结果，需要依赖服务端的异步通知。
                         HideAllLayout();
                         LinearLayout modeldetails_main = modelOrderDetailsView.findViewById(R.id.modeldetails_main);
-                        View resultView = LayoutInflater.from(mControlMainActivity).inflate(R.layout.modelorderpay_payresult1, null);
+                        View resultView = LayoutInflater.from(mMainContext).inflate(R.layout.modelorderpay_payresult1, null);
                         modeldetails_main.addView(resultView);
                         TextView orderpay_payresult = resultView.findViewById(R.id.orderpay_payresult);
                         orderpay_payresult.setText("订单失败");
-                        mControlMainActivity.onClickOrderResult();
+                        mMainContext.onClickOrderResult();
                     }
                     break;
                 }
@@ -126,7 +126,7 @@ public class ModelOrderDetails implements View.OnClickListener {
         mCourseInfo = courseInfo;
         mCoursePacketInfo = coursePacketInfo;
         this.mMyOrderListBean = mMyOrderListBean;
-        mControlMainActivity = (ControlMainActivity) context;
+        mMainContext = (MainActivity) context;
         mModelOrderDetailsInterface = modelOrderDetailsInterface;
         DisplayMetrics dm = context.getResources().getDisplayMetrics(); //获取屏幕分辨率
         height = dm.heightPixels;
@@ -193,7 +193,7 @@ public class ModelOrderDetails implements View.OnClickListener {
             }
             case R.id.orderpay_immediatepayment: {//点击订单界面的立即支付按钮
                 if (mCurrentPayType.equals("bankcard")){ //银行卡支付
-                    mControlMainActivity.Page_OrderDetailsBankCard();
+                    mMainContext.Page_OrderDetailsBankCard();
                     CourseDetailsBankCardInit();
                     return;
                 } else if (mCurrentPayType.equals("alipay")){ //支付宝支付
@@ -204,7 +204,7 @@ public class ModelOrderDetails implements View.OnClickListener {
                 break;
             }
             case R.id.orderpay_preferentialnumber_layout:{ //点击选择优惠券
-                mControlMainActivity.Page_OrderDetailsChooseCoupon();
+                mMainContext.Page_OrderDetailsChooseCoupon();
                 CourseDetailsOrderCouponChooseInit();
                 break;
             }
@@ -261,13 +261,13 @@ public class ModelOrderDetails implements View.OnClickListener {
             case R.id.orderpay_couponchoose_main_return_button1:{
                 mCouponDataListBean = null;
                 CourseDetailsBuyInit();
-                mControlMainActivity.Page_OrderDetailsChooseCouponReturn();
+                mMainContext.Page_OrderDetailsChooseCouponReturn();
                 break;
             }
             case R.id.orderpay_couponchoose_main_exchange:{
                 //点击兑换弹出兑换对话框
-                View view = mControlMainActivity.getLayoutInflater().inflate(R.layout.dialog_sure_cancel1, null);
-                mMyCouponDialog = new ControllerCenterDialog(mControlMainActivity, 0, 0, view, R.style.DialogTheme);
+                View view = mMainContext.getLayoutInflater().inflate(R.layout.dialog_sure_cancel1, null);
+                mMyCouponDialog = new ControllerCenterDialog(mMainContext, 0, 0, view, R.style.DialogTheme);
                 mMyCouponDialog.setCancelable(true);
                 mMyCouponDialog.show();
                 TextView button_cancel = view.findViewById(R.id.button_cancel);
@@ -279,7 +279,7 @@ public class ModelOrderDetails implements View.OnClickListener {
                     //开始兑换优惠码
                     EditText dialog_content = view.findViewById(R.id.dialog_content);
                     if (dialog_content.getText().toString().equals("")){
-                        Toast.makeText(mControlMainActivity,"兑换码不允许为空",Toast.LENGTH_LONG).show();
+                        Toast.makeText(mMainContext,"兑换码不允许为空",Toast.LENGTH_LONG).show();
                         return;
                     }
                     CheckBeforeExchangingCoupons(dialog_content.getText().toString());
@@ -288,7 +288,7 @@ public class ModelOrderDetails implements View.OnClickListener {
             }
             case R.id.orderpay_bankcard_return_button1:{ //银行卡-返回
                 CourseDetailsBuyInit();
-                mControlMainActivity.Page_OrderDetailsBankCardReturn();
+                mMainContext.Page_OrderDetailsBankCardReturn();
                 break;
             }
             default:
@@ -301,7 +301,7 @@ public class ModelOrderDetails implements View.OnClickListener {
         HideAllLayout();
         LinearLayout modeldetails_main = modelOrderDetailsView.findViewById(R.id.modeldetails_main);
 //        if (mOrderBuyView == null) {
-        mOrderBuyView = LayoutInflater.from(mControlMainActivity).inflate(R.layout.modelorderpay_main, null);
+        mOrderBuyView = LayoutInflater.from(mMainContext).inflate(R.layout.modelorderpay_main, null);
         LinearLayout orderpay_paytype_bankcard = mOrderBuyView.findViewById(R.id.orderpay_paytype_bankcard);
         LinearLayout orderpay_paytype_alipay = mOrderBuyView.findViewById(R.id.orderpay_paytype_alipay);
         LinearLayout orderpay_paytype_wechat = mOrderBuyView.findViewById(R.id.orderpay_paytype_wechat);
@@ -424,11 +424,11 @@ public class ModelOrderDetails implements View.OnClickListener {
                 //取消订单  返回首页
                 HideAllLayout();
                 LinearLayout modeldetails_main = modelOrderDetailsView.findViewById(R.id.modeldetails_main);
-                View resultView = LayoutInflater.from(mControlMainActivity).inflate(R.layout.modelorderpay_payresult1, null);
+                View resultView = LayoutInflater.from(mMainContext).inflate(R.layout.modelorderpay_payresult1, null);
                 modeldetails_main.addView(resultView);
                 TextView orderpay_payresult = resultView.findViewById(R.id.orderpay_payresult);
                 orderpay_payresult.setText("订单超时");
-                mControlMainActivity.onClickOrderResult();
+                mMainContext.onClickOrderResult();
             }
         }
     };
@@ -465,7 +465,7 @@ public class ModelOrderDetails implements View.OnClickListener {
         HideAllLayout();
         LinearLayout modeldetails_main = modelOrderDetailsView.findViewById(R.id.modeldetails_main);
 //        if (mOrderBankCardView == null) {
-        mOrderBankCardView = LayoutInflater.from(mControlMainActivity).inflate(R.layout.modelorderpay_bankcard, null);
+        mOrderBankCardView = LayoutInflater.from(mMainContext).inflate(R.layout.modelorderpay_bankcard, null);
         ImageView orderpay_bankcard_return_button1 = mOrderBankCardView.findViewById(R.id.orderpay_bankcard_return_button1);
         orderpay_bankcard_return_button1.setOnClickListener(this);
 //        }
@@ -477,7 +477,7 @@ public class ModelOrderDetails implements View.OnClickListener {
         HideAllLayout();
         LinearLayout modeldetails_main = modelOrderDetailsView.findViewById(R.id.modeldetails_main);
 //        if (mOrderResultView == null) {
-        mOrderResultView = LayoutInflater.from(mControlMainActivity).inflate(R.layout.modelorderpay_payresult, null);
+        mOrderResultView = LayoutInflater.from(mMainContext).inflate(R.layout.modelorderpay_payresult, null);
 //        }
         modeldetails_main.addView(mOrderResultView);
     }
@@ -487,7 +487,7 @@ public class ModelOrderDetails implements View.OnClickListener {
         HideAllLayout();
         LinearLayout modeldetails_main = modelOrderDetailsView.findViewById(R.id.modeldetails_main);
 //        if (mOrderCouponChooseView == null) {
-        mOrderCouponChooseView = LayoutInflater.from(mControlMainActivity).inflate(R.layout.modelorderpay_couponchoose, null);
+        mOrderCouponChooseView = LayoutInflater.from(mMainContext).inflate(R.layout.modelorderpay_couponchoose, null);
         TextView orderpay_couponchoose_tab_use = mOrderCouponChooseView.findViewById(R.id.orderpay_couponchoose_tab_use);
         TextView orderpay_couponchoose_tab_unused = mOrderCouponChooseView.findViewById(R.id.orderpay_couponchoose_tab_unused);
         ImageView orderpay_couponchoose_main_return_button1 = mOrderCouponChooseView.findViewById(R.id.orderpay_couponchoose_main_return_button1);
@@ -549,7 +549,7 @@ public class ModelOrderDetails implements View.OnClickListener {
 
 //    public void WxChatAPP() {
 //        OrderRepay();
-////        final IWXAPI wxapi = WXAPIFactory.createWXAPI(mControlMainActivity, WeiXinConstants.APP_ID,false);
+////        final IWXAPI wxapi = WXAPIFactory.createWXAPI(mMainContext, WeiXinConstants.APP_ID,false);
 ////        PayReq req = new PayReq();
 ////        req.appId = WeiXinConstants.APP_ID;
 ////        req.partnerId = "1562130261";
@@ -620,13 +620,13 @@ public class ModelOrderDetails implements View.OnClickListener {
         if (mCourseInfo == null && mCoursePacketInfo == null){
             return;
         }
-        if (mControlMainActivity.mStuId.equals("")){
+        if (mMainContext.mStuId.equals("")){
             return;
         }
-        LoadingDialog.getInstance(mControlMainActivity).show();
+        LoadingDialog.getInstance(mMainContext).show();
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(mControlMainActivity.mIpadress)
+                .baseUrl(mMainContext.mIpadress)
                 .client(ModelObservableInterface.client)
                 .build();
         ModelObservableInterface modelObservableInterface = retrofit.create(ModelObservableInterface.class);
@@ -645,7 +645,7 @@ public class ModelOrderDetails implements View.OnClickListener {
         HashMap<String, Integer> paramsMap1 = new HashMap<>();
         //course_package_id参数id    文件的参数id
         paramsMap1.put("CPC_id", productId);
-        paramsMap1.put("stu_id", Integer.valueOf(mControlMainActivity.mStuId));
+        paramsMap1.put("stu_id", Integer.valueOf(mMainContext.mStuId));
         String strEntity1 = gson.toJson(paramsMap1);
         strEntity1 = strEntity1.replace("{","");
         strEntity = strEntity.replace("}","," + strEntity1);
@@ -657,54 +657,54 @@ public class ModelOrderDetails implements View.OnClickListener {
                         BuyCode body1 = response.body();
                         int code = body1.getCode();
                         if (!HeaderInterceptor.IsErrorCode(code,"")){
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         if (code != 200) {
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         if (body1.getData() == null) {
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
                         mOrderNum = body1.getData();
                         mOrderTimeL = mOrderInvalidTime;
                         handler.postDelayed(runnable, 0);
                         CourseDetailsBuyInit();
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                     }
 
                     @Override
                     public void onFailure(Call<BuyCode> call, Throwable t) {
                         Log.e(TAG, "onFailure: "+t.getMessage()+"" );
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                     }
                 });
     }
 
     //订单-支付
     private void OrderRepay(String type){
-        if (mControlMainActivity.mStuId.equals("")){
+        if (mMainContext.mStuId.equals("")){
             HideAllLayout();
             LinearLayout modeldetails_main = modelOrderDetailsView.findViewById(R.id.modeldetails_main);
-            View resultView = LayoutInflater.from(mControlMainActivity).inflate(R.layout.modelorderpay_payresult1, null);
+            View resultView = LayoutInflater.from(mMainContext).inflate(R.layout.modelorderpay_payresult1, null);
             modeldetails_main.addView(resultView);
             TextView orderpay_payresult = resultView.findViewById(R.id.orderpay_payresult);
             orderpay_payresult.setText("订单失败");
-            mControlMainActivity.onClickOrderResult();
+            mMainContext.onClickOrderResult();
             return;
         }
-        LoadingDialog.getInstance(mControlMainActivity).show();
+        LoadingDialog.getInstance(mMainContext).show();
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(mControlMainActivity.mIpadress)
+                .baseUrl(mMainContext.mIpadress)
                 .client(ModelObservableInterface.client)
                 .build();
         ModelObservableInterface modelObservableInterface = retrofit.create(ModelObservableInterface.class);
         String strEntity = "{\n" +
                 "    \"outTradeNo\":\"" + mOrderNum + "\"," +
-                "    \"stu_id\":" + mControlMainActivity.mStuId + "," ;
+                "    \"stu_id\":" + mMainContext.mStuId + "," ;
         if (mCouponDataListBean != null) {
             strEntity = strEntity + "\"small_discount_id\":" + mCouponDataListBean.small_discount_id + ",";
         } else {
@@ -718,68 +718,68 @@ public class ModelOrderDetails implements View.OnClickListener {
                         @Override
                         public void onResponse(Call<ModelObservableInterface.BaseBean1> call, Response<ModelObservableInterface.BaseBean1> response) {
                             if (response == null){
-                                LoadingDialog.getInstance(mControlMainActivity).dismiss();
-                                Toast.makeText(mControlMainActivity,"支付失败",Toast.LENGTH_SHORT).show();
+                                LoadingDialog.getInstance(mMainContext).dismiss();
+                                Toast.makeText(mMainContext,"支付失败",Toast.LENGTH_SHORT).show();
                                 HideAllLayout();
                                 LinearLayout modeldetails_main = modelOrderDetailsView.findViewById(R.id.modeldetails_main);
-                                View resultView = LayoutInflater.from(mControlMainActivity).inflate(R.layout.modelorderpay_payresult1, null);
+                                View resultView = LayoutInflater.from(mMainContext).inflate(R.layout.modelorderpay_payresult1, null);
                                 modeldetails_main.addView(resultView);
                                 TextView orderpay_payresult = resultView.findViewById(R.id.orderpay_payresult);
                                 orderpay_payresult.setText("订单失败");
-                                mControlMainActivity.onClickOrderResult();
+                                mMainContext.onClickOrderResult();
                                 return;
                             }
                             ModelObservableInterface.BaseBean1 body1 = response.body();
                             if (body1 == null){
-                                LoadingDialog.getInstance(mControlMainActivity).dismiss();
-                                Toast.makeText(mControlMainActivity,"支付失败",Toast.LENGTH_SHORT).show();
+                                LoadingDialog.getInstance(mMainContext).dismiss();
+                                Toast.makeText(mMainContext,"支付失败",Toast.LENGTH_SHORT).show();
                                 HideAllLayout();
                                 LinearLayout modeldetails_main = modelOrderDetailsView.findViewById(R.id.modeldetails_main);
-                                View resultView = LayoutInflater.from(mControlMainActivity).inflate(R.layout.modelorderpay_payresult1, null);
+                                View resultView = LayoutInflater.from(mMainContext).inflate(R.layout.modelorderpay_payresult1, null);
                                 modeldetails_main.addView(resultView);
                                 TextView orderpay_payresult = resultView.findViewById(R.id.orderpay_payresult);
                                 orderpay_payresult.setText("订单失败");
-                                mControlMainActivity.onClickOrderResult();
+                                mMainContext.onClickOrderResult();
                                 return;
                             }
                             if (!HeaderInterceptor.IsErrorCode(response.code(),response.message())){
-                                LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                                LoadingDialog.getInstance(mMainContext).dismiss();
                                 HideAllLayout();
                                 LinearLayout modeldetails_main = modelOrderDetailsView.findViewById(R.id.modeldetails_main);
-                                View resultView = LayoutInflater.from(mControlMainActivity).inflate(R.layout.modelorderpay_payresult1, null);
+                                View resultView = LayoutInflater.from(mMainContext).inflate(R.layout.modelorderpay_payresult1, null);
                                 modeldetails_main.addView(resultView);
                                 TextView orderpay_payresult = resultView.findViewById(R.id.orderpay_payresult);
                                 orderpay_payresult.setText("订单失败");
-                                mControlMainActivity.onClickOrderResult();
+                                mMainContext.onClickOrderResult();
                                 return;
                             }
                             int code = body1.getErrorCode();
                             if (code != 200) {
-                                LoadingDialog.getInstance(mControlMainActivity).dismiss();
-                                Toast.makeText(mControlMainActivity,body1.getErrorMsg(),Toast.LENGTH_SHORT).show();
+                                LoadingDialog.getInstance(mMainContext).dismiss();
+                                Toast.makeText(mMainContext,body1.getErrorMsg(),Toast.LENGTH_SHORT).show();
                                 HideAllLayout();
                                 LinearLayout modeldetails_main = modelOrderDetailsView.findViewById(R.id.modeldetails_main);
-                                View resultView = LayoutInflater.from(mControlMainActivity).inflate(R.layout.modelorderpay_payresult1, null);
+                                View resultView = LayoutInflater.from(mMainContext).inflate(R.layout.modelorderpay_payresult1, null);
                                 modeldetails_main.addView(resultView);
                                 TextView orderpay_payresult = resultView.findViewById(R.id.orderpay_payresult);
                                 orderpay_payresult.setText("订单失败");
-                                mControlMainActivity.onClickOrderResult();
+                                mMainContext.onClickOrderResult();
                                 return;
                             }
                             String data = body1.getData();
                             if (data == null){
-                                LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                                LoadingDialog.getInstance(mMainContext).dismiss();
                                 HideAllLayout();
                                 LinearLayout modeldetails_main = modelOrderDetailsView.findViewById(R.id.modeldetails_main);
-                                View resultView = LayoutInflater.from(mControlMainActivity).inflate(R.layout.modelorderpay_payresult1, null);
+                                View resultView = LayoutInflater.from(mMainContext).inflate(R.layout.modelorderpay_payresult1, null);
                                 modeldetails_main.addView(resultView);
                                 TextView orderpay_payresult = resultView.findViewById(R.id.orderpay_payresult);
                                 orderpay_payresult.setText("订单失败");
-                                mControlMainActivity.onClickOrderResult();
+                                mMainContext.onClickOrderResult();
                                 return;
                             }
                             final Runnable payRunnable = () -> {
-                                PayTask alipay = new PayTask(mControlMainActivity);
+                                PayTask alipay = new PayTask(mMainContext);
                                 //支付信息由服务器生成orderInfo  以下只是测试数据
 //                                String orderInfo = "alipay_sdk=alipay-sdk-java-3.1.0&app_id=2019120469668090&biz_content=%7B%22out_trade_no%22%3A%223%22%2C%22product_code%22%3A%22QUICK_MSECURITY_PAY%22%2C%22subject%22%3A%22%E6%A0%87%E9%A2%98%22%2C%22timeout_express%22%3A%2230h%22%2C%22total_amount%22%3A%220.01%22%7D&charset=utf-8&format=json&method=alipay.trade.app.pay&notify_url=http%3A%2F%2F111.229.55.52%3A8080%2Fhzedu%2Forder%2Fzhifubaoyibu&sign=MIcxkv7KuEPRv%2BNHg88iX54zT8olfRWPUUFAHc0eha4wVY1rSnsdiLAMotqhwCTfGQ8ywNrEzZPImMhrRJzANShC4JPGNtV2faQYEb10NugIS7llPEJ8CofzCbGZnJ1lF833jL0DchaUtqGEWRii4tQ77%2F3w1lAZEvJcaR7MGGXZTO%2Fy4BiSR43o6y9wVAw68%2B5nEeYF0uGvpKn%2FYuHg9v5FuriM%2FfkHe4Mz%2BNI%2B52geLlAPrb4cbHgFI7YG34MMa1RV%2BcZ3NMnwA6QWelmFdrL4RjK%2Fha7UR5snW7um1km1UE4UttJf4XyHgmmQKywO2Tzgh4kgesj8FU6C4%2BzHTg%3D%3D&sign_type=RSA2&timestamp=2019-12-31+17%3A57%3A29&version=1.0";
                                 Map<String, String> result = alipay.payV2(data, true);
@@ -793,21 +793,21 @@ public class ModelOrderDetails implements View.OnClickListener {
                             // 必须异步调用
                             Thread payThread = new Thread(payRunnable);
                             payThread.start();
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                         }
 
                         @Override
                         public void onFailure(Call<ModelObservableInterface.BaseBean1> call, Throwable t) {
                             Log.e(TAG, "onFailure: "+t.getMessage()+"" );
-                            Toast.makeText(mControlMainActivity,"支付失败",Toast.LENGTH_SHORT).show();
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            Toast.makeText(mMainContext,"支付失败",Toast.LENGTH_SHORT).show();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             HideAllLayout();
                             LinearLayout modeldetails_main = modelOrderDetailsView.findViewById(R.id.modeldetails_main);
-                            View resultView = LayoutInflater.from(mControlMainActivity).inflate(R.layout.modelorderpay_payresult1, null);
+                            View resultView = LayoutInflater.from(mMainContext).inflate(R.layout.modelorderpay_payresult1, null);
                             modeldetails_main.addView(resultView);
                             TextView orderpay_payresult = resultView.findViewById(R.id.orderpay_payresult);
                             orderpay_payresult.setText("订单失败");
-                            mControlMainActivity.onClickOrderResult();
+                            mMainContext.onClickOrderResult();
                         }
                     });
         } else if (type.equals("微信APP")){
@@ -816,67 +816,67 @@ public class ModelOrderDetails implements View.OnClickListener {
                         @Override
                         public void onResponse(Call<ModelObservableInterface.BaseBean> call, Response<ModelObservableInterface.BaseBean> response) {
                             if (response == null){
-                                LoadingDialog.getInstance(mControlMainActivity).dismiss();
-                                Toast.makeText(mControlMainActivity,"支付失败",Toast.LENGTH_SHORT).show();
+                                LoadingDialog.getInstance(mMainContext).dismiss();
+                                Toast.makeText(mMainContext,"支付失败",Toast.LENGTH_SHORT).show();
                                 HideAllLayout();
                                 LinearLayout modeldetails_main = modelOrderDetailsView.findViewById(R.id.modeldetails_main);
-                                View resultView = LayoutInflater.from(mControlMainActivity).inflate(R.layout.modelorderpay_payresult1, null);
+                                View resultView = LayoutInflater.from(mMainContext).inflate(R.layout.modelorderpay_payresult1, null);
                                 modeldetails_main.addView(resultView);
                                 TextView orderpay_payresult = resultView.findViewById(R.id.orderpay_payresult);
                                 orderpay_payresult.setText("订单失败");
-                                mControlMainActivity.onClickOrderResult();
+                                mMainContext.onClickOrderResult();
                                 return;
                             }
                             if (!HeaderInterceptor.IsErrorCode(response.code(),response.message())){
-                                LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                                LoadingDialog.getInstance(mMainContext).dismiss();
                                 HideAllLayout();
                                 LinearLayout modeldetails_main = modelOrderDetailsView.findViewById(R.id.modeldetails_main);
-                                View resultView = LayoutInflater.from(mControlMainActivity).inflate(R.layout.modelorderpay_payresult1, null);
+                                View resultView = LayoutInflater.from(mMainContext).inflate(R.layout.modelorderpay_payresult1, null);
                                 modeldetails_main.addView(resultView);
                                 TextView orderpay_payresult = resultView.findViewById(R.id.orderpay_payresult);
                                 orderpay_payresult.setText("订单失败");
-                                mControlMainActivity.onClickOrderResult();
+                                mMainContext.onClickOrderResult();
                                 return;
                             }
                             ModelObservableInterface.BaseBean body1 = response.body();
                             if (body1 == null){
-                                LoadingDialog.getInstance(mControlMainActivity).dismiss();
-                                Toast.makeText(mControlMainActivity,"支付失败",Toast.LENGTH_SHORT).show();
+                                LoadingDialog.getInstance(mMainContext).dismiss();
+                                Toast.makeText(mMainContext,"支付失败",Toast.LENGTH_SHORT).show();
                                 HideAllLayout();
                                 LinearLayout modeldetails_main = modelOrderDetailsView.findViewById(R.id.modeldetails_main);
-                                View resultView = LayoutInflater.from(mControlMainActivity).inflate(R.layout.modelorderpay_payresult1, null);
+                                View resultView = LayoutInflater.from(mMainContext).inflate(R.layout.modelorderpay_payresult1, null);
                                 modeldetails_main.addView(resultView);
                                 TextView orderpay_payresult = resultView.findViewById(R.id.orderpay_payresult);
                                 orderpay_payresult.setText("订单失败");
-                                mControlMainActivity.onClickOrderResult();
+                                mMainContext.onClickOrderResult();
                                 return;
                             }
                             int code = body1.getErrorCode();
                             if (code != 200) {
-                                LoadingDialog.getInstance(mControlMainActivity).dismiss();
-                                Toast.makeText(mControlMainActivity,body1.getErrorMsg(),Toast.LENGTH_SHORT).show();
+                                LoadingDialog.getInstance(mMainContext).dismiss();
+                                Toast.makeText(mMainContext,body1.getErrorMsg(),Toast.LENGTH_SHORT).show();
                                 HideAllLayout();
                                 LinearLayout modeldetails_main = modelOrderDetailsView.findViewById(R.id.modeldetails_main);
-                                View resultView = LayoutInflater.from(mControlMainActivity).inflate(R.layout.modelorderpay_payresult1, null);
+                                View resultView = LayoutInflater.from(mMainContext).inflate(R.layout.modelorderpay_payresult1, null);
                                 modeldetails_main.addView(resultView);
                                 TextView orderpay_payresult = resultView.findViewById(R.id.orderpay_payresult);
                                 orderpay_payresult.setText("订单失败");
-                                mControlMainActivity.onClickOrderResult();
+                                mMainContext.onClickOrderResult();
                                 return;
                             }
                             Map<String,Object> data = body1.getData();
                             if (data == null){
-                                LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                                LoadingDialog.getInstance(mMainContext).dismiss();
                                 HideAllLayout();
                                 LinearLayout modeldetails_main = modelOrderDetailsView.findViewById(R.id.modeldetails_main);
-                                View resultView = LayoutInflater.from(mControlMainActivity).inflate(R.layout.modelorderpay_payresult1, null);
+                                View resultView = LayoutInflater.from(mMainContext).inflate(R.layout.modelorderpay_payresult1, null);
                                 modeldetails_main.addView(resultView);
                                 TextView orderpay_payresult = resultView.findViewById(R.id.orderpay_payresult);
                                 orderpay_payresult.setText("订单失败");
-                                mControlMainActivity.onClickOrderResult();
+                                mMainContext.onClickOrderResult();
                                 return;
                             }
-                            final IWXAPI wxapi = WXAPIFactory.createWXAPI(mControlMainActivity, (String) data.get("appid"),false);
+                            final IWXAPI wxapi = WXAPIFactory.createWXAPI(mMainContext, (String) data.get("appid"),false);
                             PayReq req = new PayReq();
                             req.appId = (String) data.get("appid");
                             req.partnerId = (String) data.get("mch_id");
@@ -901,25 +901,25 @@ public class ModelOrderDetails implements View.OnClickListener {
                             req.sign = (String) data.get("sign");
                             boolean result = wxapi.sendReq(req);
                             if (!result){
-                                Toast.makeText(mControlMainActivity,"支付失败",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(mMainContext,"支付失败",Toast.LENGTH_SHORT).show();
                             } else {
-                                mControlMainActivity.onClickOrderBuyReturn();
+                                mMainContext.onClickOrderBuyReturn();
                             }
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                         }
 
                         @Override
                         public void onFailure(Call<ModelObservableInterface.BaseBean> call, Throwable t) {
                             Log.e(TAG, "onFailure: "+t.getMessage()+"" );
-                            Toast.makeText(mControlMainActivity,"支付失败",Toast.LENGTH_SHORT).show();
-                            LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                            Toast.makeText(mMainContext,"支付失败",Toast.LENGTH_SHORT).show();
+                            LoadingDialog.getInstance(mMainContext).dismiss();
                             HideAllLayout();
                             LinearLayout modeldetails_main = modelOrderDetailsView.findViewById(R.id.modeldetails_main);
-                            View resultView = LayoutInflater.from(mControlMainActivity).inflate(R.layout.modelorderpay_payresult1, null);
+                            View resultView = LayoutInflater.from(mMainContext).inflate(R.layout.modelorderpay_payresult1, null);
                             modeldetails_main.addView(resultView);
                             TextView orderpay_payresult = resultView.findViewById(R.id.orderpay_payresult);
                             orderpay_payresult.setText("订单失败");
-                            mControlMainActivity.onClickOrderResult();
+                            mMainContext.onClickOrderResult();
                         }
                     });
         }
@@ -953,17 +953,17 @@ public class ModelOrderDetails implements View.OnClickListener {
     }
 
     private void QueryDiscountFromOneStuCourse(boolean isEnable,LinearLayout orderpay_couponchoose_main_content) {
-        if (mCourseInfo.mCourseId.equals("") ||mControlMainActivity.mStuId.equals("")){
+        if (mCourseInfo.mCourseId.equals("") ||mMainContext.mStuId.equals("")){
             if (isEnable){
-                Toast.makeText(mControlMainActivity,"查询可用优惠券列表失败",Toast.LENGTH_LONG).show();
+                Toast.makeText(mMainContext,"查询可用优惠券列表失败",Toast.LENGTH_LONG).show();
             } else {
-                Toast.makeText(mControlMainActivity,"查询不可用优惠券列表失败",Toast.LENGTH_LONG).show();
+                Toast.makeText(mMainContext,"查询不可用优惠券列表失败",Toast.LENGTH_LONG).show();
             }
             return;
         }
-        LoadingDialog.getInstance(mControlMainActivity).show();
+        LoadingDialog.getInstance(mMainContext).show();
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(mControlMainActivity.mIpadress)
+                .baseUrl(mMainContext.mIpadress)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(ModelObservableInterface.client)
                 .build();
@@ -978,7 +978,7 @@ public class ModelOrderDetails implements View.OnClickListener {
             paramsMap1.put("type", 0);
         }
         paramsMap1.put("course_id", Integer.valueOf(mCourseInfo.mCourseId));
-        paramsMap1.put("stu_id", Integer.valueOf(mControlMainActivity.mStuId));
+        paramsMap1.put("stu_id", Integer.valueOf(mMainContext.mStuId));
         String strEntity = gson.toJson(paramsMap1);
         RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json;charset=UTF-8"),strEntity);
         Call<CouponBean> call = modelObservableInterface.queryDiscountFromOneStuCourse(body);
@@ -989,47 +989,47 @@ public class ModelOrderDetails implements View.OnClickListener {
                 if (code != 200){
                     Log.e("TAG", "getSingleCourseDetails  onErrorCode: " + code);
                     if (isEnable){
-                        Toast.makeText(mControlMainActivity,"查询可用优惠券列表失败",Toast.LENGTH_LONG).show();
+                        Toast.makeText(mMainContext,"查询可用优惠券列表失败",Toast.LENGTH_LONG).show();
                     } else {
-                        Toast.makeText(mControlMainActivity,"查询不可用优惠券列表失败",Toast.LENGTH_LONG).show();
+                        Toast.makeText(mMainContext,"查询不可用优惠券列表失败",Toast.LENGTH_LONG).show();
                     }
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 CouponBean couponBean = response.body();
                 if (couponBean == null){
                     Log.e("TAG", "getSingleCourseDetails  onErrorCode: " + code);
                     if (isEnable){
-                        Toast.makeText(mControlMainActivity,"查询可用优惠券列表失败",Toast.LENGTH_LONG).show();
+                        Toast.makeText(mMainContext,"查询可用优惠券列表失败",Toast.LENGTH_LONG).show();
                     } else {
-                        Toast.makeText(mControlMainActivity,"查询不可用优惠券列表失败",Toast.LENGTH_LONG).show();
+                        Toast.makeText(mMainContext,"查询不可用优惠券列表失败",Toast.LENGTH_LONG).show();
                     }
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 if (!HeaderInterceptor.IsErrorCode(couponBean.getErrorCode(),couponBean.getErrorMsg())){
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 CouponBean.CouponDataBean couponDataBean = couponBean.getData();
                 if (couponDataBean == null){
                     Log.e("TAG", "getSingleCourseDetails  onErrorCode: " + code);
                     if (isEnable){
-                        Toast.makeText(mControlMainActivity,"查询可用优惠券列表失败",Toast.LENGTH_LONG).show();
+                        Toast.makeText(mMainContext,"查询可用优惠券列表失败",Toast.LENGTH_LONG).show();
                     } else {
-                        Toast.makeText(mControlMainActivity,"查询不可用优惠券列表失败",Toast.LENGTH_LONG).show();
+                        Toast.makeText(mMainContext,"查询不可用优惠券列表失败",Toast.LENGTH_LONG).show();
                     }
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 if (couponDataBean.couponsList == null){
                     Log.e("TAG", "getSingleCourseDetails  onErrorCode: " + code);
                     if (isEnable){
-                        Toast.makeText(mControlMainActivity,"查询可用优惠券列表失败",Toast.LENGTH_LONG).show();
+                        Toast.makeText(mMainContext,"查询可用优惠券列表失败",Toast.LENGTH_LONG).show();
                     } else {
-                        Toast.makeText(mControlMainActivity,"查询不可用优惠券列表失败",Toast.LENGTH_LONG).show();
+                        Toast.makeText(mMainContext,"查询不可用优惠券列表失败",Toast.LENGTH_LONG).show();
                     }
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 TextView orderpay_couponchoose_tab_use = mOrderCouponChooseView.findViewById(R.id.orderpay_couponchoose_tab_use);
@@ -1037,7 +1037,7 @@ public class ModelOrderDetails implements View.OnClickListener {
                 TextView orderpay_couponchoose_tab_unused = mOrderCouponChooseView.findViewById(R.id.orderpay_couponchoose_tab_unused);
                 orderpay_couponchoose_tab_unused.setText("不可用（" + couponDataBean.unNum + "）");
                 for (CouponBean.CouponDataListBean couponDataListBean:couponDataBean.couponsList){
-                    View view = LayoutInflater.from(mControlMainActivity).inflate(R.layout.modelorderpay_couponchoose1, null);
+                    View view = LayoutInflater.from(mMainContext).inflate(R.layout.modelorderpay_couponchoose1, null);
                     TextView orderpay_couponchoose1_termofvaliditydata = view.findViewById(R.id.orderpay_couponchoose1_termofvaliditydata);
                     orderpay_couponchoose1_termofvaliditydata.setText(couponDataListBean.service_life_end_time);
                     TextView orderpay_couponchoose1_couponfullreduction = view.findViewById(R.id.orderpay_couponchoose1_couponfullreduction);
@@ -1074,7 +1074,7 @@ public class ModelOrderDetails implements View.OnClickListener {
                         orderpay_couponchoose1_immediateuse.setOnClickListener(V->{
                             mCouponDataListBean = couponDataListBean; //选中的优惠券
                             CourseDetailsBuyInit();
-                            mControlMainActivity.Page_OrderDetailsChooseCouponReturn();
+                            mMainContext.Page_OrderDetailsChooseCouponReturn();
                         });
                         view.setOnClickListener(v->{
                             if (mCouponDataListBean == null){
@@ -1105,34 +1105,34 @@ public class ModelOrderDetails implements View.OnClickListener {
                     }
                     orderpay_couponchoose_main_content.addView(view);
                 }
-                LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                LoadingDialog.getInstance(mMainContext).dismiss();
             }
 
             @Override
             public void onFailure(Call<CouponBean> call, Throwable t) {
                 Log.e("TAG", "onError: " + t.getMessage()+"" );
                 if (isEnable){
-                    Toast.makeText(mControlMainActivity,"查询可用优惠券列表失败",Toast.LENGTH_LONG).show();
+                    Toast.makeText(mMainContext,"查询可用优惠券列表失败",Toast.LENGTH_LONG).show();
                 } else {
-                    Toast.makeText(mControlMainActivity,"查询不可用优惠券列表失败",Toast.LENGTH_LONG).show();
+                    Toast.makeText(mMainContext,"查询不可用优惠券列表失败",Toast.LENGTH_LONG).show();
                 }
-                LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                LoadingDialog.getInstance(mMainContext).dismiss();
             }
         });
     }
 
     private void QueryDiscountFromOneStuCoursePacket(boolean isEnable,LinearLayout orderpay_couponchoose_main_content) {
-        if (mCoursePacketInfo.mCoursePacketId.equals("") ||mControlMainActivity.mStuId.equals("")){
+        if (mCoursePacketInfo.mCoursePacketId.equals("") ||mMainContext.mStuId.equals("")){
             if (isEnable){
-                Toast.makeText(mControlMainActivity,"查询可用优惠券列表失败",Toast.LENGTH_LONG).show();
+                Toast.makeText(mMainContext,"查询可用优惠券列表失败",Toast.LENGTH_LONG).show();
             } else {
-                Toast.makeText(mControlMainActivity,"查询不可用优惠券列表失败",Toast.LENGTH_LONG).show();
+                Toast.makeText(mMainContext,"查询不可用优惠券列表失败",Toast.LENGTH_LONG).show();
             }
             return;
         }
-        LoadingDialog.getInstance(mControlMainActivity).show();
+        LoadingDialog.getInstance(mMainContext).show();
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(mControlMainActivity.mIpadress)
+                .baseUrl(mMainContext.mIpadress)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(ModelObservableInterface.client)
                 .build();
@@ -1147,7 +1147,7 @@ public class ModelOrderDetails implements View.OnClickListener {
             paramsMap1.put("type", 0);
         }
         paramsMap1.put("course_package_id", Integer.valueOf(mCoursePacketInfo.mCoursePacketId));
-        paramsMap1.put("stu_id", Integer.valueOf(mControlMainActivity.mStuId));
+        paramsMap1.put("stu_id", Integer.valueOf(mMainContext.mStuId));
         String strEntity = gson.toJson(paramsMap1);
         RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json;charset=UTF-8"),strEntity);
         Call<CouponBean> call = modelObservableInterface.queryDiscountFromOneStuCoursePacket(body);
@@ -1158,47 +1158,47 @@ public class ModelOrderDetails implements View.OnClickListener {
                 if (code != 200){
                     Log.e("TAG", "getSingleCourseDetails  onErrorCode: " + code);
                     if (isEnable){
-                        Toast.makeText(mControlMainActivity,"查询可用优惠券列表失败",Toast.LENGTH_LONG).show();
+                        Toast.makeText(mMainContext,"查询可用优惠券列表失败",Toast.LENGTH_LONG).show();
                     } else {
-                        Toast.makeText(mControlMainActivity,"查询不可用优惠券列表失败",Toast.LENGTH_LONG).show();
+                        Toast.makeText(mMainContext,"查询不可用优惠券列表失败",Toast.LENGTH_LONG).show();
                     }
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 CouponBean couponBean = response.body();
                 if (couponBean == null){
                     Log.e("TAG", "getSingleCourseDetails  onErrorCode: " + code);
                     if (isEnable){
-                        Toast.makeText(mControlMainActivity,"查询可用优惠券列表失败",Toast.LENGTH_LONG).show();
+                        Toast.makeText(mMainContext,"查询可用优惠券列表失败",Toast.LENGTH_LONG).show();
                     } else {
-                        Toast.makeText(mControlMainActivity,"查询不可用优惠券列表失败",Toast.LENGTH_LONG).show();
+                        Toast.makeText(mMainContext,"查询不可用优惠券列表失败",Toast.LENGTH_LONG).show();
                     }
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 if (!HeaderInterceptor.IsErrorCode(couponBean.getErrorCode(),couponBean.getErrorMsg())){
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 CouponBean.CouponDataBean couponDataBean = couponBean.getData();
                 if (couponDataBean == null){
                     Log.e("TAG", "getSingleCourseDetails  onErrorCode: " + code);
                     if (isEnable){
-                        Toast.makeText(mControlMainActivity,"查询可用优惠券列表失败",Toast.LENGTH_LONG).show();
+                        Toast.makeText(mMainContext,"查询可用优惠券列表失败",Toast.LENGTH_LONG).show();
                     } else {
-                        Toast.makeText(mControlMainActivity,"查询不可用优惠券列表失败",Toast.LENGTH_LONG).show();
+                        Toast.makeText(mMainContext,"查询不可用优惠券列表失败",Toast.LENGTH_LONG).show();
                     }
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 if (couponDataBean.couponsList == null){
                     Log.e("TAG", "getSingleCourseDetails  onErrorCode: " + code);
                     if (isEnable){
-                        Toast.makeText(mControlMainActivity,"查询可用优惠券列表失败",Toast.LENGTH_LONG).show();
+                        Toast.makeText(mMainContext,"查询可用优惠券列表失败",Toast.LENGTH_LONG).show();
                     } else {
-                        Toast.makeText(mControlMainActivity,"查询不可用优惠券列表失败",Toast.LENGTH_LONG).show();
+                        Toast.makeText(mMainContext,"查询不可用优惠券列表失败",Toast.LENGTH_LONG).show();
                     }
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 TextView orderpay_couponchoose_tab_use = mOrderCouponChooseView.findViewById(R.id.orderpay_couponchoose_tab_use);
@@ -1206,7 +1206,7 @@ public class ModelOrderDetails implements View.OnClickListener {
                 TextView orderpay_couponchoose_tab_unused = mOrderCouponChooseView.findViewById(R.id.orderpay_couponchoose_tab_unused);
                 orderpay_couponchoose_tab_unused.setText("不可用（" + couponDataBean.unNum + "）");
                 for (CouponBean.CouponDataListBean couponDataListBean:couponDataBean.couponsList){
-                    View view = LayoutInflater.from(mControlMainActivity).inflate(R.layout.modelorderpay_couponchoose1, null);
+                    View view = LayoutInflater.from(mMainContext).inflate(R.layout.modelorderpay_couponchoose1, null);
                     TextView orderpay_couponchoose1_termofvaliditydata = view.findViewById(R.id.orderpay_couponchoose1_termofvaliditydata);
                     orderpay_couponchoose1_termofvaliditydata.setText(couponDataListBean.service_life_end_time);
                     TextView orderpay_couponchoose1_couponfullreduction = view.findViewById(R.id.orderpay_couponchoose1_couponfullreduction);
@@ -1243,7 +1243,7 @@ public class ModelOrderDetails implements View.OnClickListener {
                         orderpay_couponchoose1_immediateuse.setOnClickListener(V->{
                             mCouponDataListBean = couponDataListBean; //选中的优惠券
                             CourseDetailsBuyInit();
-                            mControlMainActivity.Page_OrderDetailsChooseCouponReturn();
+                            mMainContext.Page_OrderDetailsChooseCouponReturn();
                         });
                         view.setOnClickListener(v->{
                             if (mCouponDataListBean != null) {
@@ -1273,34 +1273,34 @@ public class ModelOrderDetails implements View.OnClickListener {
                     }
                     orderpay_couponchoose_main_content.addView(view);
                 }
-                LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                LoadingDialog.getInstance(mMainContext).dismiss();
             }
 
             @Override
             public void onFailure(Call<CouponBean> call, Throwable t) {
                 Log.e("TAG", "onError: " + t.getMessage()+"" );
                 if (isEnable){
-                    Toast.makeText(mControlMainActivity,"查询可用优惠券列表失败",Toast.LENGTH_LONG).show();
+                    Toast.makeText(mMainContext,"查询可用优惠券列表失败",Toast.LENGTH_LONG).show();
                 } else {
-                    Toast.makeText(mControlMainActivity,"查询不可用优惠券列表失败",Toast.LENGTH_LONG).show();
+                    Toast.makeText(mMainContext,"查询不可用优惠券列表失败",Toast.LENGTH_LONG).show();
                 }
-                LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                LoadingDialog.getInstance(mMainContext).dismiss();
             }
         });
     }
 
     private void QueryDiscountFromOneStuRepay(boolean isEnable,LinearLayout orderpay_couponchoose_main_content) {
-        if (mMyOrderListBean.getCPC_id() == null || mControlMainActivity.mStuId.equals("")){
+        if (mMyOrderListBean.getCPC_id() == null || mMainContext.mStuId.equals("")){
             if (isEnable){
-                Toast.makeText(mControlMainActivity,"查询可用优惠券列表失败",Toast.LENGTH_LONG).show();
+                Toast.makeText(mMainContext,"查询可用优惠券列表失败",Toast.LENGTH_LONG).show();
             } else {
-                Toast.makeText(mControlMainActivity,"查询不可用优惠券列表失败",Toast.LENGTH_LONG).show();
+                Toast.makeText(mMainContext,"查询不可用优惠券列表失败",Toast.LENGTH_LONG).show();
             }
             return;
         }
-        LoadingDialog.getInstance(mControlMainActivity).show();
+        LoadingDialog.getInstance(mMainContext).show();
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(mControlMainActivity.mIpadress)
+                .baseUrl(mMainContext.mIpadress)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(ModelObservableInterface.client)
                 .build();
@@ -1319,7 +1319,7 @@ public class ModelOrderDetails implements View.OnClickListener {
         } else if (mMyOrderListBean.getProduct_type().equals("课程")) {
             paramsMap1.put("course_id", mMyOrderListBean.getCPC_id());
         }
-        paramsMap1.put("stu_id", Integer.valueOf(mControlMainActivity.mStuId));
+        paramsMap1.put("stu_id", Integer.valueOf(mMainContext.mStuId));
         String strEntity = gson.toJson(paramsMap1);
         RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json;charset=UTF-8"),strEntity);
         if (mMyOrderListBean.getProduct_type().equals("课程包")){
@@ -1331,47 +1331,47 @@ public class ModelOrderDetails implements View.OnClickListener {
                     if (code != 200){
                         Log.e("TAG", "getSingleCourseDetails  onErrorCode: " + code);
                         if (isEnable){
-                            Toast.makeText(mControlMainActivity,"查询可用优惠券列表失败",Toast.LENGTH_LONG).show();
+                            Toast.makeText(mMainContext,"查询可用优惠券列表失败",Toast.LENGTH_LONG).show();
                         } else {
-                            Toast.makeText(mControlMainActivity,"查询不可用优惠券列表失败",Toast.LENGTH_LONG).show();
+                            Toast.makeText(mMainContext,"查询不可用优惠券列表失败",Toast.LENGTH_LONG).show();
                         }
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                         return;
                     }
                     CouponBean couponBean = response.body();
                     if (couponBean == null){
                         Log.e("TAG", "getSingleCourseDetails  onErrorCode: " + code);
                         if (isEnable){
-                            Toast.makeText(mControlMainActivity,"查询可用优惠券列表失败",Toast.LENGTH_LONG).show();
+                            Toast.makeText(mMainContext,"查询可用优惠券列表失败",Toast.LENGTH_LONG).show();
                         } else {
-                            Toast.makeText(mControlMainActivity,"查询不可用优惠券列表失败",Toast.LENGTH_LONG).show();
+                            Toast.makeText(mMainContext,"查询不可用优惠券列表失败",Toast.LENGTH_LONG).show();
                         }
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                         return;
                     }
                     if (!HeaderInterceptor.IsErrorCode(couponBean.getErrorCode(),couponBean.getErrorMsg())){
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                         return;
                     }
                     CouponBean.CouponDataBean couponDataBean = couponBean.getData();
                     if (couponDataBean == null){
                         Log.e("TAG", "getSingleCourseDetails  onErrorCode: " + code);
                         if (isEnable){
-                            Toast.makeText(mControlMainActivity,"查询可用优惠券列表失败",Toast.LENGTH_LONG).show();
+                            Toast.makeText(mMainContext,"查询可用优惠券列表失败",Toast.LENGTH_LONG).show();
                         } else {
-                            Toast.makeText(mControlMainActivity,"查询不可用优惠券列表失败",Toast.LENGTH_LONG).show();
+                            Toast.makeText(mMainContext,"查询不可用优惠券列表失败",Toast.LENGTH_LONG).show();
                         }
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                         return;
                     }
                     if (couponDataBean.couponsList == null){
                         Log.e("TAG", "getSingleCourseDetails  onErrorCode: " + code);
                         if (isEnable){
-                            Toast.makeText(mControlMainActivity,"查询可用优惠券列表失败",Toast.LENGTH_LONG).show();
+                            Toast.makeText(mMainContext,"查询可用优惠券列表失败",Toast.LENGTH_LONG).show();
                         } else {
-                            Toast.makeText(mControlMainActivity,"查询不可用优惠券列表失败",Toast.LENGTH_LONG).show();
+                            Toast.makeText(mMainContext,"查询不可用优惠券列表失败",Toast.LENGTH_LONG).show();
                         }
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                         return;
                     }
                     TextView orderpay_couponchoose_tab_use = mOrderCouponChooseView.findViewById(R.id.orderpay_couponchoose_tab_use);
@@ -1379,7 +1379,7 @@ public class ModelOrderDetails implements View.OnClickListener {
                     TextView orderpay_couponchoose_tab_unused = mOrderCouponChooseView.findViewById(R.id.orderpay_couponchoose_tab_unused);
                     orderpay_couponchoose_tab_unused.setText("不可用（" + couponDataBean.unNum + "）");
                     for (CouponBean.CouponDataListBean couponDataListBean:couponDataBean.couponsList){
-                        View view = LayoutInflater.from(mControlMainActivity).inflate(R.layout.modelorderpay_couponchoose1, null);
+                        View view = LayoutInflater.from(mMainContext).inflate(R.layout.modelorderpay_couponchoose1, null);
                         TextView orderpay_couponchoose1_termofvaliditydata = view.findViewById(R.id.orderpay_couponchoose1_termofvaliditydata);
                         orderpay_couponchoose1_termofvaliditydata.setText(couponDataListBean.service_life_end_time);
                         TextView orderpay_couponchoose1_couponfullreduction = view.findViewById(R.id.orderpay_couponchoose1_couponfullreduction);
@@ -1416,7 +1416,7 @@ public class ModelOrderDetails implements View.OnClickListener {
                             orderpay_couponchoose1_immediateuse.setOnClickListener(V->{
                                 mCouponDataListBean = couponDataListBean; //选中的优惠券
                                 CourseDetailsBuyInit();
-                                mControlMainActivity.Page_OrderDetailsChooseCouponReturn();
+                                mMainContext.Page_OrderDetailsChooseCouponReturn();
                             });
                         } else {
                             //将文字颜色置为灰色
@@ -1430,18 +1430,18 @@ public class ModelOrderDetails implements View.OnClickListener {
                         }
                         orderpay_couponchoose_main_content.addView(view);
                     }
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                 }
 
                 @Override
                 public void onFailure(Call<CouponBean> call, Throwable t) {
                     Log.e("TAG", "onError: " + t.getMessage()+"" );
                     if (isEnable){
-                        Toast.makeText(mControlMainActivity,"查询可用优惠券列表失败",Toast.LENGTH_LONG).show();
+                        Toast.makeText(mMainContext,"查询可用优惠券列表失败",Toast.LENGTH_LONG).show();
                     } else {
-                        Toast.makeText(mControlMainActivity,"查询不可用优惠券列表失败",Toast.LENGTH_LONG).show();
+                        Toast.makeText(mMainContext,"查询不可用优惠券列表失败",Toast.LENGTH_LONG).show();
                     }
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                 }
             });
         } else if (mMyOrderListBean.getProduct_type().equals("课程")) {
@@ -1453,43 +1453,43 @@ public class ModelOrderDetails implements View.OnClickListener {
                     if (code != 200){
                         Log.e("TAG", "getSingleCourseDetails  onErrorCode: " + code);
                         if (isEnable){
-                            Toast.makeText(mControlMainActivity,"查询可用优惠券列表失败",Toast.LENGTH_LONG).show();
+                            Toast.makeText(mMainContext,"查询可用优惠券列表失败",Toast.LENGTH_LONG).show();
                         } else {
-                            Toast.makeText(mControlMainActivity,"查询不可用优惠券列表失败",Toast.LENGTH_LONG).show();
+                            Toast.makeText(mMainContext,"查询不可用优惠券列表失败",Toast.LENGTH_LONG).show();
                         }
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                         return;
                     }
                     CouponBean couponBean = response.body();
                     if (couponBean == null){
                         Log.e("TAG", "getSingleCourseDetails  onErrorCode: " + code);
                         if (isEnable){
-                            Toast.makeText(mControlMainActivity,"查询可用优惠券列表失败",Toast.LENGTH_LONG).show();
+                            Toast.makeText(mMainContext,"查询可用优惠券列表失败",Toast.LENGTH_LONG).show();
                         } else {
-                            Toast.makeText(mControlMainActivity,"查询不可用优惠券列表失败",Toast.LENGTH_LONG).show();
+                            Toast.makeText(mMainContext,"查询不可用优惠券列表失败",Toast.LENGTH_LONG).show();
                         }
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                         return;
                     }
                     CouponBean.CouponDataBean couponDataBean = couponBean.getData();
                     if (couponDataBean == null){
                         Log.e("TAG", "getSingleCourseDetails  onErrorCode: " + code);
                         if (isEnable){
-                            Toast.makeText(mControlMainActivity,"查询可用优惠券列表失败",Toast.LENGTH_LONG).show();
+                            Toast.makeText(mMainContext,"查询可用优惠券列表失败",Toast.LENGTH_LONG).show();
                         } else {
-                            Toast.makeText(mControlMainActivity,"查询不可用优惠券列表失败",Toast.LENGTH_LONG).show();
+                            Toast.makeText(mMainContext,"查询不可用优惠券列表失败",Toast.LENGTH_LONG).show();
                         }
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                         return;
                     }
                     if (couponDataBean.couponsList == null){
                         Log.e("TAG", "getSingleCourseDetails  onErrorCode: " + code);
                         if (isEnable){
-                            Toast.makeText(mControlMainActivity,"查询可用优惠券列表失败",Toast.LENGTH_LONG).show();
+                            Toast.makeText(mMainContext,"查询可用优惠券列表失败",Toast.LENGTH_LONG).show();
                         } else {
-                            Toast.makeText(mControlMainActivity,"查询不可用优惠券列表失败",Toast.LENGTH_LONG).show();
+                            Toast.makeText(mMainContext,"查询不可用优惠券列表失败",Toast.LENGTH_LONG).show();
                         }
-                        LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
                         return;
                     }
                     TextView orderpay_couponchoose_tab_use = mOrderCouponChooseView.findViewById(R.id.orderpay_couponchoose_tab_use);
@@ -1497,7 +1497,7 @@ public class ModelOrderDetails implements View.OnClickListener {
                     TextView orderpay_couponchoose_tab_unused = mOrderCouponChooseView.findViewById(R.id.orderpay_couponchoose_tab_unused);
                     orderpay_couponchoose_tab_unused.setText("不可用（" + couponDataBean.unNum + "）");
                     for (CouponBean.CouponDataListBean couponDataListBean:couponDataBean.couponsList){
-                        View view = LayoutInflater.from(mControlMainActivity).inflate(R.layout.modelorderpay_couponchoose1, null);
+                        View view = LayoutInflater.from(mMainContext).inflate(R.layout.modelorderpay_couponchoose1, null);
                         TextView orderpay_couponchoose1_termofvaliditydata = view.findViewById(R.id.orderpay_couponchoose1_termofvaliditydata);
                         orderpay_couponchoose1_termofvaliditydata.setText(couponDataListBean.service_life_end_time);
                         TextView orderpay_couponchoose1_couponfullreduction = view.findViewById(R.id.orderpay_couponchoose1_couponfullreduction);
@@ -1534,7 +1534,7 @@ public class ModelOrderDetails implements View.OnClickListener {
                             orderpay_couponchoose1_immediateuse.setOnClickListener(V->{
                                 mCouponDataListBean = couponDataListBean; //选中的优惠券
                                 CourseDetailsBuyInit();
-                                mControlMainActivity.Page_OrderDetailsChooseCouponReturn();
+                                mMainContext.Page_OrderDetailsChooseCouponReturn();
                             });
                             view.setOnClickListener(v->{
                                 if (mCouponDataListBean == null){
@@ -1565,18 +1565,18 @@ public class ModelOrderDetails implements View.OnClickListener {
                         }
                         orderpay_couponchoose_main_content.addView(view);
                     }
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                 }
 
                 @Override
                 public void onFailure(Call<CouponBean> call, Throwable t) {
                     Log.e("TAG", "onError: " + t.getMessage()+"" );
                     if (isEnable){
-                        Toast.makeText(mControlMainActivity,"查询可用优惠券列表失败",Toast.LENGTH_LONG).show();
+                        Toast.makeText(mMainContext,"查询可用优惠券列表失败",Toast.LENGTH_LONG).show();
                     } else {
-                        Toast.makeText(mControlMainActivity,"查询不可用优惠券列表失败",Toast.LENGTH_LONG).show();
+                        Toast.makeText(mMainContext,"查询不可用优惠券列表失败",Toast.LENGTH_LONG).show();
                     }
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                 }
             });
         }
@@ -1584,9 +1584,9 @@ public class ModelOrderDetails implements View.OnClickListener {
     }
 
     private void CheckBeforeExchangingCoupons(String coupon) {
-        LoadingDialog.getInstance(mControlMainActivity).show();
+        LoadingDialog.getInstance(mMainContext).show();
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(mControlMainActivity.mIpadress)
+                .baseUrl(mMainContext.mIpadress)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(ModelObservableInterface.client)
                 .build();
@@ -1595,7 +1595,7 @@ public class ModelOrderDetails implements View.OnClickListener {
 
         Gson gson = new Gson();
         HashMap<String,Integer> paramsMap = new HashMap<>();
-        paramsMap.put("stu_id", Integer.valueOf(mControlMainActivity.mStuId));
+        paramsMap.put("stu_id", Integer.valueOf(mMainContext.mStuId));
         String strEntity = gson.toJson(paramsMap);
         HashMap<String,String> paramsMap1 = new HashMap<>();
         paramsMap1.put("discount_code_value", coupon);
@@ -1610,34 +1610,34 @@ public class ModelOrderDetails implements View.OnClickListener {
                 int code = response.code();
                 if (code != 200){
                     Log.e("TAG", "CheckBeforeExchangingCoupons  onErrorCode: " + code);
-                    Toast.makeText(mControlMainActivity,"该优惠码不可用",Toast.LENGTH_LONG).show();
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    Toast.makeText(mMainContext,"该优惠码不可用",Toast.LENGTH_LONG).show();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 if (response.body() == null){
                     Log.e("TAG", "CheckBeforeExchangingCoupons  onErrorCode: " + code);
-                    Toast.makeText(mControlMainActivity,"该优惠码不可用",Toast.LENGTH_LONG).show();
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    Toast.makeText(mMainContext,"该优惠码不可用",Toast.LENGTH_LONG).show();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 if (!HeaderInterceptor.IsErrorCode(response.body().getErrorCode(),response.body().getErrorMsg())){
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 String message = response.body().getErrorMsg();
                 if (message == null){
                     Log.e("TAG", "CheckBeforeExchangingCoupons  onErrorCode: " + code);
-                    Toast.makeText(mControlMainActivity,"该优惠码不可用",Toast.LENGTH_LONG).show();
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    Toast.makeText(mMainContext,"该优惠码不可用",Toast.LENGTH_LONG).show();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 if (message.equals("ok")) {
                     redeemCoupons(coupon);
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                 } else {
                     Log.e("TAG", "CheckBeforeExchangingCoupons  onErrorCode: " + code);
-                    Toast.makeText(mControlMainActivity,"该优惠码不可用",Toast.LENGTH_LONG).show();
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    Toast.makeText(mMainContext,"该优惠码不可用",Toast.LENGTH_LONG).show();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
             }
@@ -1645,16 +1645,16 @@ public class ModelOrderDetails implements View.OnClickListener {
             @Override
             public void onFailure(Call<ModelObservableInterface.BaseBean> call, Throwable t) {
                 Log.e("TAG", "onError: " + t.getMessage()+"" );
-                Toast.makeText(mControlMainActivity,"兑换优惠券失败",Toast.LENGTH_LONG).show();
-                LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                Toast.makeText(mMainContext,"兑换优惠券失败",Toast.LENGTH_LONG).show();
+                LoadingDialog.getInstance(mMainContext).dismiss();
             }
         });
     }
 
     private void redeemCoupons(String coupon) {
-        LoadingDialog.getInstance(mControlMainActivity).show();
+        LoadingDialog.getInstance(mMainContext).show();
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(mControlMainActivity.mIpadress)
+                .baseUrl(mMainContext.mIpadress)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(ModelObservableInterface.client)
                 .build();
@@ -1663,7 +1663,7 @@ public class ModelOrderDetails implements View.OnClickListener {
 
         Gson gson = new Gson();
         HashMap<String,Integer> paramsMap = new HashMap<>();
-        paramsMap.put("stu_id", Integer.valueOf(mControlMainActivity.mStuId));
+        paramsMap.put("stu_id", Integer.valueOf(mMainContext.mStuId));
         String strEntity = gson.toJson(paramsMap);
         HashMap<String,String> paramsMap1 = new HashMap<>();
         paramsMap1.put("discount_code_value", coupon);
@@ -1678,32 +1678,32 @@ public class ModelOrderDetails implements View.OnClickListener {
                 int code = response.code();
                 if (code != 200){
                     Log.e("TAG", "redeemCoupons  onErrorCode: " + code);
-                    Toast.makeText(mControlMainActivity,"该优惠码已失效",Toast.LENGTH_LONG).show();
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    Toast.makeText(mMainContext,"该优惠码已失效",Toast.LENGTH_LONG).show();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 if (response.body() == null){
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
                 if (!HeaderInterceptor.IsErrorCode(response.body().getErrorCode(),response.body().getErrorMsg())){
-                    LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
-                Toast.makeText(mControlMainActivity,"优惠码兑换成功",Toast.LENGTH_LONG).show();
+                Toast.makeText(mMainContext,"优惠码兑换成功",Toast.LENGTH_LONG).show();
                 if (mMyCouponDialog != null) {
                     mMyCouponDialog.cancel();
                 }
                 //重新刷一下优惠码界面
                 CourseDetailsOrderCouponChooseInit();
-                LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                LoadingDialog.getInstance(mMainContext).dismiss();
             }
 
             @Override
             public void onFailure(Call<ModelObservableInterface.BaseBean> call, Throwable t) {
                 Log.e("TAG", "onError: " + t.getMessage()+"" );
-                Toast.makeText(mControlMainActivity,"兑换优惠券失败",Toast.LENGTH_LONG).show();
-                LoadingDialog.getInstance(mControlMainActivity).dismiss();
+                Toast.makeText(mMainContext,"兑换优惠券失败",Toast.LENGTH_LONG).show();
+                LoadingDialog.getInstance(mMainContext).dismiss();
             }
         });
     }

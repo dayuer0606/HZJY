@@ -22,7 +22,7 @@ public class HeaderInterceptor implements Interceptor {
     public static String stuId = null;
     public static String permissioncode = null;
 
-    public static ControlMainActivity context = null;
+    public static MainActivity context = null;
     @Override
     public Response intercept(Chain chain) throws IOException {
         Request request = chain.request();

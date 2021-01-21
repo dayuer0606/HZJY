@@ -19,7 +19,7 @@ public class ModelSearchRecordSQLiteOpenHelper extends SQLiteOpenHelper {
     private static ModelSearchRecordSQLiteOpenHelper instance = null;
     private static SQLiteDatabase db = null;
     private static String SECRET_KEY = PublicCommonUtil.SECRET_KEY;
-    private static ControlMainActivity mControlMainActivity = null;
+    private static MainActivity mMainContext = null;
 
     private ModelSearchRecordSQLiteOpenHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
@@ -27,14 +27,14 @@ public class ModelSearchRecordSQLiteOpenHelper extends SQLiteOpenHelper {
 
     public static synchronized ModelSearchRecordSQLiteOpenHelper getInstance(Context context) {
         if (context != null){
-            mControlMainActivity = (ControlMainActivity) context;
+            mMainContext = (MainActivity) context;
         }
-        if (mControlMainActivity == null){
+        if (mMainContext == null){
             return null;
         }
         if (instance == null) {
-            SQLiteDatabase.loadLibs(mControlMainActivity);
-            instance = new ModelSearchRecordSQLiteOpenHelper(mControlMainActivity, DB_NAME, null, DB_VERSION);
+            SQLiteDatabase.loadLibs(mMainContext);
+            instance = new ModelSearchRecordSQLiteOpenHelper(mMainContext, DB_NAME, null, DB_VERSION);
             db = instance.getWritableDatabase(SECRET_KEY);
         }
         return instance;
@@ -42,20 +42,20 @@ public class ModelSearchRecordSQLiteOpenHelper extends SQLiteOpenHelper {
 
     public static synchronized SQLiteDatabase getWritableDatabase(Context context) {
         if (context != null){
-            mControlMainActivity = (ControlMainActivity) context;
+            mMainContext = (MainActivity) context;
         }
         if (db == null) {
-            db = getInstance(mControlMainActivity).getWritableDatabase(SECRET_KEY);
+            db = getInstance(mMainContext).getWritableDatabase(SECRET_KEY);
         }
         return db;
     }
 
     public static synchronized SQLiteDatabase getReadableDatabase(Context context) {
         if (context != null){
-            mControlMainActivity = (ControlMainActivity) context;
+            mMainContext = (MainActivity) context;
         }
         if (db == null) {
-            db = getInstance(mControlMainActivity).getReadableDatabase(SECRET_KEY);
+            db = getInstance(mMainContext).getReadableDatabase(SECRET_KEY);
         }
         return db;
     }
