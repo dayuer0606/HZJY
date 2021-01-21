@@ -1,4 +1,4 @@
-package com.android.school;
+package com.android.school.info;
 
 import java.io.Serializable;
 import java.util.Date;

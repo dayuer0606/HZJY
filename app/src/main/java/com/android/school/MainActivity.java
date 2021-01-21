@@ -94,6 +94,8 @@ import com.android.school.activity.LoginJumpActivity;
 import com.android.school.consts.PlayType;
 import com.android.school.entity.PlaybackDataConverter;
 import com.android.school.entity.PrePlaybackEntity;
+import com.android.school.info.CourseInfo;
+import com.android.school.info.CoursePacketInfo;
 import com.android.school.net.HttpRequest;
 import com.android.school.util.ActivityUtil;
 import com.google.gson.Gson;

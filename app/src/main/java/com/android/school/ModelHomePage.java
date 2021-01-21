@@ -17,6 +17,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.aliyun.vodplayerview.utils.DensityUtil;
+import com.android.school.info.CourseInfo;
+import com.android.school.info.CoursePacketInfo;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
@@ -326,15 +328,16 @@ public class ModelHomePage extends Fragment{
             if (homePageAllRecommendCourseInfoBean.cover == null){
                 homePageAllRecommendCourseInfoBean.cover = "";
             }
-            CourseInfo CourseInfo = new CourseInfo();
-            CourseInfo.mCourseId = String.valueOf(homePageAllRecommendCourseInfoBean.course_id);
-            CourseInfo.mCourseCover = homePageAllRecommendCourseInfoBean.cover;
-            CourseInfo.mCourseLearnPersonNum = String.valueOf(homePageAllRecommendCourseInfoBean.buying_base_number);
-            CourseInfo.mCourseName = homePageAllRecommendCourseInfoBean.course_name;
-            CourseInfo.mCoursePrice = String.valueOf(homePageAllRecommendCourseInfoBean.special_price);
-            CourseInfo.mCoursePriceOld = String.valueOf(homePageAllRecommendCourseInfoBean.price);
-            CourseInfo.mCourseType = homePageAllRecommendCourseInfoBean.course_type;
-            CourseInfoList.add(CourseInfo);
+
+            CourseInfo courseInfo = new CourseInfo();
+            courseInfo.setmCourseId(String.valueOf(homePageAllRecommendCourseInfoBean.course_id));
+            courseInfo.setmCourseCover(homePageAllRecommendCourseInfoBean.cover);
+            courseInfo.setmCourseType(homePageAllRecommendCourseInfoBean.course_type);
+            courseInfo.setmCourseName(homePageAllRecommendCourseInfoBean.course_name);
+            courseInfo.setmCoursePriceOld(String.valueOf(homePageAllRecommendCourseInfoBean.special_price));
+            courseInfo.setmCoursePrice(String.valueOf(homePageAllRecommendCourseInfoBean.price)) ;
+            courseInfo.setmCourseLearnPersonNum(String.valueOf(homePageAllRecommendCourseInfoBean.buying_base_number));
+            CourseInfoList.add(courseInfo);
             Log.e("TAG", "onError: initRecommendCourseData3");
         }
         return CourseInfoList;

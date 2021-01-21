@@ -31,6 +31,9 @@ import android.widget.Toast;
 
 import com.aliyun.vodplayerview.view.download.DownloadView;
 import com.aliyun.vodplayerview.widget.AliyunVodPlayerView;
+import com.android.school.info.CourseInfo;
+import com.android.school.info.CoursePacketInfo;
+import com.android.school.info.CourseRecordPlayDownloadInfo;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
@@ -448,13 +451,13 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
         //添加每个课程的监听，点击跳转到课程详情
         view.setOnClickListener(v -> {
             CourseInfo courseInfo = new CourseInfo();
-            courseInfo.mCourseId = String.valueOf(listBean.course_id);
-            courseInfo.mCourseCover = listBean.cover;
-            courseInfo.mCourseType = listBean.course_type;
-            courseInfo.mCourseName = listBean.course_name;
-            courseInfo.mCoursePriceOld = String.valueOf(listBean.price);
-            courseInfo.mCoursePrice = String.valueOf(listBean.special_price);
-            courseInfo.mCourseLearnPersonNum = String.valueOf(listBean.stuNum);
+            courseInfo.setmCourseId(String.valueOf(listBean.course_id));
+            courseInfo.setmCourseCover(listBean.cover);
+            courseInfo.setmCourseType(listBean.course_type);
+            courseInfo.setmCourseName(listBean.course_name);
+            courseInfo.setmCoursePriceOld(String.valueOf(listBean.price));
+            courseInfo.setmCoursePrice(String.valueOf(listBean.special_price)) ;
+            courseInfo.setmCourseLearnPersonNum(String.valueOf(listBean.stuNum));
             //跳转课程详情
             ModelCourseCover modelCourseCover = new ModelCourseCover();
             View modelCourseView = modelCourseCover.ModelCourseCover(mMainContext, courseInfo);
@@ -1964,13 +1967,13 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                     //添加每个课程的监听，点击跳转到课程详情
                     view.setOnClickListener(v -> {
                         CourseInfo courseInfo = new CourseInfo();
-                        courseInfo.mCourseId = String.valueOf(courseListBean.course_id);
-                        courseInfo.mCourseCover = courseListBean.cover;
-                        courseInfo.mCourseType = courseListBean.course_type;
-                        courseInfo.mCourseName = courseListBean.course_name;
-                        courseInfo.mCoursePriceOld = String.valueOf(courseListBean.price);
-                        courseInfo.mCoursePrice = String.valueOf(courseListBean.special_price);
-                        courseInfo.mCourseLearnPersonNum = String.valueOf(courseListBean.stuNum);
+                        courseInfo.setmCourseId(String.valueOf(courseListBean.course_id));
+                        courseInfo.setmCourseCover(courseListBean.cover);
+                        courseInfo.setmCourseType(courseListBean.course_type);
+                        courseInfo.setmCourseName(courseListBean.course_name);
+                        courseInfo.setmCoursePriceOld(String.valueOf(courseListBean.price));
+                        courseInfo.setmCoursePrice(String.valueOf(courseListBean.special_price)) ;
+                        courseInfo.setmCourseLearnPersonNum(String.valueOf(courseListBean.stuNum));
 
                         //跳转课程详情
                         ModelCourseCover modelCourseCover = new ModelCourseCover();
@@ -2132,13 +2135,13 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                     //添加每个课程的监听，点击跳转到课程详情
                     view.setOnClickListener(v -> {
                         CourseInfo courseInfo = new CourseInfo();
-                        courseInfo.mCourseId = String.valueOf(courseListBean.course_id);
-                        courseInfo.mCourseCover = courseListBean.cover;
-                        courseInfo.mCourseType = courseListBean.course_type;
-                        courseInfo.mCourseName = courseListBean.course_name;
-                        courseInfo.mCoursePriceOld = String.valueOf(courseListBean.price);
-                        courseInfo.mCoursePrice = String.valueOf(courseListBean.special_price);
-                        courseInfo.mCourseLearnPersonNum = String.valueOf(courseListBean.stuNum);
+                        courseInfo.setmCourseId(String.valueOf(courseListBean.course_id));
+                        courseInfo.setmCourseCover(courseListBean.cover);
+                        courseInfo.setmCourseType(courseListBean.course_type);
+                        courseInfo.setmCourseName(courseListBean.course_name);
+                        courseInfo.setmCoursePriceOld(String.valueOf(courseListBean.price));
+                        courseInfo.setmCoursePrice(String.valueOf(courseListBean.special_price)) ;
+                        courseInfo.setmCourseLearnPersonNum(String.valueOf(courseListBean.stuNum));
 
                         //跳转课程详情
                         ModelCourseCover modelCourseCover = new ModelCourseCover();

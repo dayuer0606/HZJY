@@ -9,6 +9,8 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 
+import com.android.school.info.ClassBean;
+
 import java.util.HashMap;
 import java.util.Map;
 

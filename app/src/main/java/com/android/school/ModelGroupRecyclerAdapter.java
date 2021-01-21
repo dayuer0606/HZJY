@@ -2,6 +2,8 @@ package com.android.school;
 
 import android.content.Context;
 
+import com.android.school.info.ClassBean;
+
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;

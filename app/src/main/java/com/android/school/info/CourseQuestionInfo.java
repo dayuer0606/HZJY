@@ -1,4 +1,4 @@
-package com.android.school;
+package com.android.school.info;
 /**
  * Created by dayuer on 19/7/2.
  * 课程问答结构体

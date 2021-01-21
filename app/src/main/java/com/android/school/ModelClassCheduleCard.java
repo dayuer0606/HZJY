@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.school.consts.PlayType;
+import com.android.school.info.ClassBean;
 import com.haibin.calendarview.Calendar;
 import com.haibin.calendarview.CalendarView;
 
@@ -127,7 +128,7 @@ public class ModelClassCheduleCard extends Fragment implements
         classchedulecard_content.addView(mClasschedulecardView);
         recyclerView = mClasschedulecardView.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(mMainContext));
-        ModelGroupItemDecoration modelGroupItemDecoration = new ModelGroupItemDecoration<String,ClassBean>();
+        ModelGroupItemDecoration modelGroupItemDecoration = new ModelGroupItemDecoration<String, ClassBean>();
         modelGroupItemDecoration.setTextColor(getResources().getColor(R.color.black999999));
         modelGroupItemDecoration.setTextSize(getResources().getDimensionPixelSize(R.dimen.textsize12));
         recyclerView.addItemDecoration(modelGroupItemDecoration);

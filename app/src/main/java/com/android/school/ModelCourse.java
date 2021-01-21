@@ -19,6 +19,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.school.info.CourseInfo;
 import com.google.gson.Gson;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -898,13 +899,13 @@ public class ModelCourse extends Fragment implements ModelCourseCover.ModelCours
                         continue;
                     }
                     CourseInfo courseInfo = new CourseInfo();
-                    courseInfo.mCourseId = String.valueOf(courseListBean.course_id);
-                    courseInfo.mCourseCover = courseListBean.cover;
-                    courseInfo.mCourseType = courseListBean.course_type;
-                    courseInfo.mCourseName = courseListBean.course_name;
-                    courseInfo.mCoursePriceOld = String.valueOf(courseListBean.price);
-                    courseInfo.mCoursePrice = String.valueOf(courseListBean.special_price);
-                    courseInfo.mCourseLearnPersonNum = String.valueOf(courseListBean.foke_stu_num);
+                    courseInfo.setmCourseId(String.valueOf(courseListBean.course_id));
+                    courseInfo.setmCourseCover(courseListBean.cover);
+                    courseInfo.setmCourseType(courseListBean.course_type);
+                    courseInfo.setmCourseName(courseListBean.course_name);
+                    courseInfo.setmCoursePriceOld(String.valueOf(courseListBean.price));
+                    courseInfo.setmCoursePrice(String.valueOf(courseListBean.special_price)) ;
+                    courseInfo.setmCourseLearnPersonNum(String.valueOf(courseListBean.foke_stu_num));
                     //创建每个课程的视图，添加到课程列表
                     ModelCourseCover modelCourseCover = new ModelCourseCover();
                     modelCourseCover.ModelCourseCoverOnClickListenerSet(ModelCourse.this);
@@ -1013,13 +1014,13 @@ public class ModelCourse extends Fragment implements ModelCourseCover.ModelCours
                         continue;
                     }
                     CourseInfo courseInfo = new CourseInfo();
-                    courseInfo.mCourseId = String.valueOf(courseListBean.course_id);
-                    courseInfo.mCourseCover = courseListBean.cover;
-                    courseInfo.mCourseType = courseListBean.course_type;
-                    courseInfo.mCourseName = courseListBean.course_name;
-                    courseInfo.mCoursePriceOld = String.valueOf(courseListBean.price);
-                    courseInfo.mCoursePrice = String.valueOf(courseListBean.special_price);
-                    courseInfo.mCourseLearnPersonNum = String.valueOf(courseListBean.foke_stu_num);
+                    courseInfo.setmCourseId(String.valueOf(courseListBean.course_id));
+                    courseInfo.setmCourseCover(courseListBean.cover);
+                    courseInfo.setmCourseType(courseListBean.course_type);
+                    courseInfo.setmCourseName(courseListBean.course_name);
+                    courseInfo.setmCoursePriceOld(String.valueOf(courseListBean.price));
+                    courseInfo.setmCoursePrice(String.valueOf(courseListBean.special_price)) ;
+                    courseInfo.setmCourseLearnPersonNum(String.valueOf(courseListBean.foke_stu_num));
                     ModelCourseCover modelCourseCover = new ModelCourseCover();
                     modelCourseCover.ModelCourseCoverOnClickListenerSet(ModelCourse.this);
                     View modelCourseView = modelCourseCover.ModelCourseCover(mMainContext, courseInfo);

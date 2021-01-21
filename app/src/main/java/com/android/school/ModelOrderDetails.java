@@ -22,6 +22,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alipay.sdk.app.PayTask;
+import com.android.school.info.CourseInfo;
+import com.android.school.info.CoursePacketInfo;
 import com.google.gson.Gson;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -341,8 +343,8 @@ public class ModelOrderDetails implements View.OnClickListener {
                         discountprice = Float.valueOf(mCouponDataListBean.dc_denomination) * Float.valueOf(mCoursePacketInfo.mCoursePacketPrice);
                     }
                 } else if (mCourseInfo != null) {
-                    if (mCouponDataListBean.dc_denomination != null && mCourseInfo.mCoursePrice != null) {
-                        discountprice = Float.valueOf(mCouponDataListBean.dc_denomination) * Float.valueOf(mCourseInfo.mCoursePrice);
+                    if (mCouponDataListBean.dc_denomination != null && mCourseInfo.getmCoursePrice() != null) {
+                        discountprice = Float.valueOf(mCouponDataListBean.dc_denomination) * Float.valueOf(mCourseInfo.getmCoursePrice());
                     }
                 }else if (mMyOrderListBean != null){
                     if (mCouponDataListBean.dc_denomination != null ) {
@@ -371,17 +373,17 @@ public class ModelOrderDetails implements View.OnClickListener {
             }
         } else if (mCourseInfo != null) {
             TextView orderpay_productname = mOrderBuyView.findViewById(R.id.orderpay_productname);
-            orderpay_productname.setText(mCourseInfo.mCourseName);
+            orderpay_productname.setText(mCourseInfo.getmCourseName());
             TextView orderpay_productprice = mOrderBuyView.findViewById(R.id.orderpay_productprice);
-            orderpay_productprice.setText(mCourseInfo.mCoursePrice);
+            orderpay_productprice.setText(mCourseInfo.getmCoursePrice());
             TextView orderpay_courseprice = mOrderBuyView.findViewById(R.id.orderpay_courseprice);
-            orderpay_courseprice.setText(mCourseInfo.mCoursePrice);
+            orderpay_courseprice.setText(mCourseInfo.getmCoursePrice());
             TextView orderpay_pay = mOrderBuyView.findViewById(R.id.orderpay_pay);
-            if (mCourseInfo.mCoursePrice != null) {
-                if (mCourseInfo.mCoursePrice.equals("免费")){
-                    mCourseInfo.mCoursePrice="0";
+            if (mCourseInfo.getmCoursePrice() != null) {
+                if (mCourseInfo.getmCoursePrice().equals("免费")){
+                    mCourseInfo.setmCoursePrice("0");
                 }
-                orderpay_pay.setText(String.valueOf(Float.valueOf(mCourseInfo.mCoursePrice) - discountprice));
+                orderpay_pay.setText(String.valueOf(Float.valueOf(mCourseInfo.getmCoursePrice()) - discountprice));
             }
         } else if (mMyOrderListBean != null) {
             TextView orderpay_productname = mOrderBuyView.findViewById(R.id.orderpay_productname);
@@ -634,7 +636,7 @@ public class ModelOrderDetails implements View.OnClickListener {
         int productId = 0;
         if (mCourseInfo != null){
             paramsMap.put("tf_course", "课程");
-            productId = Integer.parseInt(mCourseInfo.mCourseId);
+            productId = Integer.parseInt(mCourseInfo.getmCourseId());
         } else if (mCoursePacketInfo != null){
             paramsMap.put("tf_course", "课程包");
             productId = Integer.parseInt(mCoursePacketInfo.mCoursePacketId);
@@ -952,7 +954,7 @@ public class ModelOrderDetails implements View.OnClickListener {
     }
 
     private void QueryDiscountFromOneStuCourse(boolean isEnable,LinearLayout orderpay_couponchoose_main_content) {
-        if (mCourseInfo.mCourseId.equals("") ||mMainContext.mStuId.equals("")){
+        if (mCourseInfo.getmCourseId().equals("") ||mMainContext.mStuId.equals("")){
             if (isEnable){
                 Toast.makeText(mMainContext,"查询可用优惠券列表失败",Toast.LENGTH_LONG).show();
             } else {
@@ -976,7 +978,7 @@ public class ModelOrderDetails implements View.OnClickListener {
         } else {
             paramsMap1.put("type", 0);
         }
-        paramsMap1.put("course_id", Integer.valueOf(mCourseInfo.mCourseId));
+        paramsMap1.put("course_id", Integer.valueOf(mCourseInfo.getmCourseId()));
         paramsMap1.put("stu_id", Integer.valueOf(mMainContext.mStuId));
         String strEntity = gson.toJson(paramsMap1);
         RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json;charset=UTF-8"),strEntity);

@@ -1,4 +1,6 @@
 package com.android.school;
+import com.android.school.info.CourseInfo;
+
 import java.util.ArrayList;
 import java.util.List;
 

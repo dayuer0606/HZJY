@@ -25,6 +25,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.school.info.CourseInfo;
+import com.android.school.info.CoursePacketInfo;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
@@ -666,9 +668,9 @@ public class ModelCoursePacketCover implements View.OnClickListener, ModelOrderD
                 }
                 View stagecourse = LayoutInflater.from(mMainContext).inflate(R.layout.modelstagecourse1, null);
                 TextView stagecourselistmain_name = stagecourse.findViewById(R.id.stagecourselistmain_name);
-                stagecourselistmain_name.setText(courseInfo.mCourseName);
+                stagecourselistmain_name.setText(courseInfo.getmCourseName());
                 TextView stagecourselistmain_price = stagecourse.findViewById(R.id.stagecourselistmain_price);
-                if (courseInfo.mCoursePrice.equals("免费")) {
+                if (courseInfo.getmCoursePrice().equals("免费")) {
                     TextView stagecourselistmain_priceLogo = stagecourse.findViewById(R.id.stagecourselistmain_priceLogo);
                     stagecourselistmain_priceLogo.setText("");
                     stagecourselistmain_price.setTextColor(stagecourse.getResources().getColor(R.color.collectdefaultcolor3));
@@ -677,7 +679,7 @@ public class ModelCoursePacketCover implements View.OnClickListener, ModelOrderD
                     stagecourselistmain_priceLogo.setText("¥");
                     stagecourselistmain_price.setTextColor(stagecourse.getResources().getColor(R.color.holo_red_dark));
                 }
-                stagecourselistmain_price.setText(courseInfo.mCoursePrice);
+                stagecourselistmain_price.setText(courseInfo.getmCoursePrice());
                 coursepacket_coursestage_label_card2_content.addView(stagecourse);
                 stagecourse.setOnClickListener(v->{ //点击某一课程
                     ModelCourseCover modelCourseCover1 = new ModelCourseCover();
@@ -993,13 +995,14 @@ public class ModelCoursePacketCover implements View.OnClickListener, ModelOrderD
                             for (int num = 0; num < mCoursePacketInfo.mStageCourseInfoList.size(); num ++ ){
                                 StageCourseInfo stageCourseInfo = mCoursePacketInfo.mStageCourseInfoList.get(num);
                                 if (stageCourseInfo.mStageCourseId.equals(String.valueOf(stage_id))){
+
                                     CourseInfo courseInfo = new CourseInfo();
-                                    courseInfo.mCourseName = course_name;
-                                    courseInfo.mCourseId = String.valueOf(course_id);
-                                    courseInfo.mCoursePrice = String.valueOf(special_price);
-                                    courseInfo.mCoursePriceOld = String.valueOf(price);
-                                    courseInfo.mCourseCover = stageListInfoBean.cover;
-                                    courseInfo.mCourseType = stageListInfoBean.course_type;
+                                    courseInfo.setmCourseId(String.valueOf(course_id));
+                                    courseInfo.setmCourseCover(stageListInfoBean.cover);
+                                    courseInfo.setmCourseType(stageListInfoBean.course_type);
+                                    courseInfo.setmCourseName(course_name);
+                                    courseInfo.setmCoursePriceOld(String.valueOf(price));
+                                    courseInfo.setmCoursePrice(String.valueOf(special_price)) ;
                                     stageCourseInfo.mCourseInfoList.add(courseInfo);
                                 }
                             }

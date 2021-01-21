@@ -22,6 +22,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.android.school.info.ClassBean;
+
 import java.util.ArrayList;
 import java.util.List;
 
