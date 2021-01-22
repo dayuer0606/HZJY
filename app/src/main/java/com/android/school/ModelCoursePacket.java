@@ -38,7 +38,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Created by dayuer on 19/7/2.
  * 课程包
  */
-public class ModelCoursePacket extends Fragment implements ModelCoursePacketCover.ModelCoursePacketCoverOnClickListener {
+public class ModelCoursePacket extends Fragment implements ClassPacketDetails.ClassPacketDetailsOnClickListener {
     private static MainActivity mMainContext;
     private static String mContext = "xxxxxxxxxxxxx";
     //要显示的页面
@@ -629,8 +629,8 @@ public class ModelCoursePacket extends Fragment implements ModelCoursePacketCove
                     if (dataBean == null) {
                         continue;
                     }
-                    ModelCoursePacketCover modelCoursePacketCover = new ModelCoursePacketCover();
-                    modelCoursePacketCover.ModelCoursePacketCoverOnClickListenerSet(ModelCoursePacket.this);
+                    ClassPacketDetails ClassPacketDetails = new ClassPacketDetails();
+                    ClassPacketDetails.ClassPacketDetailsOnClickListenerSet(ModelCoursePacket.this);
                     //new 一个相关的实体类直接一个一个赋值
                     //            private int total_price;          //总价格        private int courseNum;    //课程数量
                     //            private String cp_name;           //	课程包名字     private int favorable_price;    //优惠价格
@@ -644,7 +644,7 @@ public class ModelCoursePacket extends Fragment implements ModelCoursePacketCove
                     coursePacketInfo.mCoursePacketCourseNum = String.valueOf(dataBean.courseNum);
                     coursePacketInfo.mCoursePacketPriceOld = String.valueOf(dataBean.total_price);//数据原来的价格
                     coursePacketInfo.mCoursePacketLearnPersonNum= String.valueOf(dataBean.buying_base_number);//购买人数
-                    View modelCoursePacketView = modelCoursePacketCover.ModelCoursePacketCover(mMainContext, coursePacketInfo);
+                    View modelCoursePacketView = ClassPacketDetails.ClassPacketDetails(mMainContext, coursePacketInfo);
                     coursepacket_linearlayout.addView(modelCoursePacketView);
                     line = modelCoursePacketView.findViewById(R.id.coursepacket_line1);
                 }
@@ -742,8 +742,8 @@ public class ModelCoursePacket extends Fragment implements ModelCoursePacketCove
                     if (dataBean == null) {
                         continue;
                     }
-                    ModelCoursePacketCover modelCoursePacketCover = new ModelCoursePacketCover();
-                    modelCoursePacketCover.ModelCoursePacketCoverOnClickListenerSet(ModelCoursePacket.this);
+                    ClassPacketDetails ClassPacketDetails = new ClassPacketDetails();
+                    ClassPacketDetails.ClassPacketDetailsOnClickListenerSet(ModelCoursePacket.this);
                     //new 一个相关的实体类直接一个一个赋值
                     //            private int total_price;          //总价格        private int courseNum;    //课程数量
                     //            private String cp_name;           //	课程包名字     private int favorable_price;    //优惠价格
@@ -757,7 +757,7 @@ public class ModelCoursePacket extends Fragment implements ModelCoursePacketCove
                     coursePacketInfo.mCoursePacketCourseNum = String.valueOf(dataBean.courseNum);
                     coursePacketInfo.mCoursePacketPriceOld = String.valueOf(dataBean.total_price);//数据原来的价格
                     coursePacketInfo.mCoursePacketLearnPersonNum= String.valueOf(dataBean.buying_base_number);//购买人数
-                    View modelCoursePacketView = modelCoursePacketCover.ModelCoursePacketCover(mMainContext, coursePacketInfo);
+                    View modelCoursePacketView = ClassPacketDetails.ClassPacketDetails(mMainContext, coursePacketInfo);
                     coursepacket_linearlayout.addView(modelCoursePacketView);
                     line = modelCoursePacketView.findViewById(R.id.coursepacket_line1);
                 }
@@ -858,8 +858,8 @@ public class ModelCoursePacket extends Fragment implements ModelCoursePacketCove
                     if (dataBean == null) {
                         continue;
                     }
-                    ModelCoursePacketCover modelCoursePacketCover = new ModelCoursePacketCover();
-                    modelCoursePacketCover.ModelCoursePacketCoverOnClickListenerSet(ModelCoursePacket.this);
+                    ClassPacketDetails ClassPacketDetails = new ClassPacketDetails();
+                    ClassPacketDetails.ClassPacketDetailsOnClickListenerSet(ModelCoursePacket.this);
                     //new 一个相关的实体类直接一个一个赋值
                     //            private int total_price;          //总价格        private int courseNum;    //课程数量
                     //            private String cp_name;           //	课程包名字     private int favorable_price;    //优惠价格
@@ -873,7 +873,7 @@ public class ModelCoursePacket extends Fragment implements ModelCoursePacketCove
                     coursePacketInfo.mCoursePacketCourseNum = String.valueOf(dataBean.courseNum);
                     coursePacketInfo.mCoursePacketPriceOld = String.valueOf(dataBean.total_price);//数据原来的价格
                     coursePacketInfo.mCoursePacketLearnPersonNum= String.valueOf(dataBean.buying_base_number);//购买人数
-                    View modelCoursePacketView = modelCoursePacketCover.ModelCoursePacketCover(mMainContext, coursePacketInfo);
+                    View modelCoursePacketView = ClassPacketDetails.ClassPacketDetails(mMainContext, coursePacketInfo);
                     coursepacket_linearlayout.addView(modelCoursePacketView);
                     line = modelCoursePacketView.findViewById(R.id.coursepacket_line1);
                 }
@@ -969,8 +969,8 @@ public class ModelCoursePacket extends Fragment implements ModelCoursePacketCove
                     if (dataBean == null) {
                         continue;
                     }
-                    ModelCoursePacketCover modelCoursePacketCover = new ModelCoursePacketCover();
-                    modelCoursePacketCover.ModelCoursePacketCoverOnClickListenerSet(ModelCoursePacket.this);
+                    ClassPacketDetails ClassPacketDetails = new ClassPacketDetails();
+                    ClassPacketDetails.ClassPacketDetailsOnClickListenerSet(ModelCoursePacket.this);
                     //new 一个相关的实体类直接一个一个赋值
                     //            private int total_price;          //总价格        private int courseNum;    //课程数量
                     //            private String cp_name;           //	课程包名字     private int favorable_price;    //优惠价格
@@ -984,7 +984,7 @@ public class ModelCoursePacket extends Fragment implements ModelCoursePacketCove
                     coursePacketInfo.mCoursePacketCourseNum = String.valueOf(dataBean.courseNum);
                     coursePacketInfo.mCoursePacketPriceOld = String.valueOf(dataBean.total_price);//数据原来的价格
                     coursePacketInfo.mCoursePacketLearnPersonNum= String.valueOf(dataBean.buying_base_number);//购买人数
-                    View modelCoursePacketView = modelCoursePacketCover.ModelCoursePacketCover(mMainContext, coursePacketInfo);
+                    View modelCoursePacketView = ClassPacketDetails.ClassPacketDetails(mMainContext, coursePacketInfo);
                     coursepacket_linearlayout.addView(modelCoursePacketView);
                     line = modelCoursePacketView.findViewById(R.id.coursepacket_line1);
                 }
@@ -1077,8 +1077,8 @@ public class ModelCoursePacket extends Fragment implements ModelCoursePacketCove
                     if (dataBean == null) {
                         continue;
                     }
-                    ModelCoursePacketCover modelCoursePacketCover = new ModelCoursePacketCover();
-                    modelCoursePacketCover.ModelCoursePacketCoverOnClickListenerSet(ModelCoursePacket.this);
+                    ClassPacketDetails ClassPacketDetails = new ClassPacketDetails();
+                    ClassPacketDetails.ClassPacketDetailsOnClickListenerSet(ModelCoursePacket.this);
                     //new 一个相关的实体类直接一个一个赋值
                     //            private int total_price;          //总价格        private int courseNum;    //课程数量
                     //            private String cp_name;           //	课程包名字     private int favorable_price;    //优惠价格
@@ -1092,7 +1092,7 @@ public class ModelCoursePacket extends Fragment implements ModelCoursePacketCove
                     coursePacketInfo.mCoursePacketCourseNum = String.valueOf(dataBean.courseNum);
                     coursePacketInfo.mCoursePacketPriceOld = String.valueOf(dataBean.total_price);//数据原来的价格
                     coursePacketInfo.mCoursePacketLearnPersonNum= String.valueOf(dataBean.buying_base_number);//购买人数
-                    View modelCoursePacketView = modelCoursePacketCover.ModelCoursePacketCover(mMainContext, coursePacketInfo);
+                    View modelCoursePacketView = ClassPacketDetails.ClassPacketDetails(mMainContext, coursePacketInfo);
                     coursepacket_linearlayout.addView(modelCoursePacketView);
                     line = modelCoursePacketView.findViewById(R.id.coursepacket_line1);
                 }

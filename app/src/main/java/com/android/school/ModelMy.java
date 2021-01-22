@@ -492,7 +492,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                 Log.d("Wain", "成功  Drawable Name:" + resource.getClass().getCanonicalName());
                 return false;
             }
-        }).error(mMainContext.getResources().getDrawable(R.drawable.modelcoursepacketcover)).into(modelmy_myclasspacket1_cover);
+        }).error(mMainContext.getResources().getDrawable(R.drawable.classpacketdetails)).into(modelmy_myclasspacket1_cover);
         //课程包名称
         TextView modelmy_myclasspacket1_classname = view.findViewById(R.id.modelmy_myclasspacket1_classname);
         modelmy_myclasspacket1_classname.setText(listBean.cp_name);
@@ -518,9 +518,9 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
             coursePacketInfo.mCoursePacketPriceOld = String.valueOf(listBean.total_price);//数据原来的价格
             coursePacketInfo.mCoursePacketLearnPersonNum= String.valueOf(listBean.buying_base_number);//购买人数
             //跳转课程包详情
-            ModelCoursePacketCover modelCoursePacketCover = new ModelCoursePacketCover();
-            View modelCoursePacketView = modelCoursePacketCover.ModelCoursePacketCover(mMainContext, coursePacketInfo);
-            modelCoursePacketCover.CoursePacketDetailsShow();
+            ClassPacketDetails ClassPacketDetails = new ClassPacketDetails();
+            View modelCoursePacketView = ClassPacketDetails.ClassPacketDetails(mMainContext, coursePacketInfo);
+            ClassPacketDetails.CoursePacketDetailsShow();
             HideAllLayout();
             LinearLayout my_layout_main = mview.findViewById(R.id.my_layout_main);
             my_layout_main.addView(modelCoursePacketView);
@@ -2283,7 +2283,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                             Log.d("Wain", "成功  Drawable Name:" + resource.getClass().getCanonicalName());
                             return false;
                         }
-                    }).error(mMainContext.getResources().getDrawable(R.drawable.modelcoursepacketcover)).into(modelmy_myclasspacket1_cover);
+                    }).error(mMainContext.getResources().getDrawable(R.drawable.classpacketdetails)).into(modelmy_myclasspacket1_cover);
                     //课程包名称
                     TextView modelmy_myclasspacket1_classname = view.findViewById(R.id.modelmy_myclasspacket1_classname);
                     modelmy_myclasspacket1_classname.setText(coursePacketListBean.cp_name);
@@ -2312,9 +2312,9 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                         coursePacketInfo.mCoursePacketPriceOld = String.valueOf(coursePacketListBean.total_price);//数据原来的价格
                         coursePacketInfo.mCoursePacketLearnPersonNum= String.valueOf(coursePacketListBean.buying_base_number);//购买人数
                         //跳转课程包详情
-                        ModelCoursePacketCover modelCoursePacketCover = new ModelCoursePacketCover();
-                        View modelCoursePacketView = modelCoursePacketCover.ModelCoursePacketCover(mMainContext, coursePacketInfo);
-                        modelCoursePacketCover.CoursePacketDetailsShow();
+                        ClassPacketDetails ClassPacketDetails = new ClassPacketDetails();
+                        View modelCoursePacketView = ClassPacketDetails.ClassPacketDetails(mMainContext, coursePacketInfo);
+                        ClassPacketDetails.CoursePacketDetailsShow();
                         HideAllLayout();
                         LinearLayout my_layout_main = mview.findViewById(R.id.my_layout_main);
                         my_layout_main.addView(modelCoursePacketView);
@@ -2450,7 +2450,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                             Log.d("Wain", "成功  Drawable Name:" + resource.getClass().getCanonicalName());
                             return false;
                         }
-                    }).error(mMainContext.getResources().getDrawable(R.drawable.modelcoursepacketcover)).into(modelmy_myclasspacket1_cover);
+                    }).error(mMainContext.getResources().getDrawable(R.drawable.classpacketdetails)).into(modelmy_myclasspacket1_cover);
                     //课程包名称
                     TextView modelmy_myclasspacket1_classname = view.findViewById(R.id.modelmy_myclasspacket1_classname);
                     modelmy_myclasspacket1_classname.setText(coursePacketListBean.cp_name);
@@ -2483,9 +2483,9 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                         coursePacketInfo.mCoursePacketPriceOld = String.valueOf(coursePacketListBean.total_price);//数据原来的价格
                         coursePacketInfo.mCoursePacketLearnPersonNum= String.valueOf(coursePacketListBean.buying_base_number);//购买人数
                         //跳转课程包详情
-                        ModelCoursePacketCover modelCoursePacketCover = new ModelCoursePacketCover();
-                        View modelCoursePacketView = modelCoursePacketCover.ModelCoursePacketCover(mMainContext, coursePacketInfo);
-                        modelCoursePacketCover.CoursePacketDetailsShow();
+                        ClassPacketDetails ClassPacketDetails = new ClassPacketDetails();
+                        View modelCoursePacketView = ClassPacketDetails.ClassPacketDetails(mMainContext, coursePacketInfo);
+                        ClassPacketDetails.CoursePacketDetailsShow();
                         HideAllLayout();
                         LinearLayout my_layout_main = mview.findViewById(R.id.my_layout_main);
                         my_layout_main.addView(modelCoursePacketView);

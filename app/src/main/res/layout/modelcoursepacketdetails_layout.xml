@@ -65,7 +65,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/dp160"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/modelcoursepacketcover" />
+                        android:src="@drawable/classpacketdetails" />
 
                     <TextView
                         android:id="@+id/coursepacket_details_Name"

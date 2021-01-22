@@ -55,10 +55,10 @@ import static io.agora.rtc.internal.AudioRoutingController.TAG;
  * Created by dayuer on 19/7/2.
  * 课程包详情
  */
-public class ModelCoursePacketCover implements View.OnClickListener, ModelOrderDetailsInterface {
+public class ClassPacketDetails implements View.OnClickListener, ModelOrderDetailsInterface {
     private View modelCoursePacket, mListView, mDetailsView;
     private MainActivity mMainContext = null;
-    private ModelCoursePacketCoverOnClickListener mModelCoursePacketCoverOnClickListener = null;
+    private ClassPacketDetailsOnClickListener mClassPacketDetailsOnClickListener = null;
     private int height = 1344;
     private int width = 720;
     private String mCurrentTab = "Details";
@@ -66,11 +66,11 @@ public class ModelCoursePacketCover implements View.OnClickListener, ModelOrderD
     private boolean mIsCollect = false;
     private CoursePacketInfo mCoursePacketInfo;
 
-    public void ModelCoursePacketCoverOnClickListenerSet(ModelCoursePacketCoverOnClickListener modelCoursePacketCoverOnClickListener) {
-        mModelCoursePacketCoverOnClickListener = modelCoursePacketCoverOnClickListener;
+    public void ClassPacketDetailsOnClickListenerSet(ClassPacketDetailsOnClickListener ClassPacketDetailsOnClickListener) {
+        mClassPacketDetailsOnClickListener = ClassPacketDetailsOnClickListener;
     }
 
-    public View ModelCoursePacketCover(Context context, CoursePacketInfo coursePacketInfo) {
+    public View ClassPacketDetails(Context context, CoursePacketInfo coursePacketInfo) {
         mMainContext = (MainActivity) context;
         if (coursePacketInfo == null) {
             return null;
@@ -88,10 +88,10 @@ public class ModelCoursePacketCover implements View.OnClickListener, ModelOrderD
         if (modelCoursePacket == null) {
             modelCoursePacket = LayoutInflater.from(context).inflate(R.layout.modelcoursepacket_layout, null);
             modelCoursePacket.setOnClickListener(v -> {
-                if (mModelCoursePacketCoverOnClickListener == null || modelCoursePacket == null) {
+                if (mClassPacketDetailsOnClickListener == null || modelCoursePacket == null) {
                     return;
                 }
-                mModelCoursePacketCoverOnClickListener.OnClickListener(v);
+                mClassPacketDetailsOnClickListener.OnClickListener(v);
                 //跳转到课程包的详细界面
                 CoursePacketDetailsShow();
             });
@@ -164,7 +164,7 @@ public class ModelCoursePacketCover implements View.OnClickListener, ModelOrderD
     //课程包列表
     public void CoursePacketListInit(CoursePacketInfo coursePacketInfo) {
         ControllerCustomRoundAngleImageView imageView = mListView.findViewById(R.id.coursepacketcover);
-        imageView.setImageDrawable(mMainContext.getResources().getDrawable(R.drawable.modelcoursepacketcover));//如果没有url，加载默认图片
+        imageView.setImageDrawable(mMainContext.getResources().getDrawable(R.drawable.classpacketdetails));//如果没有url，加载默认图片
         if (coursePacketInfo.mCoursePacketCover != null) {
             Glide.with(mMainContext).load(coursePacketInfo.mCoursePacketCover).listener(new RequestListener<Drawable>() {
                 @Override
@@ -177,7 +177,7 @@ public class ModelCoursePacketCover implements View.OnClickListener, ModelOrderD
                     Log.d("Warn", "成功  Drawable Name:" + resource.getClass().getCanonicalName());
                     return false;
                 }
-            }).error(mMainContext.getResources().getDrawable(R.drawable.modelcoursepacketcover)).into(imageView);
+            }).error(mMainContext.getResources().getDrawable(R.drawable.classpacketdetails)).into(imageView);
         }
         TextView coursePacketNameTextView = mListView.findViewById(R.id.coursepacketName);
         if (coursePacketInfo.mCoursePacketName != null) {
@@ -437,7 +437,7 @@ public class ModelCoursePacketCover implements View.OnClickListener, ModelOrderD
         CoursePacketDetailsShow();
     }
 
-    public interface ModelCoursePacketCoverOnClickListener {
+    public interface ClassPacketDetailsOnClickListener {
         void OnClickListener(View view);
     }
 
@@ -461,7 +461,7 @@ public class ModelCoursePacketCover implements View.OnClickListener, ModelOrderD
                     Log.d("Warn", "成功  Drawable Name:" + resource.getClass().getCanonicalName());
                     return false;
                 }
-            }).error(mMainContext.getResources().getDrawable(R.drawable.modelcoursepacketcover)).into(coursepacket_details_Cover);
+            }).error(mMainContext.getResources().getDrawable(R.drawable.classpacketdetails)).into(coursepacket_details_Cover);
         }
         //课程包详情-课程包名称
         TextView coursepacket_details_Name = mDetailsView.findViewById(R.id.coursepacket_details_Name);

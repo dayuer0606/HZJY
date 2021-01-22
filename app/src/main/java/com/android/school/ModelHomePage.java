@@ -212,12 +212,12 @@ public class ModelHomePage extends Fragment{
             if (CoursePacketInfo == null){
                 continue;
             }
-            ModelCoursePacketCover modelCoursePacketCover = new ModelCoursePacketCover();
-            View modelCoursePacketView = modelCoursePacketCover.ModelCoursePacketCover(mMainContext,CoursePacketInfo);
+            ClassPacketDetails ClassPacketDetails = new ClassPacketDetails();
+            View modelCoursePacketView = ClassPacketDetails.ClassPacketDetails(mMainContext,CoursePacketInfo);
             modelCoursePacketView.setOnClickListener(v->{ //点击某一课程包
-                ModelCoursePacketCover modelCoursePacketCover1 = new ModelCoursePacketCover();
-                View modelCoursePacketView1 = modelCoursePacketCover1.ModelCoursePacketCover(mMainContext,CoursePacketInfo);
-                modelCoursePacketCover1.CoursePacketDetailsShow();
+                ClassPacketDetails ClassPacketDetails1 = new ClassPacketDetails();
+                View modelCoursePacketView1 = ClassPacketDetails1.ClassPacketDetails(mMainContext,CoursePacketInfo);
+                ClassPacketDetails1.CoursePacketDetailsShow();
                 HideAllLayout();
                 homepage_layout_main.addView(modelCoursePacketView1);
                 mMainContext.onClickCoursePacketDetails();

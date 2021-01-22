@@ -297,17 +297,17 @@ public interface ModelObservableInterface {
     //课程包详情
     @POST("app/homePage/coursePackageDetail")
     @Headers("Content-Type:application/json;charset=UTF-8")
-    Call<ModelCoursePacketCover.DataPacketDetailsBean> queryCoursePackageDetails(@Body RequestBody body);
+    Call<ClassPacketDetails.DataPacketDetailsBean> queryCoursePackageDetails(@Body RequestBody body);
 
     //阶段课程    http://localhost:8080/app/homePage/stageCourseList     请求头数据的设置
     @POST("app/homePage/stageCourseList")
     @Headers("Content-Type:application/json;charset=UTF-8")
-    Call<ModelCoursePacketCover.StageCourseListBean> queryStageofcoursecurriculum(@Body RequestBody body);
+    Call<ClassPacketDetails.StageCourseListBean> queryStageofcoursecurriculum(@Body RequestBody body);
 
     //师资   http://localhost:8080/app/homePage/queryOneCpJsUserList
     @POST("app/homePage/queryOneCpJsUserList")
     @Headers("Content-Type:application/x-www-form-urlencoded; charset=utf-8")
-    Observable<ModelCoursePacketCover.CourseTeacherBean> queryCoursePackageTeacher(@Query("course_package_id") int course_package_id);    //course_package_id参数id
+    Observable<ClassPacketDetails.CourseTeacherBean> queryCoursePackageTeacher(@Query("course_package_id") int course_package_id);    //course_package_id参数id
 
     //订单支付    http://localhost:8080/app/homePage/generateOrderNumber
     @POST("order/pay")
@@ -327,7 +327,7 @@ public interface ModelObservableInterface {
     //收藏课程包   http://localhost:8080/app/homePage/collectionCoursePackage
     @POST("app/homePage/collectionCoursePackage")
     @Headers("Content-Type:application/json;charset=UTF-8")
-    Call<ModelCoursePacketCover.collectionBean> queryStageofcourseCoursecollection(@Body RequestBody body);
+    Call<ClassPacketDetails.collectionBean> queryStageofcourseCoursecollection(@Body RequestBody body);
 
     // 条件筛选
     @POST("app/homePage/coursePackageSearchBox")
