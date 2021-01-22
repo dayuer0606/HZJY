@@ -54,7 +54,7 @@ public class HeaderInterceptor implements Interceptor {
         return chain.proceed(builder.build());
     }
 
-    static boolean IsErrorCode(int code,String errorMessage){
+    static public boolean IsErrorCode(int code,String errorMessage){
         if (context == null){
             return true;
         }

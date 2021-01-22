@@ -1,4 +1,4 @@
-package com.android.school;
+package com.android.school.ClassPacket;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -25,6 +25,19 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.school.ControllerCustomRoundAngleImageView;
+import com.android.school.ControllerHorizontalProgressBar;
+import com.android.school.HeaderInterceptor;
+import com.android.school.LoadingDialog;
+import com.android.school.MainActivity;
+import com.android.school.ModelCourseCover;
+import com.android.school.ModelExpandView;
+import com.android.school.ModelHtmlUtils;
+import com.android.school.ModelObservableInterface;
+import com.android.school.ModelOrderDetailsInterface;
+import com.android.school.R;
+import com.android.school.info.StageCourseInfo;
+import com.android.school.info.TeacherInfo;
 import com.android.school.info.CourseInfo;
 import com.android.school.info.CoursePacketInfo;
 import com.bumptech.glide.Glide;

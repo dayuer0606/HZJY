@@ -31,6 +31,7 @@ import android.widget.Toast;
 
 import com.aliyun.vodplayerview.view.download.DownloadView;
 import com.aliyun.vodplayerview.widget.AliyunVodPlayerView;
+import com.android.school.ClassPacket.ClassPacketDetails;
 import com.android.school.info.CourseInfo;
 import com.android.school.info.CoursePacketInfo;
 import com.android.school.info.CourseRecordPlayDownloadInfo;

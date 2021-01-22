@@ -1,8 +1,5 @@
 package com.android.school.info;
 
-import com.android.school.StageCourseInfo;
-import com.android.school.TeacherInfo;
-
 import java.util.ArrayList;
 import java.util.List;
 /**

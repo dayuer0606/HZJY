@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.aliyun.vodplayerview.utils.DensityUtil;
+import com.android.school.ClassPacket.ClassPacketDetails;
 import com.android.school.info.CourseInfo;
 import com.android.school.info.CoursePacketInfo;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
