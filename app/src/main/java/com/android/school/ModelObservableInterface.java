@@ -1,7 +1,7 @@
 package com.android.school;
 
 //import java.util.List;
-import com.android.school.ClassPacket.ClassPacketDetails;
+import com.android.school.classpacket.ClassPacketDetails;
 
 import java.util.Map;
 
@@ -288,12 +288,12 @@ public interface ModelObservableInterface {
     //课程包
     @POST("app/homePage/queryAllCoursePackageInfo")
     @Headers("Content-Type:application/json;charset=UTF-8")
-    Call<ModelCoursePacket.CoursePacketBean> queryAllCoursePackageInfo(@Body RequestBody body);
+    Call<ClassPacket.CoursePacketBean> queryAllCoursePackageInfo(@Body RequestBody body);
 
     //名字的模糊查询(搜索关键字)
     @POST("app/homePage/queryCoursePackageInfoByName")
     @Headers("Content-Type:application/json;charset=UTF-8")
-    Call<ModelCoursePacket.CoursePacketBean> queryAllCoursePackageSelectName(@Body RequestBody body);
+    Call<ClassPacket.CoursePacketBean> queryAllCoursePackageSelectName(@Body RequestBody body);
 
 
     //课程包详情
@@ -334,7 +334,7 @@ public interface ModelObservableInterface {
     // 条件筛选
     @POST("app/homePage/coursePackageSearchBox")
     @Headers("Content-Type:application/json;charset=UTF-8")
-    Call<ModelCoursePacket.CoursePacketBean> queryAllcoursePackageSearchBox(@Body RequestBody body);
+    Call<ClassPacket.CoursePacketBean> queryAllcoursePackageSearchBox(@Body RequestBody body);
 
     /**
      * 查询个人信息详情（我的界面）

@@ -134,7 +134,7 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
         }
         mCourseInfo = new CourseInfo(courseInfo);
         modelCourse = LayoutInflater.from(context).inflate(R.layout.modelcourse_layout, null);
-        mListView = LayoutInflater.from(context).inflate(R.layout.modelcourselist_layout, null);
+        mListView = LayoutInflater.from(context).inflate(R.layout.classpacketlist_layout, null);
         if (mDetailsView == null) {
             mDetailsView = LayoutInflater.from(context).inflate(R.layout.modelcoursedetails_layout, null);
             modelCourse.setOnClickListener(v -> {

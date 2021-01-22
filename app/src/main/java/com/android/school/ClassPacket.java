@@ -18,7 +18,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.school.ClassPacket.ClassPacketDetails;
+import com.android.school.classpacket.ClassPacketDetails;
 import com.android.school.info.CoursePacketInfo;
 import com.google.gson.Gson;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -39,14 +39,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Created by dayuer on 19/7/2.
  * 课程包
  */
-public class ModelCoursePacket extends Fragment implements ClassPacketDetails.ClassPacketDetailsOnClickListener {
+public class ClassPacket extends Fragment implements ClassPacketDetails.ClassPacketDetailsOnClickListener {
     private static MainActivity mMainContext;
     private static String mContext = "xxxxxxxxxxxxx";
     //要显示的页面
     static private int FragmentPage;
     private View mView;
-    private int height = 1344;
-    private int width = 720;
 
     private ModelSearchView searchView = null;
     //弹出窗口（筛选条件）
@@ -60,7 +58,7 @@ public class ModelCoursePacket extends Fragment implements ClassPacketDetails.Cl
     //排序方式搜索
     private String mCoursePacketSelectSortTemp = "-1";
     private String mCoursePacketSelectSort = "-1";
-    private static final String TAG = "ModelCoursePacket";
+    private static final String TAG = "ClassPacket";
     private SmartRefreshLayout mSmart_fragment_coursepacket;
 
     //课程包列表分页查询
@@ -71,7 +69,7 @@ public class ModelCoursePacket extends Fragment implements ClassPacketDetails.Cl
     public static Fragment newInstance(MainActivity content, String context, int iFragmentPage) {
         mContext = context;
         mMainContext = content;
-        ModelCoursePacket myFragment = new ModelCoursePacket();
+        ClassPacket myFragment = new ClassPacket();
         FragmentPage = iFragmentPage;
         return myFragment;
     }
@@ -79,9 +77,6 @@ public class ModelCoursePacket extends Fragment implements ClassPacketDetails.Cl
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mView = inflater.inflate(FragmentPage, container, false);
-        DisplayMetrics dm = mMainContext.getResources().getDisplayMetrics(); //获取屏幕分辨率
-        height = dm.heightPixels;
-        width = dm.widthPixels;
         if (mContext.equals("课程包:")) {
             CoursePacketMainShow(1);
         } else {
@@ -631,7 +626,7 @@ public class ModelCoursePacket extends Fragment implements ClassPacketDetails.Cl
                         continue;
                     }
                     ClassPacketDetails ClassPacketDetails = new ClassPacketDetails();
-                    ClassPacketDetails.ClassPacketDetailsOnClickListenerSet(ModelCoursePacket.this);
+                    ClassPacketDetails.ClassPacketDetailsOnClickListenerSet(ClassPacket.this);
                     //new 一个相关的实体类直接一个一个赋值
                     //            private int total_price;          //总价格        private int courseNum;    //课程数量
                     //            private String cp_name;           //	课程包名字     private int favorable_price;    //优惠价格
@@ -645,9 +640,9 @@ public class ModelCoursePacket extends Fragment implements ClassPacketDetails.Cl
                     coursePacketInfo.mCoursePacketCourseNum = String.valueOf(dataBean.courseNum);
                     coursePacketInfo.mCoursePacketPriceOld = String.valueOf(dataBean.total_price);//数据原来的价格
                     coursePacketInfo.mCoursePacketLearnPersonNum= String.valueOf(dataBean.buying_base_number);//购买人数
-                    View modelCoursePacketView = ClassPacketDetails.ClassPacketDetails(mMainContext, coursePacketInfo);
-                    coursepacket_linearlayout.addView(modelCoursePacketView);
-                    line = modelCoursePacketView.findViewById(R.id.coursepacket_line1);
+                    View ClassPacketView = ClassPacketDetails.ClassPacketDetails(mMainContext, coursePacketInfo);
+                    coursepacket_linearlayout.addView(ClassPacketView);
+                    line = ClassPacketView.findViewById(R.id.coursepacket_line1);
                 }
                 if (line != null) {
                     line.setVisibility(View.INVISIBLE);
@@ -744,7 +739,7 @@ public class ModelCoursePacket extends Fragment implements ClassPacketDetails.Cl
                         continue;
                     }
                     ClassPacketDetails ClassPacketDetails = new ClassPacketDetails();
-                    ClassPacketDetails.ClassPacketDetailsOnClickListenerSet(ModelCoursePacket.this);
+                    ClassPacketDetails.ClassPacketDetailsOnClickListenerSet(ClassPacket.this);
                     //new 一个相关的实体类直接一个一个赋值
                     //            private int total_price;          //总价格        private int courseNum;    //课程数量
                     //            private String cp_name;           //	课程包名字     private int favorable_price;    //优惠价格
@@ -758,9 +753,9 @@ public class ModelCoursePacket extends Fragment implements ClassPacketDetails.Cl
                     coursePacketInfo.mCoursePacketCourseNum = String.valueOf(dataBean.courseNum);
                     coursePacketInfo.mCoursePacketPriceOld = String.valueOf(dataBean.total_price);//数据原来的价格
                     coursePacketInfo.mCoursePacketLearnPersonNum= String.valueOf(dataBean.buying_base_number);//购买人数
-                    View modelCoursePacketView = ClassPacketDetails.ClassPacketDetails(mMainContext, coursePacketInfo);
-                    coursepacket_linearlayout.addView(modelCoursePacketView);
-                    line = modelCoursePacketView.findViewById(R.id.coursepacket_line1);
+                    View ClassPacketView = ClassPacketDetails.ClassPacketDetails(mMainContext, coursePacketInfo);
+                    coursepacket_linearlayout.addView(ClassPacketView);
+                    line = ClassPacketView.findViewById(R.id.coursepacket_line1);
                 }
                 if (line != null) {
                     line.setVisibility(View.INVISIBLE);
@@ -860,7 +855,7 @@ public class ModelCoursePacket extends Fragment implements ClassPacketDetails.Cl
                         continue;
                     }
                     ClassPacketDetails ClassPacketDetails = new ClassPacketDetails();
-                    ClassPacketDetails.ClassPacketDetailsOnClickListenerSet(ModelCoursePacket.this);
+                    ClassPacketDetails.ClassPacketDetailsOnClickListenerSet(ClassPacket.this);
                     //new 一个相关的实体类直接一个一个赋值
                     //            private int total_price;          //总价格        private int courseNum;    //课程数量
                     //            private String cp_name;           //	课程包名字     private int favorable_price;    //优惠价格
@@ -874,9 +869,9 @@ public class ModelCoursePacket extends Fragment implements ClassPacketDetails.Cl
                     coursePacketInfo.mCoursePacketCourseNum = String.valueOf(dataBean.courseNum);
                     coursePacketInfo.mCoursePacketPriceOld = String.valueOf(dataBean.total_price);//数据原来的价格
                     coursePacketInfo.mCoursePacketLearnPersonNum= String.valueOf(dataBean.buying_base_number);//购买人数
-                    View modelCoursePacketView = ClassPacketDetails.ClassPacketDetails(mMainContext, coursePacketInfo);
-                    coursepacket_linearlayout.addView(modelCoursePacketView);
-                    line = modelCoursePacketView.findViewById(R.id.coursepacket_line1);
+                    View ClassPacketView = ClassPacketDetails.ClassPacketDetails(mMainContext, coursePacketInfo);
+                    coursepacket_linearlayout.addView(ClassPacketView);
+                    line = ClassPacketView.findViewById(R.id.coursepacket_line1);
                 }
                 if (line != null) {
                     line.setVisibility(View.INVISIBLE);
@@ -900,7 +895,7 @@ public class ModelCoursePacket extends Fragment implements ClassPacketDetails.Cl
     }
 
     //课程包列表请求
-    private void getModelCoursePacketDatas() {
+    private void getClassPacketDatas() {
         LoadingDialog.getInstance(mMainContext).show();
         LinearLayout coursepacket_end = mView.findViewById(R.id.coursepacket_end);
         coursepacket_end.setVisibility(View.INVISIBLE);
@@ -971,7 +966,7 @@ public class ModelCoursePacket extends Fragment implements ClassPacketDetails.Cl
                         continue;
                     }
                     ClassPacketDetails ClassPacketDetails = new ClassPacketDetails();
-                    ClassPacketDetails.ClassPacketDetailsOnClickListenerSet(ModelCoursePacket.this);
+                    ClassPacketDetails.ClassPacketDetailsOnClickListenerSet(ClassPacket.this);
                     //new 一个相关的实体类直接一个一个赋值
                     //            private int total_price;          //总价格        private int courseNum;    //课程数量
                     //            private String cp_name;           //	课程包名字     private int favorable_price;    //优惠价格
@@ -985,9 +980,9 @@ public class ModelCoursePacket extends Fragment implements ClassPacketDetails.Cl
                     coursePacketInfo.mCoursePacketCourseNum = String.valueOf(dataBean.courseNum);
                     coursePacketInfo.mCoursePacketPriceOld = String.valueOf(dataBean.total_price);//数据原来的价格
                     coursePacketInfo.mCoursePacketLearnPersonNum= String.valueOf(dataBean.buying_base_number);//购买人数
-                    View modelCoursePacketView = ClassPacketDetails.ClassPacketDetails(mMainContext, coursePacketInfo);
-                    coursepacket_linearlayout.addView(modelCoursePacketView);
-                    line = modelCoursePacketView.findViewById(R.id.coursepacket_line1);
+                    View ClassPacketView = ClassPacketDetails.ClassPacketDetails(mMainContext, coursePacketInfo);
+                    coursepacket_linearlayout.addView(ClassPacketView);
+                    line = ClassPacketView.findViewById(R.id.coursepacket_line1);
                 }
                 if (line != null) {
                     line.setVisibility(View.INVISIBLE);
@@ -1010,7 +1005,7 @@ public class ModelCoursePacket extends Fragment implements ClassPacketDetails.Cl
         });
     }
 
-    private void getModelCoursePacketDatasMore() {
+    private void getClassPacketDatasMore() {
         LoadingDialog.getInstance(mMainContext).show();
         LinearLayout coursepacket_end = mView.findViewById(R.id.coursepacket_end);
         coursepacket_end.setVisibility(View.INVISIBLE);
@@ -1079,7 +1074,7 @@ public class ModelCoursePacket extends Fragment implements ClassPacketDetails.Cl
                         continue;
                     }
                     ClassPacketDetails ClassPacketDetails = new ClassPacketDetails();
-                    ClassPacketDetails.ClassPacketDetailsOnClickListenerSet(ModelCoursePacket.this);
+                    ClassPacketDetails.ClassPacketDetailsOnClickListenerSet(ClassPacket.this);
                     //new 一个相关的实体类直接一个一个赋值
                     //            private int total_price;          //总价格        private int courseNum;    //课程数量
                     //            private String cp_name;           //	课程包名字     private int favorable_price;    //优惠价格
@@ -1093,9 +1088,9 @@ public class ModelCoursePacket extends Fragment implements ClassPacketDetails.Cl
                     coursePacketInfo.mCoursePacketCourseNum = String.valueOf(dataBean.courseNum);
                     coursePacketInfo.mCoursePacketPriceOld = String.valueOf(dataBean.total_price);//数据原来的价格
                     coursePacketInfo.mCoursePacketLearnPersonNum= String.valueOf(dataBean.buying_base_number);//购买人数
-                    View modelCoursePacketView = ClassPacketDetails.ClassPacketDetails(mMainContext, coursePacketInfo);
-                    coursepacket_linearlayout.addView(modelCoursePacketView);
-                    line = modelCoursePacketView.findViewById(R.id.coursepacket_line1);
+                    View ClassPacketView = ClassPacketDetails.ClassPacketDetails(mMainContext, coursePacketInfo);
+                    coursepacket_linearlayout.addView(ClassPacketView);
+                    line = ClassPacketView.findViewById(R.id.coursepacket_line1);
                 }
                 if (line != null) {
                     line.setVisibility(View.INVISIBLE);

@@ -17,7 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.aliyun.vodplayerview.utils.DensityUtil;
-import com.android.school.ClassPacket.ClassPacketDetails;
+import com.android.school.classpacket.ClassPacketDetails;
 import com.android.school.info.CourseInfo;
 import com.android.school.info.CoursePacketInfo;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -214,16 +214,16 @@ public class ModelHomePage extends Fragment{
                 continue;
             }
             ClassPacketDetails ClassPacketDetails = new ClassPacketDetails();
-            View modelCoursePacketView = ClassPacketDetails.ClassPacketDetails(mMainContext,CoursePacketInfo);
-            modelCoursePacketView.setOnClickListener(v->{ //点击某一课程包
+            View ClassPacketView = ClassPacketDetails.ClassPacketDetails(mMainContext,CoursePacketInfo);
+            ClassPacketView.setOnClickListener(v->{ //点击某一课程包
                 ClassPacketDetails ClassPacketDetails1 = new ClassPacketDetails();
-                View modelCoursePacketView1 = ClassPacketDetails1.ClassPacketDetails(mMainContext,CoursePacketInfo);
+                View ClassPacketView1 = ClassPacketDetails1.ClassPacketDetails(mMainContext,CoursePacketInfo);
                 ClassPacketDetails1.CoursePacketDetailsShow();
                 HideAllLayout();
-                homepage_layout_main.addView(modelCoursePacketView1);
+                homepage_layout_main.addView(ClassPacketView1);
                 mMainContext.onClickCoursePacketDetails();
             });
-            coursePacketModelLinearLayout.addView(modelCoursePacketView);
+            coursePacketModelLinearLayout.addView(ClassPacketView);
         }
 
         View line = view.findViewById(R.id.line);

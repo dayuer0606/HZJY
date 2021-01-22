@@ -31,7 +31,7 @@ import android.widget.Toast;
 
 import com.aliyun.vodplayerview.view.download.DownloadView;
 import com.aliyun.vodplayerview.widget.AliyunVodPlayerView;
-import com.android.school.ClassPacket.ClassPacketDetails;
+import com.android.school.classpacket.ClassPacketDetails;
 import com.android.school.info.CourseInfo;
 import com.android.school.info.CoursePacketInfo;
 import com.android.school.info.CourseRecordPlayDownloadInfo;
@@ -520,11 +520,11 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
             coursePacketInfo.mCoursePacketLearnPersonNum= String.valueOf(listBean.buying_base_number);//购买人数
             //跳转课程包详情
             ClassPacketDetails ClassPacketDetails = new ClassPacketDetails();
-            View modelCoursePacketView = ClassPacketDetails.ClassPacketDetails(mMainContext, coursePacketInfo);
+            View ClassPacketView = ClassPacketDetails.ClassPacketDetails(mMainContext, coursePacketInfo);
             ClassPacketDetails.CoursePacketDetailsShow();
             HideAllLayout();
             LinearLayout my_layout_main = mview.findViewById(R.id.my_layout_main);
-            my_layout_main.addView(modelCoursePacketView);
+            my_layout_main.addView(ClassPacketView);
             mMainContext.onClickCoursePacketDetails();
         });
         
@@ -2314,11 +2314,11 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                         coursePacketInfo.mCoursePacketLearnPersonNum= String.valueOf(coursePacketListBean.buying_base_number);//购买人数
                         //跳转课程包详情
                         ClassPacketDetails ClassPacketDetails = new ClassPacketDetails();
-                        View modelCoursePacketView = ClassPacketDetails.ClassPacketDetails(mMainContext, coursePacketInfo);
+                        View ClassPacketView = ClassPacketDetails.ClassPacketDetails(mMainContext, coursePacketInfo);
                         ClassPacketDetails.CoursePacketDetailsShow();
                         HideAllLayout();
                         LinearLayout my_layout_main = mview.findViewById(R.id.my_layout_main);
-                        my_layout_main.addView(modelCoursePacketView);
+                        my_layout_main.addView(ClassPacketView);
                         mMainContext.onClickCoursePacketDetails();
                     });
                     //我的课程包协议
@@ -2485,11 +2485,11 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                         coursePacketInfo.mCoursePacketLearnPersonNum= String.valueOf(coursePacketListBean.buying_base_number);//购买人数
                         //跳转课程包详情
                         ClassPacketDetails ClassPacketDetails = new ClassPacketDetails();
-                        View modelCoursePacketView = ClassPacketDetails.ClassPacketDetails(mMainContext, coursePacketInfo);
+                        View ClassPacketView = ClassPacketDetails.ClassPacketDetails(mMainContext, coursePacketInfo);
                         ClassPacketDetails.CoursePacketDetailsShow();
                         HideAllLayout();
                         LinearLayout my_layout_main = mview.findViewById(R.id.my_layout_main);
-                        my_layout_main.addView(modelCoursePacketView);
+                        my_layout_main.addView(ClassPacketView);
                         mMainContext.onClickCoursePacketDetails();
                     });
                     //我的课程包协议

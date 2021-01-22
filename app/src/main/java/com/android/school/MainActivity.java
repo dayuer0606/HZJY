@@ -142,7 +142,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class MainActivity extends AppCompatActivity implements EasyPermissions.PermissionCallbacks, AliyunDownloadManagerInterface {
     //继承Activity 不会显示APP头上的标题
-    private Fragment mModelHomePage,mModelMy,mModelOpenClass,mModelLogIn,mModelSetting,mModelCoursePacket,mModelCourse,mModelClassCheduleCard
+    private Fragment mModelHomePage,mModelMy,mModelOpenClass,mModelLogIn,mModelSetting,mClassPacket,mModelCourse,mModelClassCheduleCard
             ,mModelQuestionBank,mModelNews,mModelCommunityAnswer;
     private String mPage = ""; //当前显示页面
     private String mBeforePage = ""; //上一个显示界面
@@ -568,8 +568,8 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
         if (mModelSetting != null){//隐藏设置
             transaction.hide(mModelSetting);
         }
-        if (mModelCoursePacket != null){//隐藏课程包
-            transaction.hide(mModelCoursePacket);
+        if (mClassPacket != null){//隐藏课程包
+            transaction.hide(mClassPacket);
         }
         if (mModelCourse != null){//隐藏课程包
             transaction.hide(mModelCourse);
@@ -646,8 +646,8 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
         if (mModelSetting != null){
             mModelSetting.onDestroy();
         }
-        if (mModelCoursePacket != null){
-            mModelCoursePacket.onDestroy();
+        if (mClassPacket != null){
+            mClassPacket.onDestroy();
         }
         if (mModelCourse != null){
             mModelCourse.onDestroy();
@@ -1416,15 +1416,15 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
         mPage = "课程包搜索";
         //将底部菜单隐藏
         mBottomNavigationView.setVisibility(View.INVISIBLE);
-        if (mModelCoursePacket != null){
-            ((ModelCoursePacket)mModelCoursePacket).CoursePacketMainSearchShow();
+        if (mClassPacket != null){
+            ((ClassPacket)mClassPacket).CoursePacketMainSearchShow();
         }
     }
 
     //点击课程包主界面条件查询按钮
     public void onCoursePacketMainSearchCondition(View view) {
-        if (mModelCoursePacket != null){
-            ((ModelCoursePacket)mModelCoursePacket).CoursePacketMainSearchConditionShow();
+        if (mClassPacket != null){
+            ((ClassPacket)mClassPacket).CoursePacketMainSearchConditionShow();
         }
     }
 
@@ -1802,15 +1802,15 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
         }
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         hideAllFragment(transaction);
-        if(mModelCoursePacket == null){
-            mModelCoursePacket = ModelCoursePacket.newInstance(mThis,"课程包:" + mBeforePage,R.layout.fragment_coursepacket);//"课程包"
-            transaction.add(R.id.framepage,mModelCoursePacket);
+        if(mClassPacket == null){
+            mClassPacket = ClassPacket.newInstance(mThis,"课程包:" + mBeforePage,R.layout.fragment_coursepacket);//"课程包"
+            transaction.add(R.id.framepage,mClassPacket);
         }else{
-            transaction.show(mModelCoursePacket);
+            transaction.show(mClassPacket);
             if (mBeforePage.equals("")) {
-                ((ModelCoursePacket) mModelCoursePacket).CoursePacketMainShow(1);
+                ((ClassPacket) mClassPacket).CoursePacketMainShow(1);
             } else {
-                ((ModelCoursePacket) mModelCoursePacket).CoursePacketMainShow(0);
+                ((ClassPacket) mClassPacket).CoursePacketMainShow(0);
             }
         }
         transaction.commit();

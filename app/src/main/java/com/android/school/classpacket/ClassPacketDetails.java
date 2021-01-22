@@ -1,4 +1,4 @@
-package com.android.school.ClassPacket;
+package com.android.school.classpacket;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -69,7 +69,7 @@ import static io.agora.rtc.internal.AudioRoutingController.TAG;
  * 课程包详情
  */
 public class ClassPacketDetails implements View.OnClickListener, ModelOrderDetailsInterface {
-    private View modelCoursePacket, mListView, mDetailsView;
+    private View ClassPacket, mListView, mDetailsView;
     private MainActivity mMainContext = null;
     private ClassPacketDetailsOnClickListener mClassPacketDetailsOnClickListener = null;
     private int height = 1344;
@@ -90,18 +90,14 @@ public class ClassPacketDetails implements View.OnClickListener, ModelOrderDetai
         }
         //直接赋值赋值以后直接刷新界面
         mCoursePacketInfo = new CoursePacketInfo(coursePacketInfo);
-//        阶段课程的界面刷新方法
-//        CoursePacketStageCourseInit(mCoursePacketInfo);
-//        阶段课程的界面刷新方法
-//       CoursePacketTeachersInit(mCoursePacketInfo);
 
         DisplayMetrics dm = context.getResources().getDisplayMetrics(); //获取屏幕分辨率
         height = dm.heightPixels;
         width = dm.widthPixels;
-        if (modelCoursePacket == null) {
-            modelCoursePacket = LayoutInflater.from(context).inflate(R.layout.modelcoursepacket_layout, null);
-            modelCoursePacket.setOnClickListener(v -> {
-                if (mClassPacketDetailsOnClickListener == null || modelCoursePacket == null) {
+        if (ClassPacket == null) {
+            ClassPacket = LayoutInflater.from(context).inflate(R.layout.classpacket_layout, null);
+            ClassPacket.setOnClickListener(v -> {
+                if (mClassPacketDetailsOnClickListener == null || ClassPacket == null) {
                     return;
                 }
                 mClassPacketDetailsOnClickListener.OnClickListener(v);
@@ -109,9 +105,9 @@ public class ClassPacketDetails implements View.OnClickListener, ModelOrderDetai
                 CoursePacketDetailsShow();
             });
         }
-        mListView = LayoutInflater.from(context).inflate(R.layout.modelcoursepacketlist_layout, null);
+        mListView = LayoutInflater.from(context).inflate(R.layout.classpacketlist_layout, null);
         if (mDetailsView == null) {
-            mDetailsView = LayoutInflater.from(context).inflate(R.layout.modelcoursepacketdetails_layout, null);
+            mDetailsView = LayoutInflater.from(context).inflate(R.layout.classpacketdetails_layout, null);
             TextView coursepacket_details_label = mDetailsView.findViewById(R.id.coursepacket_details_label);
             TextView coursepacket_details_label1 = mDetailsView.findViewById(R.id.coursepacket_details_label1);
             TextView coursepacket_coursestage_label = mDetailsView.findViewById(R.id.coursepacket_coursestage_label);
@@ -168,11 +164,11 @@ public class ClassPacketDetails implements View.OnClickListener, ModelOrderDetai
         }
         HideAllLayout();
         CoursePacketListInit(coursePacketInfo);
-        RelativeLayout coursepacket_main = modelCoursePacket.findViewById(R.id.coursepacket_main);
+        RelativeLayout coursepacket_main = ClassPacket.findViewById(R.id.coursepacket_main);
         coursepacket_main.addView(mListView);
         //        详情页面的网络方法
         getDataPacketDetails();
-        return modelCoursePacket;
+        return ClassPacket;
     }
     //课程包列表
     public void CoursePacketListInit(CoursePacketInfo coursePacketInfo) {
@@ -228,11 +224,11 @@ public class ClassPacketDetails implements View.OnClickListener, ModelOrderDetai
     }
     //课程包的详情
     public void CoursePacketDetailsShow() {
-        if (modelCoursePacket == null) {
+        if (ClassPacket == null) {
             return;
         }
         HideAllLayout();
-        RelativeLayout coursepacket_main = modelCoursePacket.findViewById(R.id.coursepacket_main);
+        RelativeLayout coursepacket_main = ClassPacket.findViewById(R.id.coursepacket_main);
         coursepacket_main.addView(mDetailsView);
         //默认显示详情界面  详情1
         TextView coursepacket_details_label = mDetailsView.findViewById(R.id.coursepacket_details_label);
@@ -267,7 +263,7 @@ public class ClassPacketDetails implements View.OnClickListener, ModelOrderDetai
     }
 
     public void HideAllLayout() {
-        RelativeLayout coursepacket_main = modelCoursePacket.findViewById(R.id.coursepacket_main);
+        RelativeLayout coursepacket_main = ClassPacket.findViewById(R.id.coursepacket_main);
         coursepacket_main.removeAllViews();
     }
 
@@ -435,7 +431,7 @@ public class ClassPacketDetails implements View.OnClickListener, ModelOrderDetai
                     Toast.makeText(mMainContext,"此功能还在完善，敬请期待！",Toast.LENGTH_SHORT).show();
                 }
 //                HideAllLayout();
-//                RelativeLayout coursepacket_main = modelCoursePacket.findViewById(R.id.coursepacket_main);
+//                RelativeLayout coursepacket_main = ClassPacket.findViewById(R.id.coursepacket_main);
 //                View view = mMainContext.Page_OrderDetails(this,null,mCoursePacketInfo,null);
 //                coursepacket_main.addView(view);
                 break;
@@ -602,7 +598,7 @@ public class ClassPacketDetails implements View.OnClickListener, ModelOrderDetai
                         View modelCourseView1 = modelCourseCover1.ModelCourseCover(mMainContext,courseInfo);
                         modelCourseCover1.CourseDetailsShow();
                         HideAllLayout();
-                        RelativeLayout coursepacket_main = modelCoursePacket.findViewById(R.id.coursepacket_main);
+                        RelativeLayout coursepacket_main = ClassPacket.findViewById(R.id.coursepacket_main);
                         coursepacket_main.addView(modelCourseView1);
                         mMainContext.onClickCourseDetails();
                     });
@@ -699,7 +695,7 @@ public class ClassPacketDetails implements View.OnClickListener, ModelOrderDetai
                     View modelCourseView1 = modelCourseCover1.ModelCourseCover(mMainContext,courseInfo);
                     modelCourseCover1.CourseDetailsShow();
                     HideAllLayout();
-                    RelativeLayout coursepacket_main = modelCoursePacket.findViewById(R.id.coursepacket_main);
+                    RelativeLayout coursepacket_main = ClassPacket.findViewById(R.id.coursepacket_main);
                     coursepacket_main.addView(modelCourseView1);
                     mMainContext.onClickCourseDetails();
                 });
