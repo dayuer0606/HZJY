@@ -88,6 +88,10 @@
             android:windowSoftInputMode="adjustResize|stateHidden"
             android:screenOrientation="portrait" />
         <activity
+            android:name="com.tencent.aiaudio.activity.NewsActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="landscape" />
+        <activity
             android:name="com.android.school.activity.LoginJumpActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />

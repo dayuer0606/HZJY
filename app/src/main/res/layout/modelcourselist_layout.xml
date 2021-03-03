@@ -9,26 +9,6 @@
         android:layout_height="@dimen/dp_140"
         android:layout_marginTop="@dimen/dp18"
         android:background="@drawable/textview_style_rect">
-        <com.android.school.ControllerCustomRoundAngleImageView
-            android:id="@+id/coursecover"
-            android:layout_width="@dimen/dp0"
-            android:layout_height="@dimen/dp0"
-            app:shadow_color="0xffe4e4e4"
-            app:image_shadow="true"
-            app:image_radius="@dimen/dp5"
-            app:image_shadow_radius="@dimen/dp5"
-            android:layout_marginTop="@dimen/dp15"
-            android:layout_marginLeft="@dimen/dp13"
-            android:layout_marginRight="@dimen/dp15"
-            android:scaleType="centerCrop"/>
-        <ImageView
-            android:id="@+id/coursetype"
-            android:layout_width="@dimen/dp0"
-            android:layout_height="@dimen/dp0"
-            android:background="@drawable/button_myclass_mix"
-            android:layout_alignBottom="@id/coursecover"
-            android:layout_marginLeft="@dimen/dp_23"
-            android:layout_marginBottom="@dimen/dp_7"/>
 
         <TextView
             android:id="@+id/courseName"
@@ -107,8 +87,6 @@
             android:layout_gravity="left"
             android:textColor="#f32d2d"
             android:textSize="@dimen/textsize13"
-            android:layout_toRightOf="@id/coursecover"
-            android:layout_alignBottom="@id/coursecover"
             android:layout_marginBottom="@dimen/dp1"/>
         <TextView
             android:id="@+id/courseprice"
@@ -143,8 +121,7 @@
             android:textSize="@dimen/sp_10"
             android:textColor="#999999"
             android:layout_marginLeft="@dimen/dp8"
-            android:layout_toRightOf="@id/coursepriceend"
-            android:layout_alignBottom="@id/coursecover"/>
+            android:layout_toRightOf="@id/coursepriceend"/>
         <!--    <View-->
         <!--        android:id="@+id/course_line1"-->
         <!--        android:layout_width="match_parent"-->

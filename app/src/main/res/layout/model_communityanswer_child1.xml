@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:text="张三"
             android:textSize="@dimen/textsize14"
-            android:textColor="#649cf0"/>
+            android:textColor="#2079FD"/>
         <TextView
             android:id="@+id/communityanswer_child1_answer"
             android:layout_marginLeft="@dimen/dp3"
@@ -34,7 +34,7 @@
             android:layout_marginLeft="@dimen/dp3"
             android:text="李四"
             android:textSize="@dimen/textsize14"
-            android:textColor="#649cf0"/>
+            android:textColor="#2079FD"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -42,12 +42,16 @@
             android:layout_marginLeft="@dimen/dp3"
             android:textColor="#666666"
             android:textSize="@dimen/textsize15"/>
-        <TextView
-            android:id="@+id/communityanswer_child1_content"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="课程很优秀哒"
-            android:textColor="#666666"
-            android:textSize="@dimen/textsize15"/>
     </LinearLayout>
+    <TextView
+        android:layout_below="@id/communityanswer_child1_respond"
+        android:id="@+id/communityanswer_child1_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/dp13"
+        android:layout_marginLeft="@dimen/dp13"
+        android:layout_marginTop="@dimen/dp10"
+        android:text="课程很优秀哒"
+        android:textColor="#666666"
+        android:textSize="@dimen/textsize15"/>
 </RelativeLayout>

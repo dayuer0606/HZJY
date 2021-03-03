@@ -134,7 +134,7 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
         }
         mCourseInfo = new CourseInfo(courseInfo);
         modelCourse = LayoutInflater.from(context).inflate(R.layout.modelcourse_layout, null);
-        mListView = LayoutInflater.from(context).inflate(R.layout.classpacketlist_layout, null);
+        mListView = LayoutInflater.from(context).inflate(R.layout.modelcourselist_layout, null);
         if (mDetailsView == null) {
             mDetailsView = LayoutInflater.from(context).inflate(R.layout.modelcoursedetails_layout, null);
             modelCourse.setOnClickListener(v -> {
@@ -300,41 +300,12 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
 
     //课程信息初始化
     public void CourseListInit(CourseInfo courseInfo) {
-        ControllerCustomRoundAngleImageView imageView = mListView.findViewById(R.id.coursecover);
-        imageView.setImageDrawable(mMainContext.getResources().getDrawable(R.drawable.modelcoursecover));//如果没有url，加载默认图片
-        if (courseInfo.getmCourseCover() != null) {
-            Glide.with(mMainContext).
-                    load(courseInfo.getmCourseCover()).listener(new RequestListener<Drawable>() {
-                @Override
-                public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                    Log.d("Wain", "加载失败 errorMsg:" + (e != null ? e.getMessage() : "null"));
-                    return false;
-                }
-
-                @Override
-                public boolean onResourceReady(final Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                    Log.d("Wain", "成功  Drawable Name:" + resource.getClass().getCanonicalName());
-                    return false;
-                }
-            })
-                    .error(mMainContext.getResources().getDrawable(R.drawable.modelcoursecover)).into(imageView);
-        }
-        //设置课程类型
-        ImageView coursetype = mListView.findViewById(R.id.coursetype);
-        if (courseInfo.getmCourseType().equals("直播")) {
-            coursetype.setBackground(mListView.getResources().getDrawable(R.drawable.button_myclass_live));
-        } else if (courseInfo.getmCourseType().equals("录播")) {
-            coursetype.setBackground(mListView.getResources().getDrawable(R.drawable.button_myclass_record));
-        } else if (courseInfo.getmCourseType().equals("混合")) {
-            coursetype.setBackground(mListView.getResources().getDrawable(R.drawable.button_myclass_mix));
-        }
         TextView courseNameTextView = mListView.findViewById(R.id.courseName);
         if (courseInfo.getmCourseName() != null) {
             courseNameTextView.setText(courseInfo.getmCourseName());
         }
         TextView courseLearnStuNum = mListView.findViewById(R.id.courseLearnStuNum);
         courseLearnStuNum.setText(courseInfo.getmCourseLearnPersonNum() + "人正在学习");
-        TextView coursepricebeginTextView = mListView.findViewById(R.id.coursepricebegin);
         TextView coursepriceTextView = mListView.findViewById(R.id.courseprice);
         TextView coursepriceendTextView = mListView.findViewById(R.id.coursepriceend);
         if (courseInfo.getmCoursePrice() != null) {

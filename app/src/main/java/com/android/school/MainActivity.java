@@ -981,36 +981,24 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
         }
     }
 
-    //点击忘记密码
-    public void onClickForgetPassword(View view) {
-        mPage = "忘记密码";
+    //点击验证码登录
+    public void onClickVerLogin(View view) {
+        mPage = "注册";
         mBeforePage = "登录";
-        ((ModelLogIn)mModelLogIn).ForgetPasswordShow();
+        ((ModelLogIn)mModelLogIn).VerLoginShow();
     }
 
-    //点击忘记密码-返回
-    public void onClickForgetPasswordReturn(View view) {
+    //点击密码登录
+    public void onClickPasswordLogin(View view) {
+        mPage = "登录";
+        mBeforePage = "设置";
         ((ModelLogIn)mModelLogIn).LogInMainShow();
     }
 
-    //点击注册
-    public void onClickRegister(View view) {
-        mPage = "注册";
-        mBeforePage = "登录";
-        ((ModelLogIn)mModelLogIn).RegisterShow();
-    }
-
     //点击开始注册
-    public void onClickRegisterStart(View view) {
+    public void onClickVerLoginStart(View view) {
         //服务器注册
-        ((ModelLogIn)mModelLogIn).Register();
-    }
-
-    //点击获取验证码
-    public void onClickSMSCodeGet(View view) {
-        //向服务器发命令获取验证码
-        //修改界面为倒计时
-        ((ModelLogIn)mModelLogIn).SMSCodeGet();
+        ((ModelLogIn)mModelLogIn).VerLogin();
     }
 
     //注册-获取验证码
@@ -1018,12 +1006,6 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
         //向服务器发命令获取验证码
         //修改界面为倒计时
         ((ModelLogIn)mModelLogIn).RegisterSMSCodeGet();
-    }
-
-    //点击重置密码
-    public void onClickResetPassword(View view) {
-        //向服务器发送新密码
-        ((ModelLogIn)mModelLogIn).RetrievePassword();
     }
 
     //点击设置-基本信息
