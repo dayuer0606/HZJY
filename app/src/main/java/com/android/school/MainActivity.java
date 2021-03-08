@@ -1939,24 +1939,6 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
         mBeforePage = "社区问答";
     }
 
-    //跳转社区问答-添加问答界面
-    public void Page_onCommunityAnswerAdd(){
-        mPage = "添加问答";
-        mBeforePage = "社区问答";
-    }
-
-    //跳转社区问答-选择标签界面
-    public void Page_onCommunityAnswerChooseSign(){
-        mPage = "选择标签";
-        mBeforePage = "添加问答";
-    }
-
-    //跳转社区问答-问答详情界面
-    public void Page_onCommunityAnswerDetails(){
-        mPage = "问答详情";
-        mBeforePage = "社区问答";
-    }
-
     //社区问答-返回
     public void onClickCommunityAnswerReturn(View view) {
         if (mState.equals("发布问答")){

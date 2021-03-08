@@ -1,19 +1,28 @@
 package com.android.school.appactivity;
 
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.IntentFilter;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 //import android.icu.text.SimpleDateFormat;
 import java.text.SimpleDateFormat;
+
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.content.FileProvider;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -47,10 +56,12 @@ import com.android.school.ControllerWarpLinearLayout;
 import com.android.school.HeaderInterceptor;
 import com.android.school.LoadingDialog;
 import com.android.school.MainActivity;
+import com.android.school.ModelGetPhotoFromPhotoAlbum;
 import com.android.school.ModelHtmlUtils;
 import com.android.school.ModelObservableInterface;
 import com.android.school.ModelSearchRecordSQLiteOpenHelper;
 import com.android.school.ModelSearchView;
+import com.android.school.ModelSetting;
 import com.android.school.R;
 import com.android.school.appinfo.CommunityBean;
 import com.bumptech.glide.Glide;
@@ -146,6 +157,7 @@ public class ModelCommunityAnswerActivity extends FragmentActivity {
     private View mPopupWindowView = null;
     private String mIpadress = PublicCommonUtil.ipadress;
     private String mStuId = "";
+    private String mPage = "main";
 
     //评论
     private ControllerCustomDialog mCustomDialog = null;
@@ -207,8 +219,110 @@ public class ModelCommunityAnswerActivity extends FragmentActivity {
     public void onDestroy() {
         super.onDestroy();
     }
+
+    private final        int CUPREQUEST        = 50;
+    private final        int CAMERA            = 10;
+    private final        int ALBUM             = 20;
+    private Uri uritempFile;
+    private String          picPath;
+    private File            mOutImage;
+
+    private File cameraSavePath;//拍照照片路径
+    private Uri uri;//照片uri
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode != RESULT_OK) {
+            return;
+        }
+        Log.w("", "{onActivityResult}resultCode="+resultCode);
+        Log.w("", "{onActivityResult}requestCode="+requestCode);
+        if (resultCode == Activity.RESULT_OK) {
+            //选择照片
+            if(requestCode == ControllerGlobals.CHOOSE_PIC_REQUEST_CODE){
+                CommunityAnswerPictureAdd(data);
+            }
+        }
+
+        switch (requestCode) {
+            // 裁剪相机照片
+            case CAMERA:
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    picPath = String.valueOf(cameraSavePath);
+                } else {
+                    picPath = uri.getEncodedPath();
+                }
+                Log.d("返回图片路径拍照:", picPath);
+                mOutImage = new File(picPath);
+                setCropPhoto();
+                break;
+            //裁剪本地相册
+            case ALBUM:
+                picPath = ModelGetPhotoFromPhotoAlbum.getRealPathFromUri(this, data.getData());
+                Log.d("返回图片路径相册:", picPath);
+                mOutImage = new File(picPath);
+                setCropPhoto();
+                break;
+            default:
+                break;
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+    private void setCropPhoto() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            //如果是7.0剪裁图片 同理 需要把uri包装
+            //通过FileProvider创建一个content类型的Uri
+            Uri inputUri = FileProvider.getUriForFile(ModelCommunityAnswerActivity.this,
+                    PublicCommonUtil.fileProvider, mOutImage);
+            startPhotoZoom(inputUri);//设置输入类型
+        } else {
+            Uri inputUri = Uri.fromFile(mOutImage);
+            startPhotoZoom(inputUri);
+        }
+    }
+
+    //裁剪
+    private void startPhotoZoom(Uri uri) {
+        Intent intent = new Intent("com.android.camera.action.CROP");
+        intent.setDataAndType(uri, "image/*");
+        //sdk>=24
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            //去除默认的人脸识别，否则和剪裁匡重叠
+            intent.putExtra("noFaceDetection", false);
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+
+        }
+        // 设置裁剪
+        intent.putExtra("crop", "true");
+        // aspectX aspectY 宽高的比例
+        //华为特殊处理 不然会显示圆
+        if (Build.MODEL.contains("HUAWEI")) {
+            intent.putExtra("aspectX", 9998);
+            intent.putExtra("aspectY", 9999);
+        } else {
+            intent.putExtra("aspectX", 1);
+            intent.putExtra("aspectY", 1);
+        }
+        // outputX outputY 是裁剪图片宽高
+        intent.putExtra("outputX", 200);
+        intent.putExtra("outputY", 200);
+        //miui系统 特殊处理 return-data的方式只适用于小图。
+        if (Build.MANUFACTURER.contains("Xiaomi")){//裁剪后的图片Uri路径，uritempFile为Uri类变量
+            uritempFile = Uri.parse("file://" + "/" + Environment.getExternalStorageDirectory().getPath() + "/" + "eduhead.jpg");
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, uritempFile);
+        } else {
+            intent.putExtra("return-data", true);
+            uritempFile = Uri.parse("file://" + "/" + Environment.getExternalStorageDirectory().getPath() + "/" + "eduhead.jpg");
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, uritempFile);
+        }
+        intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
+        startActivityForResult(intent, CUPREQUEST);
+    }
+
     //社区问答主界面显示
     public void CommunityAnswerMainShow() {
+        mPage = "main";
         HideAllLayout();
         LinearLayout communityanswer_layout_main = findViewById(R.id.communityanswer_layout_main);
         if (mCommunityAnswerView == null){
@@ -610,6 +724,7 @@ public class ModelCommunityAnswerActivity extends FragmentActivity {
     }
     //社区子条目详情
     public void CommunityAnswerDetailsShow(Integer questions_id) {
+        mPage = "details";
         HideAllLayout();
         //详情的评论
         LinearLayout communityanswer_layout_main = findViewById(R.id.communityanswer_layout_main);
@@ -701,7 +816,11 @@ public class ModelCommunityAnswerActivity extends FragmentActivity {
     }
 
     public void onClickCommunityAnswerReturn(View view) {
-        CommunityAnswerMainShow();
+        if (mPage.equals("main")) {
+            ActivityManager.getInstance().finish(COMMUNITY_ANSWER_ACTIVITY_ID);
+        } else if (mPage.equals("details")) {
+            CommunityAnswerMainShow();
+        }
     }
 
     public void onCommunityAnswerMainSearch(View view) {
