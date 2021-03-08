@@ -1,5 +1,7 @@
 package com.android.school;
 
+import android.app.Activity;
+import android.app.Application;
 import android.content.Context;
 
 import com.aliyun.svideo.common.PublicCommonUtil;
@@ -19,7 +21,7 @@ public class ModelSearchRecordSQLiteOpenHelper extends SQLiteOpenHelper {
     private static ModelSearchRecordSQLiteOpenHelper instance = null;
     private static SQLiteDatabase db = null;
     private static String SECRET_KEY = PublicCommonUtil.SECRET_KEY;
-    private static MainActivity mMainContext = null;
+    private static Context mMainContext = null;
 
     private ModelSearchRecordSQLiteOpenHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
@@ -27,7 +29,7 @@ public class ModelSearchRecordSQLiteOpenHelper extends SQLiteOpenHelper {
 
     public static synchronized ModelSearchRecordSQLiteOpenHelper getInstance(Context context) {
         if (context != null){
-            mMainContext = (MainActivity) context;
+            mMainContext =  context.getApplicationContext();
         }
         if (mMainContext == null){
             return null;
@@ -42,7 +44,7 @@ public class ModelSearchRecordSQLiteOpenHelper extends SQLiteOpenHelper {
 
     public static synchronized SQLiteDatabase getWritableDatabase(Context context) {
         if (context != null){
-            mMainContext = (MainActivity) context;
+            mMainContext = context.getApplicationContext();
         }
         if (db == null) {
             db = getInstance(mMainContext).getWritableDatabase(SECRET_KEY);
@@ -52,7 +54,7 @@ public class ModelSearchRecordSQLiteOpenHelper extends SQLiteOpenHelper {
 
     public static synchronized SQLiteDatabase getReadableDatabase(Context context) {
         if (context != null){
-            mMainContext = (MainActivity) context;
+            mMainContext = context.getApplicationContext();
         }
         if (db == null) {
             db = getInstance(mMainContext).getReadableDatabase(SECRET_KEY);

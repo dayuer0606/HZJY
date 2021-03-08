@@ -31,6 +31,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -91,6 +92,7 @@ import com.aliyun.vodplayerview.view.tipsview.ErrorInfo;
 import com.aliyun.vodplayerview.widget.AliyunScreenMode;
 import com.aliyun.vodplayerview.widget.AliyunVodPlayerView;
 import com.android.school.activity.LoginJumpActivity;
+import com.android.school.appactivity.ModelCommunityAnswerActivity;
 import com.android.school.consts.PlayType;
 import com.android.school.entity.PlaybackDataConverter;
 import com.android.school.entity.PrePlaybackEntity;
@@ -127,6 +129,7 @@ import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+import me.iwf.photopicker.PhotoPicker;
 import okhttp3.RequestBody;
 import pub.devrel.easypermissions.EasyPermissions;
 import retrofit2.Call;
@@ -136,6 +139,9 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import static com.android.school.appinfo.ActivityIDInfo.ACTION_COMMUNITY_ANSWER_PICTURE_ADD;
+import static com.android.school.appinfo.ActivityIDInfo.COMMUNITY_ANSWER_ACTIVITY_ID;
+
 /**
  * Created by dayuer on 19/7/2.
  * 主程序
@@ -143,7 +149,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MainActivity extends AppCompatActivity implements EasyPermissions.PermissionCallbacks, AliyunDownloadManagerInterface {
     //继承Activity 不会显示APP头上的标题
     private Fragment mModelHomePage,mModelMy,mModelOpenClass,mModelLogIn,mModelSetting,mClassPacket,mModelCourse,mModelClassCheduleCard
-            ,mModelQuestionBank,mModelNews,mModelCommunityAnswer;
+            ,mModelQuestionBank,mModelNews;
     private String mPage = ""; //当前显示页面
     private String mBeforePage = ""; //上一个显示界面
     private static MainActivity mThis;
@@ -583,9 +589,7 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
         if (mModelNews != null){//隐藏新闻
             transaction.hide(mModelNews);
         }
-        if (mModelCommunityAnswer != null){//隐藏社区问答
-            transaction.hide(mModelCommunityAnswer);
-        }
+        ActivityManager.getInstance().finish(COMMUNITY_ANSWER_ACTIVITY_ID);
     }
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
@@ -664,9 +668,6 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
         if (mModelNews != null){
             mModelNews.onDestroy();
         }
-        if (mModelCommunityAnswer != null){
-            mModelCommunityAnswer.onDestroy();
-        }
         if (mAliyunVodPlayerView != null) {
             mAliyunVodPlayerView.onDestroy();
             mAliyunVodPlayerView = null;
@@ -681,6 +682,7 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
             commenUtils.onDestroy();
             commenUtils = null;
         }
+        ActivityManager.getInstance().finishAll();
         if (LoadingDialog.getInstance(this).isShowing()) {
             LoadingDialog.getInstance(this).dismiss();
         }
@@ -1924,19 +1926,11 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
 
     //跳转社区问答
     public void Page_CommunityAnswer(){
-        mBottomNavigationView.setVisibility(View.INVISIBLE);
-        mPage = "社区问答";
-        mBeforePage = "首页";
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        hideAllFragment(transaction);
-        if(mModelCommunityAnswer == null){
-            mModelCommunityAnswer = ModelCommunityAnswer.newInstance(mThis,"社区问答:" + mBeforePage,R.layout.fragment_communityanswer);//"社区问答"
-            transaction.add(R.id.framepage,mModelCommunityAnswer);
-        }else{
-            transaction.show(mModelCommunityAnswer);
-            ((ModelCommunityAnswer) mModelCommunityAnswer).CommunityAnswerMainShow();
-        }
-        transaction.commit();
+        ActivityManager.getInstance().finish(COMMUNITY_ANSWER_ACTIVITY_ID);
+        Intent intent = new Intent(mThis, ModelCommunityAnswerActivity.class);
+        intent.putExtra("stu_id", mStuId);
+        intent.putExtra("ip",mIpadress);
+        startActivity(intent);
     }
 
     //跳转社区问答-搜索界面
@@ -1974,19 +1968,21 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
             mBottomNavigationView.setVisibility(View.VISIBLE);
         } else if (mPage.equals("问答搜索") && mBeforePage.equals("社区问答")) { //如果当前界面是问答搜索，点击返回按钮，应该返回到社区问答
             Page_CommunityAnswer();
-        } else if (mPage.equals("添加问答") && mBeforePage.equals("社区问答")) { //如果当前界面是添加问答，点击返回按钮，应该返回到社区问答
-            mPage = "社区问答";
-            mBeforePage = "首页";
-            if (mModelCommunityAnswer != null) {
-                ((ModelCommunityAnswer) mModelCommunityAnswer).CommunityAnswerAddReturn();
-            }
-        } else if (mPage.equals("选择标签") && mBeforePage.equals("添加问答")) { //如果当前界面是选择标签，点击返回按钮，应该返回到添加问答
-            if (mModelCommunityAnswer != null) {
-                ((ModelCommunityAnswer) mModelCommunityAnswer).CommunityAnswerAddInit(false);
-            }
-            mPage = "添加问答";
-            mBeforePage = "社区问答";
-        } else if (mPage.equals("问答详情") && mBeforePage.equals("社区问答")) { //如果当前界面是问答详情，点击返回按钮，应该返回到社区问答
+        }
+//        else if (mPage.equals("添加问答") && mBeforePage.equals("社区问答")) { //如果当前界面是添加问答，点击返回按钮，应该返回到社区问答
+//            mPage = "社区问答";
+//            mBeforePage = "首页";
+//            if (mModelCommunityAnswer != null) {
+//                ((ModelCommunityAnswer) mModelCommunityAnswer).CommunityAnswerAddReturn();
+//            }
+//        } else if (mPage.equals("选择标签") && mBeforePage.equals("添加问答")) { //如果当前界面是选择标签，点击返回按钮，应该返回到添加问答
+//            if (mModelCommunityAnswer != null) {
+//                ((ModelCommunityAnswer) mModelCommunityAnswer).CommunityAnswerAddInit(false);
+//            }
+//            mPage = "添加问答";
+//            mBeforePage = "社区问答";
+//        }
+        else if (mPage.equals("问答详情") && mBeforePage.equals("社区问答")) { //如果当前界面是问答详情，点击返回按钮，应该返回到社区问答
             Page_CommunityAnswer();
         }
     }
@@ -2541,21 +2537,24 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
                 } else if (mPage.equals("问答详情") && mBeforePage.equals("社区问答")) { //如果当前界面是问答详情，点击返回按钮，应该返回到社区问答
                     Page_CommunityAnswer();
                     return true;
-                } else if (mPage.equals("添加问答") && mBeforePage.equals("社区问答")) { //如果当前界面是添加问答，点击返回按钮，应该返回到社区问答
-                    mPage = "社区问答";
-                    mBeforePage = "首页";
-                    if (mModelCommunityAnswer != null) {
-                        ((ModelCommunityAnswer) mModelCommunityAnswer).CommunityAnswerAddReturn();
-                    }
-                    return true;
-                } else if (mPage.equals("选择标签") && mBeforePage.equals("添加问答")) { //如果当前界面是选择标签，点击返回按钮，应该返回到添加问答
-                    if (mModelCommunityAnswer != null) {
-                        ((ModelCommunityAnswer) mModelCommunityAnswer).CommunityAnswerAddInit(false);
-                    }
-                    mPage = "添加问答";
-                    mBeforePage = "社区问答";
-                    return true;
-                } else if (mPage.equals("我的课程") && mBeforePage.equals("我的")) { //如果当前界面是我的课程，点击返回按钮，应该返回到我的
+                }
+//                else if (mPage.equals("添加问答") && mBeforePage.equals("社区问答")) { //如果当前界面是添加问答，点击返回按钮，应该返回到社区问答
+//                    mPage = "社区问答";
+//                    mBeforePage = "首页";
+//                    if (mModelCommunityAnswer != null) {
+//                        ((ModelCommunityAnswer) mModelCommunityAnswer).CommunityAnswerAddReturn();
+//                    }
+//                    return true;
+//                }
+//                else if (mPage.equals("选择标签") && mBeforePage.equals("添加问答")) { //如果当前界面是选择标签，点击返回按钮，应该返回到添加问答
+//                    if (mModelCommunityAnswer != null) {
+//                        ((ModelCommunityAnswer) mModelCommunityAnswer).CommunityAnswerAddInit(false);
+//                    }
+//                    mPage = "添加问答";
+//                    mBeforePage = "社区问答";
+//                    return true;
+//                }
+                else if (mPage.equals("我的课程") && mBeforePage.equals("我的")) { //如果当前界面是我的课程，点击返回按钮，应该返回到我的
                     Page_My();
                     return true;
                 } else if (mPage.equals("我的课程包") && mBeforePage.equals("我的")) { //如果当前界面是我的课程包，点击返回按钮，应该返回到我的
@@ -2943,8 +2942,10 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
 //                else if (mModelCommunityAnswer != null && beforePageS[beforePageS.length - 1].equals("首页") && mPage.equals("社区问答")){
 //                    ((ModelCommunityAnswer)mModelCommunityAnswer).CommunityAnswerPictureAdd(data);
 //                }
-                if (mModelCommunityAnswer != null && beforePageS[beforePageS.length - 1].equals("社区问答") && mPage.equals("添加问答")){
-                    ((ModelCommunityAnswer)mModelCommunityAnswer).CommunityAnswerPictureAdd(data);
+                if (ActivityManager.getInstance(). get(COMMUNITY_ANSWER_ACTIVITY_ID)!= null && beforePageS[beforePageS.length - 1].equals("社区问答") && mPage.equals("添加问答")){
+                    Intent intent = new Intent(ACTION_COMMUNITY_ANSWER_PICTURE_ADD);
+                    intent.putStringArrayListExtra(PhotoPicker.KEY_SELECTED_PHOTOS,data.getStringArrayListExtra(PhotoPicker.KEY_SELECTED_PHOTOS));
+                    LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(data);
                 }
             }
         }

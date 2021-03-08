@@ -1,6 +1,8 @@
 package com.android.school;
 
 //import java.util.List;
+import com.android.school.appactivity.ModelCommunityAnswerActivity;
+import com.android.school.appinfo.CommunityBean;
 import com.android.school.classpacket.ClassPacketDetails;
 
 import java.util.Map;
@@ -45,7 +47,7 @@ public interface ModelObservableInterface {
     //社区问答--列表   http://localhost:8080/app/homePage/queryHomePageInfo/Community
     @POST("app/user/queryCommunityQuestions")
     @Headers("Content-Type:application/json;charset=UTF-8")
-    Call<ModelCommunityAnswer.CommunityBean> queryAllCoursePackageCommunity(@Body RequestBody body);
+    Call<CommunityBean> queryAllCoursePackageCommunity(@Body RequestBody body);
 
     //社区问答-回复
     @POST("app/user/ReplyQuestion")
@@ -60,12 +62,12 @@ public interface ModelObservableInterface {
     //社区问答--查询标签
     @POST("app/user/queryClassificationName")
     @Headers("Content-Type:application/json;charset=UTF-8")
-    Call<ModelCommunityAnswer.CommunityQuerytagsBean> queryMyCommunityQuerytags(@Body RequestBody body);
+    Call<ModelCommunityAnswerActivity.CommunityQuerytagsBean> queryMyCommunityQuerytags(@Body RequestBody body);
 
     //社区问答详情
     @POST("app/user/queryCommunityQuestionsDetails")
     @Headers("Content-Type:application/json;charset=UTF-8")
-    Call<ModelCommunityAnswer.CommunityDetilsBean> QueryCommunityQuestionsDetails(@Body RequestBody body);
+    Call<ModelCommunityAnswerActivity.CommunityDetilsBean> QueryCommunityQuestionsDetails(@Body RequestBody body);
 
     // 我的课程列表   http://localhost:8080/app/my/queryMyCourseList
     @POST("app/my/queryMyCourseList")

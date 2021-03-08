@@ -86,11 +86,13 @@
             android:name="com.android.school.MainActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:windowSoftInputMode="adjustResize|stateHidden"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.tencent.aiaudio.activity.NewsActivity"
+            android:name=".appactivity.ModelCommunityAnswerActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="landscape" />
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.android.school.activity.LoginJumpActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"

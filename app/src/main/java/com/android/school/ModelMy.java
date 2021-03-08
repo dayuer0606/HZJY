@@ -31,6 +31,7 @@ import android.widget.Toast;
 
 import com.aliyun.vodplayerview.view.download.DownloadView;
 import com.aliyun.vodplayerview.widget.AliyunVodPlayerView;
+import com.android.school.appactivity.ModelCommunityAnswerActivity;
 import com.android.school.classpacket.ClassPacketDetails;
 import com.android.school.info.CourseInfo;
 import com.android.school.info.CoursePacketInfo;
@@ -4051,10 +4052,10 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
         String strEntity = gson.toJson(paramsMap);
         RequestBody body = RequestBody.create(MediaType.parse("application/json;charset=UTF-8"), strEntity);
         modelObservableInterface.QueryCommunityQuestionsDetails(body)
-                .enqueue(new Callback<ModelCommunityAnswer.CommunityDetilsBean>() {
+                .enqueue(new Callback<ModelCommunityAnswerActivity.CommunityDetilsBean>() {
                     @Override
-                    public void onResponse(Call<ModelCommunityAnswer.CommunityDetilsBean> call, Response<ModelCommunityAnswer.CommunityDetilsBean> response) {
-                        ModelCommunityAnswer.CommunityDetilsBean communityDetilsBean = response.body();
+                    public void onResponse(Call<ModelCommunityAnswerActivity.CommunityDetilsBean> call, Response<ModelCommunityAnswerActivity.CommunityDetilsBean> response) {
+                        ModelCommunityAnswerActivity.CommunityDetilsBean communityDetilsBean = response.body();
                         if (communityDetilsBean == null){
                             if (mSmart_model_my_myanswerdetails != null) {
                                 mSmart_model_my_myanswerdetails.finishRefresh();
@@ -4077,7 +4078,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                             LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
-                        ModelCommunityAnswer.CommunityDetilsBean.CommunityDetilsDataBean communityDetilsDataBean = communityDetilsBean.getData();
+                        ModelCommunityAnswerActivity.CommunityDetilsBean.CommunityDetilsDataBean communityDetilsDataBean = communityDetilsBean.getData();
                         if (communityDetilsDataBean == null){
                             if (mSmart_model_my_myanswerdetails != null) {
                                 mSmart_model_my_myanswerdetails.finishRefresh();
@@ -4212,7 +4213,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                                 }
                             }
                         }
-                        ModelCommunityAnswer.CommunityDetilsBean.CommunityDetilsAnswerDataBean communityDetilsAnswerDataBean = communityDetilsDataBean.getHuida();
+                        ModelCommunityAnswerActivity.CommunityDetilsBean.CommunityDetilsAnswerDataBean communityDetilsAnswerDataBean = communityDetilsDataBean.getHuida();
                         if (communityDetilsAnswerDataBean == null){
                             if (mSmart_model_my_myanswerdetails != null) {
                                 mSmart_model_my_myanswerdetails.finishRefresh();
@@ -4221,7 +4222,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                             return;
                         }
                         mMyQuestionAndAnswerDetailsSum = communityDetilsAnswerDataBean.getTotal();
-                        List<ModelCommunityAnswer.CommunityDetilsBean.CommunityDetilsAnswerDataBeanList> listBeans = communityDetilsAnswerDataBean.getList();
+                        List<ModelCommunityAnswerActivity.CommunityDetilsBean.CommunityDetilsAnswerDataBeanList> listBeans = communityDetilsAnswerDataBean.getList();
                         if (listBeans == null){
                             if (mSmart_model_my_myanswerdetails != null) {
                                 mSmart_model_my_myanswerdetails.finishRefresh();
@@ -4231,7 +4232,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                         }
                         View line = null;
                         for (int i = 0; i < listBeans.size() ; i ++){
-                            ModelCommunityAnswer.CommunityDetilsBean.CommunityDetilsAnswerDataBeanList listBean = listBeans.get(i);
+                            ModelCommunityAnswerActivity.CommunityDetilsBean.CommunityDetilsAnswerDataBeanList listBean = listBeans.get(i);
                             if (listBean == null){
                                 continue;
                             }
@@ -4280,7 +4281,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                     }
 
                     @Override
-                    public void onFailure(Call<ModelCommunityAnswer.CommunityDetilsBean> call, Throwable t) {
+                    public void onFailure(Call<ModelCommunityAnswerActivity.CommunityDetilsBean> call, Throwable t) {
                         if (mSmart_model_my_myanswerdetails != null) {
                             mSmart_model_my_myanswerdetails.finishRefresh();
                         }
@@ -4316,10 +4317,10 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
         String strEntity = gson.toJson(paramsMap);
         RequestBody body = RequestBody.create(MediaType.parse("application/json;charset=UTF-8"), strEntity);
         modelObservableInterface.QueryCommunityQuestionsDetails(body)
-                .enqueue(new Callback<ModelCommunityAnswer.CommunityDetilsBean>() {
+                .enqueue(new Callback<ModelCommunityAnswerActivity.CommunityDetilsBean>() {
                     @Override
-                    public void onResponse(Call<ModelCommunityAnswer.CommunityDetilsBean> call, Response<ModelCommunityAnswer.CommunityDetilsBean> response) {
-                        ModelCommunityAnswer.CommunityDetilsBean communityDetilsBean = response.body();
+                    public void onResponse(Call<ModelCommunityAnswerActivity.CommunityDetilsBean> call, Response<ModelCommunityAnswerActivity.CommunityDetilsBean> response) {
+                        ModelCommunityAnswerActivity.CommunityDetilsBean communityDetilsBean = response.body();
                         if (communityDetilsBean == null){
                             if (mSmart_model_my_myanswerdetails != null) {
                                 mSmart_model_my_myanswerdetails.finishLoadMore();
@@ -4342,7 +4343,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                             LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
-                        ModelCommunityAnswer.CommunityDetilsBean.CommunityDetilsDataBean communityDetilsDataBean= communityDetilsBean.getData();
+                        ModelCommunityAnswerActivity.CommunityDetilsBean.CommunityDetilsDataBean communityDetilsDataBean= communityDetilsBean.getData();
                         if (communityDetilsDataBean == null){
                             if (mSmart_model_my_myanswerdetails != null) {
                                 mSmart_model_my_myanswerdetails.finishLoadMore();
@@ -4417,7 +4418,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                                 }
                             }
                         }
-                        ModelCommunityAnswer.CommunityDetilsBean.CommunityDetilsAnswerDataBean communityDetilsAnswerDataBean = communityDetilsDataBean.getHuida();
+                        ModelCommunityAnswerActivity.CommunityDetilsBean.CommunityDetilsAnswerDataBean communityDetilsAnswerDataBean = communityDetilsDataBean.getHuida();
                         if (communityDetilsAnswerDataBean == null){
                             if (mSmart_model_my_myanswerdetails != null) {
                                 mSmart_model_my_myanswerdetails.finishLoadMore();
@@ -4426,7 +4427,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                             return;
                         }
                         mMyQuestionAndAnswerDetailsSum = communityDetilsAnswerDataBean.getTotal();
-                        List<ModelCommunityAnswer.CommunityDetilsBean.CommunityDetilsAnswerDataBeanList> listBeans = communityDetilsAnswerDataBean.getList();
+                        List<ModelCommunityAnswerActivity.CommunityDetilsBean.CommunityDetilsAnswerDataBeanList> listBeans = communityDetilsAnswerDataBean.getList();
                         if (listBeans == null){
                             if (mSmart_model_my_myanswerdetails != null) {
                                 mSmart_model_my_myanswerdetails.finishLoadMore();
@@ -4436,7 +4437,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                         }
                         View line = null;
                         for (int i = 0; i < listBeans.size() ; i ++){
-                            ModelCommunityAnswer.CommunityDetilsBean.CommunityDetilsAnswerDataBeanList listBean = listBeans.get(i);
+                            ModelCommunityAnswerActivity.CommunityDetilsBean.CommunityDetilsAnswerDataBeanList listBean = listBeans.get(i);
                             if (listBean == null){
                                 continue;
                             }
@@ -4485,7 +4486,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                     }
 
                     @Override
-                    public void onFailure(Call<ModelCommunityAnswer.CommunityDetilsBean> call, Throwable t) {
+                    public void onFailure(Call<ModelCommunityAnswerActivity.CommunityDetilsBean> call, Throwable t) {
                         if (mSmart_model_my_myanswerdetails != null) {
                             mSmart_model_my_myanswerdetails.finishLoadMore();
                         }

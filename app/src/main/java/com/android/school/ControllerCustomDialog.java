@@ -1,5 +1,6 @@
 package com.android.school;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -28,7 +29,7 @@ import static android.content.Context.INPUT_METHOD_SERVICE;
 public class ControllerCustomDialog extends Dialog {
     private EditText et_input;  //输入框
     private ImageView course_question_respond_layout_commit_button ; //发布按钮
-    private MainActivity mMainContext;
+    private Activity mMainContext;
     private String mContent = ""; //框中显示内容
     private boolean mIsUseImage = false;  //是否使用图片
     private OnClickPublishOrImage mOnClickPublishOrImage = null;
@@ -38,7 +39,7 @@ public class ControllerCustomDialog extends Dialog {
 
     public ControllerCustomDialog(@NonNull Context context, int themeResId,String content,boolean isUseImage) {
         super(context, themeResId);
-        mMainContext = (MainActivity) context;
+        mMainContext = (Activity) context;
         if (content != null){
             mContent = content;
         }
@@ -149,7 +150,7 @@ public class ControllerCustomDialog extends Dialog {
         mOnClickPublishOrImage = onClickPublishOrImage;
     }
 
-    interface OnClickPublishOrImage{
+    public interface OnClickPublishOrImage{
         void publish(String content);
         void image();
     }
