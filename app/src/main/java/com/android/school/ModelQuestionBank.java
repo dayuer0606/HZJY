@@ -10,6 +10,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -238,7 +239,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
     }
 
     //题库列表传值列表
-    public void QuestionBankMainMoreShow(QuestionBankBean.DataBean dataBean,MyQuestionBankBean.MyQuestionBankDataBean dataBean1) {
+    public void QuestionBankMainMoreShow(View view,QuestionBankBean.DataBean dataBean,MyQuestionBankBean.MyQuestionBankDataBean dataBean1) {
         if (mview == null) {
             return;
         }
@@ -250,25 +251,20 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
 //            mModelQuestionBankView = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank, null);
 //        }
 //        fragmentquestionbank_main.addView(mModelQuestionBankView);
-        LinearLayout questionbank_main_content = mModelQuestionBankView.findViewById(R.id.questionbank_main_content);
-        questionbank_main_content.removeAllViews();
         //题库列表的描述
-        View view = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank_1, null);
         TextView modelquestionbank_mainquestionbank_id = view.findViewById(R.id.modelquestionbank_mainquestionbank_id);
         //基金法律标题
         TextView modelquestionbank_mainquestionbank_name = view.findViewById(R.id.modelquestionbank_mainquestionbank_name);
-        //基金法律message内容
-        TextView modelquestionbank_mainquestionbank_describ = view.findViewById(R.id.modelquestionbank_mainquestionbank_describ);
         //更多
-        LinearLayout modelquestionbank_mainquestionbank_more = view.findViewById(R.id.modelquestionbank_mainquestionbank_more);
-        modelquestionbank_mainquestionbank_more.setVisibility(View.INVISIBLE);
+        ImageView modelquestionbank_mainquestionbank_more = view.findViewById(R.id.modelquestionbank_mainquestionbank_more);
+        ImageView modelquestionbank_mainquestionbank_more_down = view.findViewById(R.id.modelquestionbank_mainquestionbank_more_down);
+        LinearLayout modelquestionbank_mainquestionbank_list_content = view.findViewById(R.id.modelquestionbank_mainquestionbank_list_content);
+        boolean isFind = false;
         if (dataBean != null){
             modelquestionbank_mainquestionbank_id.setText(dataBean.getItem_bank_id() + "");
             modelquestionbank_mainquestionbank_name.setText(dataBean.getItem_bank_name());
-            modelquestionbank_mainquestionbank_describ.setText(dataBean.getBrief_introduction());
             if (dataBean.getSub_library() != null){
                 //子题库赋值
-                GridLayout modelquestionbank_mainquestionbank_list = view.findViewById(R.id.modelquestionbank_mainquestionbank_list);
                 for (int i = 0; i < dataBean.getSub_library().size() ; i ++){
                     QuestionBankBean.DataBean.SubLibraryBean subLibraryBean = dataBean.getSub_library().get(i);
                     //子标题id和name
@@ -277,7 +273,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                     modelquestionbank_subquestionbank1.setHint(subLibraryBean.getIbs_id() + "");
                     //子题库名称
                     modelquestionbank_subquestionbank1.setText(subLibraryBean.getIbs_name());
-                    modelquestionbank_mainquestionbank_list.addView(view1);
+                    modelquestionbank_mainquestionbank_list_content.addView(view1);
                     //        //判断题库是否有做题权限，如果没有不可点击颜色变灰
                     if (dataBean.TF == 1) {
                         modelquestionbank_subquestionbank1.setClickable(true);
@@ -292,18 +288,23 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                         modelquestionbank_subquestionbank1.setClickable(true);
                         modelquestionbank_subquestionbank1.setOnClickListener(v -> {
                             //传入相关的id和name
-                            Toast.makeText(mMainContext, "您没有此题库的做题权限！", Toast.LENGTH_SHORT).show();
+                            Toast toast = Toast.makeText(mMainContext, "您还没有做题权限！", Toast.LENGTH_SHORT);
+                            toast.setGravity(Gravity.CENTER, 0, 0);
+                            toast.show();
                         });
                     }
+                    if (i == (dataBean.getSub_library().size()-1)) {
+                        ImageView modelquestionbank_subquestionbank1_line = view1.findViewById(R.id.modelquestionbank_subquestionbank1_line);
+                        modelquestionbank_subquestionbank1_line.setVisibility(View.INVISIBLE);
+                    }
+                    isFind = true;
                 }
             }
         } else if (dataBean1 != null){
             modelquestionbank_mainquestionbank_id.setText(dataBean1.getItem_bank_id() + "");
             modelquestionbank_mainquestionbank_name.setText(dataBean1.getItem_bank_name());
-            modelquestionbank_mainquestionbank_describ.setText(dataBean1.getBrief_introduction());
             if (dataBean1.getSub_library() != null){
                 //子题库赋值
-                GridLayout modelquestionbank_mainquestionbank_list = view.findViewById(R.id.modelquestionbank_mainquestionbank_list);
                 for (int i = 0; i < dataBean1.getSub_library().size() ; i ++){
                     MyQuestionBankBean.MyQuestionBankSubDataBean subLibraryBean = dataBean1.getSub_library().get(i);
                     //子标题id和name
@@ -312,7 +313,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                     modelquestionbank_subquestionbank1.setHint(subLibraryBean.getIbs_id() + "");
                     //子题库名称
                     modelquestionbank_subquestionbank1.setText(subLibraryBean.getIbs_name());
-                    modelquestionbank_mainquestionbank_list.addView(view1);
+                    modelquestionbank_mainquestionbank_list_content.addView(view1);
                     //查询子题库的名称
                     //        //判断题库是否有做题权限，如果没有不可点击颜色变灰
                     //        if (!ibs_name.equals("科目二")) {
@@ -327,12 +328,43 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                     //        } else {
                     //            modelquestionbank_subquestionbank1.setTextColor(view1.getResources().getColor(R.color.black999999));
                     //        }
+                    if (i == (dataBean1.getSub_library().size()-1)) {
+                        ImageView modelquestionbank_subquestionbank1_line = view1.findViewById(R.id.modelquestionbank_subquestionbank1_line);
+                        modelquestionbank_subquestionbank1_line.setVisibility(View.INVISIBLE);
+                    }
+                    isFind = true;
                 }
             }
         }
 
 
-        questionbank_main_content.addView(view);
+        ModelExpandView modelquestionbank_mainquestionbank_list_expandView = view.findViewById(R.id.modelquestionbank_mainquestionbank_list_expandView);
+        if (!isFind) {
+//            Toast.makeText(mMainContext, "本章下面没有节或考点", Toast.LENGTH_SHORT);
+            //收缩隐藏布局
+            RelativeLayout.LayoutParams rl = (RelativeLayout.LayoutParams) modelquestionbank_mainquestionbank_list_expandView.getLayoutParams();
+            rl.height = 0;
+            modelquestionbank_mainquestionbank_list_expandView.setLayoutParams(rl);
+            modelquestionbank_mainquestionbank_list_expandView.setVisibility(View.INVISIBLE);
+            LinearLayout.LayoutParams ll1 = (LinearLayout.LayoutParams) modelquestionbank_mainquestionbank_more.getLayoutParams();
+            ll1.width = view.getResources().getDimensionPixelSize(R.dimen.dp6);
+            modelquestionbank_mainquestionbank_more.setLayoutParams(ll1);
+            ll1 = (LinearLayout.LayoutParams) modelquestionbank_mainquestionbank_more_down.getLayoutParams();
+            ll1.width = 0;
+            modelquestionbank_mainquestionbank_more_down.setLayoutParams(ll1);
+            return;
+        }
+        modelquestionbank_mainquestionbank_list_expandView.expand();
+        RelativeLayout.LayoutParams rl = (RelativeLayout.LayoutParams) modelquestionbank_mainquestionbank_list_expandView.getLayoutParams();
+        rl.height = RelativeLayout.LayoutParams.WRAP_CONTENT;
+        modelquestionbank_mainquestionbank_list_expandView.setLayoutParams(rl);
+        modelquestionbank_mainquestionbank_list_expandView.setVisibility(View.VISIBLE);
+        LinearLayout.LayoutParams ll1 = (LinearLayout.LayoutParams) modelquestionbank_mainquestionbank_more.getLayoutParams();
+        ll1.width = 0;
+        modelquestionbank_mainquestionbank_more.setLayoutParams(ll1);
+        ll1 = (LinearLayout.LayoutParams) modelquestionbank_mainquestionbank_more_down.getLayoutParams();
+        ll1.width = view.getResources().getDimensionPixelSize(R.dimen.dp10);
+        modelquestionbank_mainquestionbank_more_down.setLayoutParams(ll1);
     }
 
     //题库详情------章节练习传值界面
@@ -10465,44 +10497,43 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                             //题库子条目的标题
                             TextView modelquestionbank_mainquestionbank_name = item_bank_view.findViewById(R.id.modelquestionbank_mainquestionbank_name);
                             modelquestionbank_mainquestionbank_name.setText(dataBean.getItem_bank_name());
-                            //题库子条目的描述
-                            TextView modelquestionbank_mainquestionbank_describ = item_bank_view.findViewById(R.id.modelquestionbank_mainquestionbank_describ);
-                            modelquestionbank_mainquestionbank_describ.setText(dataBean.getBrief_introduction());
                             //题库点击更多
-                            LinearLayout modelquestionbank_mainquestionbank_more = item_bank_view.findViewById(R.id.modelquestionbank_mainquestionbank_more);
-                            modelquestionbank_mainquestionbank_more.setClickable(true);
-                            modelquestionbank_mainquestionbank_more.setOnClickListener(v -> {
-                                //题库列表详情   将id name
-                                QuestionBankMainMoreShow(null,dataBean);
+                            LinearLayout modelquestionbank_mainquestionbank = item_bank_view.findViewById(R.id.modelquestionbank_mainquestionbank);
+                            ModelExpandView modelquestionbank_mainquestionbank_list_expandView = item_bank_view.findViewById(R.id.modelquestionbank_mainquestionbank_list_expandView);
+                            ImageView modelquestionbank_mainquestionbank_more = item_bank_view.findViewById(R.id.modelquestionbank_mainquestionbank_more);
+                            ImageView modelquestionbank_mainquestionbank_more_down = item_bank_view.findViewById(R.id.modelquestionbank_mainquestionbank_more_down);
+                            modelquestionbank_mainquestionbank.setClickable(true);
+                            modelquestionbank_mainquestionbank.setOnClickListener(v -> {
+                                if (!modelquestionbank_mainquestionbank_list_expandView.isExpand()) {
+                                    //题库点击更多   将id name
+                                    modelquestionbank_mainquestionbank_list_expandView.expand();
+                                    RelativeLayout.LayoutParams rl = (RelativeLayout.LayoutParams) modelquestionbank_mainquestionbank_list_expandView.getLayoutParams();
+                                    rl.height = RelativeLayout.LayoutParams.WRAP_CONTENT;
+                                    modelquestionbank_mainquestionbank_list_expandView.setLayoutParams(rl);
+                                    modelquestionbank_mainquestionbank_list_expandView.setVisibility(View.VISIBLE);
+                                    LinearLayout.LayoutParams ll1 = (LinearLayout.LayoutParams) modelquestionbank_mainquestionbank_more.getLayoutParams();
+                                    ll1.width = 0;
+                                    modelquestionbank_mainquestionbank_more.setLayoutParams(ll1);
+                                    ll1 = (LinearLayout.LayoutParams) modelquestionbank_mainquestionbank_more_down.getLayoutParams();
+                                    ll1.width = item_bank_view.getResources().getDimensionPixelSize(R.dimen.dp10);
+                                    modelquestionbank_mainquestionbank_more_down.setLayoutParams(ll1);
+                                } else {
+                                    modelquestionbank_mainquestionbank_list_expandView.collapse();
+                                    //收缩隐藏布局
+                                    RelativeLayout.LayoutParams rl = (RelativeLayout.LayoutParams) modelquestionbank_mainquestionbank_list_expandView.getLayoutParams();
+                                    rl.height = 0;
+                                    modelquestionbank_mainquestionbank_list_expandView.setLayoutParams(rl);
+                                    modelquestionbank_mainquestionbank_list_expandView.setVisibility(View.INVISIBLE);
+                                    LinearLayout.LayoutParams ll1 = (LinearLayout.LayoutParams) modelquestionbank_mainquestionbank_more.getLayoutParams();
+                                    ll1.width = item_bank_view.getResources().getDimensionPixelSize(R.dimen.dp6);
+                                    modelquestionbank_mainquestionbank_more.setLayoutParams(ll1);
+                                    ll1 = (LinearLayout.LayoutParams) modelquestionbank_mainquestionbank_more_down.getLayoutParams();
+                                    ll1.width = 0;
+                                    modelquestionbank_mainquestionbank_more_down.setLayoutParams(ll1);
+                                }
                             });
-                            //子题库的数据
-                            List<MyQuestionBankBean.MyQuestionBankSubDataBean> sub_library = dataBean.getSub_library();
-                            if (sub_library == null){
-                                continue;
-                            }
-                            GridLayout modelquestionbank_mainquestionbank_list = item_bank_view.findViewById(R.id.modelquestionbank_mainquestionbank_list);
-                            modelquestionbank_mainquestionbank_list.removeAllViews();
-                            for (int j = 0; j < sub_library.size(); j ++) {
-                                MyQuestionBankBean.MyQuestionBankSubDataBean subLibraryBean = sub_library.get(j);
-                                if (subLibraryBean == null){
-                                    continue;
-                                }
-                                if (j >= 2){
-                                    break;
-                                }
-                                //子题库的数据
-                                View item_bank_view1 = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank_1_1, null);
-                                TextView modelquestionbank_subquestionbank1 = item_bank_view1.findViewById(R.id.modelquestionbank_subquestionbank1);
-                                modelquestionbank_subquestionbank1.setHint(subLibraryBean.getIbs_id() + "");
-                                modelquestionbank_subquestionbank1.setText(subLibraryBean.getIbs_name());
-                                modelquestionbank_mainquestionbank_list.addView(item_bank_view1);
-                                modelquestionbank_subquestionbank1.setOnClickListener(v->{
-                                    mIbs_id = String.valueOf(subLibraryBean.getIbs_id());
-                                    mIbs_name = subLibraryBean.getIbs_name();
-                                    //查询此子题库是否有未完成的试题
-                                    getMyQuestionBankGoon();
-                                });
-                            }
+
+                            QuestionBankMainMoreShow(item_bank_view,null,dataBean);
                             LinearLayout questionbank_main_content = mModelQuestionBankView.findViewById(R.id.questionbank_main_content);
                             questionbank_main_content.addView(item_bank_view);
                         }
@@ -10580,53 +10611,43 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                             //题库的标题
                             TextView modelquestionbank_mainquestionbank_name = item_bank_view.findViewById(R.id.modelquestionbank_mainquestionbank_name);
                             modelquestionbank_mainquestionbank_name.setText(dataBean.getItem_bank_name());
-                            //题库的描述
-                            TextView modelquestionbank_mainquestionbank_describ = item_bank_view.findViewById(R.id.modelquestionbank_mainquestionbank_describ);
-                            modelquestionbank_mainquestionbank_describ.setText(dataBean.getBrief_introduction());
                             //题库点击更多
-                            LinearLayout modelquestionbank_mainquestionbank_more = item_bank_view.findViewById(R.id.modelquestionbank_mainquestionbank_more);
-                            modelquestionbank_mainquestionbank_more.setClickable(true);
-                            modelquestionbank_mainquestionbank_more.setOnClickListener(v -> {
-                                //题库点击更多   将id name
-                                QuestionBankMainMoreShow(dataBean,null);
+                            LinearLayout modelquestionbank_mainquestionbank = item_bank_view.findViewById(R.id.modelquestionbank_mainquestionbank);
+                            ModelExpandView modelquestionbank_mainquestionbank_list_expandView = item_bank_view.findViewById(R.id.modelquestionbank_mainquestionbank_list_expandView);
+                            ImageView modelquestionbank_mainquestionbank_more = item_bank_view.findViewById(R.id.modelquestionbank_mainquestionbank_more);
+                            ImageView modelquestionbank_mainquestionbank_more_down = item_bank_view.findViewById(R.id.modelquestionbank_mainquestionbank_more_down);
+                            modelquestionbank_mainquestionbank.setClickable(true);
+                            modelquestionbank_mainquestionbank.setOnClickListener(v -> {
+                                if (!modelquestionbank_mainquestionbank_list_expandView.isExpand()) {
+                                    //题库点击更多   将id name
+                                    modelquestionbank_mainquestionbank_list_expandView.expand();
+                                    RelativeLayout.LayoutParams rl = (RelativeLayout.LayoutParams) modelquestionbank_mainquestionbank_list_expandView.getLayoutParams();
+                                    rl.height = RelativeLayout.LayoutParams.WRAP_CONTENT;
+                                    modelquestionbank_mainquestionbank_list_expandView.setLayoutParams(rl);
+                                    modelquestionbank_mainquestionbank_list_expandView.setVisibility(View.VISIBLE);
+                                    LinearLayout.LayoutParams ll1 = (LinearLayout.LayoutParams) modelquestionbank_mainquestionbank_more.getLayoutParams();
+                                    ll1.width = 0;
+                                    modelquestionbank_mainquestionbank_more.setLayoutParams(ll1);
+                                    ll1 = (LinearLayout.LayoutParams) modelquestionbank_mainquestionbank_more_down.getLayoutParams();
+                                    ll1.width = item_bank_view.getResources().getDimensionPixelSize(R.dimen.dp10);
+                                    modelquestionbank_mainquestionbank_more_down.setLayoutParams(ll1);
+                                } else {
+                                    modelquestionbank_mainquestionbank_list_expandView.collapse();
+                                    //收缩隐藏布局
+                                    RelativeLayout.LayoutParams rl = (RelativeLayout.LayoutParams) modelquestionbank_mainquestionbank_list_expandView.getLayoutParams();
+                                    rl.height = 0;
+                                    modelquestionbank_mainquestionbank_list_expandView.setLayoutParams(rl);
+                                    modelquestionbank_mainquestionbank_list_expandView.setVisibility(View.INVISIBLE);
+                                    LinearLayout.LayoutParams ll1 = (LinearLayout.LayoutParams) modelquestionbank_mainquestionbank_more.getLayoutParams();
+                                    ll1.width = item_bank_view.getResources().getDimensionPixelSize(R.dimen.dp6);
+                                    modelquestionbank_mainquestionbank_more.setLayoutParams(ll1);
+                                    ll1 = (LinearLayout.LayoutParams) modelquestionbank_mainquestionbank_more_down.getLayoutParams();
+                                    ll1.width = 0;
+                                    modelquestionbank_mainquestionbank_more_down.setLayoutParams(ll1);
+                                }
                             });
-                            //子题库的数据
-                            GridLayout modelquestionbank_mainquestionbank_list = item_bank_view.findViewById(R.id.modelquestionbank_mainquestionbank_list);
-                            modelquestionbank_mainquestionbank_list.removeAllViews();
-                            //子题库的数据
-                            List<QuestionBankBean.DataBean.SubLibraryBean> sub_library = dataBean.getSub_library();
-                            for (int j = 0; j < sub_library.size(); j ++) {
-                                QuestionBankBean.DataBean.SubLibraryBean subLibraryBean = sub_library.get(j);
-                                if (subLibraryBean == null){
-                                    continue;
-                                }
-                                if (j >= 2){
-                                    break;
-                                }
-                                View item_bank_view1 = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank_1_1, null);
-                                TextView modelquestionbank_subquestionbank1 = item_bank_view1.findViewById(R.id.modelquestionbank_subquestionbank1);
-                                modelquestionbank_subquestionbank1.setHint(subLibraryBean.getIbs_id() + "");
-                                modelquestionbank_subquestionbank1.setText(subLibraryBean.getIbs_name());
-                                modelquestionbank_mainquestionbank_list.addView(item_bank_view1);
-                                //判断题库是否有做题权限，如果没有不可点击颜色变灰
-                                if (dataBean.TF == 1) {
-                                    modelquestionbank_subquestionbank1.setClickable(true);
-                                    modelquestionbank_subquestionbank1.setOnClickListener(v -> {
-                                        //传入相关的id和name
-                                        mIbs_id = String.valueOf(subLibraryBean.getIbs_id());
-                                        mIbs_name = subLibraryBean.getIbs_name();
-                                        //查询此子题库是否有未完成的试题
-                                        getMyQuestionBankGoon();
-                                    });
-                                } else if (dataBean.TF == 2) {
-                                    modelquestionbank_subquestionbank1.setTextColor(item_bank_view1.getResources().getColor(R.color.black999999));
-                                    modelquestionbank_subquestionbank1.setClickable(true);
-                                    modelquestionbank_subquestionbank1.setOnClickListener(v -> {
-                                        //传入相关的id和name
-                                        Toast.makeText(mMainContext, "您没有此题库的做题权限！", Toast.LENGTH_SHORT).show();
-                                    });
-                                }
-                            }
+
+                            QuestionBankMainMoreShow(item_bank_view,dataBean,null);
                             LinearLayout questionbank_main_content = mModelQuestionBankView.findViewById(R.id.questionbank_main_content);
                             questionbank_main_content.addView(item_bank_view);
                         }
