@@ -120,7 +120,7 @@
     <TextView
         android:id="@+id/questionbank_sub_details_brief"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp25"
+        android:layout_height="@dimen/dp0"
         android:layout_below="@id/questionbank_sub_details_line2"
         android:layout_marginBottom="@dimen/dp5"
         android:background="#f4f6f9"

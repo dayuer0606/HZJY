@@ -243,8 +243,6 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
         if (mview == null) {
             return;
         }
-        mIsMore = true;
-        mMainContext.onClickQuestionBankMore();
 //        HideAllLayout();
 //        RelativeLayout fragmentquestionbank_main = mview.findViewById(R.id.fragmentquestionbank_main);
 //        if (mModelQuestionBankView == null) {
@@ -506,7 +504,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
         //点击开始
         View view = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank_sub_detials_quicktask, null);
         questionbank_sub_details_content.addView(view);
-        ImageView questionbank_sub_details_quicktask_start = view.findViewById(R.id.questionbank_sub_details_quicktask_start);
+        TextView questionbank_sub_details_quicktask_start = view.findViewById(R.id.questionbank_sub_details_quicktask_start);
         questionbank_sub_details_quicktask_start.setClickable(true);
         questionbank_sub_details_quicktask_start.setOnClickListener(v -> {
 //            if (myQuestionBankGoonDataBeans != null){
@@ -585,10 +583,10 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
             rl.height = 0;
             questionbank_sub_details_chapterexercises_expandView.setLayoutParams(rl);
             questionbank_sub_details_chapterexercises_expandView.setVisibility(View.INVISIBLE);
-            LinearLayout.LayoutParams ll1 = (LinearLayout.LayoutParams) questionbank_sub_details_chapterexercises_arrow_right.getLayoutParams();
+            RelativeLayout.LayoutParams ll1 = (RelativeLayout.LayoutParams) questionbank_sub_details_chapterexercises_arrow_right.getLayoutParams();
             ll1.width = view.getResources().getDimensionPixelSize(R.dimen.dp6);
             questionbank_sub_details_chapterexercises_arrow_right.setLayoutParams(ll1);
-            ll1 = (LinearLayout.LayoutParams) questionbank_sub_details_chapterexercises_arrow_down.getLayoutParams();
+            ll1 = (RelativeLayout.LayoutParams) questionbank_sub_details_chapterexercises_arrow_down.getLayoutParams();
             ll1.width = 0;
             questionbank_sub_details_chapterexercises_arrow_down.setLayoutParams(ll1);
             return;
@@ -598,10 +596,10 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
         rl.height = RelativeLayout.LayoutParams.WRAP_CONTENT;
         questionbank_sub_details_chapterexercises_expandView.setLayoutParams(rl);
         questionbank_sub_details_chapterexercises_expandView.setVisibility(View.VISIBLE);
-        LinearLayout.LayoutParams ll1 = (LinearLayout.LayoutParams) questionbank_sub_details_chapterexercises_arrow_right.getLayoutParams();
+        RelativeLayout.LayoutParams ll1 = (RelativeLayout.LayoutParams) questionbank_sub_details_chapterexercises_arrow_right.getLayoutParams();
         ll1.width = 0;
         questionbank_sub_details_chapterexercises_arrow_right.setLayoutParams(ll1);
-        ll1 = (LinearLayout.LayoutParams) questionbank_sub_details_chapterexercises_arrow_down.getLayoutParams();
+        ll1 = (RelativeLayout.LayoutParams) questionbank_sub_details_chapterexercises_arrow_down.getLayoutParams();
         ll1.width = view.getResources().getDimensionPixelSize(R.dimen.dp10);
         questionbank_sub_details_chapterexercises_arrow_down.setLayoutParams(ll1);
     }
@@ -844,7 +842,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
             //默认将其可选的改为全选
             if (mQuestionType.equals("AllQuestion")){
                 questionbank_questionsetting_all.setBackground(mModelQuestionBankSettingView.getResources().getDrawable(R.drawable.textview_style_rect_blue1));
-                questionbank_questionsetting_all.setTextColor(mModelQuestionBankSettingView.getResources().getColor(R.color.blue669ef0));
+                questionbank_questionsetting_all.setTextColor(mModelQuestionBankSettingView.getResources().getColor(R.color.bottom_button_select));
             } else {
                 questionbank_questionsetting_all.setBackground(mModelQuestionBankSettingView.getResources().getDrawable(R.drawable.textview_style_rect_black));
                 questionbank_questionsetting_all.setTextColor(mModelQuestionBankSettingView.getResources().getColor(R.color.collectdefaultcolor3));
@@ -863,7 +861,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
             mNotDoneQuestionState = "enable";
             if (mQuestionType.equals("NotDoneQuestion")) {
                 questionbank_questionsetting_notdone.setBackground(mModelQuestionBankSettingView.getResources().getDrawable(R.drawable.textview_style_rect_blue1));
-                questionbank_questionsetting_notdone.setTextColor(mModelQuestionBankSettingView.getResources().getColor(R.color.blue669ef0));
+                questionbank_questionsetting_notdone.setTextColor(mModelQuestionBankSettingView.getResources().getColor(R.color.bottom_button_select));
             } else {
                 questionbank_questionsetting_notdone.setBackground(mModelQuestionBankSettingView.getResources().getDrawable(R.drawable.textview_style_rect_black));
                 questionbank_questionsetting_notdone.setTextColor(mModelQuestionBankSettingView.getResources().getColor(R.color.collectdefaultcolor3));
@@ -879,7 +877,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
             mWrongQuestionState = "enable";
             if (mQuestionType.equals("WrongQuestion")) {
                 questionbank_questionsetting_wrong.setBackground(mModelQuestionBankSettingView.getResources().getDrawable(R.drawable.textview_style_rect_blue1));
-                questionbank_questionsetting_wrong.setTextColor(mModelQuestionBankSettingView.getResources().getColor(R.color.blue669ef0));
+                questionbank_questionsetting_wrong.setTextColor(mModelQuestionBankSettingView.getResources().getColor(R.color.bottom_button_select));
             } else {
                 questionbank_questionsetting_wrong.setBackground(mModelQuestionBankSettingView.getResources().getDrawable(R.drawable.textview_style_rect_black));
                 questionbank_questionsetting_wrong.setTextColor(mModelQuestionBankSettingView.getResources().getColor(R.color.collectdefaultcolor3));
@@ -948,13 +946,13 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
         }
         if (mQuestionCount.equals("TenQuestion") && mTenQuestionState.equals("enable")){
             questionbank_questionsetting_questioncount1.setBackground(mModelQuestionBankSettingView.getResources().getDrawable(R.drawable.textview_style_rect_blue1));
-            questionbank_questionsetting_questioncount1.setTextColor(mModelQuestionBankSettingView.getResources().getColor(R.color.blue669ef0));
+            questionbank_questionsetting_questioncount1.setTextColor(mModelQuestionBankSettingView.getResources().getColor(R.color.bottom_button_select));
         } else if (mQuestionCount.equals("TwentyQuestion") && mTwentyQuestionState.equals("enable")){
             questionbank_questionsetting_questioncount2.setBackground(mModelQuestionBankSettingView.getResources().getDrawable(R.drawable.textview_style_rect_blue1));
-            questionbank_questionsetting_questioncount2.setTextColor(mModelQuestionBankSettingView.getResources().getColor(R.color.blue669ef0));
+            questionbank_questionsetting_questioncount2.setTextColor(mModelQuestionBankSettingView.getResources().getColor(R.color.bottom_button_select));
         } else if (mQuestionCount.equals("HundredQuestion") && mHundredQuestionState.equals("enable")){
             questionbank_questionsetting_questioncount3.setBackground(mModelQuestionBankSettingView.getResources().getDrawable(R.drawable.textview_style_rect_blue1));
-            questionbank_questionsetting_questioncount3.setTextColor(mModelQuestionBankSettingView.getResources().getColor(R.color.blue669ef0));
+            questionbank_questionsetting_questioncount3.setTextColor(mModelQuestionBankSettingView.getResources().getColor(R.color.bottom_button_select));
         }
         //设置点击事件
         questionbank_questionsetting_questioncount1.setClickable(true);
@@ -965,7 +963,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
             if (mTenQuestionState.equals("enable")) {
                 mQuestionCount = "TenQuestion";
                 questionbank_questionsetting_questioncount1.setBackground(mModelQuestionBankSettingView.getResources().getDrawable(R.drawable.textview_style_rect_blue1));
-                questionbank_questionsetting_questioncount1.setTextColor(mModelQuestionBankSettingView.getResources().getColor(R.color.blue669ef0));
+                questionbank_questionsetting_questioncount1.setTextColor(mModelQuestionBankSettingView.getResources().getColor(R.color.bottom_button_select));
                 if (!mTwentyQuestionState.equals("disable")) {
                     questionbank_questionsetting_questioncount2.setBackground(mModelQuestionBankSettingView.getResources().getDrawable(R.drawable.textview_style_rect_black));
                     questionbank_questionsetting_questioncount2.setTextColor(mModelQuestionBankSettingView.getResources().getColor(R.color.collectdefaultcolor3));
@@ -983,7 +981,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
             if (mTwentyQuestionState.equals("enable")) {
                 mQuestionCount = "TwentyQuestion";
                 questionbank_questionsetting_questioncount2.setBackground(mModelQuestionBankSettingView.getResources().getDrawable(R.drawable.textview_style_rect_blue1));
-                questionbank_questionsetting_questioncount2.setTextColor(mModelQuestionBankSettingView.getResources().getColor(R.color.blue669ef0));
+                questionbank_questionsetting_questioncount2.setTextColor(mModelQuestionBankSettingView.getResources().getColor(R.color.bottom_button_select));
                 if (!mTenQuestionState.equals("disable")) {
                     questionbank_questionsetting_questioncount1.setBackground(mModelQuestionBankSettingView.getResources().getDrawable(R.drawable.textview_style_rect_black));
                     questionbank_questionsetting_questioncount1.setTextColor(mModelQuestionBankSettingView.getResources().getColor(R.color.collectdefaultcolor3));
@@ -1000,7 +998,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
             if (mHundredQuestionState.equals("enable")) {
                 mQuestionCount = "HundredQuestion";
                 questionbank_questionsetting_questioncount3.setBackground(mModelQuestionBankSettingView.getResources().getDrawable(R.drawable.textview_style_rect_blue1));
-                questionbank_questionsetting_questioncount3.setTextColor(mModelQuestionBankSettingView.getResources().getColor(R.color.blue669ef0));
+                questionbank_questionsetting_questioncount3.setTextColor(mModelQuestionBankSettingView.getResources().getColor(R.color.bottom_button_select));
                 if (!mTenQuestionState.equals("disable")) {
                     questionbank_questionsetting_questioncount1.setBackground(mModelQuestionBankSettingView.getResources().getDrawable(R.drawable.textview_style_rect_black));
                     questionbank_questionsetting_questioncount1.setTextColor(mModelQuestionBankSettingView.getResources().getColor(R.color.collectdefaultcolor3));
@@ -8559,12 +8557,12 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                             questionbank_sub_details_chapterexercises_name.setText(data.get(i).getName());  //章名字
                             questionbank_sub_details_chapterexercises_name.setHint(data.get(i).getChapter_test_point_id() + "");//章id
                             TextView questionbank_sub_details_chapterexercises_count = view.findViewById(R.id.questionbank_sub_details_chapterexercises_count);
-                            questionbank_sub_details_chapterexercises_count.setText("共计" + data.get(i).getNum() + "道题");
+                            questionbank_sub_details_chapterexercises_count.setText("(共计" + data.get(i).getNum() + "道题)");
                             //默认全部展开
                             ImageView questionbank_sub_details_chapterexercises_arrow_right = view.findViewById(R.id.questionbank_sub_details_chapterexercises_arrow_right);
                             //显示章 展开下面的节或考点
                             ImageView questionbank_sub_details_chapterexercises_arrow_down = view.findViewById(R.id.questionbank_sub_details_chapterexercises_arrow_down);
-                            LinearLayout.LayoutParams ll = (LinearLayout.LayoutParams) questionbank_sub_details_chapterexercises_arrow_right.getLayoutParams();
+                            RelativeLayout.LayoutParams ll = (RelativeLayout.LayoutParams) questionbank_sub_details_chapterexercises_arrow_right.getLayoutParams();
                             ll.width = 0;
                             questionbank_sub_details_chapterexercises_arrow_right.setLayoutParams(ll);
                             //更多
@@ -8583,10 +8581,10 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                                     rl.height = 0;
                                     questionbank_sub_details_chapterexercises_expandView.setLayoutParams(rl);
                                     questionbank_sub_details_chapterexercises_expandView.setVisibility(View.INVISIBLE);
-                                    LinearLayout.LayoutParams ll1 = (LinearLayout.LayoutParams) questionbank_sub_details_chapterexercises_arrow_right.getLayoutParams();
+                                    RelativeLayout.LayoutParams ll1 = (RelativeLayout.LayoutParams) questionbank_sub_details_chapterexercises_arrow_right.getLayoutParams();
                                     ll1.width = view.getResources().getDimensionPixelSize(R.dimen.dp6);
                                     questionbank_sub_details_chapterexercises_arrow_right.setLayoutParams(ll1);
-                                    ll1 = (LinearLayout.LayoutParams) questionbank_sub_details_chapterexercises_arrow_down.getLayoutParams();
+                                    ll1 = (RelativeLayout.LayoutParams) questionbank_sub_details_chapterexercises_arrow_down.getLayoutParams();
                                     ll1.width = 0;
                                     questionbank_sub_details_chapterexercises_arrow_down.setLayoutParams(ll1);
                                 } else {
@@ -8603,10 +8601,10 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                                     rl.height = 0;
                                     questionbank_sub_details_chapterexercises_expandView.setLayoutParams(rl);
                                     questionbank_sub_details_chapterexercises_expandView.setVisibility(View.INVISIBLE);
-                                    LinearLayout.LayoutParams ll1 = (LinearLayout.LayoutParams) questionbank_sub_details_chapterexercises_arrow_right.getLayoutParams();
+                                    RelativeLayout.LayoutParams ll1 = (RelativeLayout.LayoutParams) questionbank_sub_details_chapterexercises_arrow_right.getLayoutParams();
                                     ll1.width = view.getResources().getDimensionPixelSize(R.dimen.dp6);
                                     questionbank_sub_details_chapterexercises_arrow_right.setLayoutParams(ll1);
-                                    ll1 = (LinearLayout.LayoutParams) questionbank_sub_details_chapterexercises_arrow_down.getLayoutParams();
+                                    ll1 = (RelativeLayout.LayoutParams) questionbank_sub_details_chapterexercises_arrow_down.getLayoutParams();
                                     ll1.width = 0;
                                     questionbank_sub_details_chapterexercises_arrow_down.setLayoutParams(ll1);
                                 } else {

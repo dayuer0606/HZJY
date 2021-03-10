@@ -5,9 +5,9 @@
     android:id="@+id/questionbank_sub_details_chapterexercises_main"
     xmlns:android="http://schemas.android.com/apk/res/android" >
     <!--    题库 -->
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/questionbank_sub_details_chapterexercises"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_alignParentLeft="true"
@@ -20,7 +20,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="基金法律法规"
-            android:layout_weight="1"
             android:gravity="center_vertical"
             android:singleLine="true"
             android:ellipsize="end"
@@ -28,37 +27,39 @@
             android:textSize="@dimen/textsize17"
             android:layout_marginRight="@dimen/dp13"
             android:textColor="#333333"/>
+        <TextView
+            android:id="@+id/questionbank_sub_details_chapterexercises_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/questionbank_sub_details_chapterexercises_name"
+            android:text="(共计30道题)"
+            android:textColor="#999999"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:textSize="@dimen/textsize14"
+            android:layout_marginLeft="@dimen/dp8"
+            android:layout_marginRight="@dimen/dp14"/>
         <ImageView
             android:id="@+id/questionbank_sub_details_chapterexercises_arrow_right"
             android:layout_width="@dimen/dp6"
             android:layout_height="@dimen/dp10"
             android:layout_gravity="center"
-            android:src="@drawable/button_arrow_right"/>
+            android:layout_alignParentRight="true"
+            android:src="@drawable/button_arrow_right" />
         <ImageView
             android:id="@+id/questionbank_sub_details_chapterexercises_arrow_down"
             android:layout_width="@dimen/dp10"
             android:layout_height="@dimen/dp6"
             android:layout_gravity="center"
+            android:layout_alignParentRight="true"
             android:src="@drawable/button_arrow_down"/>
-    </LinearLayout>
-    <TextView
-        android:id="@+id/questionbank_sub_details_chapterexercises_count"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="共计30道题"
-        android:textColor="#999999"
-        android:singleLine="true"
-        android:ellipsize="end"
-        android:textSize="@dimen/textsize14"
-        android:layout_below="@id/questionbank_sub_details_chapterexercises"
-        android:layout_marginLeft="@dimen/dp14"
-        android:layout_marginRight="@dimen/dp14"/>
+    </RelativeLayout>
     <com.android.school.ModelExpandView
         android:id="@+id/questionbank_sub_details_chapterexercises_expandView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="visible"
-        android:layout_below="@+id/questionbank_sub_details_chapterexercises_count"
+        android:layout_below="@+id/questionbank_sub_details_chapterexercises"
         android:clickable="true">
         <LinearLayout
             android:id="@+id/questionbank_sub_details_chapterexercises_content"

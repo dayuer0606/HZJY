@@ -1854,16 +1854,6 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
         }
     }
 
-    //跳转到题库更多界面
-    public void onClickQuestionBankMore() {
-        if (mBeforePage.contains("题库更多")){
-            mBeforePage = mBeforePage.substring(0,mBeforePage.indexOf("/题库更多"));
-        } else {
-            mBeforePage = mBeforePage + "/" + mPage ;
-        }
-        mPage = "题库更多";
-    }
-
     //跳转到题库详情
     public void onClickQuestionBankDetails() {
         if (mBeforePage.contains("题库详情")){

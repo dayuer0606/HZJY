@@ -9,8 +9,7 @@
         android:layout_height="@dimen/dp_90"
         android:orientation="vertical"
         android:layout_gravity="center"
-        android:layout_marginTop="@dimen/dp15"
-        android:background="@drawable/questionbank_simulated_background">
+        android:layout_marginTop="@dimen/dp15">
         <LinearLayout
             android:id="@+id/questionbank_simulated_logo"
             android:layout_width="wrap_content"
@@ -18,11 +17,11 @@
             android:orientation="horizontal"
             android:gravity="center"
             android:layout_marginTop="@dimen/dp18">
-            <ImageView
-                android:layout_width="@dimen/dp13"
-                android:layout_height="@dimen/dp13"
-                android:layout_marginLeft="@dimen/dp10"
-                android:background="@drawable/questionbank_simulated_logo"/>
+<!--            <ImageView-->
+<!--                android:layout_width="@dimen/dp13"-->
+<!--                android:layout_height="@dimen/dp13"-->
+<!--                android:layout_marginLeft="@dimen/dp10"-->
+<!--                android:background="@drawable/questionbank_simulated_logo"/>-->
             <TextView
                 android:id="@+id/questionbank_simulated_name"
                 android:layout_width="wrap_content"
@@ -46,7 +45,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="时间："
-                android:layout_marginLeft="@dimen/dp_31"
+                android:layout_marginLeft="@dimen/dp8"
                 android:textSize="@dimen/textsize14"
                 android:textColor="#b3666666"
                 android:singleLine="true"

@@ -9,6 +9,6 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/defaultpage_nodata"
+        android:background="@drawable/background_startmakequestion"
         android:adjustViewBounds="true"/>
 </LinearLayout>
