@@ -21,38 +21,39 @@
         <TextView
             android:id="@+id/questionbank_answerpaper_countdowntimetext"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/dp27"
             android:layout_gravity="center"
-            android:gravity="left"
+            android:gravity="center"
             android:layout_marginLeft="@dimen/dp15"
-            android:layout_weight="1"
             android:text="00:00"
+            android:padding="@dimen/dp4"
             android:textColor="#333333"
             android:singleLine="true"
             android:ellipsize="end"
-            android:textSize="@dimen/textsize18"/>
+            android:background="@drawable/button_questionbank_timer"
+            android:textSize="@dimen/textsize14"/>
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center|right">
             <ImageView
+                android:id="@+id/button_questionbank_answerquestioncard"
+                android:layout_width="@dimen/dp22"
+                android:layout_height="@dimen/dp22"
+                android:background="@drawable/button_questionbank_answercard"/>
+            <ImageView
                 android:id="@+id/questionbank_answerpaper_sign"
                 android:layout_width="@dimen/dp13"
                 android:layout_height="@dimen/dp_19"
+                android:layout_marginLeft="@dimen/dp15"
                 android:background="@drawable/button_questionbank_sign"/>
             <ImageView
-                android:id="@+id/questionbank_answerpaper_fontsize"
-                android:layout_width="@dimen/dp15"
-                android:layout_height="@dimen/dp_19"
-                android:layout_marginLeft="@dimen/dp15"
-                android:background="@drawable/button_questionbank_fontsize_nomal"/>
-            <ImageView
-                android:id="@+id/questionbank_answerpaper_pause"
+                android:id="@+id/questionbank_answerpaper_commit"
                 android:layout_width="@dimen/dp20"
                 android:layout_height="@dimen/dp_19"
                 android:layout_marginLeft="@dimen/dp15"
-                android:background="@drawable/button_questionbank_pause"/>
+                android:background="@drawable/button_questionbank_commit"/>
         </LinearLayout>
     </LinearLayout>
     <View
@@ -82,10 +83,15 @@
             android:id="@+id/questionbank_answerpaper_questiontype"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="[单选题]"
+            android:text="单项选择题"
             android:layout_marginLeft="@dimen/dp10"
-            android:textSize="@dimen/textsize15"
-            android:textColor="#999999"/>
+            android:textSize="@dimen/textsize14"
+            android:paddingRight="@dimen/dp10"
+            android:paddingLeft="@dimen/dp10"
+            android:paddingTop="@dimen/dp_7"
+            android:paddingBottom="@dimen/dp_7"
+            android:textColor="#ffffff"
+            android:background="@drawable/textview_style_circle_gray2"/>
     </LinearLayout>
     <LinearLayout
         android:id="@+id/questionbank_answerpaper_questioncountlayout"
@@ -133,9 +139,9 @@
                 android:layout_marginLeft="@dimen/dp13"/>
             <TextView
                 android:id="@+id/coursedetails_answerpaper_analysisbutton"
-                android:layout_width="@dimen/dp_193"
+                android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_37"
-                android:textColor="#999999"
+                android:textColor="#ffffff"
                 android:text="查看解析"
                 android:gravity="center"
                 android:layout_marginRight="@dimen/dp13"
@@ -143,7 +149,7 @@
                 android:textSize="@dimen/textsize20"
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/dp_70"
-                android:background="@drawable/textview_style_rect_gray"
+                android:background="@drawable/button_style3"
                 />
             <LinearLayout
                 android:id="@+id/coursedetails_answerpaper_analysis"
@@ -193,29 +199,7 @@
                 android:textColor="#666666"/>
         </LinearLayout>
         <LinearLayout
-            android:id="@+id/button_questionbank_answerquestioncard"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_weight="1"
-            android:layout_marginTop="@dimen/dp8"
-            android:layout_marginBottom="@dimen/dp8">
-            <ImageView
-                android:layout_width="@dimen/dp17"
-                android:layout_height="@dimen/dp18"
-                android:layout_gravity="center"
-                android:layout_marginBottom="@dimen/dp5"
-                android:background="@drawable/button_questionbank_answercard"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="答题卡"
-                android:layout_gravity="center"
-                android:textSize="@dimen/textsize10"
-                android:textColor="#666666"/>
-        </LinearLayout>
-        <LinearLayout
-            android:id="@+id/questionbank_answerpaper_commit"
+            android:id="@+id/questionbank_answerpaper_pause"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -227,14 +211,15 @@
                 android:layout_height="@dimen/dp18"
                 android:layout_gravity="center"
                 android:layout_marginBottom="@dimen/dp5"
-                android:background="@drawable/button_questionbank_commit"/>
+                android:background="@drawable/button_questionbank_pause"/>
+
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="交卷"
+                android:layout_height="30dp"
                 android:layout_gravity="center"
-                android:textSize="@dimen/textsize10"
-                android:textColor="#666666"/>
+                android:text="暂停"
+                android:textColor="#666666"
+                android:textSize="@dimen/textsize10" />
         </LinearLayout>
         <LinearLayout
             android:id="@+id/button_questionbank_nextquestion"

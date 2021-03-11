@@ -1,5 +1,6 @@
 package com.android.school;
 
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import java.text.SimpleDateFormat;
 import android.os.Bundle;
@@ -1272,26 +1273,26 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
         });
         boolean isCailiao = QuestionViewAdd(mMyQuestionBankExercisesBean);
         //点击交卷
-        LinearLayout questionbank_answerpaper_commit = mModelQuestionBankAnswerPaperView.findViewById(R.id.questionbank_answerpaper_commit);
+        ImageView questionbank_answerpaper_commit = mModelQuestionBankAnswerPaperView.findViewById(R.id.questionbank_answerpaper_commit);
 //        String finalQuestion_id_group1 = question_id_group;
+        questionbank_answerpaper_commit.setClickable(true);
         questionbank_answerpaper_commit.setOnClickListener(v -> {
             //判断啊当前是否删除
-            View view1 = mMainContext.getLayoutInflater().inflate(R.layout.dialog_sure_cancel, null);
+            View view1 = mMainContext.getLayoutInflater().inflate(R.layout.dialog_notip_sure_cancel, null);
             ControllerCenterDialog mMyDialog = new ControllerCenterDialog(mMainContext, 0, 0, view1, R.style.DialogTheme);
             mMyDialog.setCancelable(true);
             mMyDialog.show();
-            TextView tip = view1.findViewById(R.id.tip);
-            tip.setText("交卷");
             TextView dialog_content = view1.findViewById(R.id.dialog_content);
             dialog_content.setText("确认交卷吗？");
             TextView button_cancel = view1.findViewById(R.id.button_cancel);
-            button_cancel.setText("再检查一下");
+            button_cancel.setText("不交卷");
             button_cancel.setOnClickListener(View -> {
                 mMyDialog.cancel();
             });
             //点击   网络请求
             TextView button_sure = view1.findViewById(R.id.button_sure);
             button_sure.setText("交卷");
+            button_sure.setTextColor(Color.BLUE);
             button_sure.setOnClickListener(View -> {
                 //暂停计时器
                 if (mTimer2 != null) {
@@ -1307,7 +1308,8 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
             });
         });
         //点击暂停   网络请求暂停
-        ImageView questionbank_answerpaper_pause = mModelQuestionBankAnswerPaperView.findViewById(R.id.questionbank_answerpaper_pause);
+        LinearLayout questionbank_answerpaper_pause = mModelQuestionBankAnswerPaperView.findViewById(R.id.questionbank_answerpaper_pause);
+        questionbank_answerpaper_pause.setClickable(true);
         questionbank_answerpaper_pause.setOnClickListener(v -> {
 
             getQuestionBankHandInBean(2,mTime);
@@ -1317,10 +1319,12 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
             mMyDialog.show();
             TextView tip = view1.findViewById(R.id.tip);
             tip.setText("暂停");
+            tip.setHeight(0);
             TextView dialog_content = view1.findViewById(R.id.dialog_content);
-            dialog_content.setText("哎呦，休息时间到啦");
+            dialog_content.setText("休息一会儿吧");
             TextView button_sure = view1.findViewById(R.id.button_sure);
             button_sure.setText("继续做题");
+            button_sure.setTextColor(Color.BLUE);
 
             button_sure.setOnClickListener(View -> {    //点击继续做题
                 mMyDialog.cancel();
@@ -1420,16 +1424,12 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
             }
         });
         //答题卡
-        LinearLayout button_questionbank_answerquestioncard = mModelQuestionBankAnswerPaperView.findViewById(R.id.button_questionbank_answerquestioncard);
+        ImageView button_questionbank_answerquestioncard = mModelQuestionBankAnswerPaperView.findViewById(R.id.button_questionbank_answerquestioncard);
+        button_questionbank_answerquestioncard.setClickable(true);
         //添加答题卡
         button_questionbank_answerquestioncard.setOnClickListener(v ->{
             mTestPageIssueDataScore = "";
             getQuestionBankAnswerSheet(1);
-        });
-        //点击字号
-        ImageView questionbank_answerpaper_fontsize = mModelQuestionBankAnswerPaperView.findViewById(R.id.questionbank_answerpaper_fontsize);
-        questionbank_answerpaper_fontsize.setOnClickListener(v -> {
-            ShowPopFontSize(questionbank_answerpaper_fontsize);
         });
         //计时器
         if (mTimer2 != null) {
@@ -1950,23 +1950,23 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
         //添加题,//默认显示第一题
         QuestionViewAdd(mMyQuestionBankExercisesBean);
         //点击交卷
-        LinearLayout questionbank_answerpaper_commit = mModelQuestionBankAnswerPaperView.findViewById(R.id.questionbank_answerpaper_commit);
+        ImageView questionbank_answerpaper_commit = mModelQuestionBankAnswerPaperView.findViewById(R.id.questionbank_answerpaper_commit);
+        questionbank_answerpaper_commit.setClickable(true);
         questionbank_answerpaper_commit.setOnClickListener(v -> {
-            View view1 = mMainContext.getLayoutInflater().inflate(R.layout.dialog_sure_cancel, null);
+            View view1 = mMainContext.getLayoutInflater().inflate(R.layout.dialog_notip_sure_cancel, null);
             ControllerCenterDialog mMyDialog = new ControllerCenterDialog(mMainContext, 0, 0, view1, R.style.DialogTheme);
             mMyDialog.setCancelable(true);
             mMyDialog.show();
-            TextView tip = view1.findViewById(R.id.tip);
-            tip.setText("交卷");
             TextView dialog_content = view1.findViewById(R.id.dialog_content);
             dialog_content.setText("确认交卷吗？");
             TextView button_cancel = view1.findViewById(R.id.button_cancel);
-            button_cancel.setText("再检查一下");
+            button_cancel.setText("不交卷");
             button_cancel.setOnClickListener(View -> {
                 mMyDialog.cancel();
             });
             TextView button_sure = view1.findViewById(R.id.button_sure);
             button_sure.setText("交卷");
+            button_sure.setTextColor(Color.BLUE);
             button_sure.setOnClickListener(View -> {
                 //暂停计时器
                 if (mTimer2 != null) {
@@ -1982,7 +1982,8 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
             });
         });
         //点击暂停
-        ImageView questionbank_answerpaper_pause = mModelQuestionBankAnswerPaperView.findViewById(R.id.questionbank_answerpaper_pause);
+        LinearLayout questionbank_answerpaper_pause = mModelQuestionBankAnswerPaperView.findViewById(R.id.questionbank_answerpaper_pause);
+        questionbank_answerpaper_pause.setClickable(true);
         questionbank_answerpaper_pause.setOnClickListener(v -> {
             getQuestionBankHandInBean(2,mTime);
             View view1 = mMainContext.getLayoutInflater().inflate(R.layout.dialog_sure, null);
@@ -1991,11 +1992,13 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
             mMyDialog.show();
             TextView tip = view1.findViewById(R.id.tip);
             tip.setText("暂停");
+            tip.setHeight(0);
             TextView dialog_content = view1.findViewById(R.id.dialog_content);
-            dialog_content.setText("哎呦，休息时间到啦");
+            dialog_content.setText("休息一会儿吧");
             TextView button_sure = view1.findViewById(R.id.button_sure);
             //点击继续做题
             button_sure.setText("继续做题");
+            button_sure.setTextColor(Color.BLUE);
             button_sure.setOnClickListener(View -> {
                 mMyDialog.cancel();
                 //重新打开计时器
@@ -2066,15 +2069,11 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
             }
         });
         //答题卡
-        LinearLayout button_questionbank_answerquestioncard = mModelQuestionBankAnswerPaperView.findViewById(R.id.button_questionbank_answerquestioncard);
+        ImageView button_questionbank_answerquestioncard = mModelQuestionBankAnswerPaperView.findViewById(R.id.button_questionbank_answerquestioncard);
+        button_questionbank_answerquestioncard.setClickable(true);
         button_questionbank_answerquestioncard.setOnClickListener(v ->{
             mTestPageIssueDataScore = "";
             getQuestionBankAnswerSheet(1);
-        });
-        //点击字号
-        ImageView questionbank_answerpaper_fontsize = mModelQuestionBankAnswerPaperView.findViewById(R.id.questionbank_answerpaper_fontsize);
-        questionbank_answerpaper_fontsize.setOnClickListener(v -> {
-            ShowPopFontSize(questionbank_answerpaper_fontsize);
         });
         //计时器
         if (mTimer2 != null) {
@@ -2135,23 +2134,23 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
         //添加题,//默认显示第一题
         TestPaper_QuestionViewAdd();
         //点击交卷
-        LinearLayout questionbank_answerpaper_commit = mModelQuestionBankAnswerPaperView.findViewById(R.id.questionbank_answerpaper_commit);
+        ImageView questionbank_answerpaper_commit = mModelQuestionBankAnswerPaperView.findViewById(R.id.questionbank_answerpaper_commit);
+        questionbank_answerpaper_commit.setClickable(true);
         questionbank_answerpaper_commit.setOnClickListener(v -> {
-            View view1 = mMainContext.getLayoutInflater().inflate(R.layout.dialog_sure_cancel, null);
+            View view1 = mMainContext.getLayoutInflater().inflate(R.layout.dialog_notip_sure_cancel, null);
             ControllerCenterDialog mMyDialog = new ControllerCenterDialog(mMainContext, 0, 0, view1, R.style.DialogTheme);
             mMyDialog.setCancelable(true);
             mMyDialog.show();
-            TextView tip = view1.findViewById(R.id.tip);
-            tip.setText("交卷");
             TextView dialog_content = view1.findViewById(R.id.dialog_content);
             dialog_content.setText("确认交卷吗？");
             TextView button_cancel = view1.findViewById(R.id.button_cancel);
-            button_cancel.setText("再检查一下");
+            button_cancel.setText("不交卷");
             button_cancel.setOnClickListener(View -> {
                 mMyDialog.cancel();
             });
             TextView button_sure = view1.findViewById(R.id.button_sure);
             button_sure.setText("交卷");
+            button_sure.setTextColor(Color.BLUE);
             button_sure.setOnClickListener(View -> {
                 //暂停计时器
                 if (mTimer2 != null) {
@@ -2166,7 +2165,8 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
             });
         });
         //点击暂停
-        ImageView questionbank_answerpaper_pause = mModelQuestionBankAnswerPaperView.findViewById(R.id.questionbank_answerpaper_pause);
+        LinearLayout questionbank_answerpaper_pause = mModelQuestionBankAnswerPaperView.findViewById(R.id.questionbank_answerpaper_pause);
+        questionbank_answerpaper_pause.setClickable(true);
         questionbank_answerpaper_pause.setOnClickListener(v -> {
             getQuestionBankHandInTestPaperBean(2,mTime);
             View view1 = mMainContext.getLayoutInflater().inflate(R.layout.dialog_sure, null);
@@ -2175,11 +2175,13 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
             mMyDialog.show();
             TextView tip = view1.findViewById(R.id.tip);
             tip.setText("暂停");
+            tip.setHeight(0);
             TextView dialog_content = view1.findViewById(R.id.dialog_content);
-            dialog_content.setText("哎呦，休息时间到啦");
+            dialog_content.setText("休息一会儿吧");
             TextView button_sure = view1.findViewById(R.id.button_sure);
             //点击继续做题
             button_sure.setText("继续做题");
+            button_sure.setTextColor(Color.BLUE);
             button_sure.setOnClickListener(View -> {
                 mMyDialog.cancel();
                 //重新打开计时器
@@ -2244,15 +2246,11 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
             }
         });
         //答题卡
-        LinearLayout button_questionbank_answerquestioncard = mModelQuestionBankAnswerPaperView.findViewById(R.id.button_questionbank_answerquestioncard);
+        ImageView button_questionbank_answerquestioncard = mModelQuestionBankAnswerPaperView.findViewById(R.id.button_questionbank_answerquestioncard);
+        button_questionbank_answerquestioncard.setClickable(true);
         button_questionbank_answerquestioncard.setOnClickListener(v ->{
             mTestPageIssueDataScore = "";
             getQuestionBankAnswerSheet(1);
-        });
-        //点击字号
-        ImageView questionbank_answerpaper_fontsize = mModelQuestionBankAnswerPaperView.findViewById(R.id.questionbank_answerpaper_fontsize);
-        questionbank_answerpaper_fontsize.setOnClickListener(v -> {
-            ShowPopFontSize(questionbank_answerpaper_fontsize);
         });
         //计时器
         if (mTimer2 != null) {
@@ -3181,13 +3179,13 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                 return false;
             }
             if (myQuestionBankExercisesDataBean.question_type == 1) {
-                questionbank_answerpaper_questiontype.setText("[单选题]");
+                questionbank_answerpaper_questiontype.setText("单项选择题");
             } else if (myQuestionBankExercisesDataBean.question_type == 2) {
-                questionbank_answerpaper_questiontype.setText("[多选题]");
+                questionbank_answerpaper_questiontype.setText("多项选择题");
             } else if (myQuestionBankExercisesDataBean.question_type == 4) {
-                questionbank_answerpaper_questiontype.setText("[简答题]");
+                questionbank_answerpaper_questiontype.setText("简答题");
             } else if (myQuestionBankExercisesDataBean.question_type == 7) {
-                questionbank_answerpaper_questiontype.setText("[材料题]");
+                questionbank_answerpaper_questiontype.setText("材料分析题");
             }
             LinearLayout questionbank_answerpaper_content = view2.findViewById(R.id.questionbank_answerpaper_content);
             questionbank_answerpaper_content.removeAllViews();
@@ -3373,11 +3371,11 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                         }
                         String type = "";
                         if (MyQuestionBankExercisesDataBean1.question_type == 11) {
-                            type = "[单选题] ";
+                            type = "单项选择题 ";
                         } else if (MyQuestionBankExercisesDataBean1.question_type == 12) {
-                            type = "[多选题] ";
+                            type = "多项选择题 ";
                         } else if (MyQuestionBankExercisesDataBean1.question_type == 14) {
-                            type = "[简答题] ";
+                            type = "简答题 ";
                         }
                         if (MyQuestionBankExercisesDataBean1.question_type == 11 || MyQuestionBankExercisesDataBean1.question_type == 12) { //如果是单选题或多选题添加选项布局
                             if (MyQuestionBankExercisesDataBean1.optionanswer == null) {
@@ -3723,13 +3721,13 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                 return;
             }
             if (myTestPageIssueDataBean.question_type == 1) {
-                questionbank_answerpaper_questiontype.setText("[单选题]");
+                questionbank_answerpaper_questiontype.setText("单项选择题");
             } else if (myTestPageIssueDataBean.question_type == 2) {
-                questionbank_answerpaper_questiontype.setText("[多选题]");
+                questionbank_answerpaper_questiontype.setText("多项选择题");
             } else if (myTestPageIssueDataBean.question_type == 4) {
-                questionbank_answerpaper_questiontype.setText("[简答题]");
+                questionbank_answerpaper_questiontype.setText("简答题");
             } else if (myTestPageIssueDataBean.question_type == 7) {
-                questionbank_answerpaper_questiontype.setText("[材料题]");
+                questionbank_answerpaper_questiontype.setText("材料分析题");
             }
             LinearLayout questionbank_answerpaper_content = view2.findViewById(R.id.questionbank_answerpaper_content);
             questionbank_answerpaper_content.removeAllViews();
@@ -3908,11 +3906,11 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                         }
                         String type = "";
                         if (MyTestPageIssueDataBean1.question_type == 11) {
-                            type = "[单选题] ";
+                            type = "单项选择题 ";
                         } else if (MyTestPageIssueDataBean1.question_type == 12) {
-                            type = "[多选题] ";
+                            type = "多项选择题 ";
                         } else if (MyTestPageIssueDataBean1.question_type == 14) {
-                            type = "[简答题] ";
+                            type = "简答题 ";
                         }
                         if (MyTestPageIssueDataBean1.question_type == 11 || MyTestPageIssueDataBean1.question_type == 12) { //如果是单选题或多选题添加选项布局
                             if (MyTestPageIssueDataBean1.optionanswer == null) {
@@ -4130,13 +4128,13 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
         //单选题或者多选题赋值
         TextView questionbank_handin_analysis_questiontype = mModelQuestionBankHandInAnalysisView.findViewById(R.id.questionbank_handin_analysis_questiontype);
         if (myQuestionBankExercisesDataBean.question_type == 1) {
-            questionbank_handin_analysis_questiontype.setText("[单选题]");
+            questionbank_handin_analysis_questiontype.setText("单项选择题");
         } else if (myQuestionBankExercisesDataBean.question_type == 2) {
-            questionbank_handin_analysis_questiontype.setText("[多选题]");
+            questionbank_handin_analysis_questiontype.setText("多项选择题");
         } else if (myQuestionBankExercisesDataBean.question_type == 4) {
-            questionbank_handin_analysis_questiontype.setText("[简答题]");
+            questionbank_handin_analysis_questiontype.setText("简答题");
         } else if (myQuestionBankExercisesDataBean.question_type == 7) {
-            questionbank_handin_analysis_questiontype.setText("[材料题]");
+            questionbank_handin_analysis_questiontype.setText("材料分析题");
         }
 
         LinearLayout questionbank_answerpaper_content = view2.findViewById(R.id.questionbank_answerpaper_content);
@@ -4223,11 +4221,11 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                     }
                     String type = "";
                     if (MyQuestionBankExercisesDataBean1.question_type == 11) {
-                        type = "[单选题] ";
+                        type = "单项选择题 ";
                     } else if (MyQuestionBankExercisesDataBean1.question_type == 12) {
-                        type = "[多选题] ";
+                        type = "多项选择题 ";
                     } else if (MyQuestionBankExercisesDataBean1.question_type == 14) {
-                        type = "[简答题] ";
+                        type = "简答题 ";
                     }
                     if (MyQuestionBankExercisesDataBean1.question_type == 11 || MyQuestionBankExercisesDataBean1.question_type == 12) { //如果是单选题或多选题添加选项布局
                         if (MyQuestionBankExercisesDataBean1.optionanswer == null) {
@@ -4510,13 +4508,13 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
         questionbank_answerpaper_single_title.setHint(questionBankMyFavoriteQuestionDataBean.question_id + "");
         TextView questionbank_wrongquestion_questiontype = mModelQuestionBankWrongQuestionView.findViewById(R.id.questionbank_wrongquestion_questiontype);
         if (questionBankMyFavoriteQuestionDataBean.question_type == 1) {
-            questionbank_wrongquestion_questiontype.setText("[单选题]");
+            questionbank_wrongquestion_questiontype.setText("单项选择题");
         } else if (questionBankMyFavoriteQuestionDataBean.question_type == 2) {
-            questionbank_wrongquestion_questiontype.setText("[多选题]");
+            questionbank_wrongquestion_questiontype.setText("多项选择题");
         } else if (questionBankMyFavoriteQuestionDataBean.question_type == 4) {
-            questionbank_wrongquestion_questiontype.setText("[简答题]");
+            questionbank_wrongquestion_questiontype.setText("简答题");
         } else if (questionBankMyFavoriteQuestionDataBean.question_type == 7) {
-            questionbank_wrongquestion_questiontype.setText("[材料题]");
+            questionbank_wrongquestion_questiontype.setText("材料分析题");
         }
         LinearLayout questionbank_answerpaper_content = view2.findViewById(R.id.questionbank_answerpaper_content);
         questionbank_answerpaper_content.removeAllViews();
@@ -4696,11 +4694,11 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                     }
                     String type = "";
                     if (QuestionBankMyFavoriteQuestionDataBean1.question_type == 11) {
-                        type = "[单选题] ";
+                        type = "单项选择题 ";
                     } else if (QuestionBankMyFavoriteQuestionDataBean1.question_type == 12) {
-                        type = "[多选题] ";
+                        type = "多项选择题 ";
                     } else if (QuestionBankMyFavoriteQuestionDataBean1.question_type == 14) {
-                        type = "[简答题] ";
+                        type = "简答题 ";
                     }
                     if (QuestionBankMyFavoriteQuestionDataBean1.question_type == 11 || QuestionBankMyFavoriteQuestionDataBean1.question_type == 12) { //如果是单选题或多选题添加选项布局
                         if (QuestionBankMyFavoriteQuestionDataBean1.optionanswer == null) {
@@ -5274,13 +5272,13 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
         questionbank_answerpaper_single_title.setHint(questionBankMyFavoriteQuestionDataBean.question_id + "");
         TextView questionbank_mycollextionquestion_questiontype = mModelQuestionBankMyCollectionQuestionView.findViewById(R.id.questionbank_mycollextionquestion_questiontype);
         if (questionBankMyFavoriteQuestionDataBean.question_type == 1) {
-            questionbank_mycollextionquestion_questiontype.setText("[单选题]");
+            questionbank_mycollextionquestion_questiontype.setText("单项选择题");
         } else if (questionBankMyFavoriteQuestionDataBean.question_type == 2) {
-            questionbank_mycollextionquestion_questiontype.setText("[多选题]");
+            questionbank_mycollextionquestion_questiontype.setText("多项选择题");
         } else if (questionBankMyFavoriteQuestionDataBean.question_type == 4) {
-            questionbank_mycollextionquestion_questiontype.setText("[简答题]");
+            questionbank_mycollextionquestion_questiontype.setText("简答题");
         } else if (questionBankMyFavoriteQuestionDataBean.question_type == 7) {
-            questionbank_mycollextionquestion_questiontype.setText("[材料题]");
+            questionbank_mycollextionquestion_questiontype.setText("材料分析题");
         }
         LinearLayout questionbank_answerpaper_content = view2.findViewById(R.id.questionbank_answerpaper_content);
         questionbank_answerpaper_content.removeAllViews();
@@ -5360,11 +5358,11 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                     }
                     String type = "";
                     if (QuestionBankMyFavoriteQuestionDataBean1.question_type == 11) {
-                        type = "[单选题] ";
+                        type = "单项选择题 ";
                     } else if (QuestionBankMyFavoriteQuestionDataBean1.question_type == 12) {
-                        type = "[多选题] ";
+                        type = "多项选择题 ";
                     } else if (QuestionBankMyFavoriteQuestionDataBean1.question_type == 14) {
-                        type = "[简答题] ";
+                        type = "简答题 ";
                     }
                     if (QuestionBankMyFavoriteQuestionDataBean1.question_type == 11 || QuestionBankMyFavoriteQuestionDataBean1.question_type == 12) { //如果是单选题或多选题添加选项布局
                         if (QuestionBankMyFavoriteQuestionDataBean1.optionanswer == null) {
@@ -6120,7 +6118,6 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
             });
         }
     }
-
     //起始，结束，时间长度
     private void toggleBright() {
         // 三个参数分别为：起始值 结束值 时长，那么整个动画回调过来的值就是从0.5f--1f的

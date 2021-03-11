@@ -11,7 +11,6 @@
         android:layout_height="wrap_content"
         android:text="删除该消息"
         android:gravity="center"
-        android:layout_below="@+id/tip"
         android:padding="@dimen/dp13"
         android:textColor="#999999"
         android:background="@color/white"
