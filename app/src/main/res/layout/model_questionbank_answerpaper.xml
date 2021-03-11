@@ -2,7 +2,8 @@
 <!--    题库 做题设置 -->
 <RelativeLayout android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <LinearLayout android:id="@+id/questionbank_answerpaper_main_title"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp44"
@@ -64,11 +65,53 @@
         android:background="#e5e5e5"
         android:layout_below="@id/questionbank_answerpaper_main_title"/>
     <LinearLayout
-        android:id="@+id/questionbank_answerpaper_questiontitlelayout"
-        android:layout_below="@id/questionbank_answerpaper_main_line1"
+        android:id="@+id/questionbank_answerpaper_questioncountlayout"
+        android:layout_below="@+id/questionbank_answerpaper_main_line1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp10"
         android:orientation="horizontal"
+        android:layout_marginLeft="@dimen/dp13"
+        android:layout_marginRight="@dimen/dp13">
+        <TextView
+            android:id="@+id/questionbank_answerpaper_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="章节练习"
+            android:textColor="#6D6E6E"
+            android:textSize="@dimen/textsize18"/>
+        <TextView
+            android:id="@+id/questionbank_answerpaper_questioncount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:text="0"
+            android:textSize="@dimen/textsize15"
+            android:textColor="#FF6740"/>
+        <TextView
+            android:id="@+id/questionbank_answerpaper_questioncountsum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="/0"
+            android:textSize="@dimen/textsize15"
+            android:textColor="#666666"/>
+    </LinearLayout>
+    <com.android.school.ControllerHorizontalProgressBar
+        android:layout_marginLeft="@dimen/dp13"
+        android:layout_marginTop="@dimen/dp10"
+        android:id="@+id/questionbank_answerpaper_questioncountlayout_progress"
+        android:layout_width="match_parent"
+        android:layout_below="@id/questionbank_answerpaper_questioncountlayout"
+        android:layout_height="2dp"
+        app:HorizontalProgresReachColor="@color/bottom_button_select"
+        app:HorizontalProgresUnReachColor="@color/grayccbab9b9" />
+    <LinearLayout
+        android:id="@+id/questionbank_answerpaper_questiontitlelayout"
+        android:layout_below="@id/questionbank_answerpaper_questioncountlayout_progress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:layout_marginLeft="@dimen/dp13"
         android:layout_marginRight="@dimen/dp13"
         android:layout_marginTop="@dimen/dp20">
@@ -78,45 +121,19 @@
             android:layout_height="wrap_content"
             android:text="建筑防火案例分析"
             android:textSize="@dimen/textsize18"
-            android:textColor="#649cf0"/>
+            android:textColor="#FF6740"/>
         <TextView
             android:id="@+id/questionbank_answerpaper_questiontype"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/dp27"
             android:text="单项选择题"
-            android:layout_marginLeft="@dimen/dp10"
+            android:layout_marginTop="@dimen/dp10"
             android:textSize="@dimen/textsize14"
             android:paddingRight="@dimen/dp10"
             android:paddingLeft="@dimen/dp10"
-            android:paddingTop="@dimen/dp_7"
-            android:paddingBottom="@dimen/dp_7"
+            android:gravity="center"
             android:textColor="#ffffff"
             android:background="@drawable/textview_style_circle_gray2"/>
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/questionbank_answerpaper_questioncountlayout"
-        android:layout_below="@id/questionbank_answerpaper_questiontitlelayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginLeft="@dimen/dp13"
-        android:layout_marginRight="@dimen/dp13">
-        <TextView
-            android:id="@+id/questionbank_answerpaper_questioncount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="right"
-            android:text="0"
-            android:textSize="@dimen/textsize15"
-            android:textColor="#649cf0"/>
-        <TextView
-            android:id="@+id/questionbank_answerpaper_questioncountsum"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="/0"
-            android:textSize="@dimen/textsize15"
-            android:textColor="#666666"/>
     </LinearLayout>
     <ScrollView
         android:id="@+id/coursedetails_answerpaper_detailsscrollview"
@@ -124,7 +141,7 @@
         android:layout_height="match_parent"
         android:layout_marginTop="@dimen/dp20"
         android:scrollbars="none"
-        android:layout_below="@id/questionbank_answerpaper_questioncountlayout"
+        android:layout_below="@id/questionbank_answerpaper_questiontitlelayout"
         android:layout_marginBottom="@dimen/dp_55">
         <LinearLayout
             android:layout_width="match_parent"
@@ -157,16 +174,6 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:layout_marginBottom="@dimen/dp13"/>
-<!--            <TextView-->
-<!--                android:layout_width="@dimen/dp_193"-->
-<!--                android:layout_height="@dimen/dp_37"-->
-<!--                android:textColor="#ffffff"-->
-<!--                android:text="查看解析"-->
-<!--                android:gravity="center"-->
-<!--                android:textSize="@dimen/textsize20"-->
-<!--                android:layout_gravity="center"-->
-<!--                android:layout_marginBottom="@dimen/dp13"-->
-<!--                android:background="@drawable/textview_style_rect_blue"/>-->
         </LinearLayout>
     </ScrollView>
     <LinearLayout

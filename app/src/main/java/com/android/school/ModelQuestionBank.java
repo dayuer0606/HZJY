@@ -1256,6 +1256,8 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
             mModelQuestionBankAnswerPaperView = LayoutInflater.from(mMainContext).inflate(R.layout.model_questionbank_answerpaper, null);
         }
         fragmentquestionbank_main.addView(mModelQuestionBankAnswerPaperView);
+        TextView questionbank_answerpaper_type = mModelQuestionBankAnswerPaperView.findViewById(R.id.questionbank_answerpaper_type);
+        questionbank_answerpaper_type.setText(mCurrentChapterName);
         //此题所属章节名称（分析内容标题）
         TextView questionbank_answerpaper_questiontitle = mModelQuestionBankAnswerPaperView.findViewById(R.id.questionbank_answerpaper_questiontitle);
         questionbank_answerpaper_questiontitle.setText(mCurrentChapterName);
@@ -3163,6 +3165,13 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
             //案列分析的解析
             TextView questionbank_answerpaper_questioncount = mModelQuestionBankAnswerPaperView.findViewById(R.id.questionbank_answerpaper_questioncount);
             questionbank_answerpaper_questioncount.setText(String.valueOf(mCurrentIndex + 1));
+            ControllerHorizontalProgressBar questionbank_answerpaper_questioncountlayout_progress =
+                    mModelQuestionBankAnswerPaperView.findViewById(R.id.questionbank_answerpaper_questioncountlayout_progress);
+            if (questionSum == 0) {
+                questionbank_answerpaper_questioncountlayout_progress.updateProgress(100);
+            } else {
+                questionbank_answerpaper_questioncountlayout_progress.updateProgress((int) (mCurrentIndex + 1) * 100 / questionSum);
+            }
             TextView questionbank_answerpaper_single_title = view2.findViewById(R.id.questionbank_answerpaper_single_title);
             if (mFontSize.equals("nomal")) {
                 questionbank_answerpaper_single_title.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view2.getResources().getDimensionPixelSize(R.dimen.textsize17));
@@ -3705,6 +3714,13 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
             //案列分析的解析
             TextView questionbank_answerpaper_questioncount = mModelQuestionBankAnswerPaperView.findViewById(R.id.questionbank_answerpaper_questioncount);
             questionbank_answerpaper_questioncount.setText(String.valueOf(mCurrentIndex + 1));
+            ControllerHorizontalProgressBar questionbank_answerpaper_questioncountlayout_progress =
+                    mModelQuestionBankAnswerPaperView.findViewById(R.id.questionbank_answerpaper_questioncountlayout_progress);
+            if (mMyTestPageIssueDataBeans.size() == 0) {
+                questionbank_answerpaper_questioncountlayout_progress.updateProgress(100);
+            } else {
+                questionbank_answerpaper_questioncountlayout_progress.updateProgress((int) (mCurrentIndex + 1) * 100 / mMyTestPageIssueDataBeans.size());
+            }
             TextView questionbank_answerpaper_single_title = view2.findViewById(R.id.questionbank_answerpaper_single_title);
             if (mFontSize.equals("nomal")) {
                 questionbank_answerpaper_single_title.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, view2.getResources().getDimensionPixelSize(R.dimen.textsize17));
