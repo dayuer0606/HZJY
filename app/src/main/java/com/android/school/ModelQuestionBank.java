@@ -1048,8 +1048,8 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
             ll.height = mModelQuestionBankHandInView.getResources().getDimensionPixelSize(R.dimen.dp_137);
             coursedetails_handinpaper_accuracyrateprogress.setLayoutParams(ll);
         }
-        TextView questionbank_handinpaper__main_titletext = mModelQuestionBankHandInView.findViewById(R.id.questionbank_handinpaper__main_titletext);
-        questionbank_handinpaper__main_titletext.setText(mCurrentChapterName);
+//        TextView questionbank_handinpaper__main_titletext = mModelQuestionBankHandInView.findViewById(R.id.questionbank_handinpaper__main_titletext);
+//        questionbank_handinpaper__main_titletext.setText(mCurrentChapterName);
         LinearLayout coursedetails_handinpaper_details = mModelQuestionBankHandInView.findViewById(R.id.coursedetails_handinpaper_details);
         //查找题型
         coursedetails_handinpaper_details.removeAllViews();
@@ -3219,7 +3219,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                     MyQuestionBankExercises.MyQuestionBankExercisesDataBean finalMyQuestionBankExercisesDataBean1 = myQuestionBankExercisesDataBean;
                     questionbank_answerpaper_option_name.setOnClickListener(v -> {
                         questionbank_answerpaper_option_name.setBackground(view3.getResources().getDrawable(R.drawable.textview_style_circle_blue649cf0));
-                        questionbank_answerpaper_option_name.setTextColor(view3.getResources().getColor(R.color.blue649cf0));
+                        questionbank_answerpaper_option_name.setTextColor(view3.getResources().getColor(R.color.white));
                         if (finalMyQuestionBankExercisesDataBean.question_type == 1) { //如果是单选题，将其他选项置为false
                             int count = questionbank_answerpaper_content.getChildCount();
                             for (int num = 0; num < count; num ++) {
@@ -3290,7 +3290,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                         if (answerInfo.answer != null) {
                             if (answerInfo.answer.contains(optionanswerS1[0])) {
                                 questionbank_answerpaper_option_name.setBackground(view3.getResources().getDrawable(R.drawable.textview_style_circle_blue649cf0));
-                                questionbank_answerpaper_option_name.setTextColor(view3.getResources().getColor(R.color.blue649cf0));
+                                questionbank_answerpaper_option_name.setTextColor(view3.getResources().getColor(R.color.white));
                             }
                         }
                     }
@@ -3419,7 +3419,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                                 questionbank_answerpaper_option_name.setHint(optionanswerS1[1]);
                                 questionbank_answerpaper_option_name.setOnClickListener(v -> { // 选项的点击响应
                                     questionbank_answerpaper_option_name.setBackground(view3.getResources().getDrawable(R.drawable.textview_style_circle_blue649cf0));
-                                    questionbank_answerpaper_option_name.setTextColor(view3.getResources().getColor(R.color.blue649cf0));
+                                    questionbank_answerpaper_option_name.setTextColor(view3.getResources().getColor(R.color.white));
                                     if (MyQuestionBankExercisesDataBean1.question_type == 11) { //如果是单选题，将其他选项置为false
                                         int count = questionbank_answerpaper_content1.getChildCount();
                                         for (int num = 0; num < count; num ++) {
@@ -3489,7 +3489,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                                     if (answerInfo.answer != null) {
                                         if (answerInfo.answer.contains(optionanswerS1[0])) {
                                             questionbank_answerpaper_option_name.setBackground(view3.getResources().getDrawable(R.drawable.textview_style_circle_blue649cf0));
-                                            questionbank_answerpaper_option_name.setTextColor(view3.getResources().getColor(R.color.blue649cf0));
+                                            questionbank_answerpaper_option_name.setTextColor(view3.getResources().getColor(R.color.white));
                                         }
                                     }
                                 }
@@ -3766,7 +3766,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                     questionbank_answerpaper_option_name.setHint(optionanswerS1[1]);
                     questionbank_answerpaper_option_name.setOnClickListener(v -> {
                         questionbank_answerpaper_option_name.setBackground(view3.getResources().getDrawable(R.drawable.textview_style_circle_blue649cf0));
-                        questionbank_answerpaper_option_name.setTextColor(view3.getResources().getColor(R.color.blue649cf0));
+                        questionbank_answerpaper_option_name.setTextColor(view3.getResources().getColor(R.color.white));
                         if (myTestPageIssueDataBean.question_type == 1) { //如果是单选题，将其他选项置为false
                             int count = questionbank_answerpaper_content.getChildCount();
                             for (int num = 0; num < count; num ++) {
@@ -3836,7 +3836,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                         if (answerInfo.answer != null) {
                             if (answerInfo.answer.contains(optionanswerS1[0])) {
                                 questionbank_answerpaper_option_name.setBackground(view3.getResources().getDrawable(R.drawable.textview_style_circle_blue649cf0));
-                                questionbank_answerpaper_option_name.setTextColor(view3.getResources().getColor(R.color.blue649cf0));
+                                questionbank_answerpaper_option_name.setTextColor(view3.getResources().getColor(R.color.white));
                             }
                         }
                     }
@@ -3961,7 +3961,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                                 questionbank_answerpaper_option_name.setHint(optionanswerS1[1]);
                                 questionbank_answerpaper_option_name.setOnClickListener(v -> { // 选项的点击响应
                                     questionbank_answerpaper_option_name.setBackground(view3.getResources().getDrawable(R.drawable.textview_style_circle_blue649cf0));
-                                    questionbank_answerpaper_option_name.setTextColor(view3.getResources().getColor(R.color.blue649cf0));
+                                    questionbank_answerpaper_option_name.setTextColor(view3.getResources().getColor(R.color.white));
                                     if (MyTestPageIssueDataBean1.question_type == 11) { //如果是单选题，将其他选项置为false
                                         int count = questionbank_answerpaper_content1.getChildCount();
                                         for (int num = 0; num < count; num ++) {
@@ -4031,7 +4031,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                                     if (answerInfo.answer != null) {
                                         if (answerInfo.answer.contains(optionanswerS1[0])) {
                                             questionbank_answerpaper_option_name.setBackground(view3.getResources().getDrawable(R.drawable.textview_style_circle_blue649cf0));
-                                            questionbank_answerpaper_option_name.setTextColor(view3.getResources().getColor(R.color.blue649cf0));
+                                            questionbank_answerpaper_option_name.setTextColor(view3.getResources().getColor(R.color.white));
                                         }
                                     }
                                 }
@@ -4182,7 +4182,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                         if (answerInfo.answer != null) {
                             if (answerInfo.answer.contains(optionanswerS1[0])){
                                 questionbank_answerpaper_option_name.setBackground(view3.getResources().getDrawable(R.drawable.textview_style_circle_blue649cf0));
-                                questionbank_answerpaper_option_name.setTextColor(view3.getResources().getColor(R.color.blue649cf0));
+                                questionbank_answerpaper_option_name.setTextColor(view3.getResources().getColor(R.color.white));
                             }
                         }
                     }
@@ -4279,7 +4279,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                                 if (answerInfo.answer != null) {
                                     if (answerInfo.answer.contains(optionanswerS1[0])) {
                                         questionbank_answerpaper_option_name.setBackground(view3.getResources().getDrawable(R.drawable.textview_style_circle_blue649cf0));
-                                        questionbank_answerpaper_option_name.setTextColor(view3.getResources().getColor(R.color.blue649cf0));
+                                        questionbank_answerpaper_option_name.setTextColor(view3.getResources().getColor(R.color.white));
                                     }
                                 }
                             }
@@ -5665,14 +5665,14 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                 }
                 if (mCurrentIndex == count) { //此题为当前正在答的题,改变题的颜色
                     questionbank_answerquestioncard2_select.setTextColor(view.getResources().getColor(R.color.white));
-                    questionbank_answerquestioncard2_select.setBackground(view.getResources().getDrawable(R.drawable.textview_style_circle_green));
+                    questionbank_answerquestioncard2_select.setBackground(view.getResources().getDrawable(R.drawable.textview_style_circle_blue));
                 } else if (mMyQuestionBankExercisesAnswerMap != null) { //判断是已做过还是未做过的题（如果没有答案，说明没做过）
                     AnswerInfo answerInfo = mMyQuestionBankExercisesAnswerMap.get(Integer.valueOf(questionBankAnswerSheetDataBean.question_id));
                     if (answerInfo != null) {
                         if (answerInfo.answer != null) {
                             if (!answerInfo.answer.equals("")) {
                                 questionbank_answerquestioncard2_select.setTextColor(view.getResources().getColor(R.color.white));
-                                questionbank_answerquestioncard2_select.setBackground(view.getResources().getDrawable(R.drawable.textview_style_circle_blue));
+                                questionbank_answerquestioncard2_select.setBackground(view.getResources().getDrawable(R.drawable.textview_style_circle_red));
                             }
                         }
                     }
@@ -5702,14 +5702,14 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                 }
                 if (mCurrentIndex == count) { //此题为当前正在答的题,改变题的颜色
                     questionbank_answerquestioncard2_select.setTextColor(view.getResources().getColor(R.color.white));
-                    questionbank_answerquestioncard2_select.setBackground(view.getResources().getDrawable(R.drawable.textview_style_circle_green));
+                    questionbank_answerquestioncard2_select.setBackground(view.getResources().getDrawable(R.drawable.textview_style_circle_blue));
                 } else if (mMyQuestionBankExercisesAnswerMap != null) { //判断是已做过还是未做过的题（如果没有答案，说明没做过）
                     AnswerInfo answerInfo = mMyQuestionBankExercisesAnswerMap.get(Integer.valueOf(questionBankAnswerSheetDataBean.question_id));
                     if (answerInfo != null) {
                         if (answerInfo.answer != null) {
                             if (!answerInfo.answer.equals("")) {
                                 questionbank_answerquestioncard2_select.setTextColor(view.getResources().getColor(R.color.white));
-                                questionbank_answerquestioncard2_select.setBackground(view.getResources().getDrawable(R.drawable.textview_style_circle_blue));
+                                questionbank_answerquestioncard2_select.setBackground(view.getResources().getDrawable(R.drawable.textview_style_circle_red));
                             }
                         }
                     }
@@ -5739,14 +5739,14 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                 }
                 if (mCurrentIndex == count) { //此题为当前正在答的题,改变题的颜色
                     questionbank_answerquestioncard2_select.setTextColor(view.getResources().getColor(R.color.white));
-                    questionbank_answerquestioncard2_select.setBackground(view.getResources().getDrawable(R.drawable.textview_style_circle_green));
+                    questionbank_answerquestioncard2_select.setBackground(view.getResources().getDrawable(R.drawable.textview_style_circle_blue));
                 } else if (mMyQuestionBankExercisesAnswerMap != null) { //判断是已做过还是未做过的题（如果没有答案，说明没做过）
                     AnswerInfo answerInfo = mMyQuestionBankExercisesAnswerMap.get(Integer.valueOf(questionBankAnswerSheetDataBean.question_id));
                     if (answerInfo != null) {
                         if (answerInfo.answer != null) {
                             if (!answerInfo.answer.equals("")) {
                                 questionbank_answerquestioncard2_select.setTextColor(view.getResources().getColor(R.color.white));
-                                questionbank_answerquestioncard2_select.setBackground(view.getResources().getDrawable(R.drawable.textview_style_circle_blue));
+                                questionbank_answerquestioncard2_select.setBackground(view.getResources().getDrawable(R.drawable.textview_style_circle_red));
                             }
                         }
                     }
@@ -5776,14 +5776,14 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                 }
                 if (mCurrentIndex == count) { //此题为当前正在答的题,改变题的颜色
                     questionbank_answerquestioncard2_select.setTextColor(view.getResources().getColor(R.color.white));
-                    questionbank_answerquestioncard2_select.setBackground(view.getResources().getDrawable(R.drawable.textview_style_circle_green));
+                    questionbank_answerquestioncard2_select.setBackground(view.getResources().getDrawable(R.drawable.textview_style_circle_blue));
                 } else if (mMyQuestionBankExercisesAnswerMap != null) { //判断是已做过还是未做过的题（如果没有答案，说明没做过）
                     AnswerInfo answerInfo = mMyQuestionBankExercisesAnswerMap.get(Integer.valueOf(questionBankAnswerSheetDataBean.question_id));
                     if (answerInfo != null) {
                         if (answerInfo.answer != null) {
                             if (!answerInfo.answer.equals("")) {
                                 questionbank_answerquestioncard2_select.setTextColor(view.getResources().getColor(R.color.white));
-                                questionbank_answerquestioncard2_select.setBackground(view.getResources().getDrawable(R.drawable.textview_style_circle_blue));
+                                questionbank_answerquestioncard2_select.setBackground(view.getResources().getDrawable(R.drawable.textview_style_circle_red));
                             }
                         }
                     }

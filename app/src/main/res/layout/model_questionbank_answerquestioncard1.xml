@@ -10,12 +10,12 @@
         android:layout_marginLeft="@dimen/dp13"
         android:layout_marginTop="@dimen/dp25"
         android:layout_marginRight="@dimen/dp13">
-        <TextView
-            android:layout_width="@dimen/dp2"
-            android:layout_height="@dimen/dp10"
-            android:layout_marginRight="@dimen/dp7"
-            android:layout_gravity="center"
-            android:background="@color/holo_red_dark"/>
+<!--        <TextView-->
+<!--            android:layout_width="@dimen/dp2"-->
+<!--            android:layout_height="@dimen/dp10"-->
+<!--            android:layout_marginRight="@dimen/dp7"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:background="@color/holo_red_dark"/>-->
         <TextView
             android:id="@+id/coursedetails_answerquestioncard_questiontype"
             android:layout_width="wrap_content"
@@ -23,6 +23,19 @@
             android:text="单选题"
             android:textSize="@dimen/textsize18"
             android:textColor="#333333" />
+        <TextView
+            android:layout_width="@dimen/dp16"
+            android:layout_marginLeft="@dimen/dp25"
+            android:layout_height="@dimen/dp7"
+            android:background="@drawable/textview_style_circle_red1"
+            android:layout_gravity="bottom"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_marginLeft="@dimen/dp5"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/textsize10"
+            android:textColor="#999999"
+            android:text="已做题"/>
         <TextView
             android:layout_width="@dimen/dp16"
             android:layout_marginLeft="@dimen/dp25"
@@ -35,33 +48,20 @@
             android:layout_height="wrap_content"
             android:textSize="@dimen/textsize10"
             android:textColor="#999999"
-            android:text="已答题"/>
-        <TextView
-            android:layout_width="@dimen/dp16"
-            android:layout_marginLeft="@dimen/dp25"
-            android:layout_height="@dimen/dp7"
-            android:background="@drawable/textview_style_circle_green1"
-            android:layout_gravity="bottom"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_marginLeft="@dimen/dp5"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/textsize10"
-            android:textColor="#999999"
-            android:text="当前题"/>
-        <TextView
-            android:layout_width="@dimen/dp16"
-            android:layout_marginLeft="@dimen/dp25"
-            android:layout_height="@dimen/dp7"
-            android:background="@drawable/textview_style_circle_gray1"
-            android:layout_gravity="bottom"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_marginLeft="@dimen/dp5"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/textsize10"
-            android:textColor="#999999"
-            android:text="未做"/>
+            android:text="所在题"/>
+<!--        <TextView-->
+<!--            android:layout_width="@dimen/dp16"-->
+<!--            android:layout_marginLeft="@dimen/dp25"-->
+<!--            android:layout_height="@dimen/dp7"-->
+<!--            android:background="@drawable/textview_style_circle_gray1"-->
+<!--            android:layout_gravity="bottom"/>-->
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_marginLeft="@dimen/dp5"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:textSize="@dimen/textsize10"-->
+<!--            android:textColor="#999999"-->
+<!--            android:text="未做"/>-->
     </LinearLayout>
     <GridLayout
         android:id="@+id/coursedetails_answerquestioncard_questionnumber"

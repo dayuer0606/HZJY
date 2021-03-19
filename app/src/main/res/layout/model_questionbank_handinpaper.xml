@@ -26,12 +26,26 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:layout_weight="1"
-            android:text="科目五"
+            android:text="答题卡"
             android:textColor="#333333"
             android:singleLine="true"
             android:ellipsize="end"
             android:textStyle="bold"
             android:textSize="@dimen/textsize18"/>
+        <TextView
+            android:id="@+id/qquestionbank_handinpaper_main_countdowntimetext"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp27"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_marginLeft="@dimen/dp15"
+            android:text="00:00"
+            android:padding="@dimen/dp4"
+            android:textColor="#333333"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:background="@drawable/button_questionbank_timer"
+            android:textSize="@dimen/textsize14"/>
     </LinearLayout>
     <View
         android:id="@+id/questionbank_handinpaper_main_line1"
@@ -55,7 +69,7 @@
             android:layout_width="@dimen/dp_137"
             android:layout_height="@dimen/dp_137"
             app:roundColor="#D1D1D1"
-            app:roundProgressColor="#649cf0"
+            app:roundProgressColor="#679DEF"
             app:RoundProgressBartextColor="#333333"
             app:RoundProgressBartextColor1="#999999"
             app:RoundProgressBartext="正确率"

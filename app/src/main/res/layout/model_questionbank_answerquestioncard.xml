@@ -31,6 +31,20 @@
             android:ellipsize="end"
             android:textStyle="bold"
             android:textSize="@dimen/textsize18"/>
+        <TextView
+            android:id="@+id/questionbank_answerquestioncard__main_countdowntimetext"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp27"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_marginLeft="@dimen/dp15"
+            android:text="00:00"
+            android:padding="@dimen/dp4"
+            android:textColor="#333333"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:background="@drawable/button_questionbank_timer"
+            android:textSize="@dimen/textsize14"/>
     </LinearLayout>
     <View
         android:id="@+id/questionbank_answerquestioncard_main_line1"

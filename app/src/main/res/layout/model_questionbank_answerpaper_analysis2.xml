@@ -33,7 +33,7 @@
             android:layout_marginRight="@dimen/dp_13"
             android:layout_marginLeft="@dimen/dp_13"
             android:textSize="@dimen/textsize15"
-            android:textColor="@color/blue649cf0"
+            android:textColor="#0BD770"
             android:text="这才是正确答案"
             android:layout_marginTop="@dimen/dp10"
             android:lineSpacingExtra="@dimen/dp_5"/>
@@ -53,14 +53,14 @@
             android:layout_marginRight="@dimen/dp_13"
             android:layout_marginLeft="@dimen/dp_13"
             android:textSize="@dimen/textsize15"
-            android:textColor="#666666"
+            android:textColor="#F95355"
             android:layout_marginTop="@dimen/dp10"
             android:lineSpacingExtra="@dimen/dp_5"
             android:text=""/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="解析"
+            android:text="参考解析"
             android:textSize="@dimen/textsize15"
             android:textColor="#333333"
             android:layout_marginTop="@dimen/dp10"
