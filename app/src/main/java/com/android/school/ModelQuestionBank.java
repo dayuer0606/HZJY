@@ -2717,10 +2717,10 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                 WrongQuestionViewAdd(questionbank_wrongquestion_collection);
             }
         });
-        //题型
-        LinearLayout button_wrongquestion_answerquestioncard = mModelQuestionBankWrongQuestionView.findViewById(R.id.button_wrongquestion_answerquestioncard);
-        button_wrongquestion_answerquestioncard.setOnClickListener(v ->
-                QuestionBankDetailsQuestionTypeShow(2));
+//        //题型
+//        LinearLayout button_wrongquestion_answerquestioncard = mModelQuestionBankWrongQuestionView.findViewById(R.id.button_wrongquestion_answerquestioncard);
+//        button_wrongquestion_answerquestioncard.setOnClickListener(v ->
+//                QuestionBankDetailsQuestionTypeShow(2));
         //提交错题
         LinearLayout questionbank_wrongquestion_commit = mModelQuestionBankWrongQuestionView.findViewById(R.id.questionbank_wrongquestion_commit);
         questionbank_wrongquestion_commit.setOnClickListener(v -> {
@@ -2766,11 +2766,6 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                     mMyDialog.cancel();
                 });
             }
-        });
-        //点击字号
-        ImageView questionbank_wrongquestion_fontsize = mModelQuestionBankWrongQuestionView.findViewById(R.id.questionbank_wrongquestion_fontsize);
-        questionbank_wrongquestion_fontsize.setOnClickListener(v -> {
-            ShowPopFontSize( questionbank_wrongquestion_fontsize);
         });
     }
 
