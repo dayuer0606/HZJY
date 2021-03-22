@@ -498,18 +498,13 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
         //课程包名称
         TextView modelmy_myclasspacket1_classname = view.findViewById(R.id.modelmy_myclasspacket1_classname);
         modelmy_myclasspacket1_classname.setText(listBean.cp_name);
-        //阶段数量
-        TextView modelmy_myclasspacket1_stagecount = view.findViewById(R.id.modelmy_myclasspacket1_stagecount);
-        modelmy_myclasspacket1_stagecount.setText(listBean.stageNum + "");
-        //课程数量
-        TextView modelmy_myclasspacket1_coursecount = view.findViewById(R.id.modelmy_myclasspacket1_coursecount);
-        modelmy_myclasspacket1_coursecount.setText(listBean.courseNum + "");
         //学习人数
         TextView modelmy_myclasspacket1_learnpersoncount = view.findViewById(R.id.modelmy_myclasspacket1_learnpersoncount);
         modelmy_myclasspacket1_learnpersoncount.setText(listBean.stuNum + "");
         modelmy_mycollect_main_content.addView(view);
+        TextView modelmy_myclasspacket1_golearn = view.findViewById(R.id.modelmy_myclasspacket1_golearn);
         //刷新我的界面
-        view.setOnClickListener(v -> {
+        modelmy_myclasspacket1_golearn.setOnClickListener(v -> {
             CoursePacketInfo coursePacketInfo = new CoursePacketInfo();
             coursePacketInfo.mCoursePacketId = String.valueOf(listBean.course_package_id);//课程包id
             coursePacketInfo.mCoursePacketCover = listBean.cover;
@@ -528,10 +523,6 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
             my_layout_main.addView(ClassPacketView);
             mMainContext.onClickCoursePacketDetails();
         });
-        
-        //我的收藏不需要显示课程协议，因为没有购买的课程也可以被收藏
-        TextView modelmy_myclasspacket1_agreement = view.findViewById(R.id.modelmy_myclasspacket1_agreement);
-        modelmy_myclasspacket1_agreement.setVisibility(View.INVISIBLE);
         //我的收藏不需要显示学习进度，因为没有购买的课程也可以被收藏
         LinearLayout modelmy_myclasspacket1_learnprogresslayout = view.findViewById(R.id.modelmy_myclasspacket1_learnprogresslayout);
         modelmy_myclasspacket1_learnprogresslayout.setVisibility(View.INVISIBLE);
@@ -2289,12 +2280,6 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                     //课程包名称
                     TextView modelmy_myclasspacket1_classname = view.findViewById(R.id.modelmy_myclasspacket1_classname);
                     modelmy_myclasspacket1_classname.setText(coursePacketListBean.cp_name);
-                    //阶段数量
-                    TextView modelmy_myclasspacket1_stagecount = view.findViewById(R.id.modelmy_myclasspacket1_stagecount);
-                    modelmy_myclasspacket1_stagecount.setText(coursePacketListBean.stageNum + "");
-                    //课程数量
-                    TextView modelmy_myclasspacket1_coursecount = view.findViewById(R.id.modelmy_myclasspacket1_coursecount);
-                    modelmy_myclasspacket1_coursecount.setText(coursePacketListBean.courseNum + "");
                     //学习人数
                     TextView modelmy_myclasspacket1_learnpersoncount = view.findViewById(R.id.modelmy_myclasspacket1_learnpersoncount);
                     modelmy_myclasspacket1_learnpersoncount.setText(coursePacketListBean.stuNum + "");
@@ -2302,8 +2287,9 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                     TextView modelmy_myclasspacket1_learnprogresscount = view.findViewById(R.id.modelmy_myclasspacket1_learnprogresscount);
                     modelmy_myclasspacket1_learnprogresscount.setText(coursePacketListBean.rateOfLearning * 100 + "%");
                     modelmy_myclasspacket_main_content.addView(view);
+                    TextView modelmy_myclasspacket1_golearn = view.findViewById(R.id.modelmy_myclasspacket1_golearn);
                     //添加每个课程包的监听，点击跳转到课程包详情
-                    view.setOnClickListener(v -> {
+                    modelmy_myclasspacket1_golearn.setOnClickListener(v -> {
                         CoursePacketInfo coursePacketInfo = new CoursePacketInfo();
                         coursePacketInfo.mCoursePacketId = String.valueOf(coursePacketListBean.course_package_id);//课程包id
                         coursePacketInfo.mCoursePacketCover = coursePacketListBean.cover;
@@ -2322,23 +2308,6 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                         my_layout_main.addView(ClassPacketView);
                         mMainContext.onClickCoursePacketDetails();
                     });
-                    //我的课程包协议
-                    if (coursePacketListBean.agreement_id != null) {
-                        //我的课程包协议
-                        TextView modelmy_myclasspacket1_agreement = view.findViewById(R.id.modelmy_myclasspacket1_agreement);
-                        modelmy_myclasspacket1_agreement.setOnClickListener(v -> { //点击查看协议
-                            HideAllLayout();
-                            mMainContext.onClickMyAgreement();
-                            View myclass_agreement = LayoutInflater.from(mMainContext).inflate(R.layout.model_agreement, null);
-                            //我的课程包协议请求
-                            getModelMyMeent(myclass_agreement,coursePacketListBean.agreement_id);
-                            LinearLayout my_layout_main = mview.findViewById(R.id.my_layout_main);
-                            my_layout_main.addView(myclass_agreement);
-                        });
-                    } else {
-                        TextView modelmy_myclasspacket1_agreement = view.findViewById(R.id.modelmy_myclasspacket1_agreement);
-                        modelmy_myclasspacket1_agreement.setVisibility(View.INVISIBLE);
-                    }
                     //view线
                     line = view.findViewById(R.id.modelmy_myclasspacket1_line1);
                 }
@@ -2456,12 +2425,6 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                     //课程包名称
                     TextView modelmy_myclasspacket1_classname = view.findViewById(R.id.modelmy_myclasspacket1_classname);
                     modelmy_myclasspacket1_classname.setText(coursePacketListBean.cp_name);
-                    //阶段数量
-                    TextView modelmy_myclasspacket1_stagecount = view.findViewById(R.id.modelmy_myclasspacket1_stagecount);
-                    modelmy_myclasspacket1_stagecount.setText(coursePacketListBean.stageNum + "");
-                    //课程数量
-                    TextView modelmy_myclasspacket1_coursecount = view.findViewById(R.id.modelmy_myclasspacket1_coursecount);
-                    modelmy_myclasspacket1_coursecount.setText(coursePacketListBean.courseNum + "");
                     //学习人数
                     TextView modelmy_myclasspacket1_learnpersoncount = view.findViewById(R.id.modelmy_myclasspacket1_learnpersoncount);
                     modelmy_myclasspacket1_learnpersoncount.setText(coursePacketListBean.stuNum + "");
@@ -2473,8 +2436,9 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                         modelmy_myclasspacket1_learnprogresscount.setText(coursePacketListBean.rateOfLearning * 100 + "%");
                     }
                     modelmy_myclasspacket_main_content.addView(view);
+                    TextView modelmy_myclasspacket1_golearn = view.findViewById(R.id.modelmy_myclasspacket1_golearn);
                     //添加每个课程包的监听，点击跳转到课程包详情
-                    view.setOnClickListener(v -> {
+                    modelmy_myclasspacket1_golearn.setOnClickListener(v -> {
                         CoursePacketInfo coursePacketInfo = new CoursePacketInfo();
                         coursePacketInfo.mCoursePacketId = String.valueOf(coursePacketListBean.course_package_id);//课程包id
                         coursePacketInfo.mCoursePacketCover = coursePacketListBean.cover;
@@ -2493,23 +2457,6 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                         my_layout_main.addView(ClassPacketView);
                         mMainContext.onClickCoursePacketDetails();
                     });
-                    //我的课程包协议
-                    if (coursePacketListBean.agreement_id != null) {
-                        //我的课程包协议
-                        TextView modelmy_myclasspacket1_agreement = view.findViewById(R.id.modelmy_myclasspacket1_agreement);
-                        modelmy_myclasspacket1_agreement.setOnClickListener(v -> { //点击查看协议
-                            HideAllLayout();
-                            mMainContext.onClickMyAgreement();
-                            View myclass_agreement = LayoutInflater.from(mMainContext).inflate(R.layout.model_agreement, null);
-                            //我的课程包协议请求
-                            getModelMyMeent(myclass_agreement,coursePacketListBean.agreement_id);
-                            LinearLayout my_layout_main = mview.findViewById(R.id.my_layout_main);
-                            my_layout_main.addView(myclass_agreement);
-                        });
-                    } else {
-                        TextView modelmy_myclasspacket1_agreement = view.findViewById(R.id.modelmy_myclasspacket1_agreement);
-                        modelmy_myclasspacket1_agreement.setVisibility(View.INVISIBLE);
-                    }
                     //view线
                     line = view.findViewById(R.id.modelmy_myclasspacket1_line1);
                 }
