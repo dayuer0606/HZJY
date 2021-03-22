@@ -83,6 +83,20 @@
                 android:textColor="#333333"
                 android:textSize="@dimen/textsize16"
                 android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/modelmy_mycollect_tab_question"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:singleLine="true"
+                android:text=" 问答 "
+                android:textColor="#333333"
+                android:textSize="@dimen/textsize18"
+                android:textStyle="bold" />
         </LinearLayout>
 
         <ImageView
@@ -90,7 +104,7 @@
             android:layout_width="@dimen/dp18"
             android:layout_height="@dimen/dp2"
             android:layout_below="@id/modelmy_mycollect_tab"
-            android:background="@drawable/image_cusor"
+            android:background="#FF6740"
             android:scaleType="matrix" />
 
         <View

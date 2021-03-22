@@ -349,6 +349,14 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                         }
                         //加载网络数据  刷新页面
                         getModelMyClassPacketCollectionMore();
+                    } else if (mMyCollectCurrentTab.equals("question")) {
+                        if (mMyCollectPacketSum <= mMyCollectPacketCurrentPage * mMyCollectPacketPageCount){
+                            LinearLayout mycollect_end = mMyCollectView.findViewById(R.id.mycollect_end);
+                            mycollect_end.setVisibility(View.VISIBLE);
+                            return;
+                        }
+                        //加载网络数据  刷新页面
+//                        getModelMyClassPacketCollectionMore();
                     }
                 }
                 @Override
@@ -361,21 +369,26 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                     } else if (mMyCollectCurrentTab.equals("coursepacket")) {
                         //加载网络数据  刷新页面
                         getModelMyClassPacketCollection();
+                    } else if (mMyCollectCurrentTab.equals("question")) {
+                        //加载网络数据  刷新页面
+//                        getModelMyClassPacketCollection();
                     }
                 }
             });
-          //我的课程控件  
+            //我的课程控件
             TextView modelmy_mycollect_tab_course = mMyCollectView.findViewById(R.id.modelmy_mycollect_tab_course);
             modelmy_mycollect_tab_course.setOnClickListener(v -> {
                 if (!mMyCollectCurrentTab.equals("course")) {
                     ImageView modelmy_mycollect_cursor1 = mMyCollectView.findViewById(R.id.modelmy_mycollect_cursor1);
-                    Animation animation = new TranslateAnimation((mMyCollectLastTabIndex - 1) * width / 2, 0, 0, 0);
+                    Animation animation = new TranslateAnimation((mMyCollectLastTabIndex - 1) * width / 3, 0, 0, 0);
                     animation.setFillAfter(true);// True:图片停在动画结束位置
                     animation.setDuration(200);
                     modelmy_mycollect_cursor1.startAnimation(animation);
                     TextView modelmy_mycollect_tab_coursepacket = mMyCollectView.findViewById(R.id.modelmy_mycollect_tab_coursepacket);
                     modelmy_mycollect_tab_course.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, mMyCollectView.getResources().getDimensionPixelSize(R.dimen.textsize18));
                     modelmy_mycollect_tab_coursepacket.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, mMyCollectView.getResources().getDimensionPixelSize(R.dimen.textsize16));
+                    TextView modelmy_mycollect_tab_question = mMyCollectView.findViewById(R.id.modelmy_mycollect_tab_question);
+                    modelmy_mycollect_tab_question.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, mMyCollectView.getResources().getDimensionPixelSize(R.dimen.textsize16));
                 }
                 mMyCollectLastTabIndex = 1;
                 mMyCollectCurrentTab = "course";
@@ -387,21 +400,40 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
             modelmy_mycollect_tab_coursepacket.setOnClickListener(v -> {
                 if (!mMyCollectCurrentTab.equals("coursepacket")) {
                     ImageView modelmy_mycollect_cursor1 = mMyCollectView.findViewById(R.id.modelmy_mycollect_cursor1);
-                    Animation animation = new TranslateAnimation((mMyCollectLastTabIndex - 1) * width / 2, width / 2, 0, 0);
+                    Animation animation = new TranslateAnimation((mMyCollectLastTabIndex - 1) * width / 3, width / 3, 0, 0);
                     animation.setFillAfter(true);// True:图片停在动画结束位置
                     animation.setDuration(200);
                     modelmy_mycollect_cursor1.startAnimation(animation);
                     modelmy_mycollect_tab_course.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, mMyCollectView.getResources().getDimensionPixelSize(R.dimen.textsize16));
+                    TextView modelmy_mycollect_tab_question = mMyCollectView.findViewById(R.id.modelmy_mycollect_tab_question);
+                    modelmy_mycollect_tab_question.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, mMyCollectView.getResources().getDimensionPixelSize(R.dimen.textsize16));
                     modelmy_mycollect_tab_coursepacket.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, mMyCollectView.getResources().getDimensionPixelSize(R.dimen.textsize18));
                 }
                 mMyCollectLastTabIndex = 2;
                 mMyCollectCurrentTab = "coursepacket";
                 getModelMyClassPacketCollection();
             });
+            //问答
+            TextView modelmy_mycollect_tab_question = mMyCollectView.findViewById(R.id.modelmy_mycollect_tab_question);
+            modelmy_mycollect_tab_question.setOnClickListener(v -> {
+                if (!mMyCollectCurrentTab.equals("question")) {
+                    ImageView modelmy_mycollect_cursor1 = mMyCollectView.findViewById(R.id.modelmy_mycollect_cursor1);
+                    Animation animation = new TranslateAnimation((mMyCollectLastTabIndex - 1) * width / 3, width *2 / 3, 0, 0);
+                    animation.setFillAfter(true);// True:图片停在动画结束位置
+                    animation.setDuration(200);
+                    modelmy_mycollect_cursor1.startAnimation(animation);
+                    modelmy_mycollect_tab_course.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, mMyCollectView.getResources().getDimensionPixelSize(R.dimen.textsize16));
+                    modelmy_mycollect_tab_coursepacket.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, mMyCollectView.getResources().getDimensionPixelSize(R.dimen.textsize16));
+                    modelmy_mycollect_tab_question.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, mMyCollectView.getResources().getDimensionPixelSize(R.dimen.textsize18));
+                }
+                mMyCollectLastTabIndex = 3;
+                mMyCollectCurrentTab = "question";
+//                getModelMyClassPacketCollection();
+            });
         }
         my_layout_main.addView(mMyCollectView);
         ImageView modelmy_mycollect_cursor1 = mMyCollectView.findViewById(R.id.modelmy_mycollect_cursor1);
-        int x = width / 4 - mMyCollectView.getResources().getDimensionPixelSize(R.dimen.dp18) / 2;
+        int x = width / 6 - mMyCollectView.getResources().getDimensionPixelSize(R.dimen.dp18) / 2;
         modelmy_mycollect_cursor1.setX(x);
         //默认选中的为课程
         mMyCollectLastTabIndex = 1;
@@ -417,41 +449,19 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
     }
 
     //展示我的收藏界面-课程
-    private View MyCollectShow_MyCourse(LinearLayout modelmy_mycollect_main_content,QueryMyCollectionListBean.DataBean.ListBean listBean) {
+    private void MyCollectShow_MyCourse(LinearLayout modelmy_mycollect_main_content,QueryMyCollectionListBean.DataBean.ListBean listBean) {
         //测试数据我的课程子条目
         View view = LayoutInflater.from(mMainContext).inflate(R.layout.model_my_myclass1, null);
-        //加载网络图片封面
-        ControllerCustomRoundAngleImageView modelmy_myclass1_cover = view.findViewById(R.id.modelmy_myclass1_cover);
-        Glide.with(mMainContext).load(listBean.cover).listener(new RequestListener<Drawable>() {
-            @Override
-            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                Log.d("Wain", "加载失败 errorMsg:" + (e != null ? e.getMessage() : "null"));
-                return false;
-            }
-            @Override
-            public boolean onResourceReady(final Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                Log.d("Wain", "成功  Drawable Name:" + resource.getClass().getCanonicalName());
-                return false;
-            }
-        }).error(mMainContext.getResources().getDrawable(R.drawable.modelcoursecover)).into(modelmy_myclass1_cover);
         //课程名称
         TextView modelmy_myclass1_classname = view.findViewById(R.id.modelmy_myclass1_classname);
         modelmy_myclass1_classname.setText(listBean.course_name);
         //stuNum
         TextView modelmy_myclass1_state = view.findViewById(R.id.modelmy_myclass1_state);
         modelmy_myclass1_state.setText(listBean.stuNum + "");
-        //类型
-        ImageView iv_imagetype = view.findViewById(R.id.iv_imagetype);
-        if (listBean.course_type.equals("直播,录播")){
-            iv_imagetype.setBackground(view.getResources().getDrawable(R.drawable.button_myclass_mix));
-        } else if (listBean.course_type.equals("直播")){
-            iv_imagetype.setBackground(view.getResources().getDrawable(R.drawable.button_myclass_live));
-        } else if (listBean.course_type.equals("录播")){
-            iv_imagetype.setBackground(view.getResources().getDrawable(R.drawable.button_myclass_record));
-        }
         modelmy_mycollect_main_content.addView(view);
         //添加每个课程的监听，点击跳转到课程详情
-        view.setOnClickListener(v -> {
+        TextView modelmy_myclass1_golearn = view.findViewById(R.id.modelmy_myclass1_golearn);
+        modelmy_myclass1_golearn.setOnClickListener(v -> {
             CourseInfo courseInfo = new CourseInfo();
             courseInfo.setmCourseId(String.valueOf(listBean.course_id));
             courseInfo.setmCourseCover(listBean.cover);
@@ -469,17 +479,12 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
             my_layout_main.addView(modelCourseView);
             mMainContext.onClickCourseDetails();
         });
-        //我的收藏不需要显示课程协议，因为没有购买的课程也可以被收藏
-        TextView modelmy_myclass1_agreement = view.findViewById(R.id.modelmy_myclass1_agreement);
-        modelmy_myclass1_agreement.setVisibility(View.INVISIBLE);
-        
-        View modelmy_myclass1_line1 = view.findViewById(R.id.modelmy_myclass1_line1);
-        return modelmy_myclass1_line1;
+
+        return ;
     }
 
     //展示我的收藏界面-课程包
     private View MyCollectShow_MyCoursePacket(LinearLayout modelmy_mycollect_main_content,QueryMyCollectionPacketListBean.DataBean.ListBean listBean) {
-        //modelmy_myclasspacket1_line1
         View view = LayoutInflater.from(mMainContext).inflate(R.layout.model_my_myclasspacket1, null);
         //加载网络图片封面
         ControllerCustomRoundAngleImageView modelmy_myclasspacket1_cover = view.findViewById(R.id.modelmy_myclasspacket1_cover);
@@ -526,6 +531,9 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
         //我的收藏不需要显示学习进度，因为没有购买的课程也可以被收藏
         LinearLayout modelmy_myclasspacket1_learnprogresslayout = view.findViewById(R.id.modelmy_myclasspacket1_learnprogresslayout);
         modelmy_myclasspacket1_learnprogresslayout.setVisibility(View.INVISIBLE);
+        //我的收藏界面显示价格
+        LinearLayout modelmy_myclasspacket1_price_layout = view.findViewById(R.id.modelmy_myclasspacket1_price_layout);
+        modelmy_myclasspacket1_price_layout.setVisibility(View.VISIBLE);
         //布局控件的线
         View modelmy_myclasspacket1_line1 = view.findViewById(R.id.modelmy_myclasspacket1_line1);
         return modelmy_myclasspacket1_line1;
@@ -1920,45 +1928,22 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                 mMyCourseSum = dataBean.getTotal();
                 LinearLayout modelmy_myclass_main_content = mMyClassView.findViewById(R.id.modelmy_myclass_main_content);
                 modelmy_myclass_main_content.removeAllViews();
-                View line = null;
                 for (int i = 0; i < courseListBeansList.size(); i++) {
                     QueryMyCourseListBean.DataBean.ListBean courseListBean = courseListBeansList.get(i);
                     if (courseListBean == null) {
                         continue;
                     }
                     View view = LayoutInflater.from(mMainContext).inflate(R.layout.model_my_myclass1, null);
-                    //加载网络图片封面
-                    ControllerCustomRoundAngleImageView modelmy_myclass1_cover = view.findViewById(R.id.modelmy_myclass1_cover);
-                    Glide.with(mMainContext).load(courseListBean.cover).listener(new RequestListener<Drawable>() {
-                        @Override
-                        public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                            Log.d("Wain", "加载失败 errorMsg:" + (e != null ? e.getMessage() : "null"));
-                            return false;
-                        }
-                        @Override
-                        public boolean onResourceReady(final Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                            Log.d("Wain", "成功  Drawable Name:" + resource.getClass().getCanonicalName());
-                            return false;
-                        }
-                    }).error(mMainContext.getResources().getDrawable(R.drawable.modelcoursecover)).into(modelmy_myclass1_cover);
                     //课程名称
                     TextView modelmy_myclass1_classname = view.findViewById(R.id.modelmy_myclass1_classname);
                     modelmy_myclass1_classname.setText(courseListBean.course_name);
                     //stuNum
                     TextView modelmy_myclass1_state = view.findViewById(R.id.modelmy_myclass1_state);
                     modelmy_myclass1_state.setText(courseListBean.stuNum + "");
-                    //类型
-                    ImageView iv_imagetype = view.findViewById(R.id.iv_imagetype);
-                    if (courseListBean.course_type.equals("直播,录播")){
-                        iv_imagetype.setBackground(view.getResources().getDrawable(R.drawable.button_myclass_mix));
-                    } else if (courseListBean.course_type.equals("直播")){
-                        iv_imagetype.setBackground(view.getResources().getDrawable(R.drawable.button_myclass_live));
-                    } else if (courseListBean.course_type.equals("录播")){
-                        iv_imagetype.setBackground(view.getResources().getDrawable(R.drawable.button_myclass_record));
-                    }
                     modelmy_myclass_main_content.addView(view);
+                    TextView modelmy_myclass1_golearn = view.findViewById(R.id.modelmy_myclass1_golearn);
                     //添加每个课程的监听，点击跳转到课程详情
-                    view.setOnClickListener(v -> {
+                    modelmy_myclass1_golearn.setOnClickListener(v -> {
                         CourseInfo courseInfo = new CourseInfo();
                         courseInfo.setmCourseId(String.valueOf(courseListBean.course_id));
                         courseInfo.setmCourseCover(courseListBean.cover);
@@ -1978,28 +1963,6 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                         mModelCourseCover = modelCourseCover;
                         mMainContext.onClickCourseDetails();
                     });
-                    //我的课程协议
-                    if (courseListBean.agreement_id != null) {
-                        //我的课程协议
-                        TextView modelmy_myclass1_agreement = view.findViewById(R.id.modelmy_myclass1_agreement);
-                        modelmy_myclass1_agreement.setOnClickListener(v -> { //点击查看协议
-                            HideAllLayout();
-                            mMainContext.onClickMyAgreement();
-                            View myclass_agreement = LayoutInflater.from(mMainContext).inflate(R.layout.model_agreement, null);
-                            //我的课程网络请求
-                            getModelMyMeent(myclass_agreement,courseListBean.agreement_id);
-                            LinearLayout my_layout_main = mview.findViewById(R.id.my_layout_main);
-                            my_layout_main.addView(myclass_agreement);
-                        });
-                    } else {
-                        TextView modelmy_myclass1_agreement = view.findViewById(R.id.modelmy_myclass1_agreement);
-                        modelmy_myclass1_agreement.setVisibility(View.INVISIBLE);
-                    }
-                    //view线
-                    line = view.findViewById(R.id.modelmy_myclass1_line1);
-                }
-                if (line != null) {
-                    line.setVisibility(View.INVISIBLE);
                 }
                 if (mSmart_model_my_myclass != null){
                     mSmart_model_my_myclass.finishRefresh();
@@ -2088,45 +2051,22 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                 }
                 mMyCourseSum = dataBean.getTotal();
                 LinearLayout modelmy_myclass_main_content = mMyClassView.findViewById(R.id.modelmy_myclass_main_content);
-                View line = null;
                 for (int i = 0; i < courseListBeansList.size(); i++) {
                     QueryMyCourseListBean.DataBean.ListBean courseListBean = courseListBeansList.get(i);
                     if (courseListBean == null) {
                         continue;
                     }
                     View view = LayoutInflater.from(mMainContext).inflate(R.layout.model_my_myclass1, null);
-                    //加载网络图片封面
-                    ControllerCustomRoundAngleImageView modelmy_myclass1_cover = view.findViewById(R.id.modelmy_myclass1_cover);
-                    Glide.with(mMainContext).load(courseListBean.cover).listener(new RequestListener<Drawable>() {
-                        @Override
-                        public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                            Log.d("Wain", "加载失败 errorMsg:" + (e != null ? e.getMessage() : "null"));
-                            return false;
-                        }
-                        @Override
-                        public boolean onResourceReady(final Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                            Log.d("Wain", "成功  Drawable Name:" + resource.getClass().getCanonicalName());
-                            return false;
-                        }
-                    }).error(mMainContext.getResources().getDrawable(R.drawable.modelcoursecover)).into(modelmy_myclass1_cover);
                     //课程名称
                     TextView modelmy_myclass1_classname = view.findViewById(R.id.modelmy_myclass1_classname);
                     modelmy_myclass1_classname.setText(courseListBean.course_name);
                     //stuNum
                     TextView modelmy_myclass1_state = view.findViewById(R.id.modelmy_myclass1_state);
                     modelmy_myclass1_state.setText(courseListBean.stuNum + "");
-                    //类型
-                    ImageView iv_imagetype = view.findViewById(R.id.iv_imagetype);
-                    if (courseListBean.course_type.equals("直播,录播")){
-                        iv_imagetype.setBackground(view.getResources().getDrawable(R.drawable.button_myclass_mix));
-                    } else if (courseListBean.course_type.equals("直播")){
-                        iv_imagetype.setBackground(view.getResources().getDrawable(R.drawable.button_myclass_live));
-                    } else if (courseListBean.course_type.equals("录播")){
-                        iv_imagetype.setBackground(view.getResources().getDrawable(R.drawable.button_myclass_record));
-                    }
                     modelmy_myclass_main_content.addView(view);
                     //添加每个课程的监听，点击跳转到课程详情
-                    view.setOnClickListener(v -> {
+                    TextView modelmy_myclass1_golearn = view.findViewById(R.id.modelmy_myclass1_golearn);
+                    modelmy_myclass1_golearn.setOnClickListener(v -> {
                         CourseInfo courseInfo = new CourseInfo();
                         courseInfo.setmCourseId(String.valueOf(courseListBean.course_id));
                         courseInfo.setmCourseCover(courseListBean.cover);
@@ -2146,27 +2086,6 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                         mModelCourseCover = modelCourseCover;
                         mMainContext.onClickCourseDetails();
                     });
-                    if (courseListBean.agreement_id != null) {
-                        //我的课程协议
-                        TextView modelmy_myclass1_agreement = view.findViewById(R.id.modelmy_myclass1_agreement);
-                        modelmy_myclass1_agreement.setOnClickListener(v -> { //点击查看协议
-                            HideAllLayout();
-                            mMainContext.onClickMyAgreement();
-                            View myclass_agreement = LayoutInflater.from(mMainContext).inflate(R.layout.model_agreement, null);
-                            //我的课程网络请求
-                            getModelMyMeent(myclass_agreement,courseListBean.agreement_id);
-                            LinearLayout my_layout_main = mview.findViewById(R.id.my_layout_main);
-                            my_layout_main.addView(myclass_agreement);
-                        });
-                    } else {
-                        TextView modelmy_myclass1_agreement = view.findViewById(R.id.modelmy_myclass1_agreement);
-                        modelmy_myclass1_agreement.setVisibility(View.INVISIBLE);
-                    }
-                    //view线
-                    line = view.findViewById(R.id.modelmy_myclass1_line1);
-                }
-                if (line != null) {
-                    line.setVisibility(View.INVISIBLE);
                 }
                 if (mSmart_model_my_myclass != null){
                     mSmart_model_my_myclass.finishLoadMore();
@@ -2760,7 +2679,6 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                                 mMyCollectSum = data.getTotal();
                                 List<QueryMyCollectionListBean.DataBean.ListBean> list = data.getList();
                                 if (list != null){
-                                    View modelmy_myclass1_line1 = null;
                                     for (int i = 0; i < list.size(); i ++){
                                         QueryMyCollectionListBean.DataBean.ListBean listBean1 = list.get(i);
                                         if (listBean1 == null){
@@ -2769,10 +2687,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                                             }
                                             continue;
                                         }
-                                        modelmy_myclass1_line1 = MyCollectShow_MyCourse(modelmy_mycollect_main_content,listBean1);
-                                    }
-                                    if (modelmy_myclass1_line1 != null){
-                                        modelmy_myclass1_line1.setVisibility(View.INVISIBLE);
+                                        MyCollectShow_MyCourse(modelmy_mycollect_main_content,listBean1);
                                     }
                                 } else {
                                     if (mSmart_model_my_mycollect != null){
@@ -2870,7 +2785,6 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                                 mMyCollectSum = data.getTotal();
                                 List<QueryMyCollectionListBean.DataBean.ListBean> list = data.getList();
                                 if (list != null){
-                                    View modelmy_myclass1_line1 = null;
                                     for (int i = 0; i < list.size(); i ++){
                                         QueryMyCollectionListBean.DataBean.ListBean listBean1 = list.get(i);
                                         if (listBean1 == null){
@@ -2879,10 +2793,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                                             }
                                             continue;
                                         }
-                                        modelmy_myclass1_line1 = MyCollectShow_MyCourse(modelmy_mycollect_main_content,listBean1);
-                                    }
-                                    if (modelmy_myclass1_line1 != null){
-                                        modelmy_myclass1_line1.setVisibility(View.INVISIBLE);
+                                        MyCollectShow_MyCourse(modelmy_mycollect_main_content,listBean1);
                                     }
                                     if (mSmart_model_my_mycollect != null){
                                         mSmart_model_my_mycollect.finishRefresh();
@@ -2902,7 +2813,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                                 LoadingDialog.getInstance(mMainContext).dismiss();
                                 return;
                             }
-                        }else {
+                        } else {
                             if (mSmart_model_my_mycollect != null){
                                 mSmart_model_my_mycollect.finishLoadMore();
                             }
