@@ -10,9 +10,9 @@
     android:focusable="true">
     <RelativeLayout
         android:id="@+id/setting_main"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:visibility="invisible">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="visible">
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="@dimen/dp44"
@@ -39,217 +39,11 @@
                 android:gravity="center"
                 android:layout_centerVertical="true"/>
         </RelativeLayout>
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_57"
-            android:layout_marginTop="@dimen/dp_10"
-            android:background="@color/white"
-            android:id="@+id/setting_essentialinformation"
-            android:clickable="true"
-            android:onClick="onClickSettingEssentialInformation"
-            android:layout_below="@id/setting_returnRelativeLayout">
-            <TextView
-                android:id="@+id/setting_essentialinformation_textview"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/title_essentialinformation"
-                android:layout_centerVertical="true"
-                android:textColor="#333333"
-                android:singleLine="true"
-                android:textSize="@dimen/textsize18"
-                android:paddingLeft="@dimen/dp13"
-                android:layout_toLeftOf="@+id/setting_essentialinformation_go"
-                android:layout_alignParentLeft="true"/>
-            <ImageView
-                android:id="@+id/setting_essentialinformation_go"
-                android:layout_width="@dimen/dp16"
-                android:layout_height="@dimen/dp16"
-                android:layout_marginRight="@dimen/dp13"
-                android:layout_centerVertical="true"
-                android:background="@drawable/button_return_left_gray"
-                android:layout_alignParentRight="true"/>
-        </RelativeLayout>
-<!--        android:layout_height="@dimen/dp_57"-->
-<!--        android:layout_marginTop="@dimen/dp_10"-->
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp0"
-            android:layout_marginTop="@dimen/dp0"
-            android:background="@color/white"
-            android:id="@+id/setting_clearcache"
-            android:clickable="true"
-            android:layout_below="@id/setting_essentialinformation"
-            android:onClick="onClickSettingClearCache">
-            <TextView
-                android:id="@+id/setting_clearcache_textview"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/title_clearcache"
-                android:layout_centerVertical="true"
-                android:textColor="#333333"
-                android:singleLine="true"
-                android:textSize="@dimen/textsize18"
-                android:paddingLeft="@dimen/dp13"
-                android:layout_toLeftOf="@+id/clearcache_value_textview"
-                android:layout_alignParentLeft="true"/>
-            <TextView
-                android:id="@+id/clearcache_value_textview"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:layout_centerVertical="true"
-                android:textColor="#999999"
-                android:singleLine="true"
-                android:textSize="@dimen/textsize16"
-                android:paddingLeft="@dimen/dp13"
-                android:layout_marginLeft="@dimen/dp8"
-                android:layout_marginRight="@dimen/dp8"
-                android:layout_toLeftOf="@+id/setting_clearcache_go"/>
-            <ImageView
-                android:id="@+id/setting_clearcache_go"
-                android:layout_width="@dimen/dp16"
-                android:layout_height="@dimen/dp16"
-                android:layout_marginRight="@dimen/dp13"
-                android:layout_centerVertical="true"
-                android:background="@drawable/button_return_left_gray"
-                android:layout_alignParentRight="true"/>
-        </RelativeLayout>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp0"
-            android:background="#ececec"
-            android:id="@+id/setting_line2"
-            android:layout_marginRight="@dimen/dp13"
-            android:layout_marginLeft="@dimen/dp13"
-            android:layout_below="@id/setting_clearcache"/>
-<!--        android:layout_height="@dimen/dp_57"-->
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp0"
-            android:background="@color/white"
-            android:id="@+id/setting_allownonwifiplay"
-            android:layout_below="@id/setting_line2">
-            <TextView
-                android:id="@+id/setting_allownonwifiplay_textview"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/title_allownonwifiplay"
-                android:layout_centerVertical="true"
-                android:textColor="#333333"
-                android:singleLine="true"
-                android:textSize="@dimen/textsize18"
-                android:paddingLeft="@dimen/dp13"
-                android:layout_toLeftOf="@+id/setting_allownonwifiplay_go"
-                android:layout_alignParentLeft="true"/>
-            <com.android.school.ModelSwitchButton
-                android:id="@+id/setting_allownonwifiplay_go"
-                android:layout_width="@dimen/dp50"
-                android:layout_height="@dimen/dp28"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="@dimen/dp13"
-                android:layout_marginLeft="@dimen/dp8"
-                app:sb_checked_color="#ff649cf0"
-                app:sb_uncheck_color="#e0e0e0"
-                app:sb_background="#e0e0e0"
-                android:layout_alignParentRight="true"/>
-        </RelativeLayout>
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_57"
-            android:layout_marginTop="@dimen/dp_10"
-            android:background="@color/white"
-            android:id="@+id/setting_aboutus"
-            android:clickable="true"
-            android:layout_below="@id/setting_allownonwifiplay"
-            android:onClick="onClickSettingAboutUs">
-            <TextView
-                android:id="@+id/setting_aboutus_textview"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/title_aboutus"
-                android:layout_centerVertical="true"
-                android:textColor="#333333"
-                android:singleLine="true"
-                android:textSize="@dimen/textsize18"
-                android:paddingLeft="@dimen/dp13"
-                android:layout_toLeftOf="@+id/setting_aboutus_go"
-                android:layout_alignParentLeft="true"/>
-            <ImageView
-                android:id="@+id/setting_aboutus_go"
-                android:layout_width="@dimen/dp16"
-                android:layout_height="@dimen/dp16"
-                android:layout_marginRight="@dimen/dp13"
-                android:layout_centerVertical="true"
-                android:background="@drawable/button_return_left_gray"
-                android:layout_alignParentRight="true"/>
-        </RelativeLayout>
-        <TextView
-            android:id="@+id/setting_logout_button"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_57"
-            android:background="@color/white"
-            android:text="@string/title_logout"
-            android:textColor="#333333"
-            android:gravity="center"
-            android:layout_marginTop="@dimen/dp_10"
-            android:textSize="@dimen/textsize18"
-            android:onClick="onClickLogout"
-            android:layout_below="@id/setting_aboutus"/>
-        <TextView
-            android:id="@+id/yijian"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="意见反馈"
-            android:gravity="center"
-            android:textColor="#333333"
-            android:singleLine="true"
-            android:textSize="@dimen/textsize12"
-            android:layout_marginBottom="@dimen/dp15"
-            android:layout_alignParentBottom="true"/>
-    </RelativeLayout>
-    <RelativeLayout
-        android:id="@+id/setting_essentialinformation_main"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:visibility="invisible"
-        android:background="#f3f3f3">
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp44"
-            android:background="@color/white"
-            android:id="@+id/setting_essentialinformation_returnRelativeLayout">
-            <ImageView
-                android:id="@+id/setting_essentialinformation_return_button"
-                android:layout_width="@dimen/dp16"
-                android:layout_height="@dimen/dp16"
-                android:layout_marginLeft="@dimen/dp13"
-                android:layout_marginRight="@dimen/dp13"
-                android:layout_centerVertical="true"
-                android:background="@drawable/button_return_right_gray"
-                android:clickable="true"
-                android:onClick="onClickSettingBaseInfoReturn"/>
-            <TextView
-                android:id="@+id/setting_essentialinformation_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/title_essentialinformation"
-                android:singleLine="true"
-                android:textColor="#ff333333"
-                android:textSize="@dimen/textsize18"
-                android:gravity="center"
-                android:layout_centerVertical="true"/>
-        </RelativeLayout>
-        <View
-            android:id="@+id/setting_essentialinformation_line1"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#ececec"
-            android:layout_below="@id/setting_essentialinformation_returnRelativeLayout"/>
         <ScrollView
             android:id="@+id/setting_essentialinformation_scroll_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/setting_essentialinformation_line1">
+            android:layout_below="@id/setting_returnRelativeLayout">
             <LinearLayout
                 android:id="@+id/setting_essentialinformation_LinearLayout"
                 android:layout_width="match_parent"
@@ -481,6 +275,53 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/dp56"
                         android:background="@color/white"
+                        android:id="@+id/essentialinformation_idnumber"
+                        android:clickable="true"
+                        android:onClick="onClickSettingEssentialInformationIdNum">
+                        <TextView
+                            android:id="@+id/essentialinformation_idnumber_textview"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/title_idnumber"
+                            android:layout_marginLeft="@dimen/dp13"
+                            android:layout_marginRight="@dimen/dp13"
+                            android:singleLine="true"
+                            android:textColor="#333333"
+                            android:layout_centerVertical="true"
+                            android:textSize="@dimen/textsize17"
+                            android:layout_toLeftOf="@+id/essentialinformation_idnumber_value_textview"
+                            android:layout_alignParentLeft="true"/>
+                        <TextView
+                            android:id="@+id/essentialinformation_idnumber_value_textview"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=""
+                            android:singleLine="true"
+                            android:textColor="#999999"
+                            android:layout_centerVertical="true"
+                            android:textSize="@dimen/textsize17"
+                            android:maxLength="12"
+                            android:layout_marginRight="@dimen/dp13"
+                            android:layout_toLeftOf="@+id/essentialinformation_idnumber_go"/>
+                        <ImageView
+                            android:id="@+id/essentialinformation_idnumber_go"
+                            android:layout_width="@dimen/dp16"
+                            android:layout_height="@dimen/dp16"
+                            android:layout_marginRight="@dimen/dp13"
+                            android:layout_centerVertical="true"
+                            android:background="@drawable/button_return_left_gray"
+                            android:layout_alignParentRight="true"/>
+                    </RelativeLayout>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp1"
+                        android:layout_marginRight="@dimen/dp13"
+                        android:layout_marginLeft="@dimen/dp13"
+                        android:background="#ececec"/>
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp56"
+                        android:background="@color/white"
                         android:id="@+id/essentialinformation_email"
                         android:clickable="true"
                         android:onClick="onClickSettingEssentialInformationEmail">
@@ -565,53 +406,7 @@
                             android:background="@drawable/button_return_left_gray"
                             android:layout_alignParentRight="true"/>
                     </RelativeLayout>
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/dp1"
-                        android:layout_marginRight="@dimen/dp13"
-                        android:layout_marginLeft="@dimen/dp13"
-                        android:background="#ececec"/>
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/dp56"
-                        android:background="@color/white"
-                        android:id="@+id/essentialinformation_idnumber"
-                        android:clickable="true"
-                        android:onClick="onClickSettingEssentialInformationIdNum">
-                        <TextView
-                            android:id="@+id/essentialinformation_idnumber_textview"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/title_idnumber"
-                            android:layout_marginLeft="@dimen/dp13"
-                            android:layout_marginRight="@dimen/dp13"
-                            android:singleLine="true"
-                            android:textColor="#333333"
-                            android:layout_centerVertical="true"
-                            android:textSize="@dimen/textsize17"
-                            android:layout_toLeftOf="@+id/essentialinformation_idnumber_value_textview"
-                            android:layout_alignParentLeft="true"/>
-                        <TextView
-                            android:id="@+id/essentialinformation_idnumber_value_textview"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text=""
-                            android:singleLine="true"
-                            android:textColor="#999999"
-                            android:layout_centerVertical="true"
-                            android:textSize="@dimen/textsize17"
-                            android:maxLength="12"
-                            android:layout_marginRight="@dimen/dp13"
-                            android:layout_toLeftOf="@+id/essentialinformation_idnumber_go"/>
-                        <ImageView
-                            android:id="@+id/essentialinformation_idnumber_go"
-                            android:layout_width="@dimen/dp16"
-                            android:layout_height="@dimen/dp16"
-                            android:layout_marginRight="@dimen/dp13"
-                            android:layout_centerVertical="true"
-                            android:background="@drawable/button_return_left_gray"
-                            android:layout_alignParentRight="true"/>
-                    </RelativeLayout>
+
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/dp56"
@@ -653,6 +448,109 @@
                             android:background="@drawable/button_return_left_gray"
                             android:layout_alignParentRight="true"/>
                     </RelativeLayout>
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp56"
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:background="@color/white"
+                        android:id="@+id/setting_clearcache"
+                        android:clickable="true"
+                        android:onClick="onClickSettingClearCache">
+                        <TextView
+                            android:id="@+id/setting_clearcache_textview"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/title_clearcache"
+                            android:layout_centerVertical="true"
+                            android:textColor="#333333"
+                            android:singleLine="true"
+                            android:textSize="@dimen/textsize18"
+                            android:paddingLeft="@dimen/dp13"
+                            android:layout_toLeftOf="@+id/clearcache_value_textview"
+                            android:layout_alignParentLeft="true"/>
+                        <TextView
+                            android:id="@+id/clearcache_value_textview"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=""
+                            android:layout_centerVertical="true"
+                            android:textColor="#999999"
+                            android:singleLine="true"
+                            android:textSize="@dimen/textsize16"
+                            android:paddingLeft="@dimen/dp13"
+                            android:layout_marginLeft="@dimen/dp8"
+                            android:layout_marginRight="@dimen/dp8"
+                            android:layout_toLeftOf="@+id/setting_clearcache_go"/>
+                        <ImageView
+                            android:id="@+id/setting_clearcache_go"
+                            android:layout_width="@dimen/dp16"
+                            android:layout_height="@dimen/dp16"
+                            android:layout_marginRight="@dimen/dp13"
+                            android:layout_centerVertical="true"
+                            android:background="@drawable/button_return_left_gray"
+                            android:layout_alignParentRight="true"/>
+                    </RelativeLayout>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp1"
+                        android:background="#ececec"
+                        android:id="@+id/setting_line2"
+                        android:layout_marginRight="@dimen/dp13"
+                        android:layout_marginLeft="@dimen/dp13"
+                        android:layout_below="@id/setting_clearcache"/>
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp56"
+                        android:background="@color/white"
+                        android:id="@+id/setting_allownonwifiplay"
+                        android:layout_below="@id/setting_line2">
+                        <TextView
+                            android:id="@+id/setting_allownonwifiplay_textview"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/title_allownonwifiplay"
+                            android:layout_centerVertical="true"
+                            android:textColor="#333333"
+                            android:singleLine="true"
+                            android:textSize="@dimen/textsize18"
+                            android:paddingLeft="@dimen/dp13"
+                            android:layout_toLeftOf="@+id/setting_allownonwifiplay_go"
+                            android:layout_alignParentLeft="true"/>
+                        <com.android.school.ModelSwitchButton
+                            android:id="@+id/setting_allownonwifiplay_go"
+                            android:layout_width="@dimen/dp50"
+                            android:layout_height="@dimen/dp28"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="@dimen/dp13"
+                            android:layout_marginLeft="@dimen/dp8"
+                            app:sb_checked_color="#ff649cf0"
+                            app:sb_uncheck_color="#e0e0e0"
+                            app:sb_background="#e0e0e0"
+                            android:layout_alignParentRight="true"/>
+                    </RelativeLayout>
+                    <TextView
+                        android:id="@+id/setting_logout_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_57"
+                        android:background="@color/white"
+                        android:text="@string/title_logout"
+                        android:textColor="#F32D2D"
+                        android:gravity="center"
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:textSize="@dimen/textsize17"
+                        android:onClick="onClickLogout"/>
+                    <TextView
+                        android:id="@+id/yijian"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp13"
+                        android:text="意见反馈"
+                        android:gravity="center"
+                        android:textColor="#333333"
+                        android:singleLine="true"
+                        android:textSize="@dimen/textsize12"
+                        android:layout_marginBottom="@dimen/dp15"
+                        android:layout_alignParentBottom="true"/>
                 </GridLayout>
             </LinearLayout>
         </ScrollView>
@@ -1313,35 +1211,6 @@
             android:layout_height="1dp"
             android:background="#ececec"
             android:layout_below="@id/aboutus_version"/>
-        <!--                <RelativeLayout-->
-        <!--                    android:layout_width="wrap_content"-->
-        <!--                    android:layout_height="wrap_content"-->
-        <!--                    android:id="@+id/aboutus_functionintroduce"-->
-        <!--                    android:clickable="true"-->
-        <!--                    android:onClick="onClickSettingEssentialInformation">-->
-        <!--                    <TextView-->
-        <!--                        android:id="@+id/aboutus_functionintroduce_textview"-->
-        <!--                        android:layout_width="wrap_content"-->
-        <!--                        android:layout_height="wrap_content"-->
-        <!--                        android:text="@string/title_functionintroduce"-->
-        <!--                        android:gravity="fill"-->
-        <!--                        android:layout_gravity="center"-->
-        <!--                        android:singleLine="true"-->
-        <!--                        android:textSize="18sp"-->
-        <!--                        android:layout_toLeftOf="@id/aboutus_functionintroduce_go"-->
-        <!--                        android:layout_alignParentLeft="true"/>-->
-        <!--                    <ImageView-->
-        <!--                        android:id="@+id/aboutus_functionintroduce_go"-->
-        <!--                        android:layout_width="20dp"-->
-        <!--                        android:layout_height="20dp"-->
-        <!--                        android:background="@drawable/button_return_left_gray"-->
-        <!--                        android:layout_alignParentRight="true"/>-->
-        <!--                </RelativeLayout>-->
-        <!--                <View-->
-        <!--                    android:id="@+id/login_line1"-->
-        <!--                    android:layout_width="match_parent"-->
-        <!--                    android:layout_height="1dp"-->
-        <!--                    android:background="#ececec"/>-->
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

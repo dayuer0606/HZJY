@@ -46,7 +46,7 @@
     <string name="title_version">版本</string>
     <string name="title_aboutus">关于我们</string>
     <string name="title_privacypolicy">隐私政策</string>
-    <string name="title_logout">退出当前账号</string>
+    <string name="title_logout">退出登录</string>
     <string name="title_icon">头像</string>
     <string name="title_id">账号</string>
     <string name="title_name">姓名</string>

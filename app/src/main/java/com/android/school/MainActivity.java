@@ -36,6 +36,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -859,6 +860,12 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
 
     //点击设置
     public void onClickSetting(View view) {
+        if (mStuId.equals("")) {
+            Toast toast = Toast.makeText(this,"请先登录！",Toast.LENGTH_SHORT);
+            toast.setGravity(Gravity.CENTER,0,0);
+            toast.show();
+            return;
+        }
         mPage = "设置";
         mBeforePage = "我的";
         //隐藏所有的底部按钮
@@ -1010,32 +1017,6 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
         ((ModelLogIn)mModelLogIn).RegisterSMSCodeGet();
     }
 
-    //点击设置-基本信息
-    public void onClickSettingEssentialInformation(View view) {
-        if (mStuId.equals("")){
-            mPage = "登录";
-            mBeforePage = "设置";
-            //跳转到登录界面
-            Page_LogIn();
-        } else {
-            mPage = "基本信息";
-            mBeforePage = "设置";
-            ((ModelSetting)mModelSetting).SettingBaseInfoMainShow(1);
-        }
-    }
-
-    //点击设置-基本信息-返回
-    public void onClickSettingBaseInfoReturn(View view) {
-        if (mPage.equals("基本信息") && mBeforePage.equals("我的")){
-            Page_My();
-        } else if (mPage.equals("基本信息") && mBeforePage.equals("设置")){
-            if (mModelSetting != null) {
-                mPage = "设置";
-                mBeforePage = "我的";
-                ((ModelSetting) mModelSetting).SettingMainShow(0);
-            }
-        }
-    }
 
     //点击上传头像
     public void onClickSettingEssentialInformationIcon(View view) {
@@ -1299,7 +1280,6 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
         final ModelCommonDialog dialog = new ModelCommonDialog(this);
         dialog.setMessage("确认清除缓存吗？")
 //                .setImageResId(R.mipmap.ic_launcher)
-                .setTitle("提示")
                 .setSingle(false).setOnClickBottomListener(new ModelCommonDialog.OnClickBottomListener() {
             @Override
             public void onPositiveClick() {
@@ -1317,19 +1297,6 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
     //点击设置界面的允许非WiFi网络播放和缓存视频
     public void onClickSettingAllowNonWifiPlay(boolean isEnable) {
         //isEnable 是否允许在非WiFi网络播放和缓存视频
-    }
-
-//    //点击设置界面的版本
-//    public void onClickSettingVersion(View view) {
-//    }
-
-    //点击设置界面的关于我们
-    public void onClickSettingAboutUs(View view) {
-        if (mModelSetting != null) {
-            mPage = "关于我们";
-            mBeforePage = "设置";
-            ((ModelSetting) mModelSetting).SettingAboutUsShow();
-        }
     }
 
     //点击设置界面的关于我们-返回(取消修改，无需保存)
@@ -2397,33 +2364,20 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
                     if (mModelSetting != null) {
                         mPage = "设置";
                         mBeforePage = "我的";
+                        //隐藏所有的底部按钮
+                        mBottomNavigationView.setVisibility(View.INVISIBLE);
                         ((ModelSetting) mModelSetting).SettingMainShow(0);
                     }
                     return true;
                 } else if (mPage.equals("基本信息") && mBeforePage.equals("我的")) { //如果当前界面是设置-基本信息，点击返回按钮，应该返回到我的
                     Page_My();
                     return true;
-                } else if (mPage.equals("登录") && mBeforePage.equals("设置")) { //如果当前界面是登录，点击返回按钮，应该返回到设置
-                    if (mModelSetting != null) {
-                        mPage = "设置";
-                        mBeforePage = "我的";
-                        //隐藏所有的底部按钮
-                        mBottomNavigationView.setVisibility(View.INVISIBLE);
-                        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                        hideAllFragment(transaction);
-                        if(mModelSetting == null){
-                            mModelSetting = ModelSetting.newInstance(mThis,"设置-基本信息",R.layout.modelsetting);//"设置"
-                            transaction.add(R.id.framepage,mModelSetting);
-                        } else {
-                            transaction.show(mModelSetting);
-                        }
-                        transaction.commit();
-                    }
-                    return true;
                 } else if (mPage.equals("修改名称") && mBeforePage.equals("基本信息")) { //如果当前界面是修改名称，点击返回按钮，应该返回到基本信息
                     if (mModelSetting != null) {
                         mPage = "基本信息";
                         mBeforePage = "设置";
+                        //隐藏所有的底部按钮
+                        mBottomNavigationView.setVisibility(View.INVISIBLE);
                         ((ModelSetting)mModelSetting).SettingBaseInfoMainShow(1);
                     }
                     return true;
@@ -2431,6 +2385,8 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
                     if (mModelSetting != null) {
                         mPage = "基本信息";
                         mBeforePage = "设置";
+                        //隐藏所有的底部按钮
+                        mBottomNavigationView.setVisibility(View.INVISIBLE);
                         ((ModelSetting)mModelSetting).SettingBaseInfoMainShow(1);
                     }
                     return true;
@@ -2438,6 +2394,8 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
                     if (mModelSetting != null) {
                         mPage = "基本信息";
                         mBeforePage = "设置";
+                        //隐藏所有的底部按钮
+                        mBottomNavigationView.setVisibility(View.INVISIBLE);
                         ((ModelSetting)mModelSetting).SettingBaseInfoMainShow(1);
                     }
                     return true;
@@ -2445,6 +2403,8 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
                     if (mModelSetting != null) {
                         mPage = "基本信息";
                         mBeforePage = "设置";
+                        //隐藏所有的底部按钮
+                        mBottomNavigationView.setVisibility(View.INVISIBLE);
                         ((ModelSetting)mModelSetting).SettingBaseInfoMainShow(1);
                     }
                     return true;
@@ -2452,6 +2412,8 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
                     if (mModelSetting != null) {
                         mPage = "基本信息";
                         mBeforePage = "设置";
+                        //隐藏所有的底部按钮
+                        mBottomNavigationView.setVisibility(View.INVISIBLE);
                         ((ModelSetting)mModelSetting).SettingBaseInfoMainShow(1);
                     }
                     return true;
@@ -2459,6 +2421,8 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
                     if (mModelSetting != null) {
                         mPage = "基本信息";
                         mBeforePage = "设置";
+                        //隐藏所有的底部按钮
+                        mBottomNavigationView.setVisibility(View.INVISIBLE);
                         ((ModelSetting)mModelSetting).SettingBaseInfoMainShow(1);
                     }
                     return true;
@@ -2466,6 +2430,8 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
                     if (mModelSetting != null) {
                         mPage = "基本信息";
                         mBeforePage = "设置";
+                        //隐藏所有的底部按钮
+                        mBottomNavigationView.setVisibility(View.INVISIBLE);
                         ((ModelSetting)mModelSetting).SettingBaseInfoMainShow(1);
                     }
                     return true;

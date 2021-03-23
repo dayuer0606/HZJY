@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/setting_layout_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:minWidth="260dp"
+    android:minWidth="@dimen/dp_260"
     android:layout_centerInParent="true"
-    android:paddingTop="16dp"
+    android:paddingTop="@dimen/dp16"
     android:background="@drawable/dialog_style"
     android:orientation="vertical">
     <TextView
@@ -15,14 +14,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="@dimen/dp16"
+        android:layout_marginRight="@dimen/dp16"
+        android:layout_marginBottom="@dimen/dp16"
         android:gravity="center"
         tools:text="消息提示"
         android:visibility="visible"
         android:textColor="#333333"
-        android:textSize="18sp" />
+        android:textSize="@dimen/textsize18" />
 <!--    <ImageView-->
 <!--        android:id="@+id/image"-->
 <!--        tools:src="@mipmap/p1"-->
@@ -39,19 +38,21 @@
         android:id="@+id/message"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center|left"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:lineSpacingExtra="3dp"
+        android:gravity="center"
+        android:layout_marginLeft="@dimen/dp20"
+        android:layout_marginRight="@dimen/dp20"
+        android:layout_marginTop="@dimen/dp35"
+        android:layout_marginBottom="@dimen/dp35"
+        android:lineSpacingExtra="@dimen/dp3"
         android:lineSpacingMultiplier="1.2"
-        android:textSize="14dp"
-        android:textColor="#999999"
-        tools:text="提示消息提示消息提示消息提示消息提示消息提示消息提示消息提示消息" />
+        android:textSize="@dimen/textsize16"
+        android:textColor="#000000"
+        tools:text="" />
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:layout_marginTop="16dp"
+        android:layout_height="@dimen/dp1"
+        android:layout_marginTop="@dimen/dp16"
         android:background="#E4E4E4" />
 
     <LinearLayout
@@ -63,16 +64,16 @@
             android:id="@+id/negtive"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:paddingTop="16dp"
-            android:paddingBottom="16dp"
+            android:layout_marginLeft="@dimen/dp10"
+            android:paddingTop="@dimen/dp16"
+            android:paddingBottom="@dimen/dp16"
             android:layout_weight="1"
             android:background="@null"
             android:gravity="center"
             android:singleLine="true"
             tools:text="No"
-            android:textColor="#999999"
-            android:textSize="16sp" />
+            android:textColor="#666666"
+            android:textSize="@dimen/textsize16" />
 
         <View
             android:id="@+id/column_line"
@@ -84,15 +85,15 @@
             android:id="@+id/positive"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
+            android:layout_marginRight="@dimen/dp10"
             android:layout_weight="1"
-            android:paddingTop="16dp"
-            android:paddingBottom="16dp"
+            android:paddingTop="@dimen/dp16"
+            android:paddingBottom="@dimen/dp16"
             android:background="@null"
             android:gravity="center"
             android:singleLine="true"
             tools:text="Yes"
-            android:textColor="@color/holo_red_dark"
-            android:textSize="16sp" />
+            android:textColor="#2079FD"
+            android:textSize="@dimen/textsize16" />
     </LinearLayout>
 </LinearLayout>

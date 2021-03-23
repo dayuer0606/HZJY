@@ -95,30 +95,15 @@ public class ModelSetting extends Fragment {
         SettingPasswordUpdateInit();
         SettingAboutUsInit();
         HideAllLayout();
-        if (mContext.equals("设置")) {
-            RelativeLayout setting_main = mview.findViewById(R.id.setting_main);
-            LinearLayout.LayoutParams LP = (LinearLayout.LayoutParams) setting_main.getLayoutParams();
-            LP.width = LinearLayout.LayoutParams.MATCH_PARENT;
-            LP.height = LinearLayout.LayoutParams.MATCH_PARENT;
-            setting_main.setLayoutParams(LP);
-            setting_main.setVisibility(View.VISIBLE);
-            TextView setting_logout_button = mview.findViewById(R.id.setting_logout_button);
-            setting_logout_button.setVisibility(View.VISIBLE);
-            TextView setting_essentialinformation_textview = mview.findViewById(R.id.setting_essentialinformation_textview);
-            setting_essentialinformation_textview.setText(R.string.title_essentialinformation);
-            if (mMainContext.mStuId.equals("")) {
-                //没登录不显示退出登录按钮
-                setting_logout_button.setVisibility(View.INVISIBLE);
-                //基本信息 后面改为立即登录
-                setting_essentialinformation_textview.setText(R.string.title_loginclick);
-            }
-        } else if (mContext.equals("设置-基本信息")){
-            RelativeLayout setting_essentialinformation_main = mview.findViewById(R.id.setting_essentialinformation_main);
-            LinearLayout.LayoutParams LP = (LinearLayout.LayoutParams) setting_essentialinformation_main.getLayoutParams();
-            LP.width = LinearLayout.LayoutParams.MATCH_PARENT;
-            LP.height = LinearLayout.LayoutParams.MATCH_PARENT;
-            setting_essentialinformation_main.setLayoutParams(LP);
-            setting_essentialinformation_main.setVisibility(View.VISIBLE);
+        RelativeLayout setting_main = mview.findViewById(R.id.setting_main);
+        LinearLayout.LayoutParams LP = (LinearLayout.LayoutParams) setting_main.getLayoutParams();
+        LP.width = LinearLayout.LayoutParams.MATCH_PARENT;
+        LP.height = LinearLayout.LayoutParams.MATCH_PARENT;
+        setting_main.setLayoutParams(LP);
+        setting_main.setVisibility(View.VISIBLE);
+        TextView setting_logout_button = mview.findViewById(R.id.setting_logout_button);
+        setting_logout_button.setVisibility(View.VISIBLE);
+        if (mContext.equals("设置-基本信息")){
             TextView essentialinformation_id_value_textview = mview.findViewById(R.id.essentialinformation_id_value_textview);
             essentialinformation_id_value_textview.setText("");
             TextView essentialinformation_name_value_textview = mview.findViewById(R.id.essentialinformation_name_value_textview);
@@ -186,19 +171,19 @@ public class ModelSetting extends Fragment {
         setting_main.setVisibility(View.VISIBLE);
         TextView setting_logout_button = mview.findViewById(R.id.setting_logout_button);
         setting_logout_button.setVisibility(View.VISIBLE);
-        TextView setting_essentialinformation_textview = mview.findViewById(R.id.setting_essentialinformation_textview);
-        setting_essentialinformation_textview.setText(R.string.title_essentialinformation);
-        if (mMainContext.mStuId.equals("")){
-            //没登录不显示退出登录按钮
-            setting_logout_button.setVisibility(View.INVISIBLE);
-            //基本信息 后面改为立即登录
-            setting_essentialinformation_textview.setText(R.string.title_loginclick);
-        } else {
-            //没登录不显示退出登录按钮
-            setting_logout_button.setVisibility(View.VISIBLE);
-            //基本信息 后面改为立即登录
-            setting_essentialinformation_textview.setText(R.string.title_essentialinformation);
-        }
+//        TextView setting_essentialinformation_textview = mview.findViewById(R.id.setting_essentialinformation_textview);
+//        setting_essentialinformation_textview.setText(R.string.title_essentialinformation);
+//        if (mMainContext.mStuId.equals("")){
+//            //没登录不显示退出登录按钮
+//            setting_logout_button.setVisibility(View.INVISIBLE);
+//            //基本信息 后面改为立即登录
+//            setting_essentialinformation_textview.setText(R.string.title_loginclick);
+//        } else {
+//            //没登录不显示退出登录按钮
+//            setting_logout_button.setVisibility(View.VISIBLE);
+//            //基本信息 后面改为立即登录
+//            setting_essentialinformation_textview.setText(R.string.title_essentialinformation);
+//        }
     }
     //显示设置基本信息的详细界面
     public void SettingBaseInfoMainShow(int returnString){ // returnString:  0:我的  1:设置
@@ -206,12 +191,12 @@ public class ModelSetting extends Fragment {
             return;
         }
         HideAllLayout();
-        RelativeLayout setting_essentialinformation_main = mview.findViewById(R.id.setting_essentialinformation_main);
-        LinearLayout.LayoutParams LP = (LinearLayout.LayoutParams) setting_essentialinformation_main.getLayoutParams();
+        RelativeLayout setting_main = mview.findViewById(R.id.setting_main);
+        LinearLayout.LayoutParams LP = (LinearLayout.LayoutParams) setting_main.getLayoutParams();
         LP.width = LinearLayout.LayoutParams.MATCH_PARENT;
         LP.height = LinearLayout.LayoutParams.MATCH_PARENT;
-        setting_essentialinformation_main.setLayoutParams(LP);
-        setting_essentialinformation_main.setVisibility(View.VISIBLE);
+        setting_main.setLayoutParams(LP);
+        setting_main.setVisibility(View.VISIBLE);
         TextView essentialinformation_id_value_textview = mview.findViewById(R.id.essentialinformation_id_value_textview);
         essentialinformation_id_value_textview.setText("");
         TextView essentialinformation_name_value_textview = mview.findViewById(R.id.essentialinformation_name_value_textview);
@@ -476,12 +461,6 @@ public class ModelSetting extends Fragment {
         LP.height = 0;
         setting_main.setLayoutParams(LP);
         setting_main.setVisibility(View.INVISIBLE);
-        RelativeLayout setting_essentialinformation_main = mview.findViewById(R.id.setting_essentialinformation_main);
-        LP = (LinearLayout.LayoutParams) setting_essentialinformation_main.getLayoutParams();
-        LP.width = 0;
-        LP.height = 0;
-        setting_essentialinformation_main.setLayoutParams(LP);
-        setting_essentialinformation_main.setVisibility(View.INVISIBLE);
         RelativeLayout setting_usernameupdate_main = mview.findViewById(R.id.setting_usernameupdate_main);
         LP = (LinearLayout.LayoutParams) setting_usernameupdate_main.getLayoutParams();
         LP.width = 0;
@@ -1415,6 +1394,10 @@ public class ModelSetting extends Fragment {
     public void ModifyingHead(String imgPath) {
         if (mMainContext.mStuId.equals("") || mMainContext.mToken.equals("") ){
             Toast.makeText(mMainContext, "请先登录您的账号，再进行此操作!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (imgPath == null) {
+            Toast.makeText(mMainContext, "您选择的图片未找到!", Toast.LENGTH_SHORT).show();
             return;
         }
         if (imgPath.equals("")){
