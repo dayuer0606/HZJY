@@ -1570,6 +1570,32 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
         mPage = "问答详情";
     }
 
+    //学习记录
+    public void onClickLearnRecord(View view) {
+        mBottomNavigationView.setVisibility(View.INVISIBLE);
+        mPage = "学习记录";
+        mBeforePage = "我的";
+        if(mModelMy != null){
+            ((ModelMy) mModelMy).LearnRecordShow();
+        }
+    }
+
+    //学习记录-返回
+    public void onClickLearnRecordReturn(View view) {
+        String beforePageS[] = mBeforePage.split("/");
+        if (beforePageS.length <= 0){
+            return;
+        }
+        if (mPage.equals("学习记录") && mBeforePage.equals("我的")) { //如果当前界面是学习记录，点击返回按钮，应该返回到我的
+            Page_My();
+        } else if (mPage.equals("问答详情") && beforePageS[beforePageS.length - 1].equals("我的问答")){//如果当前界面是消息详情，点击返回按钮，应该返回到我的消息
+            mPage = "我的问答";
+            mBeforePage = "我的";
+            if(mModelMy != null){
+                ((ModelMy) mModelMy).MyAnswerShow();
+            }
+        }
+    }
     //我的缓存
     public void onClickMyCache(View view) {
         mBottomNavigationView.setVisibility(View.INVISIBLE);
@@ -2545,6 +2571,9 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
                     if(mModelMy != null){
                         ((ModelMy) mModelMy).MyAnswerShow();
                     }
+                    return true;
+                } else if (mPage.equals("学习记录") && mBeforePage.equals("我的")) { //如果当前界面是学习记录，点击返回按钮，应该返回到我的
+                    Page_My();
                     return true;
                 } else if (mPage.equals("订单结果") && beforePageS[beforePageS.length - 1].equals("订单详情")) { //如果当前界面是订单结果，点击返回按钮，应该返回到首页
                     if (mBeforePage.contains("首页")){

@@ -74,7 +74,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
     static private int FragmentPage;
     private View mview, mMyView, mMyClassView, mMyClassPacketView, mMyCollectView, mMyCacheView, mMyCacheManagementCacheView,
             mMyOrderView, mMyOrderDetailsView, mMyCouponView, mMyMessageView, mMyMessageView0, mMyAnswerView, mMyAnswerDetailsView,
-            mAnswerDetailsView;
+            mAnswerDetailsView,mLearnRecordView;
     private int width = 720;
     //我的收藏当前显示tab，默认为课程
     private int mMyCollectLastTabIndex = 1;
@@ -88,6 +88,9 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
     //我的问答当前显示tab，默认为我的提问
     private int mMyAnswerLastTabIndex = 1;
     private String mMyAnswerCurrentTab = "question";
+    //学习记录当前显示tab，默认为课程
+    private int mMyRecordsLastTabIndex = 1;
+    private String mMyRecordsCurrentTab = "class";
     private ControllerCenterDialog mMyDialog, mMyCouponDialog;
     private ControllerMyMessage1Adapter adapter;
     private static final String TAG = "ModelMy";
@@ -106,12 +109,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
 //    private String order_status;
 //    private String order_num;
 //    private int product_price;
-    private SmartRefreshLayout mSmart_model_my_mycollect;
-    private SmartRefreshLayout mSmart_model_my_myorderdetails;
-    private SmartRefreshLayout mSmart_model_my_mymessage;
-    private SmartRefreshLayout mSmart_model_my_myanswer;
-    private SmartRefreshLayout mSmart_model_my_myanswerdetails;
-    private SmartRefreshLayout mSmart_model_my_mycoupon;
+    private SmartRefreshLayout mSmart_model_my_mycollect,mSmart_model_my_myorderdetails,mSmart_model_my_mymessage,mSmart_model_my_myanswer,mSmart_model_my_learnrecord,mSmart_model_my_myanswerdetails,mSmart_model_my_mycoupon;
     //我的课程列表分页查询
     private int mMyCourseCurrentPage = 0;
     private int mMyCoursePageCount = 10;
@@ -151,6 +149,10 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
     private int mMyQuestionAndAnswerDetailsSum = 0; //我的问答详情总数
     private Integer mAnswerDetailsQuestionId = null;
     private Integer mAnswerDetailsAnswerId = null;
+    //学习记录列表分页查询
+    private int mMyRecordsCurrentPage = 0;
+    private int mMyRecordsPageCount = 10;
+    private int mMyRecordsSum = 0; //总数
 
     public static Fragment newInstance(MainActivity content, String context, int iFragmentPage) {
         mContext = context;
@@ -1608,6 +1610,89 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
         mMyMessageType = 3;
         //加网络请求放到网络请求中赋值 刷新适配器
         getModelMyMessageList(3);
+    }
+
+    //展示学习记录界面
+    public void LearnRecordShow() {
+        if (mview == null) {
+            return;
+        }
+        HideAllLayout();
+        LinearLayout my_layout_main = mview.findViewById(R.id.my_layout_main);
+        if (mLearnRecordView == null) {
+            mLearnRecordView = LayoutInflater.from(mMainContext).inflate(R.layout.model_my_myrecords, null);
+            //我的问答刷新控件
+            mSmart_model_my_learnrecord = mLearnRecordView.findViewById(R.id.Smart_model_my_learnrecord);
+            mSmart_model_my_learnrecord.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
+                @Override
+                public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                    if (mMyRecordsSum <= mMyRecordsCurrentPage * mMyRecordsPageCount){
+                        LinearLayout learnrecord_end = mLearnRecordView.findViewById(R.id.learnrecord_end);
+                        learnrecord_end.setVisibility(View.VISIBLE);
+                        return;
+                    }
+                    if (mMyRecordsCurrentTab.equals("class")) {//课程
+//                        getModelMyQuestionListMore();
+                    } else {//题库
+//                        getModelMyAnswerListMore();
+                    }
+                }
+
+                @Override
+                public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                    if (mMyRecordsCurrentTab.equals("class")) {
+                        getModelMyQuestionList();
+                    } else {
+                        getModelMyAnswerList();
+                    }
+                }
+            });
+            TextView modelmy_learnrecord_tab_class = mLearnRecordView.findViewById(R.id.modelmy_learnrecord_tab_class);
+            modelmy_learnrecord_tab_class.setOnClickListener(v -> {
+                if (!mMyRecordsCurrentTab.equals("class")) {
+                    ImageView modelmy_learnrecord_cursor1 = mLearnRecordView.findViewById(R.id.modelmy_learnrecord_cursor1);
+                    Animation animation = new TranslateAnimation((mMyRecordsLastTabIndex - 1) * width / 2, 0, 0, 0);
+                    animation.setFillAfter(true);// True:图片停在动画结束位置
+                    animation.setDuration(200);
+                    modelmy_learnrecord_cursor1.startAnimation(animation);
+                    TextView modelmy_learnrecord_tab_questionbank = mLearnRecordView.findViewById(R.id.modelmy_learnrecord_tab_questionbank);
+                    modelmy_learnrecord_tab_class.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, mLearnRecordView.getResources().getDimensionPixelSize(R.dimen.textsize18));
+                    modelmy_learnrecord_tab_questionbank.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, mLearnRecordView.getResources().getDimensionPixelSize(R.dimen.textsize16));
+                }
+                mMyRecordsLastTabIndex = 1;
+                mMyRecordsCurrentTab = "class";
+//                getModelMyQuestionList();
+            });
+            TextView modelmy_learnrecord_tab_questionbank = mLearnRecordView.findViewById(R.id.modelmy_learnrecord_tab_questionbank);
+            modelmy_learnrecord_tab_questionbank.setOnClickListener(v -> {
+                if (!mMyAnswerCurrentTab.equals("questionbank")) {
+                    ImageView modelmy_learnrecord_cursor1 = mLearnRecordView.findViewById(R.id.modelmy_learnrecord_cursor1);
+                    Animation animation = new TranslateAnimation((mMyRecordsLastTabIndex - 1) * width / 2, width / 2, 0, 0);
+                    animation.setFillAfter(true);// True:图片停在动画结束位置
+                    animation.setDuration(200);
+                    modelmy_learnrecord_cursor1.startAnimation(animation);
+                    modelmy_learnrecord_tab_class.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, mLearnRecordView.getResources().getDimensionPixelSize(R.dimen.textsize16));
+                    modelmy_learnrecord_tab_questionbank.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, mLearnRecordView.getResources().getDimensionPixelSize(R.dimen.textsize18));
+                }
+                mMyRecordsLastTabIndex = 2;
+                mMyRecordsCurrentTab = "questionbank";
+                LinearLayout modelmy_learnrecord_main_content = mLearnRecordView.findViewById(R.id.modelmy_learnrecord_main_content);
+                modelmy_learnrecord_main_content.removeAllViews();
+//                getModelMyAnswerList();、
+            });
+        }
+        my_layout_main.addView(mLearnRecordView);
+        ImageView modelmy_learnrecord_cursor1 = mLearnRecordView.findViewById(R.id.modelmy_learnrecord_cursor1);
+        int x = width / 4 - mLearnRecordView.getResources().getDimensionPixelSize(R.dimen.dp18) / 2;
+        modelmy_learnrecord_cursor1.setX(x);
+        //默认选中的为我的提问
+        mMyRecordsLastTabIndex = 1;
+        mMyRecordsCurrentTab = "class";
+        TextView modelmy_learnrecord_tab_class = mLearnRecordView.findViewById(R.id.modelmy_learnrecord_tab_class);
+        TextView modelmy_learnrecord_tab_questionbank = mLearnRecordView.findViewById(R.id.modelmy_learnrecord_tab_questionbank);
+        modelmy_learnrecord_tab_class.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, mLearnRecordView.getResources().getDimensionPixelSize(R.dimen.textsize18));
+        modelmy_learnrecord_tab_questionbank.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, mLearnRecordView.getResources().getDimensionPixelSize(R.dimen.textsize16));
+//        getModelMyQuestionList();
     }
 
     //展示我的问答界面

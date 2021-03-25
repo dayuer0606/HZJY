@@ -106,7 +106,7 @@
         android:layout_width="@dimen/dp18"
         android:layout_height="@dimen/dp2"
         android:layout_below="@id/questionbank_sub_details_tab"
-        android:background="@drawable/image_cusor"
+        android:background="#FF6740"
         android:scaleType="matrix" />
 
     <View
