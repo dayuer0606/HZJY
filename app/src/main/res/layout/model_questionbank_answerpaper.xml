@@ -98,7 +98,6 @@
             android:textColor="#666666"/>
     </LinearLayout>
     <com.android.school.ControllerHorizontalProgressBar
-        android:layout_marginLeft="@dimen/dp13"
         android:layout_marginTop="@dimen/dp10"
         android:id="@+id/questionbank_answerpaper_questioncountlayout_progress"
         android:layout_width="match_parent"

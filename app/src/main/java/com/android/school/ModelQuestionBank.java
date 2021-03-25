@@ -2722,7 +2722,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
 //        button_wrongquestion_answerquestioncard.setOnClickListener(v ->
 //                QuestionBankDetailsQuestionTypeShow(2));
         //提交错题
-        LinearLayout questionbank_wrongquestion_commit = mModelQuestionBankWrongQuestionView.findViewById(R.id.questionbank_wrongquestion_commit);
+        ImageView questionbank_wrongquestion_commit = mModelQuestionBankWrongQuestionView.findViewById(R.id.questionbank_wrongquestion_commit);
         questionbank_wrongquestion_commit.setOnClickListener(v -> {
             boolean m_isError = false;
             if (mMyFavoriteQuestionDataBeans != null){
@@ -4494,6 +4494,15 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
         //错题本的数量
         TextView questionbank_wrongquestion_questioncount = mModelQuestionBankWrongQuestionView.findViewById(R.id.questionbank_wrongquestion_questioncount);
         questionbank_wrongquestion_questioncount.setText(String.valueOf(mCurrentIndex + 1));
+
+        ControllerHorizontalProgressBar questionbank_wrongquestion_progress =
+                mModelQuestionBankWrongQuestionView.findViewById(R.id.questionbank_wrongquestion_progress);
+        if (mMyFavoriteQuestionDataBeans.size() == 0) {
+            questionbank_wrongquestion_progress.updateProgress(100);
+        } else {
+            questionbank_wrongquestion_progress.updateProgress((int) (mCurrentIndex + 1) * 100 / mMyFavoriteQuestionDataBeans.size());
+        }
+
         QuestionBankMyFavoriteQuestionBean.QuestionBankMyFavoriteQuestionDataBean questionBankMyFavoriteQuestionDataBean = mMyFavoriteQuestionDataBeans.get(mCurrentIndex);
         if (questionBankMyFavoriteQuestionDataBean == null){
             return;
@@ -4553,7 +4562,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                     questionbank_answerpaper_content.addView(view3);
                     questionbank_answerpaper_option_name.setOnClickListener(v -> {
                         questionbank_answerpaper_option_name.setBackground(view3.getResources().getDrawable(R.drawable.textview_style_circle_blue649cf0));
-                        questionbank_answerpaper_option_name.setTextColor(view3.getResources().getColor(R.color.blue649cf0));
+                        questionbank_answerpaper_option_name.setTextColor(view3.getResources().getColor(R.color.white));
                         if (questionBankMyFavoriteQuestionDataBean.question_type == 1) { //如果是单选题，将其他选项置为false
                             int count = questionbank_answerpaper_content.getChildCount();
                             for (int num = 0; num < count; num++) {
@@ -4625,7 +4634,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                         if (answerInfo.answer != null) {
                             if (answerInfo.answer.contains(optionanswerS1[0])){
                                 questionbank_answerpaper_option_name.setBackground(view3.getResources().getDrawable(R.drawable.textview_style_circle_blue649cf0));
-                                questionbank_answerpaper_option_name.setTextColor(view3.getResources().getColor(R.color.blue649cf0));
+                                questionbank_answerpaper_option_name.setTextColor(view3.getResources().getColor(R.color.white));
                             }
                         }
                     }
@@ -4744,7 +4753,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                             questionbank_answerpaper_option_name.setHint(optionanswerS1[1]);
                             questionbank_answerpaper_option_name.setOnClickListener(v -> { // 选项的点击响应
                                 questionbank_answerpaper_option_name.setBackground(view3.getResources().getDrawable(R.drawable.textview_style_circle_blue649cf0));
-                                questionbank_answerpaper_option_name.setTextColor(view3.getResources().getColor(R.color.blue649cf0));
+                                questionbank_answerpaper_option_name.setTextColor(view3.getResources().getColor(R.color.white));
                                 if (QuestionBankMyFavoriteQuestionDataBean1.question_type == 11) { //如果是单选题，将其他选项置为false
                                     int count = questionbank_answerpaper_content1.getChildCount();
                                     for (int num = 0; num < count; num ++) {
@@ -4814,7 +4823,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                                 if (answerInfo.answer != null) {
                                     if (answerInfo.answer.contains(optionanswerS1[0])) {
                                         questionbank_answerpaper_option_name.setBackground(view3.getResources().getDrawable(R.drawable.textview_style_circle_blue649cf0));
-                                        questionbank_answerpaper_option_name.setTextColor(view3.getResources().getColor(R.color.blue649cf0));
+                                        questionbank_answerpaper_option_name.setTextColor(view3.getResources().getColor(R.color.white));
                                     }
                                 }
                             }

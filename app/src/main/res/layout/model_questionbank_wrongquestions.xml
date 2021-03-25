@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--    题库 做题设置 -->
+<!--    题库 错题本 -->
 <RelativeLayout android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <LinearLayout android:id="@+id/questionbank_wrongquestion_main_title"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp44"
@@ -23,61 +24,37 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center|right">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="错题本"
-                android:gravity="center"
-                android:textSize="@dimen/textsize18"
-                android:textColor="#333333"/>
             <ImageView
                 android:id="@+id/questionbank_wrongquestion_collection"
                 android:layout_width="@dimen/dp_18"
                 android:layout_height="@dimen/dp_18"
+                android:layout_marginRight="@dimen/dp27"
                 android:background="@drawable/button_collect_disable_black"/>
+            <ImageView
+                android:id="@+id/questionbank_wrongquestion_commit"
+                android:layout_width="@dimen/dp_19"
+                android:layout_height="@dimen/dp_19"
+                android:layout_gravity="center"
+                android:background="@drawable/button_questionbank_commit"/>
         </LinearLayout>
     </LinearLayout>
-    <View
-        android:id="@+id/questionbank_wrongquestion_main_line1"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp1"
-        android:layout_gravity="center_horizontal"
-        android:background="#e5e5e5"
-        android:layout_below="@id/questionbank_wrongquestion_main_title"/>
     <LinearLayout
-        android:id="@+id/questionbank_wrongquestion_questiontitlelayout"
-        android:layout_below="@id/questionbank_wrongquestion_main_line1"
+        android:id="@+id/questionbank_wrongquestion_questioncountlayout"
+        android:layout_below="@id/questionbank_wrongquestion_main_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginLeft="@dimen/dp13"
         android:layout_marginRight="@dimen/dp13"
-        android:layout_marginTop="@dimen/dp20">
+        android:layout_marginTop="@dimen/dp10">
         <TextView
-            android:id="@+id/questionbank_wrongquestion_questiontitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="建筑防火案例分析"
+            android:layout_weight="1"
+            android:gravity="left"
+            android:text="错题本"
             android:textSize="@dimen/textsize18"
-            android:textColor="#649cf0"/>
-        <TextView
-            android:id="@+id/questionbank_wrongquestion_questiontype"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="[单选题]"
-            android:layout_marginLeft="@dimen/dp10"
-            android:textSize="@dimen/textsize15"
-            android:textColor="#999999"/>
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/questionbank_wrongquestion_questioncountlayout"
-        android:layout_below="@id/questionbank_wrongquestion_questiontitlelayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginLeft="@dimen/dp13"
-        android:layout_marginRight="@dimen/dp13">
+            android:textColor="#323334"/>
         <TextView
             android:id="@+id/questionbank_wrongquestion_questioncount"
             android:layout_width="wrap_content"
@@ -85,15 +62,52 @@
             android:layout_weight="1"
             android:gravity="right"
             android:text="0"
-            android:textSize="@dimen/textsize15"
-            android:textColor="#649cf0"/>
+            android:textSize="@dimen/textsize18"
+            android:textColor="#FF6740"/>
         <TextView
             android:id="@+id/questionbank_wrongquestion_questioncountsum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="/0"
-            android:textSize="@dimen/textsize15"
+            android:textSize="@dimen/textsize18"
             android:textColor="#666666"/>
+    </LinearLayout>
+    <com.android.school.ControllerHorizontalProgressBar
+        android:layout_marginTop="@dimen/dp10"
+        android:id="@+id/questionbank_wrongquestion_progress"
+        android:layout_width="match_parent"
+        android:layout_below="@id/questionbank_wrongquestion_questioncountlayout"
+        android:layout_height="2dp"
+        app:HorizontalProgresReachColor="@color/bottom_button_select"
+        app:HorizontalProgresUnReachColor="@color/grayccbab9b9" />
+    <LinearLayout
+        android:id="@+id/questionbank_wrongquestion_questiontitlelayout"
+        android:layout_below="@id/questionbank_wrongquestion_progress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="@dimen/dp13"
+        android:layout_marginRight="@dimen/dp13"
+        android:layout_marginTop="@dimen/dp13">
+        <TextView
+            android:id="@+id/questionbank_wrongquestion_questiontype"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="单项选择题"
+            android:textSize="@dimen/textsize14"
+            android:paddingRight="@dimen/dp10"
+            android:paddingLeft="@dimen/dp10"
+            android:gravity="center"
+            android:textColor="#ffffff"
+            android:background="@drawable/textview_style_circle_gray2"/>
+        <TextView
+            android:id="@+id/questionbank_wrongquestion_questiontitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="建筑防火案例分析"
+            android:textSize="@dimen/textsize18"
+            android:textColor="#323334"
+            android:layout_marginTop="@dimen/dp20"/>
     </LinearLayout>
     <ScrollView
         android:id="@+id/coursedetails_wrongquestion_detailsscrollview"
@@ -101,7 +115,7 @@
         android:layout_height="match_parent"
         android:layout_marginTop="@dimen/dp20"
         android:scrollbars="none"
-        android:layout_below="@id/questionbank_wrongquestion_questioncountlayout"
+        android:layout_below="@id/questionbank_wrongquestion_questiontitlelayout"
         android:layout_marginBottom="@dimen/dp_55">
         <LinearLayout
             android:layout_width="match_parent"
@@ -116,9 +130,9 @@
                 android:layout_marginLeft="@dimen/dp13"/>
             <TextView
                 android:id="@+id/coursedetails_wrongquestion_analysisbutton"
-                android:layout_width="@dimen/dp_193"
+                android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_37"
-                android:textColor="#999999"
+                android:textColor="#ffffff"
                 android:text="查看解析"
                 android:gravity="center"
                 android:layout_marginRight="@dimen/dp13"
@@ -126,7 +140,7 @@
                 android:textSize="@dimen/textsize20"
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/dp_70"
-                android:background="@drawable/textview_style_rect_gray"
+                android:background="@drawable/button_style3"
                 />
             <LinearLayout
                 android:id="@+id/coursedetails_wrongquestion_analysis"
@@ -161,28 +175,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="上一题"
-                android:layout_gravity="center"
-                android:textSize="@dimen/textsize10"
-                android:textColor="#666666"/>
-        </LinearLayout>
-        <LinearLayout
-            android:id="@+id/questionbank_wrongquestion_commit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_weight="1"
-            android:layout_marginTop="@dimen/dp8"
-            android:layout_marginBottom="@dimen/dp8">
-            <ImageView
-                android:layout_width="@dimen/dp_19"
-                android:layout_height="@dimen/dp18"
-                android:layout_gravity="center"
-                android:layout_marginBottom="@dimen/dp5"
-                android:background="@drawable/button_questionbank_commit"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="提交"
                 android:layout_gravity="center"
                 android:textSize="@dimen/textsize10"
                 android:textColor="#666666"/>
