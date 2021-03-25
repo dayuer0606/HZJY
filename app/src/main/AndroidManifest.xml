@@ -53,9 +53,6 @@
         android:usesCleartextTraffic="true"
         tools:ignore="HardcodedDebugMode"
         tools:replace="android:label">
-        <meta-data
-            android:name="com.google.android.actions"
-            android:resource="@xml/actions" />
 
         <activity
             android:name=".OfficeActivity"
