@@ -1641,9 +1641,9 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                 @Override
                 public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                     if (mMyRecordsCurrentTab.equals("class")) {
-                        getModelMyQuestionList();
+//                        getModelMyQuestionList();
                     } else {
-                        getModelMyAnswerList();
+//                        getModelMyAnswerList();
                     }
                 }
             });
@@ -3622,6 +3622,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                     }
                 });
     }
+
 
     //我的问答的提问列表
     public void getModelMyQuestionList(){
