@@ -63,9 +63,9 @@
     <string name="title_inputyouridnumber">请输入您的证件号码</string>
     <string name="title_finish">完成</string>
     <string name="title_settingname">设置名称</string>
-    <string name="title_inputyouroldpassword">输入旧密码</string>
-    <string name="title_inputyournewpassword">设置新密码</string>
-    <string name="title_inputyournewpasswordagain">确认新密码</string>
+    <string name="title_inputyouroldpassword">请输入原密码</string>
+    <string name="title_inputyournewpassword">请输入新密码</string>
+    <string name="title_inputyournewpasswordagain">请再一次输入新密码</string>
     <string name="title_functionintroduce">功能介绍</string>
     <string name="title_checkversion">检查新版本</string>
     <string name="aboutus_agreeTerms"><a href="http://www.baidu.com/">《职考网校软件许可及服务协议》</a></string>

@@ -211,11 +211,6 @@ public interface ModelObservableInterface {
     @Headers("Content-Type:application/json;charset=UTF-8")
     Call<ModelMy.MyQuestionsBean> queryMyQuestionList(@Body RequestBody body);
 
-    //我的问答（我的回答）
-    @POST("app/user/queryMyQuestionDa")
-    @Headers("Content-Type:application/json;charset=UTF-8")
-    Call<ModelMy.MyAnswerBean> queryMyAnswerList(@Body RequestBody body);
-
     //我的问答-删除
     @POST("app/user/deleteMyQuestion")
     @Headers("Content-Type:application/json;charset=UTF-8")
