@@ -9,8 +9,7 @@
         android:layout_height="@dimen/dp_80"
         android:layout_marginTop="@dimen/dp15"
         android:layout_marginRight="@dimen/dp13"
-        android:layout_alignParentRight="true"
-        android:background="@drawable/modelcoursecover"/>
+        android:layout_alignParentRight="true"/>
     <TextView
         android:layout_toLeftOf="@id/news1_cover"
         android:id="@+id/news1_classname"
@@ -33,25 +32,18 @@
         android:layout_marginLeft="@dimen/dp_13"
         android:gravity="left|center">
         <TextView
-            android:id="@+id/news1_state"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="推荐"
-            android:textSize="@dimen/textsize13"
-            android:textColor="@color/blue649cf0"
-            android:layout_marginRight="@dimen/dp14"/>
-        <TextView
             android:id="@+id/news1_data"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="2019-11-12"
+            android:text="2019.11.12"
             android:textSize="@dimen/textsize13"
             android:textColor="@color/black999999"/>
         <TextView
             android:id="@+id/news1_eparator"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=" • 浏览 "
+            android:layout_marginLeft="@dimen/dp13"
+            android:text="浏览 "
             android:textSize="@dimen/textsize13"
             android:textColor="@color/black999999"/>
         <TextView

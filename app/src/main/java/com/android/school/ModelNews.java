@@ -340,14 +340,6 @@ public class ModelNews extends Fragment implements View.OnClickListener {
                                 news1_looknum.setText(String.valueOf(listBean.visit_num));
                                 //分割线
                                 line = view.findViewById(R.id.news1_line1);
-
-                                if (listBean.tf_comment == 2) { //不推荐新闻
-                                    TextView news1_state = view.findViewById(R.id.news1_state);
-                                    LinearLayout.LayoutParams ll = (LinearLayout.LayoutParams) news1_state.getLayoutParams();
-                                    ll.rightMargin = 0;
-                                    ll.width = 0;
-                                    news1_state.setLayoutParams(ll);
-                                }
                             }
                             if (line != null ){
                                 line.setVisibility(View.INVISIBLE);
@@ -483,14 +475,6 @@ public class ModelNews extends Fragment implements View.OnClickListener {
                                 news1_looknum.setText(String.valueOf(listBean.visit_num));
                                 //分割线
                                 line = view.findViewById(R.id.news1_line1);
-
-                                if (listBean.tf_comment == 2) { //不推荐新闻
-                                    TextView news1_state = view.findViewById(R.id.news1_state);
-                                    LinearLayout.LayoutParams ll = (LinearLayout.LayoutParams) news1_state.getLayoutParams();
-                                    ll.rightMargin = 0;
-                                    ll.width = 0;
-                                    news1_state.setLayoutParams(ll);
-                                }
                             }
                             if (line != null ){
                                 line.setVisibility(View.INVISIBLE);
