@@ -367,8 +367,6 @@ public class ModelCommunityAnswerActivity extends FragmentActivity {
         if (mCommunityAnswerAddView == null) {
             mCommunityAnswerAddView = LayoutInflater.from(mThis).inflate(R.layout.model_communityanswer_add, null);
         }
-        RecyclerView communityanswer_add_layout_image = mCommunityAnswerAddView.findViewById(R.id.communityanswer_add_layout_image);
-        communityanswer_add_layout_image.setLayoutManager(new GridLayoutManager(mThis, 3));
         selPhotosPath = new ArrayList<>();
         //=============图片九宫格=========================//
         mPictureAdapter = null;

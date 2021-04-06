@@ -14,10 +14,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
+import android.widget.AdapterView;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.android.school.adapter.CommonListAdapter;
 import com.android.school.consts.PlayType;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
@@ -45,7 +48,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Created by dayuer on 19/7/2.
  * 公开课模块
  */
-public class ModelOpenClass extends Fragment implements View.OnClickListener {
+public class ModelOpenClass extends Fragment {
     private static MainActivity mMainContext;
     private static String mContext="xxxxxxxxxxxxx";
     //要显示的页面
@@ -63,6 +66,8 @@ public class ModelOpenClass extends Fragment implements View.OnClickListener {
     private int mOpenClassCurrentPage = 0;
     private int mOpenClassPageCount = 10;
     private int mOpenClassSum = 0; //公开课总数
+    private GridView mGridView;
+    private CommonListAdapter<ModelOpenclassBean.DataBean.ListBean> mAdapter;
 
     public  static Fragment newInstance(MainActivity content, String context, int iFragmentPage){
         mContext = context;
@@ -79,6 +84,92 @@ public class ModelOpenClass extends Fragment implements View.OnClickListener {
         height = dm.heightPixels;
         width = dm.widthPixels;
 
+        mGridView = mview.findViewById(R.id.openclass_content);
+        mAdapter = new CommonListAdapter<ModelOpenclassBean.DataBean.ListBean>() {
+            @Override
+            protected View initListCell(int position, View convertView, ViewGroup parent) {
+                convertView = getLayoutInflater().inflate(R.layout.openclass_layout1, parent, false);
+                //加载公开课封面
+                ImageView openclass_cover = convertView.findViewById(R.id.openclass_cover);
+                Glide.with(mMainContext).load(mAdapter.getItem(position).getPc_cover()).listener(new RequestListener<Drawable>() {
+                    @Override
+                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                        Log.d("Warn","加载失败 errorMsg:" + (e != null ? e.getMessage() : "null"));
+                        return false;
+                    }
+                    @Override
+                    public boolean onResourceReady(final Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                        Log.d("Warn","成功  Drawable Name:" + resource.getClass().getCanonicalName());
+                        return false;
+                    }
+                }).error(mMainContext.getResources().getDrawable(R.drawable.openclass_default_background)).into(openclass_cover);
+                //公开课名称
+                TextView openclass_classname = convertView.findViewById(R.id.openclass_classname);
+                openclass_classname.setText(mAdapter.getItem(position).getPc_name());
+                //公开课的开始和结束时间
+                TextView openclass1_time = convertView.findViewById(R.id.openclass1_time);
+                Date date = null;
+                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd");
+                String dateS = "";
+                try {
+                    date = df.parse(mAdapter.getItem(position).begin_time);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                if (date != null) {
+                    SimpleDateFormat df1 = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", Locale.UK);
+                    Date date1 = null;
+                    try {
+                        date1 = df1.parse(date.toString());
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    if (date1 != null) {
+                        SimpleDateFormat df2 = new SimpleDateFormat("HH:mm");
+                        mAdapter.getItem(position).begin_time = df2.format(date1);
+                        dateS = dateFormat.format(date1);
+                    }
+                }
+                df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+                try {
+                    date = df.parse(mAdapter.getItem(position).end_time);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+                if (date != null) {
+                    SimpleDateFormat df1 = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", Locale.UK);
+                    Date date1 = null;
+                    try {
+                        date1 = df1.parse(date.toString());
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    if (date1 != null) {
+                        SimpleDateFormat df2 = new SimpleDateFormat("HH:mm");
+                        mAdapter.getItem(position).end_time = df2.format(date1);
+                    }
+                }
+                openclass1_time.setText(dateS + "  " + mAdapter.getItem(position).getBegin_time() + "-" + mAdapter.getItem(position).getEnd_time());
+                //公开课的状态
+                TextView openclass1_state = convertView.findViewById(R.id.openclass1_state);
+                openclass1_state.setText(mAdapter.getItem(position).getStatus());
+                return convertView;
+            }
+        };
+        mGridView.setOnItemClickListener((adapterView, view, i, l) -> {
+            //公开课当前logo
+            if (mAdapter.getItem(i).getStatus().equals("即将开始")){
+                return;
+            } else if (mAdapter.getItem(i).getStatus().equals("已结束")){
+                //为每个公开课设置监听
+                mMainContext.LoginLiveOrPlayback(mAdapter.getItem(i).public_class_id,1,PlayType.PLAYBACK);
+            } else { //直播中
+                //为每个公开课设置监听
+                mMainContext.LoginLiveOrPlayback(mAdapter.getItem(i).public_class_id,1,PlayType.LIVE);
+            }
+        });
         //控件的刷新效果
         mSmart_openclass_layout = mview.findViewById(R.id.Smart_openclass_layout);
         mSmart_openclass_layout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
@@ -90,39 +181,17 @@ public class ModelOpenClass extends Fragment implements View.OnClickListener {
                     return;
                 }
                 mSmart_openclass_layout.finishLoadMore();
-                if (mCurrentTab.equals("all")) {
-                    getOpenClassBeanMore("全部");
-                } else if (mCurrentTab.equals("haveinhand")) {
-                    getOpenClassBeanMore("已开始");
-                } else if (mCurrentTab.equals("begininaminute")) {
-                    getOpenClassBeanMore("未开始");
-                } else if (mCurrentTab.equals("over")) {
-                    getOpenClassBeanMore("已结束");
-                }
+                getOpenClassBeanMore("全部");
             }
 
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                if (mCurrentTab.equals("all")) {
-                    getOpenClassBean("全部");
-                } else if (mCurrentTab.equals("haveinhand")) {
-                    getOpenClassBean("进行中");
-                } else if (mCurrentTab.equals("begininaminute")) {
-                    getOpenClassBean("未开始");
-                } else if (mCurrentTab.equals("over")) {
-                    getOpenClassBean("已结束");
-                }
+                getOpenClassBean("全部");
             }
         });
-        TextView openclass_tab_all = mview.findViewById(R.id.openclass_tab_all);
-        TextView openclass_tab_haveinhand = mview.findViewById(R.id.openclass_tab_haveinhand);
-        TextView openclass_tab_begininaminute = mview.findViewById(R.id.openclass_tab_begininaminute);
-        TextView openclass_tab_over = mview.findViewById(R.id.openclass_tab_over);
-        openclass_tab_all.setOnClickListener(this);
-        openclass_tab_haveinhand.setOnClickListener(this);
-        openclass_tab_begininaminute.setOnClickListener(this);
-        openclass_tab_over.setOnClickListener(this);
         CourseMainShow();
+//        mAdapter.notifyDataSetChanged();
+//        mGridView.setAdapter(mAdapter);
         return mview;
     }
     @Override
@@ -134,148 +203,14 @@ public class ModelOpenClass extends Fragment implements View.OnClickListener {
         if (mview == null) {
             return;
         }
-        HideAllLayout();
-        //默认游标位置在全部
-        ImageView openclass_cursor1 = mview.findViewById(R.id.openclass_cursor1);
-        int x = width / 8 - mview.getResources().getDimensionPixelSize(R.dimen.dp18) / 2;
-        openclass_cursor1.setX(x);
-        //默认选中的为全部      默认选中为全部
-        mLastTabIndex = 1;
-        mCurrentTab = "all";
-        TextView openclass_tab_all = mview.findViewById(R.id.openclass_tab_all);
-        TextView openclass_tab_haveinhand = mview.findViewById(R.id.openclass_tab_haveinhand);
-        TextView openclass_tab_begininaminute = mview.findViewById(R.id.openclass_tab_begininaminute);
-        TextView openclass_tab_over = mview.findViewById(R.id.openclass_tab_over);
-        openclass_tab_all.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, mview.getResources().getDimensionPixelSize(R.dimen.textsize18));
-        openclass_tab_haveinhand.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, mview.getResources().getDimensionPixelSize(R.dimen.textsize16));
-        openclass_tab_begininaminute.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, mview.getResources().getDimensionPixelSize(R.dimen.textsize16));
-        openclass_tab_over.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, mview.getResources().getDimensionPixelSize(R.dimen.textsize16));
         getOpenClassBean("全部");
     }
 
-    //隐藏所有图层
-    private void HideAllLayout(){
-//        RelativeLayout course_mainLayout = mview.findViewById(R.id.course_mainLayout);
-//        LinearLayout.LayoutParams LP = (LinearLayout.LayoutParams) course_mainLayout.getLayoutParams();
-//        LP.width = 0;
-//        LP.height = 0;
-//        course_mainLayout.setLayoutParams(LP);
-//        course_mainLayout.setVisibility(View.INVISIBLE);
-//        RelativeLayout course_searchlayout = mview.findViewById(R.id.course_searchlayout);
-//        LP = (LinearLayout.LayoutParams) course_searchlayout.getLayoutParams();
-//        LP.width = 0;
-//        LP.height = 0;
-//        course_searchlayout.setLayoutParams(LP);
-//        course_searchlayout.setVisibility(View.INVISIBLE);
-//        RelativeLayout course_details1 = mview.findViewById(R.id.course_details1);
-//        LP = (LinearLayout.LayoutParams) course_details1.getLayoutParams();
-//        LP.width = 0;
-//        LP.height = 0;
-//        course_details1.setLayoutParams(LP);
-//        course_details1.setVisibility(View.INVISIBLE);
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.openclass_tab_all:{
-                if (!mCurrentTab.equals("all")) {
-                    //全部
-                    ImageView openclass_cursor1 = mview.findViewById(R.id.openclass_cursor1);
-                    Animation animation = new TranslateAnimation(( mLastTabIndex - 1)  * width / 4,0 , 0, 0);
-                    animation.setFillAfter(true);// True:图片停在动画结束位置
-                    animation.setDuration(200);
-                    openclass_cursor1.startAnimation(animation);
-                    TextView openclass_tab_all = mview.findViewById(R.id.openclass_tab_all);
-                    TextView openclass_tab_haveinhand = mview.findViewById(R.id.openclass_tab_haveinhand);
-                    TextView openclass_tab_begininaminute = mview.findViewById(R.id.openclass_tab_begininaminute);
-                    TextView openclass_tab_over = mview.findViewById(R.id.openclass_tab_over);
-                    openclass_tab_all.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, mview.getResources().getDimensionPixelSize(R.dimen.textsize18));
-                    openclass_tab_haveinhand.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, mview.getResources().getDimensionPixelSize(R.dimen.textsize16));
-                    openclass_tab_begininaminute.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, mview.getResources().getDimensionPixelSize(R.dimen.textsize16));
-                    openclass_tab_over.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, mview.getResources().getDimensionPixelSize(R.dimen.textsize16));
-                   getOpenClassBean("全部");//文件加载全部数据
-                }
-                mLastTabIndex = 1;
-                mCurrentTab = "all";
-                break;
-            }
-            //进行中
-            case R.id.openclass_tab_haveinhand:{
-                if (!mCurrentTab.equals("haveinhand")) {
-                    ImageView openclass_cursor1 = mview.findViewById(R.id.openclass_cursor1);
-                    Animation animation = new TranslateAnimation(( mLastTabIndex - 1)  * width / 4,width / 4 , 0, 0);
-                    animation.setFillAfter(true);// True:图片停在动画结束位置
-                    animation.setDuration(200);
-                    openclass_cursor1.startAnimation(animation);
-                    TextView openclass_tab_all = mview.findViewById(R.id.openclass_tab_all);
-                    TextView openclass_tab_haveinhand = mview.findViewById(R.id.openclass_tab_haveinhand);
-                    TextView openclass_tab_begininaminute = mview.findViewById(R.id.openclass_tab_begininaminute);
-                    TextView openclass_tab_over = mview.findViewById(R.id.openclass_tab_over);
-                    openclass_tab_all.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, mview.getResources().getDimensionPixelSize(R.dimen.textsize16));
-                    openclass_tab_haveinhand.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, mview.getResources().getDimensionPixelSize(R.dimen.textsize18));
-                    openclass_tab_begininaminute.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, mview.getResources().getDimensionPixelSize(R.dimen.textsize16));
-                    openclass_tab_over.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, mview.getResources().getDimensionPixelSize(R.dimen.textsize16));
-                    getOpenClassBean("进行中");
-                }
-                mLastTabIndex = 2;
-                mCurrentTab = "haveinhand";
-                break;
-            }
-            case R.id.openclass_tab_begininaminute:{
-                if (!mCurrentTab.equals("begininaminute")) {
-                    ImageView openclass_cursor1 = mview.findViewById(R.id.openclass_cursor1);
-                    Animation animation = new TranslateAnimation(( mLastTabIndex - 1)  * width / 4,width * 2 / 4, 0, 0);
-                    animation.setFillAfter(true);// True:图片停在动画结束位置
-                    animation.setDuration(200);
-                    openclass_cursor1.startAnimation(animation);
-                    TextView openclass_tab_all = mview.findViewById(R.id.openclass_tab_all);
-                    TextView openclass_tab_haveinhand = mview.findViewById(R.id.openclass_tab_haveinhand);
-                    TextView openclass_tab_begininaminute = mview.findViewById(R.id.openclass_tab_begininaminute);
-                    TextView openclass_tab_over = mview.findViewById(R.id.openclass_tab_over);
-                    openclass_tab_all.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, mview.getResources().getDimensionPixelSize(R.dimen.textsize16));
-                    openclass_tab_haveinhand.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, mview.getResources().getDimensionPixelSize(R.dimen.textsize16));
-                    openclass_tab_begininaminute.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, mview.getResources().getDimensionPixelSize(R.dimen.textsize18));
-                    openclass_tab_over.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, mview.getResources().getDimensionPixelSize(R.dimen.textsize16));
-                    getOpenClassBean("未开始");
-                }
-                mLastTabIndex = 3;
-                mCurrentTab = "begininaminute";
-                break;
-            }
-            case R.id.openclass_tab_over:{
-                if (!mCurrentTab.equals("over")) {
-                    ImageView openclass_cursor1 = mview.findViewById(R.id.openclass_cursor1);
-                    Animation animation = new TranslateAnimation(( mLastTabIndex - 1)  * width / 4,width * 3 / 4, 0, 0);
-                    animation.setFillAfter(true);// True:图片停在动画结束位置
-                    animation.setDuration(200);
-                    openclass_cursor1.startAnimation(animation);
-                    TextView openclass_tab_all = mview.findViewById(R.id.openclass_tab_all);
-                    TextView openclass_tab_haveinhand = mview.findViewById(R.id.openclass_tab_haveinhand);
-                    TextView openclass_tab_begininaminute = mview.findViewById(R.id.openclass_tab_begininaminute);
-                    TextView openclass_tab_over = mview.findViewById(R.id.openclass_tab_over);
-                    openclass_tab_all.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, mview.getResources().getDimensionPixelSize(R.dimen.textsize16));
-                    openclass_tab_haveinhand.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, mview.getResources().getDimensionPixelSize(R.dimen.textsize16));
-                    openclass_tab_begininaminute.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, mview.getResources().getDimensionPixelSize(R.dimen.textsize16));
-                    openclass_tab_over.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, mview.getResources().getDimensionPixelSize(R.dimen.textsize18));
-                    getOpenClassBean("已结束");
-                }
-                mLastTabIndex = 4;
-                mCurrentTab = "over";
-                break;
-            }
-            default:{
-                break;
-            }
-        }
-    }
     //获取openclass的数据
    public void getOpenClassBean(String type){
        LoadingDialog.getInstance(mMainContext).show();
-       LinearLayout openclass_end = mview.findViewById(R.id.openclass_end);
-       openclass_end.setVisibility(View.INVISIBLE);
-       LinearLayout openclass_content = mview.findViewById(R.id.openclass_content);
-       openclass_content.removeAllViews();
+//       LinearLayout openclass_end = mview.findViewById(R.id.openclass_end);
+//       openclass_end.setVisibility(View.INVISIBLE);
        Retrofit retrofit = new Retrofit.Builder()
                .addConverterFactory(GsonConverterFactory.create())
                .baseUrl(mMainContext.mIpadress)
@@ -338,95 +273,9 @@ public class ModelOpenClass extends Fragment implements View.OnClickListener {
                         LoadingDialog.getInstance(mMainContext).dismiss();
                         return;
                     }
-                    for (int i = 0; i < list.size(); i ++){
-                        ModelOpenclassBean.DataBean.ListBean listBean = list.get(i);
-                        if (listBean == null){
-                            continue;
-                        }
-                        View view = LayoutInflater.from(mMainContext).inflate(R.layout.openclass_layout1, null);
-                        openclass_content.addView(view);
-                        //加载公开课封面
-                        ImageView openclass_cover = view.findViewById(R.id.openclass_cover);
-                        Glide.with(mMainContext).load(listBean.getPc_cover()).listener(new RequestListener<Drawable>() {
-                            @Override
-                            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                                Log.d("Warn","加载失败 errorMsg:" + (e != null ? e.getMessage() : "null"));
-                                return false;
-                            }
-                            @Override
-                            public boolean onResourceReady(final Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                                Log.d("Warn","成功  Drawable Name:" + resource.getClass().getCanonicalName());
-                                return false;
-                            }
-                        }).error(mMainContext.getResources().getDrawable(R.drawable.modelcoursecover)).into(openclass_cover);
-                        //公开课名称
-                        TextView openclass_classname = view.findViewById(R.id.openclass_classname);
-                        openclass_classname.setText(listBean.getPc_name());
-                        //公开课的开始和结束时间
-                        TextView openclass1_time = view.findViewById(R.id.openclass1_time);
-                        Date date = null;
-                        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-                        try {
-                            date = df.parse(listBean.begin_time);
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                        }
-                        if (date != null) {
-                            SimpleDateFormat df1 = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", Locale.UK);
-                            Date date1 = null;
-                            try {
-                                date1 = df1.parse(date.toString());
-                            } catch (ParseException e) {
-                                e.printStackTrace();
-                            }
-                            if (date1 != null) {
-                                SimpleDateFormat df2 = new SimpleDateFormat("yyyy-MM-dd");
-                                listBean.begin_time = df2.format(date1).toString();
-                            }
-                        }
-                        df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-                        try {
-                            date = df.parse(listBean.end_time);
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                        }
-                        if (date != null) {
-                            SimpleDateFormat df1 = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", Locale.UK);
-                            Date date1 = null;
-                            try {
-                                date1 = df1.parse(date.toString());
-                            } catch (ParseException e) {
-                                e.printStackTrace();
-                            }
-                            if (date1 != null) {
-                                SimpleDateFormat df2 = new SimpleDateFormat("yyyy-MM-dd");
-                                listBean.end_time = df2.format(date1).toString();
-                            }
-                        }
-                        openclass1_time.setText(listBean.getBegin_time() + " " + listBean.getEnd_time());
-                        //公开课的状态
-                        TextView openclass1_state = view.findViewById(R.id.openclass1_state);
-                        openclass1_state.setText(listBean.getStatus());
-                        //公开课当前logo
-                        ImageView openclass1_logo = view.findViewById(R.id.openclass1_logo);
-                        if (listBean.getStatus().equals("即将开始")){
-                            openclass1_logo.setBackground(view.getResources().getDrawable(R.drawable.button_openclass_start));
-                            openclass1_state.setTextColor(view.getResources().getColor(R.color.holo_red_dark));
-                        }else if (listBean.getStatus().equals("已结束")){
-                            openclass1_logo.setBackground(view.getResources().getDrawable(R.drawable.button_openclass_over));
-                            openclass1_state.setTextColor(view.getResources().getColor(R.color.color_69));
-                            //为每个公开课设置监听
-                            view.setOnClickListener(v->{
-                                mMainContext.LoginLiveOrPlayback(listBean.public_class_id,1,PlayType.PLAYBACK);
-                            });
-                        } else { //直播中
-                            //为每个公开课设置监听
-                            view.setOnClickListener(v->{
-                                mMainContext.LoginLiveOrPlayback(listBean.public_class_id,1,PlayType.LIVE);
-                            });
-                        }
-
-                    }
+                    mAdapter.clear();
+                    mAdapter.addAll(list);
+                    mAdapter.notifyDataSetChanged();
                     if (mSmart_openclass_layout != null){
                         mSmart_openclass_layout.finishRefresh();
                     }
@@ -447,7 +296,6 @@ public class ModelOpenClass extends Fragment implements View.OnClickListener {
     //获取openclass的数据
     public void getOpenClassBeanMore(String type){
         LoadingDialog.getInstance(mMainContext).show();
-        LinearLayout openclass_content = mview.findViewById(R.id.openclass_content);
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
                 .baseUrl(mMainContext.mIpadress)
@@ -510,95 +358,8 @@ public class ModelOpenClass extends Fragment implements View.OnClickListener {
                             LoadingDialog.getInstance(mMainContext).dismiss();
                             return;
                         }
-                        for (int i = 0; i < list.size(); i ++){
-                            ModelOpenclassBean.DataBean.ListBean listBean = list.get(i);
-                            if (listBean == null){
-                                continue;
-                            }
-                            View view = LayoutInflater.from(mMainContext).inflate(R.layout.openclass_layout1, null);
-                            openclass_content.addView(view);
-                            //加载公开课封面
-                            ImageView openclass_cover = view.findViewById(R.id.openclass_cover);
-                            Glide.with(mMainContext).load(listBean.getPc_cover()).listener(new RequestListener<Drawable>() {
-                                @Override
-                                public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                                    Log.d("Warn","加载失败 errorMsg:" + (e != null ? e.getMessage() : "null"));
-                                    return false;
-                                }
-                                @Override
-                                public boolean onResourceReady(final Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                                    Log.d("Warn","成功  Drawable Name:" + resource.getClass().getCanonicalName());
-                                    return false;
-                                }
-                            }).error(mMainContext.getResources().getDrawable(R.drawable.modelcoursecover)).into(openclass_cover);
-                            //公开课名称
-                            TextView openclass_classname = view.findViewById(R.id.openclass_classname);
-                            openclass_classname.setText(listBean.getPc_name());
-                            //公开课的开始和结束时间
-                            TextView openclass1_time = view.findViewById(R.id.openclass1_time);
-                            Date date = null;
-                            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-                            try {
-                                date = df.parse(listBean.begin_time);
-                            } catch (ParseException e) {
-                                e.printStackTrace();
-                            }
-                            if (date != null) {
-                                SimpleDateFormat df1 = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", Locale.UK);
-                                Date date1 = null;
-                                try {
-                                    date1 = df1.parse(date.toString());
-                                } catch (ParseException e) {
-                                    e.printStackTrace();
-                                }
-                                if (date1 != null) {
-                                    SimpleDateFormat df2 = new SimpleDateFormat("yyyy-MM-dd");
-                                    listBean.begin_time = df2.format(date1).toString();
-                                }
-                            }
-                            df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-                            try {
-                                date = df.parse(listBean.end_time);
-                            } catch (ParseException e) {
-                                e.printStackTrace();
-                            }
-                            if (date != null) {
-                                SimpleDateFormat df1 = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", Locale.UK);
-                                Date date1 = null;
-                                try {
-                                    date1 = df1.parse(date.toString());
-                                } catch (ParseException e) {
-                                    e.printStackTrace();
-                                }
-                                if (date1 != null) {
-                                    SimpleDateFormat df2 = new SimpleDateFormat("yyyy-MM-dd");
-                                    listBean.end_time = df2.format(date1).toString();
-                                }
-                            }
-                            openclass1_time.setText(listBean.getBegin_time() + " " + listBean.getEnd_time());
-                            //公开课的状态
-                            TextView openclass1_state = view.findViewById(R.id.openclass1_state);
-                            openclass1_state.setText(listBean.getStatus());
-                            //公开课当前logo
-                            ImageView openclass1_logo = view.findViewById(R.id.openclass1_logo);
-                            String s = openclass1_state.getText().toString();
-                            if (s.equals("即将开始")){
-                                openclass1_logo.setBackground(view.getResources().getDrawable(R.drawable.button_openclass_start));
-                                openclass1_state.setTextColor(view.getResources().getColor(R.color.holo_red_dark));
-                            }else if (listBean.getStatus().equals("已结束")){
-                                openclass1_logo.setBackground(view.getResources().getDrawable(R.drawable.button_openclass_over));
-                                openclass1_state.setTextColor(view.getResources().getColor(R.color.color_69));
-                                //为每个公开课设置监听
-                                view.setOnClickListener(v->{
-                                    mMainContext.LoginLiveOrPlayback(listBean.public_class_id,1,PlayType.PLAYBACK);
-                                });
-                            } else { //直播中
-                                //为每个公开课设置监听
-                                view.setOnClickListener(v->{
-                                    mMainContext.LoginLiveOrPlayback(listBean.public_class_id,1,PlayType.LIVE);
-                                });
-                            }
-                        }
+                        mAdapter.addAll(list);
+                        mAdapter.notifyDataSetChanged();
                         if (mSmart_openclass_layout != null){
                             mSmart_openclass_layout.finishLoadMore();
                         }

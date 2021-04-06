@@ -26,16 +26,6 @@
         android:orientation="horizontal"
         >
 
-        <!--<Button
-            android:id="@+id/button"
-            style="@style/Widget.AppCompat.ActionButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/__picker_all_image"
-            android:textColor="#ffffff"
-            />-->
-
         <TextView
             android:id="@+id/button"
             android:layout_width="0.0dp"

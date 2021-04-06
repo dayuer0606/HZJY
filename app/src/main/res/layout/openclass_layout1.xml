@@ -5,67 +5,51 @@
     xmlns:android="http://schemas.android.com/apk/res/android" >
     <ImageView
         android:id="@+id/openclass_cover"
-        android:layout_width="@dimen/dp_150"
+        android:layout_width="match_parent"
         android:layout_height="@dimen/dp_92"
-        android:layout_marginTop="@dimen/dp20"
-        android:layout_marginLeft="@dimen/dp_13"
-        android:layout_marginRight="@dimen/dp10"
-        android:background="@drawable/modelcoursecover"/>
+        android:layout_marginTop="@dimen/dp20"/>
     <TextView
-        android:layout_toRightOf="@id/openclass_cover"
+        android:layout_below="@id/openclass_cover"
         android:id="@+id/openclass_classname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp20"
-        android:layout_marginRight="@dimen/dp_13"
+        android:layout_marginTop="@dimen/dp10"
         android:textSize="@dimen/textsize16"
         android:textColor="#333333"
-        android:lines="2"
+        android:singleLine="true"
         android:ellipsize="end"
         android:text="案例分析建筑防火知识"/>
+    <ImageView
+        android:id="@+id/classchedulecard2_timelogo"
+        android:layout_width="@dimen/dp_10"
+        android:layout_height="@dimen/dp10"
+        android:layout_below="@id/openclass_classname"
+        android:background="@drawable/button_clock_gray"
+        android:layout_marginTop="@dimen/dp10"/>
     <TextView
         android:id="@+id/openclass1_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="2019-11-12 12:00-14:00"
-        android:layout_marginRight="@dimen/dp_13"
-        android:layout_above="@+id/openclass1_timeandintroduce"
-        android:layout_toRightOf="@id/openclass_cover"
+        android:text="2019.11.12 12:00-14:00"
+        android:layout_marginTop="@dimen/dp_7"
+        android:layout_below="@id/openclass_classname"
+        android:layout_toRightOf="@id/classchedulecard2_timelogo"
         android:layout_marginBottom="@dimen/dp7"
-        android:textSize="@dimen/textsize14"
+        android:textSize="@dimen/textsize12"
+        android:layout_marginLeft="@dimen/dp_7"
         android:textColor="#999999"
         android:singleLine="true"/>
-    <LinearLayout
-        android:id="@+id/openclass1_timeandintroduce"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/openclass1_state"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_toRightOf="@id/openclass_cover"
-        android:layout_above="@+id/openclass1_line1"
-        android:layout_marginRight="@dimen/dp_13"
-        android:gravity="left|center">
-        <ImageView
-            android:id="@+id/openclass1_logo"
-            android:layout_width="@dimen/dp12"
-            android:layout_height="@dimen/dp12"
-            android:background="@drawable/button_openclass_playing"
-            android:layout_marginRight="@dimen/dp_13"/>
-        <TextView
-            android:id="@+id/openclass1_state"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="正在直播"
-            android:textSize="@dimen/textsize14"
-            android:textColor="@color/blue649cf0"/>
-    </LinearLayout>
-    <View
-        android:id="@+id/openclass1_line1"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp1"
-        android:layout_gravity="center_horizontal"
-        android:background="#e5e5e5"
-        android:layout_marginTop="@dimen/dp10"
-        android:layout_below="@id/openclass_cover"
-        android:layout_marginRight="@dimen/dp_13"
-        android:layout_marginLeft="@dimen/dp_13"/>
+        android:text="进行中"
+        android:textSize="@dimen/textsize12"
+        android:padding="@dimen/dp5"
+        android:textColor="#FFFFFF"
+        android:background="#20000000"
+        android:layout_marginTop="@dimen/dp_7"
+        android:layout_marginRight="@dimen/dp_7"
+        android:layout_alignTop="@id/openclass_cover"
+        android:layout_alignRight="@id/openclass_cover"/>
 </RelativeLayout>

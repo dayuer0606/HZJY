@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -86,44 +87,13 @@ public class ModelClassCheduleCard extends Fragment implements
             calendarView.setOnYearChangeListener(this);
 //        }
         if (context.equals("首页")){
-            LinearLayout classchedulecard_title_layout = mView.findViewById(R.id.classchedulecard_title_layout);
-            RelativeLayout.LayoutParams rl = (RelativeLayout.LayoutParams) classchedulecard_title_layout.getLayoutParams();
-            rl.height = 0;
-            classchedulecard_title_layout.setLayoutParams(rl);
+            ImageView classchedulecard_return_button1 = mView.findViewById(R.id.classchedulecard_return_button1);
+            classchedulecard_return_button1.setVisibility(View.INVISIBLE);
         } else {
-            LinearLayout classchedulecard_title_layout = mView.findViewById(R.id.classchedulecard_title_layout);
-            RelativeLayout.LayoutParams rl = (RelativeLayout.LayoutParams) classchedulecard_title_layout.getLayoutParams();
-            rl.height = RelativeLayout.LayoutParams.WRAP_CONTENT;
-            classchedulecard_title_layout.setLayoutParams(rl);
+            ImageView classchedulecard_return_button1 = mView.findViewById(R.id.classchedulecard_return_button1);
+            classchedulecard_return_button1.setVisibility(View.VISIBLE);
         }
         //获取当天日期和时间
-        Date dateOld = new Date(System.currentTimeMillis()); // 根据long类型的毫秒数生命一个date类型的时间
-        final java.util.Calendar c = java.util.Calendar.getInstance();
-        String format1 = new SimpleDateFormat("yyyy-MM-dd").format(dateOld);
-        int mWay = c.get(java.util.Calendar.DAY_OF_WEEK);
-        String classchedulecard_week = "";
-        if (mWay == 1){
-            classchedulecard_week = "星期日";
-        } else if (mWay == 2){
-            classchedulecard_week = "星期一";
-        } else if (mWay == 3){
-            classchedulecard_week = "星期二";
-        } else if (mWay == 4){
-            classchedulecard_week = "星期三";
-        } else if (mWay == 5){
-            classchedulecard_week = "星期四";
-        } else if (mWay == 6){
-            classchedulecard_week = "星期五";
-        } else if (mWay == 7){
-            classchedulecard_week = "星期六";
-        }
-        SimpleDateFormat format = new SimpleDateFormat("a");
-        TextView classchedulecard_weekNum = mView.findViewById(R.id.classchedulecard_weekNum);
-        classchedulecard_weekNum.setText(classchedulecard_week);
-        TextView classchedulecard_dataNum = mView.findViewById(R.id.classchedulecard_dataNum);
-        classchedulecard_dataNum.setText(format1);
-        TextView classchedulecard_time = mView.findViewById(R.id.classchedulecard_time);
-        classchedulecard_time.setText(format.format(dateOld));
         LinearLayout classchedulecard_content = mView.findViewById(R.id.classchedulecard_content);
         classchedulecard_content.addView(mClasschedulecardView);
         recyclerView = mClasschedulecardView.findViewById(R.id.recyclerView);
@@ -331,10 +301,6 @@ public class ModelClassCheduleCard extends Fragment implements
                                 classBeans.add(classBean);
                                 map1.put(date + ";今日课次：" + count,classBeans);
                                 titles.add(date + ";今日课次：" + count);
-                            }
-                            if (format1.equals(key)){
-                                TextView classchedulecard_classnum = mView.findViewById(R.id.classchedulecard_classnum);
-                                classchedulecard_classnum.setText(count + "");
                             }
                         }
                         //此方法在巨大的数据量上不影响遍历性能，推荐使用
