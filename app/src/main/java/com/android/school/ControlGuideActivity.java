@@ -25,7 +25,7 @@ public class ControlGuideActivity extends Activity implements ViewPager.OnPageCh
     private List<View> mViews = new ArrayList<>();//引导页容器，存储所有引导页视图
     private List<ImageView> mImageViews = new ArrayList<>();//引导页图片容器，存储所有引导页图片
     private int[]  imgRes = new int[]{//引导页图片索引容器，存储所有引导页图片索引
-            R.mipmap.guide_1,R.mipmap.guide_2,R.mipmap.guide_3
+            R.mipmap.guide_1,R.mipmap.guide_2,R.mipmap.guide_3,R.mipmap.guide_4
     };
     private Button mButton;
     private LinearLayout mLayout;
