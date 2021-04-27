@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#00FFFFFF" >
@@ -15,23 +14,27 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:layout_marginTop="@dimen/dp25"
-            android:text="请输入兑换码"
+            android:text="兑换优惠券"
             android:textColor="#666666"
             android:textSize="19sp" />
 
 
         <EditText
             android:id="@+id/dialog_content"
-            android:layout_width="@dimen/dp_175"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="@dimen/dp13"
+            android:layout_marginRight="@dimen/dp13"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:layout_centerHorizontal="true"
             android:layout_below="@+id/tip"
             android:textColor="#565555"
+            android:textColorHint="#B7BBC2"
             android:singleLine="true"
             android:ellipsize="end"
             android:maxLength="24"
             android:text=""
+            android:hint="请输入优惠码"
             android:theme="@style/MyEditText"
             android:textSize="@dimen/textsize17" />
 
