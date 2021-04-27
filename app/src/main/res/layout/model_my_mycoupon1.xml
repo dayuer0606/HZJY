@@ -30,14 +30,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/textsize14"
-                        android:textColor="@color/holo_red_dark"
+                        android:textColor="@color/bottom_button_select"
                         android:text="¥"/>
                     <TextView
                         android:id="@+id/modelmy_mycoupon1_couponprice"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/textsize22"
-                        android:textColor="@color/holo_red_dark"
+                        android:textColor="@color/bottom_button_select"
                         android:text="100"
                         android:singleLine="true"
                         android:ellipsize="end"
@@ -48,7 +48,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/textsize15"
-                    android:textColor="@color/holo_red_dark"
+                    android:textColor="@color/bottom_button_select"
                     android:text="满300元可用"
                     android:singleLine="true"
                     android:ellipsize="end"
@@ -117,21 +117,19 @@
                 android:singleLine="true"
                 android:ellipsize="end"
                 android:textColor="#cc999999"/>
-<!--            <ImageView-->
-<!--                android:layout_width="@dimen/dp_68"-->
-<!--                android:layout_height="@dimen/dp30"-->
-<!--                android:layout_marginRight="@dimen/dp13"-->
-<!--                android:background="@drawable/mycoupon_button_immediateuse"/>-->
+
+            <TextView
+                android:id="@+id/modelmy_mycoupon1_couponstate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="立即使用"
+                android:gravity="right"
+                android:layout_marginRight="@dimen/dp13"
+                android:textColor="#FF7448"
+                android:singleLine="true"
+                android:ellipsize="end"
+                android:textSize="@dimen/textsize14"/>
         </LinearLayout>
-        <ImageView
-            android:id="@+id/modelmy_mycoupon1_couponstate"
-            android:layout_width="@dimen/dp_59"
-            android:layout_height="@dimen/dp_59"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="@dimen/dp10"
-            android:layout_marginRight="@dimen/dp16"
-            android:visibility="invisible"
-            android:background="@drawable/mycoupon_icon_outofdata"/>
     </RelativeLayout>
 </LinearLayout>

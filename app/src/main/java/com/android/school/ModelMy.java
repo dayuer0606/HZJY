@@ -1448,9 +1448,9 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                 modelmy_mycoupon1_couponprice.setTextColor(view.getResources().getColor(R.color.grayccbab9b9));
                 TextView modelmy_mycoupon1_couponrequire = view.findViewById(R.id.modelmy_mycoupon1_couponrequire);
                 modelmy_mycoupon1_couponrequire.setTextColor(view.getResources().getColor(R.color.grayccbab9b9));
-                ImageView modelmy_mycoupon1_couponstate = view.findViewById(R.id.modelmy_mycoupon1_couponstate);
-                modelmy_mycoupon1_couponstate.setVisibility(View.VISIBLE);
-                modelmy_mycoupon1_couponstate.setBackground(view.getResources().getDrawable(R.drawable.mycoupon_icon_alreadyused));
+                TextView modelmy_mycoupon1_couponstate = view.findViewById(R.id.modelmy_mycoupon1_couponstate);
+                modelmy_mycoupon1_couponstate.setText("已使用");
+                modelmy_mycoupon1_couponstate.setTextColor(view.getResources().getColor(R.color.grayccbab9b9));
             }
         } else if (mMyCouponCurrentTab.equals("expired")) {
             //已经过期列表    网络请求获取相应的数据
@@ -1462,9 +1462,9 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                 modelmy_mycoupon1_couponprice.setTextColor(view.getResources().getColor(R.color.grayccbab9b9));
                 TextView modelmy_mycoupon1_couponrequire = view.findViewById(R.id.modelmy_mycoupon1_couponrequire);
                 modelmy_mycoupon1_couponrequire.setTextColor(view.getResources().getColor(R.color.grayccbab9b9));
-                ImageView modelmy_mycoupon1_couponstate = view.findViewById(R.id.modelmy_mycoupon1_couponstate);
-                modelmy_mycoupon1_couponstate.setVisibility(View.VISIBLE);
-                modelmy_mycoupon1_couponstate.setBackground(view.getResources().getDrawable(R.drawable.mycoupon_icon_outofdata));
+                TextView modelmy_mycoupon1_couponstate = view.findViewById(R.id.modelmy_mycoupon1_couponstate);
+                modelmy_mycoupon1_couponstate.setText("已过期");
+                modelmy_mycoupon1_couponstate.setTextColor(view.getResources().getColor(R.color.grayccbab9b9));
             }
         }
     }
