@@ -413,6 +413,15 @@ public interface ModelObservableInterface {
     Call<BaseBean> retrievePassword(@Body RequestBody body);
 
     /**
+     * 一键登录注册
+     *
+     * @param body 请求体（tel：手机号；stu_pass：密码；sms_code：验证码）
+     **/
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST("app/user/VerificationCodeOneClickLogin")
+    Call<BaseBean> VerificationCodeOneClickLogin(@Body RequestBody body);
+
+    /**
      * 获取验证码
      *
      * @param body 请求体（tel：手机号；）

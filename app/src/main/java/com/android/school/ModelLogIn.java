@@ -95,6 +95,8 @@ public class ModelLogIn extends Fragment {
         login_username_edittext.setText("");
         EditText login_password_edittext = mview.findViewById(R.id.login_password_edittext);
         login_password_edittext.setText("");
+        EditText login_project_edittext = mview.findViewById(R.id.login_project_edittext);
+        login_project_edittext.setText("");
         Button login_button = mview.findViewById(R.id.login_button);
         login_button.setEnabled(false);
         login_username_edittext.addTextChangedListener(new TextWatcher() {
@@ -110,7 +112,27 @@ public class ModelLogIn extends Fragment {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                if (login_username_edittext.getText().toString().equals("")) {
+                if (login_username_edittext.getText().toString().equals("") && login_project_edittext.getText().toString().equals("")) {
+                    login_button.setEnabled(false);
+                } else {
+                    login_button.setEnabled(true);
+                }
+            }
+        });
+        login_project_edittext.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (login_username_edittext.getText().toString().equals("") && login_project_edittext.getText().toString().equals("")) {
                     login_button.setEnabled(false);
                 } else {
                     login_button.setEnabled(true);
@@ -135,6 +157,8 @@ public class ModelLogIn extends Fragment {
         login_register_mainScrollView.setLayoutParams(LinearLayoutlp);
         EditText login_register_username_edittext = mview.findViewById(R.id.login_register_username_edittext);
         login_register_username_edittext.setText("");
+        EditText login_register_project_edittext = mview.findViewById(R.id.login_register_project_edittext);
+        login_register_project_edittext.setText("");
         EditText login_register_smscode_edittext = mview.findViewById(R.id.login_register_smscode_edittext);
         login_register_smscode_edittext.setText("");
         TextView register_getsmscode = mview.findViewById(R.id.register_getsmscode);
@@ -154,7 +178,31 @@ public class ModelLogIn extends Fragment {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                if (login_register_username_edittext.getText().toString().equals("")) {
+                if (login_register_username_edittext.getText().toString().equals("")
+                        && login_register_project_edittext.getText().toString().equals("")) {
+                    Button login_register_button1 = mview.findViewById(R.id.login_register_button);
+                    login_register_button1.setEnabled(false);
+                } else {
+                    Button login_register_button1 = mview.findViewById(R.id.login_register_button);
+                    login_register_button1.setEnabled(true);
+                }
+            }
+        });
+        login_register_project_edittext.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (login_register_username_edittext.getText().toString().equals("")
+                        && login_register_project_edittext.getText().toString().equals("")) {
                     Button login_register_button1 = mview.findViewById(R.id.login_register_button);
                     login_register_button1.setEnabled(false);
                 } else {
@@ -214,6 +262,12 @@ public class ModelLogIn extends Fragment {
     public String UserPasswordGet(){
         EditText login_password_edittext = mview.findViewById(R.id.login_password_edittext);
         return login_password_edittext.getText().toString();
+    }
+
+    //获取合作商ID
+    public String ProjectIdGet(){
+        EditText login_project_edittext = mview.findViewById(R.id.login_project_edittext);
+        return login_project_edittext.getText().toString();
     }
 
     //隐藏所有图层
@@ -382,8 +436,10 @@ public class ModelLogIn extends Fragment {
         }
         //判断密码是否为6~12位数字或字母
         EditText login_register_username_edittext = mview.findViewById(R.id.login_register_username_edittext);
+        EditText login_register_project_edittext = mview.findViewById(R.id.login_register_project_edittext);
         EditText login_register_smscode_edittext = mview.findViewById(R.id.login_register_smscode_edittext);
-        if (login_register_username_edittext == null || login_register_smscode_edittext == null){
+        if (login_register_username_edittext == null || login_register_smscode_edittext == null
+                || login_register_project_edittext == null){
             Toast.makeText(mMainContext,"系统错误",Toast.LENGTH_LONG).show();
             return;
         }
@@ -395,6 +451,11 @@ public class ModelLogIn extends Fragment {
         String phonecode = login_register_smscode_edittext.getText().toString();
         if (phonecode.equals("")){
             Toast.makeText(mMainContext,"请输入验证码",Toast.LENGTH_LONG).show();
+            return;
+        }
+        String project_id = login_register_project_edittext.getText().toString();
+        if (project_id.equals("")){
+            Toast.makeText(mMainContext,"请输入合作商ID",Toast.LENGTH_LONG).show();
             return;
         }
         LoadingDialog.getInstance(mMainContext).show();

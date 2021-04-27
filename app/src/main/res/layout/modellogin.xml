@@ -12,8 +12,8 @@
         android:layout_height="match_parent">
         <LinearLayout
             android:id="@+id/login_main"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_width="@dimen/dp0"
+            android:layout_height="@dimen/dp0"
             android:visibility="invisible"
             android:orientation="vertical"
             android:layout_marginLeft="@dimen/dp33"
@@ -74,6 +74,18 @@
                     android:layout_marginRight="@dimen/dp15"/>
             </RelativeLayout>
 
+            <EditText
+                android:id="@+id/login_project_edittext"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp40"
+                android:layout_marginTop="@dimen/dp_41"
+                android:hint="请输入合作商id"
+                android:singleLine="true"
+                android:enabled="true"
+                android:paddingLeft="@dimen/dp21"
+                android:paddingRight="@dimen/dp21"
+                android:textSize="@dimen/textsize14"
+                android:background="@drawable/edit_shape_20"/>
             <Button
                 android:id="@+id/login_button"
                 android:layout_width="match_parent"
@@ -172,6 +184,18 @@
                     android:onClick="onClickRegisterSMSCodeGet"/>
             </RelativeLayout>
 
+            <EditText
+                android:id="@+id/login_register_project_edittext"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp40"
+                android:layout_marginTop="@dimen/dp_41"
+                android:hint="请输入合作商id"
+                android:singleLine="true"
+                android:enabled="true"
+                android:paddingLeft="@dimen/dp21"
+                android:paddingRight="@dimen/dp21"
+                android:textSize="@dimen/textsize14"
+                android:background="@drawable/edit_shape_20"/>
             <Button
                 android:id="@+id/login_register_button"
                 android:layout_width="match_parent"

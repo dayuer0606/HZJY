@@ -841,6 +841,11 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
             Toast.makeText(this,"密码不允许为空",Toast.LENGTH_SHORT).show();
             return;
         }
+        String projectId = ((ModelLogIn)mModelLogIn).ProjectIdGet();
+        if (projectId.equals("")){
+            Toast.makeText(this,"合作商ID不允许为空",Toast.LENGTH_SHORT).show();
+            return;
+        }
         //将账户和密码发给服务器确认
         ((ModelLogIn)mModelLogIn).LogIn(userId,userPassword);
     }
