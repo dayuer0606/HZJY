@@ -151,12 +151,12 @@
                             />
                     </RelativeLayout>
 
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/dp_80"
-                        android:layout_marginTop="@dimen/dp15"
-                        android:src="@drawable/banner_icon"
-                        android:scaleType="fitXY"/>
+<!--                    <ImageView-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="@dimen/dp_80"-->
+<!--                        android:layout_marginTop="@dimen/dp15"-->
+<!--                        android:src="@drawable/banner_icon"-->
+<!--                        android:scaleType="fitXY"/>-->
 
                     <RelativeLayout
                         android:id="@+id/morecoursepacket"
