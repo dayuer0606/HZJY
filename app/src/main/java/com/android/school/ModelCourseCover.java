@@ -1750,7 +1750,8 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                 }
 //                String effictive_days = String.valueOf(courseDataBean.get("effictive_days"));
                 mCourseInfo.setmCourseMessage(String.valueOf(courseDataBean.get("course_describe")));
-                mCourseInfo.setmCourseTotalHours(String.valueOf(courseDataBean.get("total_hours")));
+//                mCourseInfo.setmCourseTotalHours(String.valueOf(courseDataBean.get("total_hours")));
+                mCourseInfo.setmCourseTotalHours(String.valueOf(courseDataBean.get("ct_num")));
                 if (mCourseInfo.getmCourseTotalHours().indexOf(".") >= 0) {
                     mCourseInfo.setmCourseTotalHours(mCourseInfo.getmCourseTotalHours().substring(0, mCourseInfo.getmCourseTotalHours().indexOf(".")));
                 }
