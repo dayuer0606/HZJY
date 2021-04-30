@@ -214,7 +214,7 @@ public class ModelLogIn extends Fragment {
 }
 
     //注册-获取验证码倒计时
-    public void RegisterSMSCodeGet(){
+    private void RegisterSMSCodeGet(){
         if (mview == null){
             Toast.makeText(mMainContext,"系统错误！",Toast.LENGTH_LONG).show();
             return;
@@ -227,9 +227,8 @@ public class ModelLogIn extends Fragment {
             return;
         }
         TextView register_getsmscode = mview.findViewById(R.id.register_getsmscode);
-        if (!register_getsmscode.getText().toString().equals("")){
-            return;
-        }
+        EditText login_register_smscode_edittext = mview.findViewById(R.id.login_register_smscode_edittext);
+        login_register_smscode_edittext.setText("");
         register_getsmscode.setText("");
         /** 倒计时60秒，一次1秒 */
         if (mRegisterSMSCodeCountDownTimer != null){
@@ -249,25 +248,6 @@ public class ModelLogIn extends Fragment {
             }
         }.start();
         VerifyPhoneNumber(tel);
-    }
-
-
-    //获取用户id
-    public String UserIdGet(){
-        EditText login_username_edittext = mview.findViewById(R.id.login_username_edittext);
-        return login_username_edittext.getText().toString();
-    }
-
-    //获取用户密码
-    public String UserPasswordGet(){
-        EditText login_password_edittext = mview.findViewById(R.id.login_password_edittext);
-        return login_password_edittext.getText().toString();
-    }
-
-    //获取合作商ID
-    public String ProjectIdGet(){
-        EditText login_project_edittext = mview.findViewById(R.id.login_project_edittext);
-        return login_project_edittext.getText().toString();
     }
 
     //隐藏所有图层
@@ -346,7 +326,19 @@ public class ModelLogIn extends Fragment {
         return "";
     }
     //登录
-    public void LogIn(String username,String password){
+    private void LogIn(){
+        EditText login_username_edittext = mview.findViewById(R.id.login_username_edittext);
+        String username = login_username_edittext.getText().toString();
+        if (username.equals("")){
+            Toast.makeText(mMainContext,"账户不允许为空",Toast.LENGTH_SHORT).show();
+            return;
+        }
+        EditText login_password_edittext = mview.findViewById(R.id.login_password_edittext);
+        String password = login_password_edittext.getText().toString();
+        if (password.equals("")){
+            Toast.makeText(mMainContext,"密码不允许为空",Toast.LENGTH_SHORT).show();
+            return;
+        }
         if (password.length() < 6){
             Toast.makeText(mMainContext,"密码不能少于6位",Toast.LENGTH_LONG).show();
             return;
@@ -428,18 +420,16 @@ public class ModelLogIn extends Fragment {
         });
     }
 
-    //注册
-    public void VerLogin(){
+    //一键注册登录
+    private void VerLogin(){
         if (mview == null){
             Toast.makeText(mMainContext,"系统错误",Toast.LENGTH_LONG).show();
             return;
         }
         //判断密码是否为6~12位数字或字母
         EditText login_register_username_edittext = mview.findViewById(R.id.login_register_username_edittext);
-        EditText login_register_project_edittext = mview.findViewById(R.id.login_register_project_edittext);
         EditText login_register_smscode_edittext = mview.findViewById(R.id.login_register_smscode_edittext);
-        if (login_register_username_edittext == null || login_register_smscode_edittext == null
-                || login_register_project_edittext == null){
+        if (login_register_username_edittext == null || login_register_smscode_edittext == null){
             Toast.makeText(mMainContext,"系统错误",Toast.LENGTH_LONG).show();
             return;
         }
@@ -451,11 +441,6 @@ public class ModelLogIn extends Fragment {
         String phonecode = login_register_smscode_edittext.getText().toString();
         if (phonecode.equals("")){
             Toast.makeText(mMainContext,"请输入验证码",Toast.LENGTH_LONG).show();
-            return;
-        }
-        String project_id = login_register_project_edittext.getText().toString();
-        if (project_id.equals("")){
-            Toast.makeText(mMainContext,"请输入合作商ID",Toast.LENGTH_LONG).show();
             return;
         }
         LoadingDialog.getInstance(mMainContext).show();
@@ -474,7 +459,7 @@ public class ModelLogIn extends Fragment {
         paramsMap.put("sms_code",phonecode);
         String strEntity = gson.toJson(paramsMap);
         RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json;charset=UTF-8"),strEntity);
-        Call<ModelObservableInterface.BaseBean> call = modelObservableInterface.telRegister(body);
+        Call<ModelObservableInterface.BaseBean> call = modelObservableInterface.VerificationCodeOneClickLogin(body);
         call.enqueue(new Callback<ModelObservableInterface.BaseBean>() {
             @Override
             public void onResponse(Call<ModelObservableInterface.BaseBean> call, Response<ModelObservableInterface.BaseBean> response) {
@@ -490,9 +475,26 @@ public class ModelLogIn extends Fragment {
                 }
                 //网络请求数据成功
                 int code = loginBean.getErrorCode();
-                //如果注册成功，跳转到登录界面
+                //如果成功
                 if (code == 200) {
-                    mMainContext.onClickImmediatelyLogin("login");
+                    if (loginBean.getData() == null){
+                        Toast.makeText(mMainContext,"登录失败",Toast.LENGTH_LONG).show();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
+                        return;
+                    }
+                    if (loginBean.getData().get("stu_id") == null){
+                        Toast.makeText(mMainContext,"登录失败",Toast.LENGTH_LONG).show();
+                        LoadingDialog.getInstance(mMainContext).dismiss();
+                        return;
+                    }
+                    //如果登录成功，跳转到我的界面，并存储token
+                    String token = String.valueOf(loginBean.getData().get("token"));
+                    String stu_id = String.valueOf(loginBean.getData().get("stu_id"));
+                    if (!stu_id.equals("")) {
+                        mMainContext.LogInSuccess(token,stu_id);
+                    } else {
+                        Toast.makeText(mMainContext,"登录失败",Toast.LENGTH_LONG).show();
+                    }
                     LoadingDialog.getInstance(mMainContext).dismiss();
                 } else if (code == 201) {
                     Toast.makeText(mMainContext,"该手机号已存在",Toast.LENGTH_LONG).show();
@@ -516,6 +518,88 @@ public class ModelLogIn extends Fragment {
             @Override
             public void onFailure(Call<ModelObservableInterface.BaseBean> call, Throwable t) {
                 Toast.makeText(mMainContext,"登录超时",Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    //获取服务器ip
+    public void ProjectAddressGet(int type) {
+        if (mview == null){
+            Toast.makeText(mMainContext,"系统错误",Toast.LENGTH_LONG).show();
+            return;
+        }
+        //判断密码是否为6~12位数字或字母
+        EditText login_register_username_edittext = mview.findViewById(R.id.login_register_username_edittext);
+        EditText login_register_project_edittext = mview.findViewById(R.id.login_register_project_edittext);
+        if (login_register_username_edittext == null
+                || login_register_project_edittext == null){
+            Toast.makeText(mMainContext,"系统错误",Toast.LENGTH_LONG).show();
+            return;
+        }
+        String username = login_register_username_edittext.getText().toString();
+        if (username.equals("")){
+            Toast.makeText(mMainContext,"用户名不能为空",Toast.LENGTH_LONG).show();
+            return;
+        }
+        String project_id = login_register_project_edittext.getText().toString();
+        if (project_id.equals("")){
+            Toast.makeText(mMainContext,"请输入合作商ID",Toast.LENGTH_LONG).show();
+            return;
+        }
+        LoadingDialog.getInstance(mMainContext).show();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(mMainContext.mIpadress)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(ModelObservableInterface.client)
+                .build();
+        ModelObservableInterface modelObservableInterface = retrofit.create(ModelObservableInterface.class);
+        Gson gson = new Gson();
+        HashMap<String,String> paramsMap= new HashMap<>();
+        paramsMap.put("partner_id",project_id);
+        String strEntity = gson.toJson(paramsMap);
+        RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json;charset=UTF-8"),strEntity);
+        Call<ModelObservableInterface.BaseBean> call = modelObservableInterface.GetHostName(body);
+        call.enqueue(new Callback<ModelObservableInterface.BaseBean>() {
+            @Override
+            public void onResponse(Call<ModelObservableInterface.BaseBean> call, Response<ModelObservableInterface.BaseBean> response) {
+                ModelObservableInterface.BaseBean loginBean = response.body();//得到解析后的LoginBean对象
+                if (loginBean == null){
+                    Toast.makeText(mMainContext,"合作商ID不正确",Toast.LENGTH_LONG).show();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
+                    return;
+                }
+                if (!HeaderInterceptor.IsErrorCode(loginBean.getErrorCode(),loginBean.getErrorMsg())){
+                    Toast.makeText(mMainContext,"合作商ID不正确",Toast.LENGTH_LONG).show();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
+                    return;
+                }
+                //网络请求数据成功
+                int code = loginBean.getErrorCode();
+                //如果注册成功，跳转到登录界面
+                if (code != 200) {
+                    Toast.makeText(mMainContext,"合作商ID不正确",Toast.LENGTH_LONG).show();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
+                    return;
+                }
+                if (loginBean.getHost_name() == null) {
+                    Toast.makeText(mMainContext,"合作商ID不正确",Toast.LENGTH_LONG).show();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
+                    return;
+                }
+                mMainContext.mIpadress = loginBean.getHost_name();
+                if (type == 1) { //验证码登录
+                    VerLogin();
+                } else if (type == 2){ //密码登录
+                    LogIn();
+                } else { //获取验证码
+                    RegisterSMSCodeGet();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ModelObservableInterface.BaseBean> call, Throwable t) {
+                Toast.makeText(mMainContext,"合作商ID验证超时",Toast.LENGTH_LONG).show();
+                LoadingDialog.getInstance(mMainContext).dismiss();
             }
         });
     }

@@ -351,161 +351,6 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
                 return false;
             });
         }
-        //添加职考网校逻辑（如果没有登录，请游客先选择是健康项目还是消防项目）
-//        if (mStuId.equals("") ||  mIpadress.equals("")){
-//            //
-//            TextView main_view_choicetitle1 = findViewById(R.id.main_view_choicetitle1);
-//            main_view_choicetitle1.setOnLongClickListener(v -> {
-//                View view = mThis.getLayoutInflater().inflate(R.layout.dialog_sure_cancel1, null);
-//                ControllerCenterDialog mMyCouponDialog = new ControllerCenterDialog(mThis, 0, 0, view, R.style.DialogTheme);
-//                mMyCouponDialog.setCancelable(true);
-//                mMyCouponDialog.show();
-//                TextView button_cancel = view.findViewById(R.id.button_cancel);
-//                button_cancel.setOnClickListener(View->{
-//                    mMyCouponDialog.cancel();
-//                });
-//                TextView button_sure = view.findViewById(R.id.button_sure);
-//                button_sure.setOnClickListener(View->{
-//                    EditText dialog_content = view.findViewById(R.id.dialog_content);
-//                    if (dialog_content.getText().toString().equals("")){
-//                        return;
-//                    }
-//                    mIpadress = "http://" + dialog_content.getText().toString() + "/";
-//                    PlayParameter.STS_GET_URL = mIpadress + PlayParameter.STS_GET_URL;
-//                    mMyCouponDialog.cancel();
-//                });
-//                return false;
-//            });
-//            //将网校系统选项界面显示，隐藏主页
-//            RelativeLayout main_view_choice = findViewById(R.id.main_view_choice);
-//            main_view_choice.setVisibility(View.VISIBLE);
-//            ConstraintLayout main_view1 = findViewById(R.id.main_view1);
-//            main_view1.setVisibility(View.INVISIBLE);
-//            LinearLayout jiankang_layout =  findViewById(R.id.jiankang_layout);
-//            ImageView jiankang = findViewById(R.id.jiankang);
-//            jiankang.setBackground(getResources().getDrawable(R.drawable.icon_black));
-//            jiankang_layout.setOnClickListener(v->{
-//                ImageView xiaofang = findViewById(R.id.xiaofang);
-//                ImageView xiaofangsetting = findViewById(R.id.xiaofangsetting);
-//                ImageView xiaofangsheshisetting = findViewById(R.id.xiaofangsheshisetting);
-//                ImageView zhuceanquaqnsetting = findViewById(R.id.zhuceanquaqnsetting);
-//                ImageView zhiye = findViewById(R.id.zhiye);
-//                zhiye.setBackground(getResources().getDrawable(R.drawable.icon_null));
-//                zhuceanquaqnsetting.setBackground(getResources().getDrawable(R.drawable.icon_null));
-//                xiaofang.setBackground(getResources().getDrawable(R.drawable.icon_null));
-//                xiaofangsetting.setBackground(getResources().getDrawable(R.drawable.icon_null));
-//                jiankang.setBackground(getResources().getDrawable(R.drawable.icon_black));
-//                xiaofangsheshisetting.setBackground(getResources().getDrawable(R.drawable.icon_null));
-//                mIpadress = "http://wangxiao.jianweijiaoyu.com/";
-//                PlayParameter.STS_GET_URL = mIpadress + PlayParameter.STS_GET_URL;
-//            });
-//            LinearLayout xiaofang_layout =  findViewById(R.id.xiaofang_layout);
-//            xiaofang_layout.setOnClickListener(v->{
-//                ImageView xiaofang = findViewById(R.id.xiaofang);
-//                ImageView xiaofangsetting = findViewById(R.id.xiaofangsetting);
-//                ImageView xiaofangsheshisetting = findViewById(R.id.xiaofangsheshisetting);
-//                ImageView zhuceanquaqnsetting = findViewById(R.id.zhuceanquaqnsetting);
-//                ImageView zhiye = findViewById(R.id.zhiye);
-//                zhiye.setBackground(getResources().getDrawable(R.drawable.icon_null));
-//                zhuceanquaqnsetting.setBackground(getResources().getDrawable(R.drawable.icon_null));
-//                xiaofang.setBackground(getResources().getDrawable(R.drawable.icon_black));
-//                jiankang.setBackground(getResources().getDrawable(R.drawable.icon_null));
-//                xiaofangsetting.setBackground(getResources().getDrawable(R.drawable.icon_null));
-//                xiaofangsheshisetting.setBackground(getResources().getDrawable(R.drawable.icon_null));
-//                mIpadress = "http://wangxiao.16zige.com/";
-//                PlayParameter.STS_GET_URL = mIpadress + PlayParameter.STS_GET_URL;
-//            });
-//            LinearLayout xiaofangsetting_layout = findViewById(R.id.xiaofangsetting_layout);
-//            xiaofangsetting_layout.setOnClickListener(v->{
-//                ImageView xiaofang = findViewById(R.id.xiaofang);
-//                ImageView xiaofangsetting = findViewById(R.id.xiaofangsetting);
-//                ImageView xiaofangsheshisetting = findViewById(R.id.xiaofangsheshisetting);
-//                ImageView zhuceanquaqnsetting = findViewById(R.id.zhuceanquaqnsetting);
-//                ImageView zhiye = findViewById(R.id.zhiye);
-//                zhiye.setBackground(getResources().getDrawable(R.drawable.icon_null));
-//                zhuceanquaqnsetting.setBackground(getResources().getDrawable(R.drawable.icon_null));
-//                xiaofangsetting.setBackground(getResources().getDrawable(R.drawable.icon_black));
-//                jiankang.setBackground(getResources().getDrawable(R.drawable.icon_null));
-//                xiaofang.setBackground(getResources().getDrawable(R.drawable.icon_null));
-//                xiaofangsheshisetting.setBackground(getResources().getDrawable(R.drawable.icon_null));
-//                mIpadress = "http://wangxiao.16zige.com/";
-//                PlayParameter.STS_GET_URL = mIpadress + PlayParameter.STS_GET_URL;
-//            });
-//            LinearLayout xiaofangsheshi_layout = findViewById(R.id.xiaofangsheshi_layout);
-//            xiaofangsheshi_layout.setOnClickListener(v -> {
-//                ImageView xiaofang = findViewById(R.id.xiaofang);
-//                ImageView xiaofangsheshisetting = findViewById(R.id.xiaofangsheshisetting);
-//                ImageView xiaofangsetting = findViewById(R.id.xiaofangsetting);
-//                ImageView zhuceanquaqnsetting = findViewById(R.id.zhuceanquaqnsetting);
-//                ImageView zhiye = findViewById(R.id.zhiye);
-//                zhiye.setBackground(getResources().getDrawable(R.drawable.icon_null));
-//                zhuceanquaqnsetting.setBackground(getResources().getDrawable(R.drawable.icon_null));
-//                xiaofangsheshisetting.setBackground(getResources().getDrawable(R.drawable.icon_black));
-//                jiankang.setBackground(getResources().getDrawable(R.drawable.icon_null));
-//                xiaofang.setBackground(getResources().getDrawable(R.drawable.icon_null));
-//                xiaofangsetting.setBackground(getResources().getDrawable(R.drawable.icon_null));
-//                mIpadress = "http://managerwt.16zige.com/";
-//            });
-//            LinearLayout zhuceanquaqn_layout = findViewById(R.id.zhuceanquaqn_layout);
-//            zhuceanquaqn_layout.setOnClickListener(v -> {
-//                ImageView xiaofang = findViewById(R.id.xiaofang);
-//                ImageView xiaofangsheshisetting = findViewById(R.id.xiaofangsheshisetting);
-//                ImageView xiaofangsetting = findViewById(R.id.xiaofangsetting);
-//                ImageView zhuceanquaqnsetting = findViewById(R.id.zhuceanquaqnsetting);
-//                ImageView zhiye = findViewById(R.id.zhiye);
-//                zhiye.setBackground(getResources().getDrawable(R.drawable.icon_null));
-//                zhuceanquaqnsetting.setBackground(getResources().getDrawable(R.drawable.icon_black));
-//                xiaofangsheshisetting.setBackground(getResources().getDrawable(R.drawable.icon_null));
-//                jiankang.setBackground(getResources().getDrawable(R.drawable.icon_null));
-//                xiaofang.setBackground(getResources().getDrawable(R.drawable.icon_null));
-//                xiaofangsetting.setBackground(getResources().getDrawable(R.drawable.icon_null));
-//                mIpadress = "http://manager.jinrongstudy.com/";
-//            });
-//            LinearLayout zhiye_layout = findViewById(R.id.zhiye_layout);
-//            zhiye_layout.setOnClickListener(v -> {
-//                ImageView xiaofang = findViewById(R.id.xiaofang);
-//                ImageView xiaofangsheshisetting = findViewById(R.id.xiaofangsheshisetting);
-//                ImageView xiaofangsetting = findViewById(R.id.xiaofangsetting);
-//                ImageView zhuceanquaqnsetting = findViewById(R.id.zhuceanquaqnsetting);
-//                ImageView zhiye = findViewById(R.id.zhiye);
-//                zhiye.setBackground(getResources().getDrawable(R.drawable.icon_black));
-//                zhuceanquaqnsetting.setBackground(getResources().getDrawable(R.drawable.icon_null));
-//                xiaofangsheshisetting.setBackground(getResources().getDrawable(R.drawable.icon_null));
-//                jiankang.setBackground(getResources().getDrawable(R.drawable.icon_null));
-//                xiaofang.setBackground(getResources().getDrawable(R.drawable.icon_null));
-//                xiaofangsetting.setBackground(getResources().getDrawable(R.drawable.icon_null));
-//                mIpadress = "http://manager.huostudy.com/";
-//            });
-//            Button button_next = findViewById(R.id.button_next);
-//            button_next.setOnClickListener(v->{
-//                //将网校系统选项界面隐藏，显示出主页
-//                RelativeLayout main_view_choice1 = findViewById(R.id.main_view_choice);
-//                main_view_choice1.setVisibility(View.INVISIBLE);
-//                ConstraintLayout main_view11 = findViewById(R.id.main_view1);
-//                main_view11.setVisibility(View.VISIBLE);
-//                //选择好网校系统以后，初始化首页
-//                Menu menu = mBottomNavigationView.getMenu();
-//                if (menu != null) {
-//                    MenuItem MenuItem = menu.getItem(0);
-//                    if (MenuItem != null) {
-//                        //初次进入app 默认显示menuItemList中的第一个
-//                        if (MenuItem.getItemId() == 1) { //首页
-//                            Page_HomePage();
-//                        } else if (MenuItem.getItemId() == 2) {//课程包
-//                            Page_MoreCoursePacket();
-//                        } else if (MenuItem.getItemId() == 3) {//课程表
-//                            Page_ClassCheduleCard();
-//                        } else if (MenuItem.getItemId() == 4) {//我的
-//                            Page_My();
-//                        }
-//                    }
-//                }
-//                //获取应用权限
-//                getPermission();
-//                getAndroidVersion(mThis);//查询是否为最新版本,若不是最新版本弹出对话框
-//            });
-//            return;
-//        }
         //初始化极光推送，设置别名，如果是游客登录设置为0，否则设置为学生id
         if (mStuId.equals("")){
             String type = mIpType.get(mIpadress);
@@ -830,24 +675,11 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
 
     //点击登录
     public void onClickLogin(View view) {
-        //获取登录界面的信息
-        String userId = ((ModelLogIn)mModelLogIn).UserIdGet();
-        if (userId.equals("")){
-            Toast.makeText(this,"账户不允许为空",Toast.LENGTH_SHORT).show();
-            return;
-        }
-        String userPassword = ((ModelLogIn)mModelLogIn).UserPasswordGet();
-        if (userPassword.equals("")){
-            Toast.makeText(this,"密码不允许为空",Toast.LENGTH_SHORT).show();
-            return;
-        }
-        String projectId = ((ModelLogIn)mModelLogIn).ProjectIdGet();
-        if (projectId.equals("")){
-            Toast.makeText(this,"合作商ID不允许为空",Toast.LENGTH_SHORT).show();
-            return;
-        }
-        //将账户和密码发给服务器确认
-        ((ModelLogIn)mModelLogIn).LogIn(userId,userPassword);
+        //隐藏所有的底部按钮
+        mBottomNavigationView.setVisibility(View.INVISIBLE);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        hideAllFragment(transaction);
+        ((ModelLogIn)mModelLogIn).ProjectAddressGet(2);
     }
 
     //登录成功的回调，存储token和学生id
@@ -997,6 +829,10 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
 
     //点击验证码登录
     public void onClickVerLogin(View view) {
+        //隐藏所有的底部按钮
+        mBottomNavigationView.setVisibility(View.INVISIBLE);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        hideAllFragment(transaction);
         mPage = "注册";
         mBeforePage = "登录";
         ((ModelLogIn)mModelLogIn).VerLoginShow();
@@ -1004,6 +840,10 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
 
     //点击密码登录
     public void onClickPasswordLogin(View view) {
+        //隐藏所有的底部按钮
+        mBottomNavigationView.setVisibility(View.INVISIBLE);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        hideAllFragment(transaction);
         mPage = "登录";
         mBeforePage = "设置";
         ((ModelLogIn)mModelLogIn).LogInMainShow();
@@ -1011,20 +851,30 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
 
     //点击开始注册
     public void onClickVerLoginStart(View view) {
+        //隐藏所有的底部按钮
+        mBottomNavigationView.setVisibility(View.INVISIBLE);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        hideAllFragment(transaction);
         //服务器注册
-        ((ModelLogIn)mModelLogIn).VerLogin();
+        ((ModelLogIn)mModelLogIn).ProjectAddressGet(1);
     }
 
     //注册-获取验证码
     public void onClickRegisterSMSCodeGet(View view) {
-        //向服务器发命令获取验证码
-        //修改界面为倒计时
-        ((ModelLogIn)mModelLogIn).RegisterSMSCodeGet();
+        //隐藏所有的底部按钮
+        mBottomNavigationView.setVisibility(View.INVISIBLE);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        hideAllFragment(transaction);
+        ((ModelLogIn)mModelLogIn).ProjectAddressGet(3);
     }
 
 
     //点击上传头像
     public void onClickSettingEssentialInformationIcon(View view) {
+        //隐藏所有的底部按钮
+        mBottomNavigationView.setVisibility(View.INVISIBLE);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        hideAllFragment(transaction);
         if (mModelSetting != null) {
             ((ModelSetting) mModelSetting).SetttingButtonDialogShow();
         }
@@ -1032,6 +882,10 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
 
     //点击修改名称
     public void onClickSettingEssentialInformationName(View view) {
+        //隐藏所有的底部按钮
+        mBottomNavigationView.setVisibility(View.INVISIBLE);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        hideAllFragment(transaction);
         if (mModelSetting != null) {
             mPage = "修改名称";
             mBeforePage = "基本信息";
@@ -1041,6 +895,10 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
 
     //点击修改名称-返回(取消修改，无需保存)
     public void onClickSettingUpdateUserNameReturn(View view) {
+        //隐藏所有的底部按钮
+        mBottomNavigationView.setVisibility(View.INVISIBLE);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        hideAllFragment(transaction);
         if (mModelSetting != null) {
             mPage = "基本信息";
             mBeforePage = "设置";
@@ -1050,6 +908,10 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
 
     //点击修改名称-保存
     public void onClickSettingUpdateUserNameSave(View view) {
+        //隐藏所有的底部按钮
+        mBottomNavigationView.setVisibility(View.INVISIBLE);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        hideAllFragment(transaction);
         if (mModelSetting != null) {
             mPage = "基本信息";
             mBeforePage = "设置";
@@ -1060,6 +922,10 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
 
     //点击修改名称-清除所有
     public void onClickSettingUpdateUserNameClear(View view) {
+        //隐藏所有的底部按钮
+        mBottomNavigationView.setVisibility(View.INVISIBLE);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        hideAllFragment(transaction);
         if (mModelSetting != null) {
             ((ModelSetting)mModelSetting).SettingUserNameUpdateClear();
         }
@@ -1067,6 +933,10 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
 
     //点击修改昵称
     public void onClickSettingEssentialInformationNick(View view) {
+        //隐藏所有的底部按钮
+        mBottomNavigationView.setVisibility(View.INVISIBLE);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        hideAllFragment(transaction);
         if (mModelSetting != null) {
             mPage = "修改昵称";
             mBeforePage = "基本信息";
@@ -1076,6 +946,10 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
 
     //点击修改昵称-返回(取消修改，无需保存)
     public void onClickSettingUpdateUserNickReturn(View view) {
+        //隐藏所有的底部按钮
+        mBottomNavigationView.setVisibility(View.INVISIBLE);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        hideAllFragment(transaction);
         if (mModelSetting != null) {
             mPage = "基本信息";
             mBeforePage = "设置";
@@ -1085,6 +959,10 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
 
     //点击修改昵称-保存
     public void onClickSettingUpdateUserNickSave(View view) {
+        //隐藏所有的底部按钮
+        mBottomNavigationView.setVisibility(View.INVISIBLE);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        hideAllFragment(transaction);
         if (mModelSetting != null) {
             mPage = "基本信息";
             mBeforePage = "设置";
@@ -1095,6 +973,10 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
 
     //点击修改昵称-清除所有
     public void onClickSettingUpdateUserNickClear(View view) {
+        //隐藏所有的底部按钮
+        mBottomNavigationView.setVisibility(View.INVISIBLE);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        hideAllFragment(transaction);
         if (mModelSetting != null) {
             ((ModelSetting)mModelSetting).SettingUserNickUpdateClear();
         }
@@ -1102,6 +984,10 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
 
     //点击修改签名
     public void onClickSettingEssentialInformationSign(View view) {
+        //隐藏所有的底部按钮
+        mBottomNavigationView.setVisibility(View.INVISIBLE);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        hideAllFragment(transaction);
         if (mModelSetting != null) {
             mPage = "修改签名";
             mBeforePage = "基本信息";
@@ -1111,6 +997,10 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
 
     //点击修改签名-返回(取消修改，无需保存)
     public void onClickSettingUpdatePersonalStatementReturn(View view) {
+        //隐藏所有的底部按钮
+        mBottomNavigationView.setVisibility(View.INVISIBLE);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        hideAllFragment(transaction);
         if (mModelSetting != null) {
             mPage = "基本信息";
             mBeforePage = "设置";
@@ -1120,6 +1010,10 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
 
     //点击修改签名-保存
     public void onClickSettingUpdatePersonalStatementSave(View view) {
+        //隐藏所有的底部按钮
+        mBottomNavigationView.setVisibility(View.INVISIBLE);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        hideAllFragment(transaction);
         if (mModelSetting != null) {
             mPage = "基本信息";
             mBeforePage = "设置";
@@ -1130,6 +1024,10 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
 
     //点击修改邮箱
     public void onClickSettingEssentialInformationEmail(View view) {
+        //隐藏所有的底部按钮
+        mBottomNavigationView.setVisibility(View.INVISIBLE);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        hideAllFragment(transaction);
         if (mModelSetting != null) {
             mPage = "修改邮箱";
             mBeforePage = "基本信息";
@@ -1139,6 +1037,10 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
 
     //点击修改邮箱-返回(取消修改，无需保存)
     public void onClickSettingUpdateEmailReturn(View view) {
+        //隐藏所有的底部按钮
+        mBottomNavigationView.setVisibility(View.INVISIBLE);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        hideAllFragment(transaction);
         if (mModelSetting != null) {
             mPage = "基本信息";
             mBeforePage = "设置";
@@ -1148,6 +1050,10 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
 
     //点击修改邮箱-保存
     public void onClickSettingUpdateEmailSave(View view) {
+        //隐藏所有的底部按钮
+        mBottomNavigationView.setVisibility(View.INVISIBLE);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        hideAllFragment(transaction);
         if (mModelSetting != null) {
             String email = ((ModelSetting)mModelSetting).EmailGet();
             if (!email.equals("")){ //如果邮箱不为空的时候，判断邮箱地址是否正确
@@ -1166,6 +1072,10 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
 
     //点击修改邮箱-清除所有
     public void onClickSettingUpdateEmailClear(View view) {
+        //隐藏所有的底部按钮
+        mBottomNavigationView.setVisibility(View.INVISIBLE);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        hideAllFragment(transaction);
         if (mModelSetting != null) {
             ((ModelSetting)mModelSetting).SettingEmailUpdateClear();
         }
@@ -1173,6 +1083,10 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
 
     //点击修改电话号码
     public void onClickSettingEssentialInformationTel(View view) {
+        //隐藏所有的底部按钮
+        mBottomNavigationView.setVisibility(View.INVISIBLE);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        hideAllFragment(transaction);
         if (mModelSetting != null) {
             mPage = "修改电话号码";
             mBeforePage = "基本信息";
@@ -1182,6 +1096,10 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
 
     //点击修改电话号码-返回(取消修改，无需保存)
     public void onClickSettingUpdateTelNumberReturn(View view) {
+        //隐藏所有的底部按钮
+        mBottomNavigationView.setVisibility(View.INVISIBLE);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        hideAllFragment(transaction);
         if (mModelSetting != null) {
             mPage = "基本信息";
             mBeforePage = "设置";
@@ -1191,6 +1109,10 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
 
     //点击修改电话号码-保存
     public void onClickSettingUpdateTelNumberSave(View view) {
+        //隐藏所有的底部按钮
+        mBottomNavigationView.setVisibility(View.INVISIBLE);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        hideAllFragment(transaction);
         if (mModelSetting != null) {
             String telNumber = ((ModelSetting)mModelSetting).TelNumberGet();
             if (!telNumber.equals("")){ //如果电话号码不为空的时候，判断电话号码是否正确
@@ -1209,6 +1131,10 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
 
     //点击修改电话号码-清除所有
     public void onClickSettingUpdateTelNumberClear(View view) {
+        //隐藏所有的底部按钮
+        mBottomNavigationView.setVisibility(View.INVISIBLE);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        hideAllFragment(transaction);
         if (mModelSetting != null) {
             ((ModelSetting)mModelSetting).SettingTelNumberUpdateClear();
         }
@@ -1216,6 +1142,10 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
 
     //点击修改证件号码
     public void onClickSettingEssentialInformationIdNum(View view) {
+        //隐藏所有的底部按钮
+        mBottomNavigationView.setVisibility(View.INVISIBLE);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        hideAllFragment(transaction);
         if (mModelSetting != null) {
             mPage = "修改证件号码";
             mBeforePage = "基本信息";
@@ -1225,6 +1155,10 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
 
     //点击修改证件号码-返回(取消修改，无需保存)
     public void onClickSettingUpdateIdNumberReturn(View view) {
+        //隐藏所有的底部按钮
+        mBottomNavigationView.setVisibility(View.INVISIBLE);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        hideAllFragment(transaction);
         if (mModelSetting != null) {
             mPage = "基本信息";
             mBeforePage = "设置";
@@ -1234,6 +1168,10 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
 
     //点击修改证件号码-保存
     public void onClickSettingUpdateIdNumberSave(View view) {
+        //隐藏所有的底部按钮
+        mBottomNavigationView.setVisibility(View.INVISIBLE);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        hideAllFragment(transaction);
         if (mModelSetting != null) {
             String idNumber = ((ModelSetting)mModelSetting).IdNumberGet();
             if (!idNumber.equals("")){ //如果证件号码不为空的时候，判断证件号码是否正确
@@ -1252,6 +1190,10 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
 
     //点击修改证件号码-清除所有
     public void onClickSettingUpdateIdNumberClear(View view) {
+        //隐藏所有的底部按钮
+        mBottomNavigationView.setVisibility(View.INVISIBLE);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        hideAllFragment(transaction);
         if (mModelSetting != null) {
             ((ModelSetting)mModelSetting).SettingIdNumberUpdateClear();
         }
@@ -1259,6 +1201,10 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
 
     //点击修改密码
     public void onClickSettingEssentialInformationPasswordUpdata(View view) {
+        //隐藏所有的底部按钮
+        mBottomNavigationView.setVisibility(View.INVISIBLE);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        hideAllFragment(transaction);
         if (mModelSetting != null) {
             mPage = "修改密码";
             mBeforePage = "基本信息";
@@ -1268,6 +1214,10 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
 
     //点击修改密码-返回(取消修改，无需保存)
     public void onClickSettingUpdatePasswordReturn(View view) {
+        //隐藏所有的底部按钮
+        mBottomNavigationView.setVisibility(View.INVISIBLE);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        hideAllFragment(transaction);
         if (mModelSetting != null) {
             mPage = "基本信息";
             mBeforePage = "设置";
@@ -1277,11 +1227,19 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
 
     //点击修改密码-保存密码
     public void onClickSettingUpdatePasswordSave(View view) {
+        //隐藏所有的底部按钮
+        mBottomNavigationView.setVisibility(View.INVISIBLE);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        hideAllFragment(transaction);
         ((ModelSetting)mModelSetting).NewPasswordSave();
     }
 
     //点击设置界面的清理缓存
     public void onClickSettingClearCache(View view) {
+        //隐藏所有的底部按钮
+        mBottomNavigationView.setVisibility(View.INVISIBLE);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        hideAllFragment(transaction);
         final ModelCommonDialog dialog = new ModelCommonDialog(this);
         dialog.setMessage("确认清除缓存吗？")
 //                .setImageResId(R.mipmap.ic_launcher)
@@ -1301,11 +1259,19 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
 
     //点击设置界面的允许非WiFi网络播放和缓存视频
     public void onClickSettingAllowNonWifiPlay(boolean isEnable) {
+        //隐藏所有的底部按钮
+        mBottomNavigationView.setVisibility(View.INVISIBLE);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        hideAllFragment(transaction);
         //isEnable 是否允许在非WiFi网络播放和缓存视频
     }
 
     //点击设置界面的关于我们-返回(取消修改，无需保存)
     public void onClickSettingAboutUsReturn(View view) {
+        //隐藏所有的底部按钮
+        mBottomNavigationView.setVisibility(View.INVISIBLE);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        hideAllFragment(transaction);
         if (mModelSetting != null) {
             mPage = "设置";
             mBeforePage = "我的";
@@ -1315,6 +1281,10 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
 
     //点击设置界面的关于我们-检查新版本
     public void onClickSettingCheckVersion(View view){
+        //隐藏所有的底部按钮
+        mBottomNavigationView.setVisibility(View.INVISIBLE);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        hideAllFragment(transaction);
         getAndroidVersion(this);//查询是否为最新版本,若不是最新版本弹出对话框
     }
 //    //点击设置界面的隐私政策

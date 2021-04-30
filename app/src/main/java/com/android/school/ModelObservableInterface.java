@@ -386,6 +386,15 @@ public interface ModelObservableInterface {
     Call<BaseBean> updateStuPass(@Body RequestBody body);
 
     /**
+     * 获取合作商服务器地址
+     *
+     * @param body 请求体（{"partner_id":"000001"}）
+     **/
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST("app/user/GetHostName")
+    Call<BaseBean> GetHostName(@Body RequestBody body);
+
+    /**
      * 登录
      *
      * @param body 请求体（tel：用户名；stu_pass：密码）
@@ -393,24 +402,6 @@ public interface ModelObservableInterface {
     @Headers({"Content-type:application/json;charset=UTF-8"})
     @POST("app/user/passwordLogin")
     Call<BaseBean> PasswordLogin(@Body RequestBody body);
-
-    /**
-     * 注册
-     *
-     * @param body 请求体（phone：手机号；password：密码；phoneCode：验证码）
-     **/
-    @Headers({"Content-type:application/json;charset=UTF-8"})
-    @POST("app/user/telRegister")
-    Call<BaseBean> telRegister(@Body RequestBody body);
-
-    /**
-     * 找回密码
-     *
-     * @param body 请求体（tel：手机号；stu_pass：密码；sms_code：验证码）
-     **/
-    @Headers({"Content-type:application/json;charset=UTF-8"})
-    @POST("app/user/retrievePassword")
-    Call<BaseBean> retrievePassword(@Body RequestBody body);
 
     /**
      * 一键登录注册
@@ -590,6 +581,7 @@ public interface ModelObservableInterface {
         private int code;
         private String message;
         private String msg;
+        private String host_name;
 
         public Map<String, Object> getData() {
             return data;
@@ -621,6 +613,14 @@ public interface ModelObservableInterface {
 
         public void setMsg(String msg) {
             this.msg = msg;
+        }
+
+        public String getHost_name() {
+            return host_name;
+        }
+
+        public void setHost_name(String host_name) {
+            this.host_name = host_name;
         }
     }
 
