@@ -582,6 +582,7 @@ public interface ModelObservableInterface {
         private String message;
         private String msg;
         private String host_name;
+        private String password;
 
         public Map<String, Object> getData() {
             return data;
@@ -621,6 +622,14 @@ public interface ModelObservableInterface {
 
         public void setHost_name(String host_name) {
             this.host_name = host_name;
+        }
+
+        public String getPassword() {
+            return password;
+        }
+
+        public void setPassword(String password) {
+            this.password = password;
         }
     }
 

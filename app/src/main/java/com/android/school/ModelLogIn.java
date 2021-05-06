@@ -496,6 +496,9 @@ public class ModelLogIn extends Fragment {
                         Toast.makeText(mMainContext,"登录失败",Toast.LENGTH_LONG).show();
                     }
                     LoadingDialog.getInstance(mMainContext).dismiss();
+                    if (loginBean.getPassword() != null) {
+                        Toast.makeText(mMainContext,"登录成功，默认密码为" + loginBean.getPassword(),Toast.LENGTH_LONG).show();
+                    }
                 } else if (code == 201) {
                     Toast.makeText(mMainContext,"该手机号已存在",Toast.LENGTH_LONG).show();
                     LoadingDialog.getInstance(mMainContext).dismiss();
