@@ -14,16 +14,6 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp44"
             android:id="@+id/course_titleRelativeLayout">
-            <ImageView
-                android:id="@+id/course_title_return"
-                android:layout_width="@dimen/dp12"
-                android:layout_height="@dimen/dp16"
-                android:layout_marginLeft="@dimen/dp13"
-                android:background="@drawable/button_return_right_gray"
-                android:clickable="true"
-                android:onClick="onClickCourseMainReturn"
-                android:layout_centerInParent="true"
-                android:layout_alignParentLeft="true"/>
             <TextView
                 android:id="@+id/course_title"
                 android:layout_width="match_parent"
