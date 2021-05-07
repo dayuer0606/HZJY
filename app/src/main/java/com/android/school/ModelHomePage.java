@@ -338,6 +338,8 @@ public class ModelHomePage extends Fragment{
             courseInfo.setmCoursePriceOld(String.valueOf(homePageAllRecommendCourseInfoBean.special_price));
             courseInfo.setmCoursePrice(String.valueOf(homePageAllRecommendCourseInfoBean.price)) ;
             courseInfo.setmCourseLearnPersonNum(String.valueOf(homePageAllRecommendCourseInfoBean.buying_base_number));
+            courseInfo.setmTeacherIcon(homePageAllRecommendCourseInfoBean.head);
+            courseInfo.setmTeacherName(homePageAllRecommendCourseInfoBean.true_name);
             CourseInfoList.add(courseInfo);
             Log.e("TAG", "onError: initRecommendCourseData3");
         }
@@ -636,6 +638,8 @@ public class ModelHomePage extends Fragment{
             private float special_price;        //优惠价格
             private float price;                //价格
             private int buying_base_number;     //学习人数
+            private String head;  // 教师头像
+            private String true_name;   //教师名称
             public String getCover(){
                 return this.cover;
             }
@@ -677,6 +681,22 @@ public class ModelHomePage extends Fragment{
             }
             public void setBuying_base_number(int buying_base_number) {
                 this.buying_base_number = buying_base_number;
+            }
+
+            public String getHead() {
+                return head;
+            }
+
+            public void setHead(String head) {
+                this.head = head;
+            }
+
+            public String getTrue_name() {
+                return true_name;
+            }
+
+            public void setTrue_name(String true_name) {
+                this.true_name = true_name;
             }
         }
         public static class HomePageRotationChartInfoBean{

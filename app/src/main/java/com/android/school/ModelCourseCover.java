@@ -308,6 +308,27 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
         courseLearnStuNum.setText(courseInfo.getmCourseLearnPersonNum() + "人正在学习");
         TextView coursepriceTextView = mListView.findViewById(R.id.courseprice);
         TextView coursepriceendTextView = mListView.findViewById(R.id.coursepriceend);
+        TextView courseTeacherName = mListView.findViewById(R.id.courseTeacherName);
+        if (courseInfo.getmTeacherName() != null) {
+            courseTeacherName.setText(courseInfo.getmTeacherName());
+        }
+        ControllerCustomRoundAngleImageView courseTeacherIcon = mListView.findViewById(R.id.courseTeacherIcon);
+        if (courseInfo.getmTeacherIcon() != null) {
+            Glide.with(mMainContext.getApplicationContext()).
+                    load(courseInfo.getmTeacherIcon()).listener(new RequestListener<Drawable>() {
+                @Override
+                public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                    Log.d("Warn","加载失败 errorMsg:" + (e != null ? e.getMessage() : "null"));
+                    return false;
+                }
+                @Override
+                public boolean onResourceReady(final Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                    Log.d("Warn","成功  Drawable Name:" + resource.getClass().getCanonicalName());
+                    return false;
+                }
+            })
+                    .error(mMainContext.getApplicationContext().getResources().getDrawable(R.drawable.image_teachersdefault)).into(courseTeacherIcon);
+        }
         if (courseInfo.getmCoursePrice() != null) {
             if (!courseInfo.getmCoursePrice().equals("免费")) {
                 coursepriceTextView.setTextColor(Color.RED);

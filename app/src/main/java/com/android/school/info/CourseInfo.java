@@ -7,6 +7,8 @@ import java.util.List;
  * 课程结构体
  */
 public class CourseInfo {
+    String mTeacherName = "";
+    String mTeacherIcon = "";
     String mCourseId = "";//课程id
     String mCourseCover = "";//课程封面
     String mCourseName = "";//课程名称
@@ -49,6 +51,8 @@ public class CourseInfo {
         mCourseOrder = courseInfo.mCourseOrder;//课程排序
         mCourseIsCollect = courseInfo.mCourseIsCollect;//课程是否收藏 1:收藏，0没收藏
         mCourseIsStartLearn = courseInfo.mCourseIsStartLearn;////课程是否开始学习 1:是，0否
+        mTeacherName = courseInfo.mTeacherName;
+        mTeacherIcon = courseInfo.mTeacherIcon;
         mCourseChaptersInfoList.addAll(courseInfo.mCourseChaptersInfoList);//课程章
         mCourseUnitInfoList.addAll(courseInfo.mCourseUnitInfoList);//课程单元
         mCourseClassTimeInfoTodayList.addAll(courseInfo.mCourseClassTimeInfoTodayList);//课次(今日)
@@ -247,5 +251,21 @@ public class CourseInfo {
 
     public void setmCourseQuestionInfoList(List<CourseQuestionInfo> mCourseQuestionInfoList) {
         this.mCourseQuestionInfoList = mCourseQuestionInfoList;
+    }
+
+    public String getmTeacherName() {
+        return mTeacherName;
+    }
+
+    public void setmTeacherName(String mTeacherName) {
+        this.mTeacherName = mTeacherName;
+    }
+
+    public String getmTeacherIcon() {
+        return mTeacherIcon;
+    }
+
+    public void setmTeacherIcon(String mTeacherIcon) {
+        this.mTeacherIcon = mTeacherIcon;
     }
 }
