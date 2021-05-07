@@ -62,7 +62,7 @@
             android:layout_marginRight="@dimen/dp_13"
             android:layout_marginLeft="@dimen/dp_13"
             android:gravity="left|bottom"
-            android:text="hahaha"
+            android:text=""
             android:textColor="#333333"
             android:textSize="@dimen/textsize12" />
 
