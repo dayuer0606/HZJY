@@ -472,7 +472,7 @@ public interface ModelObservableInterface {
     Call<BaseBean> findSingleCourseDetails(@Body RequestBody body);
 
     /**
-     * 查询课程目录
+     * 查询课程目录（已废弃）
      **/
     @Headers({"Content-type:application/json;charset=UTF-8"})
     @POST("app/course/findSingleCourseCatalog")

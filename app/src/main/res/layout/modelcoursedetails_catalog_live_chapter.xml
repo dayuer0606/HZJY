@@ -22,7 +22,7 @@
             android:id="@+id/course_catalog_live_label_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="即将开始"
+            android:text="今日课程"
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:layout_gravity="center"
@@ -96,15 +96,17 @@
     <LinearLayout
         android:id="@+id/course_catalog_live_label_namelayout1"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_alignParentLeft="true"
-        android:layout_below="@id/coursepacket_details_live_line2">
+        android:layout_below="@id/coursepacket_details_live_line2"
+        android:layout_marginBottom="@dimen/dp10"
+        android:layout_marginTop="@dimen/dp20">
         <TextView
             android:id="@+id/course_catalog_live_label_name1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="已结束"
+            android:text="即将开始"
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:layout_gravity="center"

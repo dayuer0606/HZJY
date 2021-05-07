@@ -423,7 +423,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dp10"
-                android:text="收藏课程"
+                android:text="收藏课程包"
                 android:textColor="@color/collectdefaultcolor"
                 android:textSize="@dimen/textsize14" />
         </LinearLayout>
