@@ -24,10 +24,14 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import io.reactivex.Observable;
@@ -121,6 +125,42 @@ public class ModelHomePage extends Fragment{
                 getHomePageDatas();
             }
         });
+        //今日资讯
+        if (mHomePageDataBean != null) {
+            if (mHomePageDataBean.allArticles != null) {
+                if (mHomePageDataBean.allArticles.size() > 0) {
+                    if (mHomePageDataBean.allArticles.get(0).news_title != null) {
+                        TextView homepage_news = view.findViewById(R.id.homepage_news);
+                        homepage_news.setText(mHomePageDataBean.allArticles.get(0).news_title);
+                    }
+                    if (mHomePageDataBean.allArticles.get(0).create_time != null) {
+                        Date date = null;
+                        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd   HH:mm:ss");
+                        String dateS = "";
+                        try {
+                            date = df.parse(mHomePageDataBean.allArticles.get(0).create_time);
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                        if (date != null) {
+                            SimpleDateFormat df1 = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", Locale.UK);
+                            Date date1 = null;
+                            try {
+                                date1 = df1.parse(date.toString());
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+                            if (date1 != null) {
+                                dateS = dateFormat.format(date1);
+                            }
+                        }
+                        TextView today_new_date = view.findViewById(R.id.today_new_date);
+                        today_new_date.setText(dateS);
+                    }
+                }
+            }
+        }
         DisplayMetrics dm = mMainContext.getResources().getDisplayMetrics(); //获取屏幕分辨率
         int height = dm.heightPixels;
         int width = dm.widthPixels;
@@ -506,6 +546,7 @@ public class ModelHomePage extends Fragment{
             private List<HomePageAllRecommendCoursePackageInfoBean> allRecommendCoursePackageInfo;      //推荐课程包
             private List<HomePageAllRecommendCourseInfoBean> allRecommendCourseInfo;                    //推荐课程
             private List<HomePageRotationChartInfoBean> rotationChartInfo;                              //轮播图
+            private List<HomePageArticlesBean> allArticles;                              //今日资讯
             public List<HomePageAllHomeNavigationAndbBottomMenuBean> getAllHomeNavigationAndbBottomMenuDatas() {
                 return allHomeNavigationAndbBottomMenu;
             }
@@ -529,6 +570,14 @@ public class ModelHomePage extends Fragment{
             }
             public void setRotationChartInfoDatas(List<HomePageRotationChartInfoBean> rotationChartInfo) {
                 this.rotationChartInfo = rotationChartInfo;
+            }
+
+            public List<HomePageArticlesBean> getAllArticles() {
+                return allArticles;
+            }
+
+            public void setAllArticles(List<HomePageArticlesBean> allArticles) {
+                this.allArticles = allArticles;
             }
         }
         public static class HomePageAllHomeNavigationAndbBottomMenuBean{
@@ -744,6 +793,81 @@ public class ModelHomePage extends Fragment{
 
             public void setRotation_chart_id(int rotation_chart_id) {
                 this.rotation_chart_id = rotation_chart_id;
+            }
+        }
+
+        public static class HomePageArticlesBean {
+            private String news_cover;           //新闻封面
+            private String create_time;            //创建时间
+            private int tf_comment;    //是否为推荐资讯
+            private String news_content;      //内容
+            private int visit_num;      //游览人数
+            private String news_title;   //标题
+            private String news_summary;  //资讯概述
+            private int news_id;   //新闻ID
+
+            public String getNews_cover() {
+                return news_cover;
+            }
+
+            public void setNews_cover(String news_cover) {
+                this.news_cover = news_cover;
+            }
+
+            public String getCreate_time() {
+                return create_time;
+            }
+
+            public void setCreate_time(String create_time) {
+                this.create_time = create_time;
+            }
+
+            public int getTf_comment() {
+                return tf_comment;
+            }
+
+            public void setTf_comment(int tf_comment) {
+                this.tf_comment = tf_comment;
+            }
+
+            public String getNews_content() {
+                return news_content;
+            }
+
+            public void setNews_content(String news_content) {
+                this.news_content = news_content;
+            }
+
+            public int getVisit_num() {
+                return visit_num;
+            }
+
+            public void setVisit_num(int visit_num) {
+                this.visit_num = visit_num;
+            }
+
+            public String getNews_title() {
+                return news_title;
+            }
+
+            public void setNews_title(String news_title) {
+                this.news_title = news_title;
+            }
+
+            public String getNews_summary() {
+                return news_summary;
+            }
+
+            public void setNews_summary(String news_summary) {
+                this.news_summary = news_summary;
+            }
+
+            public int getNews_id() {
+                return news_id;
+            }
+
+            public void setNews_id(int news_id) {
+                this.news_id = news_id;
             }
         }
     }

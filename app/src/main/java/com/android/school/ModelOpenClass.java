@@ -180,7 +180,6 @@ public class ModelOpenClass extends Fragment {
                     openclass_end.setVisibility(View.VISIBLE);
                     return;
                 }
-                mSmart_openclass_layout.finishLoadMore();
                 getOpenClassBeanMore("全部");
             }
 
