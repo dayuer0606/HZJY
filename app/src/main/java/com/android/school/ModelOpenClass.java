@@ -178,6 +178,7 @@ public class ModelOpenClass extends Fragment {
                 if (mOpenClassSum <= mOpenClassCurrentPage * mOpenClassPageCount){
                     LinearLayout openclass_end = mview.findViewById(R.id.openclass_end);
                     openclass_end.setVisibility(View.VISIBLE);
+                    mSmart_openclass_layout.finishLoadMore();
                     return;
                 }
                 getOpenClassBeanMore("全部");

@@ -120,6 +120,7 @@ public class ClassPacket extends Fragment implements ClassPacketDetails.ClassPac
                 if (mCoursePacketSum <= mCurrentPage * mPageCount){
                     LinearLayout course_end = mView.findViewById(R.id.coursepacket_end);
                     course_end.setVisibility(View.VISIBLE);
+                    mSmart_fragment_coursepacket.finishLoadMore();
                     return;
                 }
                 String project_id = "";

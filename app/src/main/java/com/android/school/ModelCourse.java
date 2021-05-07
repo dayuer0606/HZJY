@@ -154,6 +154,7 @@ public class ModelCourse extends Fragment implements ModelCourseCover.ModelCours
                 if (mCourseSum <= mCurrentPage * mPageCount){
                     LinearLayout course_end = mview.findViewById(R.id.course_end);
                     course_end.setVisibility(View.VISIBLE);
+                    mSmart_fragment_course.finishLoadMore();
                     return;
                 }
                 String project_id = "";

@@ -337,6 +337,7 @@ public class ModelCommunityAnswerActivity extends FragmentActivity {
                     if (mCommunityAnswerSum <= mCommunityAnswerCurrentPage * mCommunityAnswerPageCount){
                         LinearLayout communityanswer_end = mCommunityAnswerView.findViewById(R.id.communityanswer_end);
                         communityanswer_end.setVisibility(View.VISIBLE);
+                        smart_model_communityanswer.finishLoadMore();
                         return;
                     }
                     getCommunityDataMore();
@@ -737,6 +738,7 @@ public class ModelCommunityAnswerActivity extends FragmentActivity {
                     if (mCommunityAnswerDetailsSum <= mCommunityAnswerDetailsCurrentPage * mCommunityAnswerDetailsPageCount){
                         LinearLayout communityanswer_datails_end = mCommunityAnswerDetailsView.findViewById(R.id.communityanswer_datails_end);
                         communityanswer_datails_end.setVisibility(View.VISIBLE);
+                        mSmart_model_communityanswer_detalis.finishLoadMore();
                         return;
                     }
                     getCommunityDetilsBeanDataMore(questions_id);

@@ -2860,6 +2860,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                     if (mSum <= mCurrentPage * mPageCount){
                         LinearLayout questionbank_questionrecords_end = mModelQuestionBankQuestionRecordView.findViewById(R.id.questionbank_questionrecords_end);
                         questionbank_questionrecords_end.setVisibility(View.VISIBLE);
+                        mSmart_model_questionbank_questionrecord.finishLoadMore();
                         return;
                     }
                     getQuestionBankAnswerRecordMore();

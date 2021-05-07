@@ -266,6 +266,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                     if (mMyCourseSum <= mMyCourseCurrentPage * mMyCoursePageCount){
                         LinearLayout mycourse_end = mMyClassView.findViewById(R.id.mycourse_end);
                         mycourse_end.setVisibility(View.VISIBLE);
+                        mSmart_model_my_myclass.finishLoadMore();
                         return;
                     }
                     getMyCourseListMore();
@@ -304,6 +305,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                     if (mMyCoursePacketSum <= mMyCoursePacketCurrentPage * mMyCoursePacketPageCount){
                         LinearLayout mycoursepacket_end = mMyClassPacketView.findViewById(R.id.mycoursepacket_end);
                         mycoursepacket_end.setVisibility(View.VISIBLE);
+                        mSmart_model_my_myclasspacket.finishLoadMore();
                         return;
                     }
                     getMyPacketListMore();
@@ -339,6 +341,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                         if (mMyCollectSum <= mMyCollectCurrentPage * mMyCollectPageCount){
                             LinearLayout mycollect_end = mMyCollectView.findViewById(R.id.mycollect_end);
                             mycollect_end.setVisibility(View.VISIBLE);
+                            mSmart_model_my_mycollect.finishLoadMore();
                             return;
                         }
                         //加载网络数据  刷新页面
@@ -912,6 +915,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                     if (mMyOrderSum <= mMyOrderCurrentPage * mMyOrderPageCount){
                         LinearLayout myorder_end = mMyOrderView.findViewById(R.id.myorder_end);
                         myorder_end.setVisibility(View.VISIBLE);
+                        mSmart_model_my_myorder.finishLoadMore();
                         return;
                     }
                     if (mMyOrderCurrentTab.equals("all")){
@@ -1273,6 +1277,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                     if (mMyCouponSum <= mMyCouponCurrentPage * mMyCouponPageCount){
                         LinearLayout mycoupon_end = mMyCouponView.findViewById(R.id.mycoupon_end);
                         mycoupon_end.setVisibility(View.VISIBLE);
+                        mSmart_model_my_mycoupon.finishLoadMore();
                         return;
                     }
                     //获取网络数据
@@ -1486,6 +1491,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                     if (mMyMessageSum <= mMyMessageCurrentPage * mMyMessagePageCount){
                         LinearLayout mymessage_end = mMyMessageView.findViewById(R.id.mymessage_end);
                         mymessage_end.setVisibility(View.VISIBLE);
+                        mSmart_model_my_mymessage.finishLoadMore();
                         return;
                     }
                     getModelMyMessageListMore(mMyMessageType);
@@ -1629,6 +1635,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                     if (mMyRecordsSum <= mMyRecordsCurrentPage * mMyRecordsPageCount){
                         LinearLayout learnrecord_end = mLearnRecordView.findViewById(R.id.learnrecord_end);
                         learnrecord_end.setVisibility(View.VISIBLE);
+                        mSmart_model_my_learnrecord.finishLoadMore();
                         return;
                     }
                     if (mMyRecordsCurrentTab.equals("class")) {//课程
@@ -1712,6 +1719,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                     if (mMyQuestionAndAnswerSum <= mMyQuestionAndAnswerCurrentPage * mMyQuestionAndAnswerPageCount){
                         LinearLayout myanswer_end = mMyAnswerView.findViewById(R.id.myanswer_end);
                         myanswer_end.setVisibility(View.VISIBLE);
+                        mSmart_model_my_myanswer.finishLoadMore();
                         return;
                     }
 //                    if (mMyAnswerCurrentTab.equals("question")) {
@@ -1753,6 +1761,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                     if (mMyQuestionAndAnswerDetailsSum <= mMyQuestionAndAnswerDetailsCurrentPage * mMyQuestionAndAnswerDetailsPageCount){
                         LinearLayout myanswerdetails_end = mMyAnswerDetailsView.findViewById(R.id.myanswerdetails_end);
                         myanswerdetails_end.setVisibility(View.VISIBLE);
+                        mSmart_model_my_myanswerdetails.finishLoadMore();
                         return;
                     }
                     getQueryOneQuestionMore(mAnswerDetailsQuestionId,course_type);
