@@ -7,7 +7,8 @@
         android:id="@+id/openclass_cover"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_92"
-        android:layout_marginTop="@dimen/dp20"/>
+        android:layout_marginTop="@dimen/dp20"
+        android:scaleType="fitXY"/>
     <TextView
         android:layout_below="@id/openclass_cover"
         android:id="@+id/openclass_classname"

@@ -531,24 +531,23 @@ public class ModelLogIn extends Fragment {
             Toast.makeText(mMainContext,"系统错误",Toast.LENGTH_LONG).show();
             return;
         }
-        //判断密码是否为6~12位数字或字母
-        EditText login_register_username_edittext = mview.findViewById(R.id.login_register_username_edittext);
-        EditText login_register_project_edittext = mview.findViewById(R.id.login_register_project_edittext);
-        if (login_register_username_edittext == null
-                || login_register_project_edittext == null){
-            Toast.makeText(mMainContext,"系统错误",Toast.LENGTH_LONG).show();
-            return;
+        String project_id = "";
+        if (type == 2){ //密码登录
+            EditText login_project_edittext = mview.findViewById(R.id.login_project_edittext);
+            project_id = login_project_edittext.getText().toString();
+            if (project_id.equals("")){
+                Toast.makeText(mMainContext,"请输入合作商ID",Toast.LENGTH_LONG).show();
+                return;
+            }
+        } else { //获取验证码
+            EditText login_register_project_edittext = mview.findViewById(R.id.login_register_project_edittext);
+            project_id = login_register_project_edittext.getText().toString();
+            if (project_id.equals("")){
+                Toast.makeText(mMainContext,"请输入合作商ID",Toast.LENGTH_LONG).show();
+                return;
+            }
         }
-        String username = login_register_username_edittext.getText().toString();
-        if (username.equals("")){
-            Toast.makeText(mMainContext,"用户名不能为空",Toast.LENGTH_LONG).show();
-            return;
-        }
-        String project_id = login_register_project_edittext.getText().toString();
-        if (project_id.equals("")){
-            Toast.makeText(mMainContext,"请输入合作商ID",Toast.LENGTH_LONG).show();
-            return;
-        }
+
         LoadingDialog.getInstance(mMainContext).show();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(mMainContext.mIpadress)

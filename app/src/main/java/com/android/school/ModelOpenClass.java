@@ -190,8 +190,7 @@ public class ModelOpenClass extends Fragment {
             }
         });
         CourseMainShow();
-//        mAdapter.notifyDataSetChanged();
-//        mGridView.setAdapter(mAdapter);
+        mGridView.setAdapter(mAdapter);
         return mview;
     }
     @Override
