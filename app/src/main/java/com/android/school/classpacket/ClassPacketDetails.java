@@ -47,8 +47,12 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.google.gson.Gson;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 import io.reactivex.Observable;
 import io.reactivex.Observer;
@@ -535,6 +539,38 @@ public class ClassPacketDetails implements View.OnClickListener, ModelOrderDetai
             Button coursepacket_details_buy_button = mDetailsView.findViewById(R.id.coursepacket_details_buy_button);
             coursepacket_details_buy_button.setBackground(mDetailsView.getResources().getDrawable(R.drawable.button_style4));
             coursepacket_details_buy_button.setText("已购买");
+        }
+        //课程包有效期
+        if (coursePacketInfo.mInvalid_date_date != null) {
+            TextView coursepacket_details_date = mDetailsView.findViewById(R.id.coursepacket_details_date);
+            Date date = null;
+            String invalid_date_date = "";
+            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+            try {
+                date = df.parse(coursePacketInfo.mInvalid_date_date);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            if (date != null) {
+                SimpleDateFormat df1 = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", Locale.UK);
+                Date date1 = null;
+                try {
+                    date1 = df1.parse(date.toString());
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                if (date1 != null) {
+                    SimpleDateFormat df2 = new SimpleDateFormat("yyyy-MM-dd");
+                    invalid_date_date = df2.format(date1);
+                }
+            }
+            coursepacket_details_date.setText("有效期至：" + invalid_date_date);
+        } else if (coursePacketInfo.mEffictive_date != null) {
+            TextView coursepacket_details_date = mDetailsView.findViewById(R.id.coursepacket_details_date);
+            coursepacket_details_date.setText("有效天数：" + coursePacketInfo.mEffictive_date);
+        } else {
+            TextView coursepacket_details_date = mDetailsView.findViewById(R.id.coursepacket_details_date);
+            coursepacket_details_date.setText("");
         }
         //收藏状态
         ImageView coursepacket_details_bottomlayout_collectImage = mDetailsView.findViewById(R.id.coursepacket_details_bottomlayout_collectImage);
@@ -1087,10 +1123,7 @@ public class ClassPacketDetails implements View.OnClickListener, ModelOrderDetai
                  * details : 课程包1详情
                  * describe : java工程师测试课程包    coursePacketInfo
                  */
-                String details = dataPacketDetailsBean.data.getDetails();//课程包简介
                 int collection_status = dataPacketDetailsBean.data.getCollection_status();//收藏状态，1代表收藏，2代表没有收藏
-                int course_package_id = dataPacketDetailsBean.data.getCourse_package_id();//课程包id
-                String describe = dataPacketDetailsBean.data.getDescribe();//课程包详情
                 if (dataPacketDetailsBean.data.purchase_stauts != null){
                     if (dataPacketDetailsBean.data.purchase_stauts == 1){ //修改购买状态
                         mCoursePacketInfo.mCoursePacketIsHave = "1";
@@ -1101,10 +1134,13 @@ public class ClassPacketDetails implements View.OnClickListener, ModelOrderDetai
                     mCoursePacketInfo.mCoursePacketIsHave = "0";
                 }
                 //赋值
-                mCoursePacketInfo.mCoursePacketDetails = details;
-                mCoursePacketInfo.mCoursePacketId = String.valueOf(course_package_id);
+                mCoursePacketInfo.mCoursePacketDetails = dataPacketDetailsBean.data.getDetails();//课程包简介
+                mCoursePacketInfo.mCoursePacketId = String.valueOf(dataPacketDetailsBean.data.getCourse_package_id());
                 //课程包详情
-                mCoursePacketInfo.mCoursePacketMessage = describe;
+                mCoursePacketInfo.mCoursePacketMessage = dataPacketDetailsBean.data.getDescribe();//课程包详情
+                mCoursePacketInfo.mEffictive_date = dataPacketDetailsBean.data.effictive_date;
+                mCoursePacketInfo.mEffictive_days_type = dataPacketDetailsBean.data.effictive_days_type;
+                mCoursePacketInfo.mInvalid_date_date = dataPacketDetailsBean.data.invalid_date_date;
                 //        刷新详情界面的方法
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 //                    if (mCurrentTab.equals("Details")){
@@ -1420,6 +1456,9 @@ public class ClassPacketDetails implements View.OnClickListener, ModelOrderDetai
             private String details;
             private String describe;
             private Integer purchase_stauts; //购买状态
+            private String effictive_date; //有效天数
+            private String invalid_date_date;//有效期
+            private String effictive_days_type; //有效类型
 
             public int getCollection_status() {
                 return collection_status;
@@ -1459,6 +1498,30 @@ public class ClassPacketDetails implements View.OnClickListener, ModelOrderDetai
 
             public void setPurchase_stauts(Integer purchase_stauts) {
                 this.purchase_stauts = purchase_stauts;
+            }
+
+            public String getEffictive_date() {
+                return effictive_date;
+            }
+
+            public void setEffictive_date(String effictive_date) {
+                this.effictive_date = effictive_date;
+            }
+
+            public String getInvalid_date_date() {
+                return invalid_date_date;
+            }
+
+            public void setInvalid_date_date(String invalid_date_date) {
+                this.invalid_date_date = invalid_date_date;
+            }
+
+            public String getEffictive_days_type() {
+                return effictive_days_type;
+            }
+
+            public void setEffictive_days_type(String effictive_days_type) {
+                this.effictive_days_type = effictive_days_type;
             }
         }
     }

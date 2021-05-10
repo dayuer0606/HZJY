@@ -169,17 +169,17 @@
                             android:id="@+id/coursepacket_details_date"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="课程有效期:"
+                            android:layout_gravity="bottom"
+                            android:layout_marginLeft="@dimen/dp13"
                             android:background="#ffe9e7"
-                            android:singleLine="true"
-                            android:textColor="#EB0029"
                             android:paddingLeft="@dimen/dp_7"
+                            android:paddingTop="@dimen/dp2"
                             android:paddingRight="@dimen/dp_7"
                             android:paddingBottom="@dimen/dp2"
-                            android:paddingTop="@dimen/dp2"
-                            android:textSize="@dimen/textsize12"
-                            android:layout_gravity="bottom"
-                            android:layout_marginLeft="@dimen/dp13" />
+                            android:singleLine="true"
+                            android:text="课程包有效期:"
+                            android:textColor="#EB0029"
+                            android:textSize="@dimen/textsize12" />
                     </LinearLayout>
 
                     <View

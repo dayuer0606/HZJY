@@ -18,6 +18,9 @@ public class CoursePacketInfo {
     public String mCoursePacketMessage = "";//课程包描述
     public String mCoursePacketDetails = "";//课程包详情
     public String mCoursePacketIsHave = "0";//课程包是否已经购买(0:没买 1:买了)
+    public String mEffictive_date; //有效天数
+    public String mInvalid_date_date;//有效期
+    public String mEffictive_days_type; //有效类型
     public List<StageCourseInfo> mStageCourseInfoList = new ArrayList<>();//课程包包含的课程阶段
     public List<TeacherInfo> mTeacherInfoList = new ArrayList<>();//课程包包含的师资
     public CoursePacketInfo(){
@@ -34,6 +37,9 @@ public class CoursePacketInfo {
         mCoursePacketPriceOld = coursePacketInfo.mCoursePacketPriceOld;//课程包原价格
         mCoursePacketMessage = coursePacketInfo.mCoursePacketMessage;//课程包描述
         mCoursePacketDetails = coursePacketInfo.mCoursePacketDetails;//课程包详情
+        mEffictive_date = coursePacketInfo.mEffictive_date;
+        mInvalid_date_date = coursePacketInfo.mInvalid_date_date;
+        mEffictive_days_type = coursePacketInfo.mEffictive_days_type;
         mStageCourseInfoList.addAll(coursePacketInfo.mStageCourseInfoList);//课程包包含的课程阶段
         mTeacherInfoList.addAll(coursePacketInfo.mTeacherInfoList);
     }
