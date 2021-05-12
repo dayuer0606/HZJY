@@ -457,7 +457,7 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                     }
                     if (date1 != null) {
                         SimpleDateFormat df2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                        myQuestionBankGoonDataBean.time = df2.format(date1).toString();
+                        myQuestionBankGoonDataBean.time = df2.format(date1);
                     }
                 }
                 goon_time.setText(myQuestionBankGoonDataBean.time);

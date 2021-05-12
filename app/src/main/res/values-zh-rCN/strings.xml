@@ -1,5 +1,5 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="app_name">职考网校</string>
+    <string name="app_name">职业微课堂</string>
     <string name="title_homepage">首页</string>
     <string name="title_course">课程</string>
     <string name="title_coursepacket">课程包</string>
