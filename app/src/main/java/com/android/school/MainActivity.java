@@ -175,9 +175,6 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
         return mIpadress;
     }
 
-    public void onClickHomepageSearch(View view) {
-    }
-
     private class MenuItemInfo {
         String mName;  //按钮名称
         int mItemId;   //按钮标识（1：首页 2：课程 3：课程包 4：课程表 5：我的）
@@ -543,6 +540,11 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
             downloadMediaInfos.addAll(downloadDataProvider.getAllDownloadMediaInfo());
             downloadManager.stopDownloads(downloadMediaInfos);
         }
+    }
+
+    //点击首页查询课程
+    public void onClickHomepageSearch(View view) {
+
     }
 
     //点击更多课程

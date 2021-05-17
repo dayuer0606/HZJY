@@ -9,8 +9,7 @@
         android:layout_height="@dimen/dp44"
         android:layout_marginLeft="@dimen/dp13"
         android:layout_marginRight="@dimen/dp13"
-        android:orientation="horizontal"
-        xmlns:android="http://schemas.android.com/apk/res/android">
+        android:orientation="horizontal">
         <ImageView
             android:id="@+id/questionbank_answerpaper_main_return_button1"
             android:layout_width="@dimen/dp12"
@@ -38,11 +37,12 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center|right">
+
             <ImageView
                 android:id="@+id/button_questionbank_answerquestioncard"
-                android:layout_width="@dimen/dp22"
-                android:layout_height="@dimen/dp22"
-                android:background="@drawable/button_questionbank_answercard"/>
+                android:layout_width="17dp"
+                android:layout_height="17dp"
+                android:background="@drawable/button_questionbank_answercard" />
             <ImageView
                 android:id="@+id/questionbank_answerpaper_sign"
                 android:layout_width="@dimen/dp13"

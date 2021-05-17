@@ -1048,8 +1048,6 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
             ll.height = mModelQuestionBankHandInView.getResources().getDimensionPixelSize(R.dimen.dp_137);
             coursedetails_handinpaper_accuracyrateprogress.setLayoutParams(ll);
         }
-//        TextView questionbank_handinpaper__main_titletext = mModelQuestionBankHandInView.findViewById(R.id.questionbank_handinpaper__main_titletext);
-//        questionbank_handinpaper__main_titletext.setText(mCurrentChapterName);
         LinearLayout coursedetails_handinpaper_details = mModelQuestionBankHandInView.findViewById(R.id.coursedetails_handinpaper_details);
         //查找题型
         coursedetails_handinpaper_details.removeAllViews();
@@ -1218,6 +1216,8 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
             }
         }
 
+        TextView qquestionbank_handinpaper_main_countdowntimetext = mModelQuestionBankHandInView.findViewById(R.id.qquestionbank_handinpaper_main_countdowntimetext);
+        qquestionbank_handinpaper_main_countdowntimetext.setText(getStringTime(mTime));
         //进度
         coursedetails_handinpaper_accuracyrateprogress.setProgress(rightCount);
         coursedetails_handinpaper_accuracyrateprogress.setMax(questionBankAnswerSheetDataBeans.size());
@@ -1304,7 +1304,6 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                     mTask2.cancel();
                 }
                 //显示交卷界面
-//                QuestionBankDetailsHandInPaperShow(finalQuestion_id_group1);
                 getQuestionBankHandInBean(1,mTime);
                 mMyDialog.cancel();
             });
@@ -1978,7 +1977,6 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                     mTask2.cancel();
                 }
                 //显示交卷界面
-//                QuestionBankDetailsHandInPaperShow(mMyQuestionBankExercisesBean);
                 getQuestionBankHandInBean(1,mTime);
                 mMyDialog.cancel();
             });
@@ -5800,6 +5798,9 @@ public class ModelQuestionBank extends Fragment implements View.OnClickListener 
                 });
             }
         }
+
+        TextView questionbank_answerquestioncard__main_countdowntimetext = mModelQuestionBankAnswerQuestionCardView.findViewById(R.id.questionbank_answerquestioncard__main_countdowntimetext);
+        questionbank_answerquestioncard__main_countdowntimetext.setText(getStringTime(mTime));
 
         //点击交卷查看结果
         TextView coursedetails_answerquestioncard_commit = mModelQuestionBankAnswerQuestionCardView.findViewById(R.id.coursedetails_answerquestioncard_commit);

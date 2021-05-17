@@ -55,11 +55,6 @@ public class ModelHomePage extends Fragment{
     private View mView = null;
 
     private static MainActivity mMainContext;
-    private LayoutInflater inflater;
-    private ViewGroup container;
-
-    //点击查看课程详情需要用到的课程对象
-    private ModelCourseCover mModelCourseCover = null;
 
     //数据
     private HomePageBean.HomePageDataBean mHomePageDataBean ;
@@ -85,8 +80,6 @@ public class ModelHomePage extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mView = inflater.inflate(FragmentPage,container,false);
-        this.inflater = inflater;
-        this.container = container;
         //获取首页数据
         getHomePageDatas();
         //首页展示
@@ -230,7 +223,6 @@ public class ModelHomePage extends Fragment{
                 HideAllLayout();
                 homepage_layout_main.addView(modelCourseView1);
                 mMainContext.onClickCourseDetails();
-                mModelCourseCover = modelCourseCover1;
             });
             courseModelLinearLayout.addView(modelCourseView);
             course_line1 = modelCourseView.findViewById(R.id.course_line1);
