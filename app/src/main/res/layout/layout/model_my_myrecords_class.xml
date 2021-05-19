@@ -7,7 +7,7 @@
         android:id="@+id/modelmy_records_class_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="消防教育皇家内训基础班"
+        android:text=""
         android:textColor="#ff212832"
         android:textSize="@dimen/textsize16"
         android:layout_marginTop="@dimen/dp20"

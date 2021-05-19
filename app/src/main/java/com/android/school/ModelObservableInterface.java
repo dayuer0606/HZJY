@@ -221,6 +221,11 @@ public interface ModelObservableInterface {
     @Headers("Content-Type:application/json;charset=UTF-8")
     Call<BaseBean> queryCourseRecording(@Body RequestBody body);
 
+    //我的学习记录（题库）
+    @POST("app/user/queryCourseItemBank")
+    @Headers("Content-Type:application/json;charset=UTF-8")
+    Call<BaseBean> queryCourseItemBank(@Body RequestBody body);
+
     //我的收藏列表(课程包)
     @POST("app/my/queryMyCollection")
     @Headers("Content-Type:application/json;charset=UTF-8")
