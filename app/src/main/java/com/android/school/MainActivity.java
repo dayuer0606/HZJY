@@ -602,12 +602,10 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
             Page_Course();
         } else if (beforePageS[beforePageS.length - 1].equals("首页")){ //说明上个界面是首页界面
             Page_HomePage();
+        } else if (beforePageS[beforePageS.length - 1].equals("学习记录")){ //说明上个界面是学习记录界面
+            onClickLearnRecord(null);
         } else if (beforePageS[beforePageS.length - 1].equals("我的课程")){//说明上个界面是我的课程界面
-            mPage = "我的课程";
-            mBeforePage = "我的";
-            if(mModelMy != null){
-                ((ModelMy) mModelMy).MyClassShow();
-            }
+            onClickMyCourse(null);
         } else if (beforePageS[beforePageS.length - 1].equals("我的收藏")){ //说明上个界面是我的收藏界面
             mPage = "我的收藏";
             mBeforePage = "我的";
@@ -2182,6 +2180,20 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
                         }
                     }
                     Page_HomePage();
+                    return true;
+                } else if (beforePageS[beforePageS.length - 1].equals("学习记录") && mPage.equals("课程详情")){ //说明上个界面是学习记录界面
+                    if (mAliyunVodPlayerView != null) {
+                        mAliyunVodPlayerView.onStop();
+                        int time1 = mAliyunVodPlayerView.getVideoPostion();
+//                        String videoId = mAliyunVodPlayerView.VideoIdGet();
+                        String SectionsId = mAliyunVodPlayerView.SectionsIdGet();
+                        mAliyunVodPlayerView.onDestroy();
+                        mAliyunVodPlayerView = null;
+                        if (!SectionsId.equals("")) {
+                            SetCourseVideoDuration(Integer.valueOf(SectionsId),time1);
+                        }
+                    }
+                    onClickLearnRecord(null);
                     return true;
                 } else if (beforePageS[beforePageS.length - 1].equals("我的缓存") && mPage.equals("我的缓存播放")){ //说明上个界面是我的界面
                     if (mAliyunVodPlayerView != null) {

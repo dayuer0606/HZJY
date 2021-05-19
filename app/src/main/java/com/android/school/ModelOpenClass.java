@@ -54,13 +54,7 @@ public class ModelOpenClass extends Fragment {
     //要显示的页面
     static private int FragmentPage;
     private View mview ;
-    private int height = 1344;
-    private int width = 720;
-    private int mLastTabIndex = 1;
-    private String mCurrentTab = "all";
-    private String CurrentTime;
     private static final String TAG = "ModelOpenClass";
-    private SimpleDateFormat simpleDateFormat;
     private SmartRefreshLayout mSmart_openclass_layout;
     //公开课列表分页查询
     private int mOpenClassCurrentPage = 0;
@@ -80,9 +74,6 @@ public class ModelOpenClass extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mview = inflater.inflate(FragmentPage,container,false);
-        DisplayMetrics dm = mMainContext.getResources().getDisplayMetrics(); //获取屏幕分辨率
-        height = dm.heightPixels;
-        width = dm.widthPixels;
 
         mGridView = mview.findViewById(R.id.openclass_content);
         mAdapter = new CommonListAdapter<ModelOpenclassBean.DataBean.ListBean>() {

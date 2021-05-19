@@ -31,8 +31,10 @@ import android.widget.Toast;
 
 import com.aliyun.vodplayerview.view.download.DownloadView;
 import com.aliyun.vodplayerview.widget.AliyunVodPlayerView;
+import com.android.school.adapter.CommonListAdapter;
 import com.android.school.appactivity.ModelCommunityAnswerActivity;
 import com.android.school.classpacket.ClassPacketDetails;
+import com.android.school.consts.PlayType;
 import com.android.school.info.CourseInfo;
 import com.android.school.info.CoursePacketInfo;
 import com.android.school.info.CourseRecordPlayDownloadInfo;
@@ -91,6 +93,9 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
     //学习记录当前显示tab，默认为课程
     private int mMyRecordsLastTabIndex = 1;
     private String mMyRecordsCurrentTab = "class";
+    private CommonListAdapter<Object> mLearnCourseAdapter;
+    private CommonListAdapter<Object> mLearnQuestionAdapter;
+
     private ControllerCenterDialog mMyDialog, mMyCouponDialog;
     private ControllerMyMessage1Adapter adapter;
     private static final String TAG = "ModelMy";
@@ -1639,7 +1644,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                         return;
                     }
                     if (mMyRecordsCurrentTab.equals("class")) {//课程
-//                        getModelMyQuestionListMore();
+                        getModelMyLearnCourseListMore();
                     } else {//题库
 //                        getModelMyAnswerListMore();
                     }
@@ -1648,12 +1653,95 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                 @Override
                 public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                     if (mMyRecordsCurrentTab.equals("class")) {
-//                        getModelMyQuestionList();
+                        getModelMyLearnCourseList();
                     } else {
 //                        getModelMyAnswerList();
                     }
                 }
             });
+            mLearnCourseAdapter = new CommonListAdapter<Object>() {
+                @Override
+                protected View initListCell(int position, View convertView, ViewGroup parent) {
+                    convertView = getLayoutInflater().inflate(R.layout.model_my_myrecords_class, parent, false);
+                    Map<String,Object> map = (Map<String, Object>) mLearnCourseAdapter.getItem(position);
+                    //学习记录课程名称
+                    TextView modelmy_records_class_name = convertView.findViewById(R.id.modelmy_records_class_name);
+                    modelmy_records_class_name.setText(String.valueOf(map.get("course_name")));
+                    //学习记录课程创建时间
+                    TextView modelmy_records_class_time = convertView.findViewById(R.id.modelmy_records_class_time);
+                    Date date = null;
+                    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+                    String dateS = "";
+                    try {
+                        date = df.parse(String.valueOf(map.get("create_time")));
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    if (date != null) {
+                        SimpleDateFormat df1 = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", Locale.UK);
+                        Date date1 = null;
+                        try {
+                            date1 = df1.parse(date.toString());
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                        if (date1 != null) {
+                            dateS = dateFormat.format(date1);
+                        }
+                    }
+                    modelmy_records_class_time.setText(dateS);
+                    //开始学习
+                    TextView modelmy_records_class_start = convertView.findViewById(R.id.modelmy_records_class_start);
+                    modelmy_records_class_start.setClickable(true);
+                    modelmy_records_class_start.setOnClickListener(v->{
+                        CourseInfo courseInfo = new CourseInfo();
+                        courseInfo.setmCourseId(String.valueOf((int) Double.parseDouble(String.valueOf(map.get("course_id")))));
+                        courseInfo.setmCourseCover(String.valueOf(map.get("cover")));
+                        courseInfo.setmCourseType(String.valueOf(map.get("course_type")));
+                        courseInfo.setmCourseName(String.valueOf(map.get("course_name")));
+                        courseInfo.setmCoursePriceOld(String.valueOf(map.get("price")));
+                        courseInfo.setmCoursePrice(String.valueOf(map.get("special_price"))) ;
+                        courseInfo.setmCourseLearnPersonNum(String.valueOf((int) Double.parseDouble(String.valueOf(map.get("buying_base_number")))));
+
+                        //跳转课程详情
+                        ModelCourseCover modelCourseCover = new ModelCourseCover();
+                        View modelCourseView = modelCourseCover.ModelCourseCover(mMainContext, courseInfo);
+                        modelCourseCover.CourseDetailsShow();
+                        HideAllLayout();
+                        LinearLayout my_layout_main = mview.findViewById(R.id.my_layout_main);
+                        my_layout_main.addView(modelCourseView);
+                        mModelCourseCover = modelCourseCover;
+                        mMainContext.onClickCourseDetails();
+                    });
+                    //继续学习
+                    TextView modelmy_records_class_goon = convertView.findViewById(R.id.modelmy_records_class_goon);
+                    modelmy_records_class_goon.setClickable(true);
+                    modelmy_records_class_goon.setOnClickListener(v->{
+                        CourseInfo courseInfo = new CourseInfo();
+                        courseInfo.setmCourseId(String.valueOf((int) Double.parseDouble(String.valueOf(map.get("course_id")))));
+                        courseInfo.setmCourseCover(String.valueOf(map.get("cover")));
+                        courseInfo.setmCourseType(String.valueOf(map.get("course_type")));
+                        courseInfo.setmCourseName(String.valueOf(map.get("course_name")));
+                        courseInfo.setmCoursePriceOld(String.valueOf(map.get("price")));
+                        courseInfo.setmCoursePrice(String.valueOf(map.get("special_price"))) ;
+                        courseInfo.setmCourseLearnPersonNum(String.valueOf((int) Double.parseDouble(String.valueOf(map.get("buying_base_number")))));
+
+                        //跳转课程详情
+                        ModelCourseCover modelCourseCover = new ModelCourseCover();
+                        View modelCourseView = modelCourseCover.ModelCourseCover(mMainContext, courseInfo);
+                        modelCourseCover.CourseDetailsShow();
+                        HideAllLayout();
+                        LinearLayout my_layout_main = mview.findViewById(R.id.my_layout_main);
+                        my_layout_main.addView(modelCourseView);
+                        mModelCourseCover = modelCourseCover;
+                        mMainContext.onClickCourseDetails();
+                    });
+                    return convertView;
+                }
+            };
+            ControllerListViewForScrollView modelmy_learnrecord_main_listview = mLearnRecordView.findViewById(R.id.modelmy_learnrecord_main_listview);
+            modelmy_learnrecord_main_listview.setAdapter(mLearnCourseAdapter);
             TextView modelmy_learnrecord_tab_class = mLearnRecordView.findViewById(R.id.modelmy_learnrecord_tab_class);
             modelmy_learnrecord_tab_class.setOnClickListener(v -> {
                 if (!mMyRecordsCurrentTab.equals("class")) {
@@ -1668,7 +1756,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                 }
                 mMyRecordsLastTabIndex = 1;
                 mMyRecordsCurrentTab = "class";
-//                getModelMyQuestionList();
+                getModelMyLearnCourseList();
             });
             TextView modelmy_learnrecord_tab_questionbank = mLearnRecordView.findViewById(R.id.modelmy_learnrecord_tab_questionbank);
             modelmy_learnrecord_tab_questionbank.setOnClickListener(v -> {
@@ -1692,14 +1780,14 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
         ImageView modelmy_learnrecord_cursor1 = mLearnRecordView.findViewById(R.id.modelmy_learnrecord_cursor1);
         int x = width / 4 - mLearnRecordView.getResources().getDimensionPixelSize(R.dimen.dp18) / 2;
         modelmy_learnrecord_cursor1.setX(x);
-        //默认选中的为我的提问
+        //默认选中的为我的学习记录-课程
         mMyRecordsLastTabIndex = 1;
         mMyRecordsCurrentTab = "class";
         TextView modelmy_learnrecord_tab_class = mLearnRecordView.findViewById(R.id.modelmy_learnrecord_tab_class);
         TextView modelmy_learnrecord_tab_questionbank = mLearnRecordView.findViewById(R.id.modelmy_learnrecord_tab_questionbank);
         modelmy_learnrecord_tab_class.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, mLearnRecordView.getResources().getDimensionPixelSize(R.dimen.textsize18));
         modelmy_learnrecord_tab_questionbank.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, mLearnRecordView.getResources().getDimensionPixelSize(R.dimen.textsize16));
-//        getModelMyQuestionList();
+        getModelMyLearnCourseList();
     }
 
     //展示我的问答界面
@@ -1722,20 +1810,12 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                         mSmart_model_my_myanswer.finishLoadMore();
                         return;
                     }
-//                    if (mMyAnswerCurrentTab.equals("question")) {
-                        getModelMyQuestionListMore();
-//                    } else {
-//                        getModelMyAnswerListMore();
-//                    }
+                    getModelMyQuestionListMore();
                 }
 
                 @Override
                 public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-//                    if (mMyAnswerCurrentTab.equals("question")) {
-                        getModelMyQuestionList();
-//                    } else {
-//                        getModelMyAnswerList();
-//                    }
+                    getModelMyQuestionList();
                 }
             });
         }
@@ -3849,6 +3929,183 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                     public void onFailure(Call<MyQuestionsBean> call, Throwable t) {
                         if (mSmart_model_my_myanswer != null) {
                             mSmart_model_my_myanswer.finishLoadMore();
+                        }
+                        LoadingDialog.getInstance(mMainContext).dismiss();
+                    }
+                });
+    }
+
+    //我的学习记录的课程列表
+    public void getModelMyLearnCourseList(){
+        if (mMainContext.mStuId.equals("")){
+            if (mSmart_model_my_learnrecord != null) {
+                mSmart_model_my_learnrecord.finishRefresh();
+            }
+            return;
+        }
+        LoadingDialog.getInstance(mMainContext).show();
+        LinearLayout learnrecord_end = mLearnRecordView.findViewById(R.id.learnrecord_end);
+        learnrecord_end.setVisibility(View.INVISIBLE);
+        Retrofit retrofit = new Retrofit.Builder()
+                .addConverterFactory(GsonConverterFactory.create())
+                .baseUrl(mMainContext.mIpadress)
+                .client(ModelObservableInterface.client)
+                .build();
+        mMyRecordsCurrentPage = 1;
+        ModelObservableInterface modelObservableInterface = retrofit.create(ModelObservableInterface.class);
+        Gson gson = new Gson();
+        HashMap<String, Integer> paramsMap = new HashMap<>();
+        paramsMap.put("pageNum", mMyRecordsCurrentPage);//第几页
+        paramsMap.put("pageSize",mMyRecordsPageCount);//每页几条
+        paramsMap.put("stu_id", Integer.valueOf(mMainContext.mStuId));//学生id
+        String strEntity = gson.toJson(paramsMap);
+        RequestBody body = RequestBody.create(MediaType.parse("application/json;charset=UTF-8"), strEntity);
+        modelObservableInterface.queryCourseRecording(body)
+                .enqueue(new Callback<ModelObservableInterface.BaseBean>() {
+                    @Override
+                    public void onResponse(Call<ModelObservableInterface.BaseBean> call, Response<ModelObservableInterface.BaseBean> response) {
+                        ModelObservableInterface.BaseBean baseBean = response.body();
+                        if (baseBean == null){
+                            if (mSmart_model_my_learnrecord != null) {
+                                mSmart_model_my_learnrecord.finishRefresh();
+                            }
+                            LoadingDialog.getInstance(mMainContext).dismiss();
+                            return;
+                        }
+                        int code = baseBean.getErrorCode();
+                        if (!HeaderInterceptor.IsErrorCode(code,"")){
+                            if (mSmart_model_my_learnrecord != null) {
+                                mSmart_model_my_learnrecord.finishRefresh();
+                            }
+                            LoadingDialog.getInstance(mMainContext).dismiss();
+                            return;
+                        }
+                        if (code != 200 ){
+                            if (mSmart_model_my_learnrecord != null) {
+                                mSmart_model_my_learnrecord.finishRefresh();
+                            }
+                            LoadingDialog.getInstance(mMainContext).dismiss();
+                            return;
+                        }
+                        Map<String,Object> dataBean = baseBean.getData();
+                        if (dataBean == null){
+                            if (mSmart_model_my_learnrecord != null) {
+                                mSmart_model_my_learnrecord.finishRefresh();
+                            }
+                            LoadingDialog.getInstance(mMainContext).dismiss();
+                            return;
+                        }
+                        if (dataBean.get("total") != null) {
+                            mMyQuestionAndAnswerSum = (int) Double.parseDouble(String.valueOf(dataBean.get("total")));
+                        }
+                        List<Object> listBeans = (List<Object>) dataBean.get("list");
+                        if (listBeans == null){
+                            if (mSmart_model_my_learnrecord != null) {
+                                mSmart_model_my_learnrecord.finishRefresh();
+                            }
+                            LoadingDialog.getInstance(mMainContext).dismiss();
+                            return;
+                        }
+                        mLearnCourseAdapter.clear();
+                        mLearnCourseAdapter.addAll(listBeans);
+                        mLearnCourseAdapter.notifyDataSetChanged();
+                        if (mSmart_model_my_learnrecord != null) {
+                            mSmart_model_my_learnrecord.finishRefresh();
+                        }
+                        LoadingDialog.getInstance(mMainContext).dismiss();
+                    }
+
+                    @Override
+                    public void onFailure(Call<ModelObservableInterface.BaseBean> call, Throwable t) {
+                        if (mSmart_model_my_learnrecord != null) {
+                            mSmart_model_my_learnrecord.finishRefresh();
+                        }
+                        LoadingDialog.getInstance(mMainContext).dismiss();
+                    }
+                });
+    }
+
+    //我的学习记录的课程列表-下拉加载
+    public void getModelMyLearnCourseListMore(){
+        if (mMainContext.mStuId.equals("")){
+            if (mSmart_model_my_learnrecord != null) {
+                mSmart_model_my_learnrecord.finishLoadMore();
+            }
+            return;
+        }
+        LoadingDialog.getInstance(mMainContext).show();
+        Retrofit retrofit = new Retrofit.Builder()
+                .addConverterFactory(GsonConverterFactory.create())
+                .baseUrl(mMainContext.mIpadress)
+                .client(ModelObservableInterface.client)
+                .build();
+        mMyRecordsCurrentPage = mMyRecordsCurrentPage + 1;
+        ModelObservableInterface modelObservableInterface = retrofit.create(ModelObservableInterface.class);
+        Gson gson = new Gson();
+        HashMap<String, Integer> paramsMap = new HashMap<>();
+        paramsMap.put("pageNum", mMyRecordsCurrentPage);//第几页
+        paramsMap.put("pageSize",mMyRecordsPageCount);//每页几条
+        paramsMap.put("stu_id", Integer.valueOf(mMainContext.mStuId));//学生id
+        String strEntity = gson.toJson(paramsMap);
+        RequestBody body = RequestBody.create(MediaType.parse("application/json;charset=UTF-8"), strEntity);
+        modelObservableInterface.queryCourseRecording(body)
+                .enqueue(new Callback<ModelObservableInterface.BaseBean>() {
+                    @Override
+                    public void onResponse(Call<ModelObservableInterface.BaseBean> call, Response<ModelObservableInterface.BaseBean> response) {
+                        ModelObservableInterface.BaseBean baseBean = response.body();
+                        if (baseBean == null){
+                            if (mSmart_model_my_learnrecord != null) {
+                                mSmart_model_my_learnrecord.finishLoadMore();
+                            }
+                            LoadingDialog.getInstance(mMainContext).dismiss();
+                            return;
+                        }
+                        int code = baseBean.getErrorCode();
+                        if (!HeaderInterceptor.IsErrorCode(code,"")){
+                            if (mSmart_model_my_learnrecord != null) {
+                                mSmart_model_my_learnrecord.finishLoadMore();
+                            }
+                            LoadingDialog.getInstance(mMainContext).dismiss();
+                            return;
+                        }
+                        if (code != 200 ){
+                            if (mSmart_model_my_learnrecord != null) {
+                                mSmart_model_my_learnrecord.finishLoadMore();
+                            }
+                            LoadingDialog.getInstance(mMainContext).dismiss();
+                            return;
+                        }
+                        Map<String,Object> dataBean = baseBean.getData();
+                        if (dataBean == null){
+                            if (mSmart_model_my_learnrecord != null) {
+                                mSmart_model_my_learnrecord.finishLoadMore();
+                            }
+                            LoadingDialog.getInstance(mMainContext).dismiss();
+                            return;
+                        }
+                        if (dataBean.get("total") != null) {
+                            mMyQuestionAndAnswerSum = (int) Double.parseDouble(String.valueOf(dataBean.get("total")));
+                        }
+                        List<Object> listBeans = (List<Object>) dataBean.get("list");
+                        if (listBeans == null){
+                            if (mSmart_model_my_learnrecord != null) {
+                                mSmart_model_my_learnrecord.finishLoadMore();
+                            }
+                            LoadingDialog.getInstance(mMainContext).dismiss();
+                            return;
+                        }
+                        mLearnCourseAdapter.addAll(listBeans);
+                        mLearnCourseAdapter.notifyDataSetChanged();
+                        if (mSmart_model_my_learnrecord != null) {
+                            mSmart_model_my_learnrecord.finishLoadMore();
+                        }
+                        LoadingDialog.getInstance(mMainContext).dismiss();
+                    }
+
+                    @Override
+                    public void onFailure(Call<ModelObservableInterface.BaseBean> call, Throwable t) {
+                        if (mSmart_model_my_learnrecord != null) {
+                            mSmart_model_my_learnrecord.finishLoadMore();
                         }
                         LoadingDialog.getInstance(mMainContext).dismiss();
                     }
