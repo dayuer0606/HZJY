@@ -15,7 +15,7 @@
         android:layout_marginRight="@dimen/dp4"
         android:singleLine="true"
         android:ellipsize="end"
-        android:layout_toLeftOf="@+id/modelmy_records_class_start"
+        android:layout_toLeftOf="@+id/modelmy_records_class_goon"
         />
 
     <LinearLayout
@@ -27,7 +27,7 @@
         android:layout_marginTop="@dimen/dp13"
         android:layout_below="@id/modelmy_records_class_name"
         android:layout_marginRight="@dimen/dp4"
-        android:layout_toLeftOf="@+id/modelmy_records_class_start"
+        android:layout_toLeftOf="@+id/modelmy_records_class_goon"
         android:gravity="center">
         <ImageView
             android:layout_width="@dimen/dp10"
@@ -53,21 +53,6 @@
         android:layout_marginRight="@dimen/dp13"
         android:layout_marginTop="@dimen/dp20"
         android:layout_below="@id/modelmy_records_class_time_layout"/>
-    <TextView
-        android:id="@+id/modelmy_records_class_start"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/textsize12"
-        android:text="开始学习"
-        android:textColor="#ffffff"
-        android:layout_marginTop="@dimen/dp24"
-        android:paddingBottom="@dimen/dp_7"
-        android:paddingTop="@dimen/dp_7"
-        android:paddingLeft="@dimen/dp17"
-        android:paddingRight="@dimen/dp17"
-        android:layout_marginRight="@dimen/dp4"
-        android:layout_toLeftOf="@+id/modelmy_records_class_goon"
-        android:background="@drawable/rect_style_orange1"/>
     <TextView
         android:id="@+id/modelmy_records_class_goon"
         android:layout_width="wrap_content"

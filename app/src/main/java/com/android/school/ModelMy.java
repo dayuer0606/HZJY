@@ -1663,23 +1663,20 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                 protected View initListCell(int position, View convertView, ViewGroup parent) {
                     convertView = getLayoutInflater().inflate(R.layout.model_my_myrecords_class, parent, false);
                     Map<String,Object> map = (Map<String, Object>) mLearnCourseAdapter.getItem(position);
-                    TextView modelmy_records_class_start = convertView.findViewById(R.id.modelmy_records_class_start);
                     TextView modelmy_records_class_goon = convertView.findViewById(R.id.modelmy_records_class_goon);
                     //学习记录名称
-                    String name = "";
-                    String time = "";
+                    String name;
+                    String time;
                     if (mMyRecordsCurrentTab.equals("questionbank")) {
                         name = String.valueOf(map.get("test_paper_name"));
                         time = String.valueOf(map.get("time"));
-                        modelmy_records_class_start.setText("开始做题");
-                        modelmy_records_class_goon.setText("继续做题");
+                        modelmy_records_class_goon.setVisibility(View.INVISIBLE);
                         if (name.equals("null")) {
                             name = "临时试卷";
                         }
                     } else {
                         name = String.valueOf(map.get("course_name"));
                         time = String.valueOf(map.get("create_time"));
-                        modelmy_records_class_start.setVisibility(View.INVISIBLE);
                     }
                     TextView modelmy_records_class_name = convertView.findViewById(R.id.modelmy_records_class_name);
                     modelmy_records_class_name.setText(name);
@@ -1707,13 +1704,6 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                         }
                     }
                     modelmy_records_class_time.setText(dateS);
-                    //开始学习
-                    modelmy_records_class_start.setClickable(true);
-                    modelmy_records_class_start.setOnClickListener(v->{
-                        if (mMyRecordsCurrentTab.equals("questionbank")) {
-
-                        }
-                    });
                     //继续学习
                     modelmy_records_class_goon.setClickable(true);
                     modelmy_records_class_goon.setOnClickListener(v->{
