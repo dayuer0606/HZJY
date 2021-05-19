@@ -1759,8 +1759,6 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                 }
                 mMyRecordsLastTabIndex = 2;
                 mMyRecordsCurrentTab = "questionbank";
-                LinearLayout modelmy_learnrecord_main_content = mLearnRecordView.findViewById(R.id.modelmy_learnrecord_main_content);
-                modelmy_learnrecord_main_content.removeAllViews();
                 getModelMyLearnQuestionList();
             });
         }

@@ -27,6 +27,7 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 
 import okhttp3.RequestBody;
 import retrofit2.Call;
@@ -44,8 +45,6 @@ public class ModelCourse extends Fragment implements ModelCourseCover.ModelCours
     //要显示的页面
     static private int FragmentPage;
     private View mview;
-    private int height = 1344;
-    private int width = 720;
     private ModelSearchView searchView = null;
 
     //下拉刷新
@@ -71,6 +70,8 @@ public class ModelCourse extends Fragment implements ModelCourseCover.ModelCours
     private int mPageCount = 10;
     private int mCourseSum = 0; //课程总数
 
+    private String seque = "";
+
     public static Fragment newInstance(MainActivity content, String context, int iFragmentPage) {
         mContext = context;
         mMainContext = content;
@@ -83,9 +84,6 @@ public class ModelCourse extends Fragment implements ModelCourseCover.ModelCours
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mview = inflater.inflate(FragmentPage, container, false);
-        DisplayMetrics dm = mMainContext.getResources().getDisplayMetrics(); //获取屏幕分辨率
-        height = dm.heightPixels;
-        width = dm.widthPixels;
         CourseMainShow();
         // 3. 绑定组件
         searchView = mview.findViewById(R.id.course_search_view);
@@ -93,54 +91,7 @@ public class ModelCourse extends Fragment implements ModelCourseCover.ModelCours
         // 4. 设置点击搜索按键后的操作（通过回调接口）
         // 参数 = 搜索框输入的内容,,,,,,,,.
         searchView.setOnClickSearch(string -> {
-            System.out.println("我收到了" + string); //只按照关键字搜索，其他查询条件全部重置
-            mCourseSelectTemp = "-1";
-            mCourseSelect = "-1";
-            //二级搜索
-            mCourseSelectTemp1 = "-1";
-            mCourseSelect1 = "-1";
-            //排序方式搜索
-            mCourseSelectSortTemp = "-1";
-            mCourseSelectSort = "-1";
-            //课程类型搜索
-            mCourseSelectCourseTypeTemp = "-1";
-            mCourseSelectCourseType = "-1";
-            String project_id = "";
-            String subject_id = "";
-            String hour = "1";
-            String fever = "1";
-            String course_type = "";  //全部默认为空
-            if (!mCourseSelect.equals("-1")){
-                project_id = mCourseSelect;
-            }
-            if (!mCourseSelect1.equals("-1")){
-                subject_id = mCourseSelect1;
-            }
-            if (mCourseSelectSort.equals("0")){
-                hour = "0";
-            } else if (mCourseSelectSort.equals("1")){
-                fever = "0";
-            }
-            if (mCourseSelectCourseType.equals("0")){
-                course_type = "直播";
-            } else if (mCourseSelectCourseType.equals("1")){
-                course_type = "录播";
-            } else if (mCourseSelectCourseType.equals("2")){
-                course_type = "直播,录播";
-            }
-            if (mview == null) {
-                return;
-            }
-            HideAllLayout();
-            RelativeLayout course_mainLayout = mview.findViewById(R.id.course_mainLayout);
-            LinearLayout.LayoutParams LP = (LinearLayout.LayoutParams) course_mainLayout.getLayoutParams();
-            LP.width = LinearLayout.LayoutParams.MATCH_PARENT;
-            LP.height = LinearLayout.LayoutParams.MATCH_PARENT;
-            course_mainLayout.setLayoutParams(LP);
-            course_mainLayout.setVisibility(View.VISIBLE);
-            ScrollView course_block_menu_scroll_view = mview.findViewById(R.id.course_block_menu_scroll_view);
-            course_block_menu_scroll_view.scrollTo(0, 0);
-            getCourseDatas(string,project_id,subject_id,hour,fever,course_type);
+            SearchAction(string);
         });
         // 5. 设置点击返回按键后的操作（通过回调接口）
         searchView.setOnClickBack(() -> {
@@ -217,6 +168,57 @@ public class ModelCourse extends Fragment implements ModelCourseCover.ModelCours
     @Override
     public void onDestroy() {
         super.onDestroy();
+    }
+
+    public void SearchAction(String string) {
+        System.out.println("我收到了" + string); //只按照关键字搜索，其他查询条件全部重置
+        mCourseSelectTemp = "-1";
+        mCourseSelect = "-1";
+        //二级搜索
+        mCourseSelectTemp1 = "-1";
+        mCourseSelect1 = "-1";
+        //排序方式搜索
+        mCourseSelectSortTemp = "-1";
+        mCourseSelectSort = "-1";
+        //课程类型搜索
+        mCourseSelectCourseTypeTemp = "-1";
+        mCourseSelectCourseType = "-1";
+        String project_id = "";
+        String subject_id = "";
+        String hour = "1";
+        String fever = "1";
+        String course_type = "";  //全部默认为空
+        if (!mCourseSelect.equals("-1")){
+            project_id = mCourseSelect;
+        }
+        if (!mCourseSelect1.equals("-1")){
+            subject_id = mCourseSelect1;
+        }
+        if (mCourseSelectSort.equals("0")){
+            hour = "0";
+        } else if (mCourseSelectSort.equals("1")){
+            fever = "0";
+        }
+        if (mCourseSelectCourseType.equals("0")){
+            course_type = "直播";
+        } else if (mCourseSelectCourseType.equals("1")){
+            course_type = "录播";
+        } else if (mCourseSelectCourseType.equals("2")){
+            course_type = "直播,录播";
+        }
+        if (mview == null) {
+            return;
+        }
+        HideAllLayout();
+        RelativeLayout course_mainLayout = mview.findViewById(R.id.course_mainLayout);
+        LinearLayout.LayoutParams LP = (LinearLayout.LayoutParams) course_mainLayout.getLayoutParams();
+        LP.width = LinearLayout.LayoutParams.MATCH_PARENT;
+        LP.height = LinearLayout.LayoutParams.MATCH_PARENT;
+        course_mainLayout.setLayoutParams(LP);
+        course_mainLayout.setVisibility(View.VISIBLE);
+        ScrollView course_block_menu_scroll_view = mview.findViewById(R.id.course_block_menu_scroll_view);
+        course_block_menu_scroll_view.scrollTo(0, 0);
+        getCourseDatas(string,project_id,subject_id,hour,fever,course_type);
     }
 
     //课程主界面展示
@@ -829,6 +831,8 @@ public class ModelCourse extends Fragment implements ModelCourseCover.ModelCours
 
         ModelObservableInterface modelObservableInterface = retrofit.create(ModelObservableInterface.class);
 
+        seque = String.valueOf(Math.random() * 100000);
+        String random = seque;
         Gson gson = new Gson();
         mCurrentPage = 1;
         HashMap<String,String> paramsMap = new HashMap<>();
@@ -850,6 +854,13 @@ public class ModelCourse extends Fragment implements ModelCourseCover.ModelCours
         call.enqueue(new Callback<CourseBean>() {
             @Override
             public void onResponse(Call<CourseBean> call, Response<CourseBean> response) {
+                if (!random.equals(seque)) {
+                    if (mSmart_fragment_course != null){
+                        mSmart_fragment_course.finishRefresh();
+                    }
+                    LoadingDialog.getInstance(mMainContext).dismiss();
+                    return;
+                }
                 int code = response.code();
                 if (code != 200){
                     if (mSmart_fragment_course != null){

@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
@@ -437,6 +438,11 @@ public class ModelHomePage extends Fragment{
         return;
     }
 
+    //获取搜索关键字
+    public String getSearchWords() {
+        EditText search_edit = mView.findViewById(R.id.search_edit);
+        return search_edit.getText().toString();
+    }
     //获取首页数据
     private void getHomePageDatas() {
         LoadingDialog.getInstance(mMainContext).show();

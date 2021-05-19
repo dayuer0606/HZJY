@@ -44,6 +44,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
@@ -544,7 +545,15 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
 
     //点击首页查询课程
     public void onClickHomepageSearch(View view) {
-
+        String words = ((ModelHomePage)mModelHomePage).getSearchWords();
+        if (words == null) {
+            return;
+        }
+        if (words.equals("")) {
+            return;
+        }
+        Page_Course();
+        ((ModelCourse) mModelCourse).SearchAction(words);
     }
 
     //点击更多课程
