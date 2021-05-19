@@ -34,7 +34,6 @@ import com.aliyun.vodplayerview.widget.AliyunVodPlayerView;
 import com.android.school.adapter.CommonListAdapter;
 import com.android.school.appactivity.ModelCommunityAnswerActivity;
 import com.android.school.classpacket.ClassPacketDetails;
-import com.android.school.consts.PlayType;
 import com.android.school.info.CourseInfo;
 import com.android.school.info.CoursePacketInfo;
 import com.android.school.info.CourseRecordPlayDownloadInfo;
@@ -94,7 +93,6 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
     private int mMyRecordsLastTabIndex = 1;
     private String mMyRecordsCurrentTab = "class";
     private CommonListAdapter<Object> mLearnCourseAdapter;
-    private CommonListAdapter<Object> mLearnQuestionAdapter;
 
     private ControllerCenterDialog mMyDialog, mMyCouponDialog;
     private ControllerMyMessage1Adapter adapter;

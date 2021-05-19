@@ -8,10 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
-//import android.icu.text.SimpleDateFormat;
 import java.text.SimpleDateFormat;
 
 import android.net.Uri;
@@ -30,10 +27,10 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.GridLayout;
@@ -54,15 +51,15 @@ import com.android.school.ControllerPictureAdapter;
 import com.android.school.ControllerPictureBean;
 import com.android.school.ControllerWarpLinearLayout;
 import com.android.school.HeaderInterceptor;
+import com.android.school.HorizontalListView;
 import com.android.school.LoadingDialog;
-import com.android.school.MainActivity;
 import com.android.school.ModelGetPhotoFromPhotoAlbum;
 import com.android.school.ModelHtmlUtils;
 import com.android.school.ModelObservableInterface;
 import com.android.school.ModelSearchRecordSQLiteOpenHelper;
 import com.android.school.ModelSearchView;
-import com.android.school.ModelSetting;
 import com.android.school.R;
+import com.android.school.adapter.CommonListAdapter;
 import com.android.school.appinfo.CommunityBean;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
@@ -115,11 +112,8 @@ public class ModelCommunityAnswerActivity extends FragmentActivity {
     static private int FragmentPage;
     private View mCommunityAnswerView ,mCommunityAnswerSelectView ,mCommunityAnswerAddView ,mCommunityAnswerChooseSignView
             ,mCommunityAnswerDetailsView;
-    //弹出窗口（筛选条件）
-    private PopupWindow popupWindow;
-    //检索条件-默认全部  mCommunityAnswerSelectTemp 为临时存储，当点击确定时，才替换到mCommunityAnswerSelect
+    //检索条件-默认全部
     private String mCommunityAnswerSelect = "-1";
-    private String mCommunityAnswerSelectTemp = "-1";
     //添加问答-图片选择器
     private RecyclerView mRecyclerView;
     private ArrayList<ControllerPictureBean> mPictureBeansList;
@@ -154,7 +148,6 @@ public class ModelCommunityAnswerActivity extends FragmentActivity {
 
     private String mKey = "";//关键字搜索
 
-    private View mPopupWindowView = null;
     private String mIpadress = PublicCommonUtil.ipadress;
     private String mStuId = "";
     private String mPage = "main";
@@ -320,15 +313,36 @@ public class ModelCommunityAnswerActivity extends FragmentActivity {
         startActivityForResult(intent, CUPREQUEST);
     }
 
+    private CommonListAdapter<CommunityQuerytagsBean.CommunityissueDataBean> adapter ;
     //社区问答主界面显示
     public void CommunityAnswerMainShow() {
         mPage = "main";
         HideAllLayout();
+        mCommunityAnswerSelect = "-1";
         LinearLayout communityanswer_layout_main = findViewById(R.id.communityanswer_layout_main);
         if (mCommunityAnswerView == null){
             mCommunityAnswerView = LayoutInflater.from(mThis).inflate(R.layout.model_communityanswer, null);
-            //下滑刷新处理
-           //Smart_model_communityanswer
+            adapter = new CommonListAdapter<CommunityQuerytagsBean.CommunityissueDataBean>() {
+                @Override
+                protected View initListCell(int position, View convertView, ViewGroup parent) {
+                    convertView = getLayoutInflater().inflate(R.layout.homepage_layout_functionbutton, parent, false);
+                    TextView TextView_functionbuttonname = convertView.findViewById(R.id.TextView_functionbuttonname);
+                    TextView_functionbuttonname.setText(adapter.getItem(position).modify_name);
+                    if (mCommunityAnswerSelect.equals(String.valueOf(adapter.getItem(position).pse_id))) {
+                        TextView_functionbuttonname.setTextColor(Color.RED);
+                    }
+                    return convertView;
+                }
+            };
+            HorizontalListView sign_list = mCommunityAnswerView.findViewById(R.id.sign_list);
+            sign_list.setAdapter(adapter);
+            sign_list.setOnItemClickListener((adapterView, view, i, l) -> {
+                mCommunityAnswerSelect = String.valueOf(adapter.getItem(i).pse_id);
+                adapter.notifyDataSetChanged();
+                getCommunityData();
+            });
+            getCommunityQuerytagsBeanData();
+                    //下滑刷新处理
             smart_model_communityanswer = mCommunityAnswerView.findViewById(R.id.Smart_model_communityanswer);
             smart_model_communityanswer.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
                 @Override
@@ -838,67 +852,6 @@ public class ModelCommunityAnswerActivity extends FragmentActivity {
         }
     }
 
-    //初始化弹出框（选择标签筛选）
-    protected void initPopupWindow() {
-        if (mPopupWindowView == null) {
-            mPopupWindowView = mThis.getLayoutInflater().inflate(R.layout.model_communityanswer_selectpop, null);
-        }
-        int height1 = (int) (getScreenHeight() - getResources().getDimension(R.dimen.dp45) - getStateBar());
-        //内容，高度，宽度
-        popupWindow = new PopupWindow(mPopupWindowView, (int) getResources().getDimension(R.dimen.dp_280), height1, true);
-        //动画效果
-        popupWindow.setAnimationStyle(R.style.AnimationRightFade);
-        //菜单背景色
-        ColorDrawable dw = new ColorDrawable(0xffffffff);
-        popupWindow.setBackgroundDrawable(dw);
-        popupWindow.showAtLocation(mThis.getLayoutInflater().inflate(R.layout.activity_main, null), Gravity.RIGHT, 0, 500);
-        popupWindow.setBackgroundDrawable(null);
-        //设置背景半透明
-        backgroundAlpha(0.9f);
-        //关闭事件
-        popupWindow.setOnDismissListener(new popupDismissListener());
-        mPopupWindowView.setOnTouchListener((v, event) -> {
-            // 这里如果返回true的话，touch事件将被拦截
-            // 拦截后 PopupWindow的onTouchEvent不被调用，这样点击外部区域无法dismiss
-            return false;
-        });
-        //查询标签
-        getCommunityQuerytagsBeanData();
-        TextView communityanswer_select_buttonsure = mPopupWindowView.findViewById(R.id.communityanswer_select_buttonsure);
-        communityanswer_select_buttonsure.setOnClickListener(v->{
-            mCommunityAnswerSelect = mCommunityAnswerSelectTemp;
-            //请求网络数据关闭页面
-            popupWindow.dismiss();
-            mKey = "" ;
-            getCommunityData();
-        });
-        //点击重置
-        TextView communityanswer_select_buttonreset = mPopupWindowView.findViewById(R.id.communityanswer_select_buttonreset);
-        communityanswer_select_buttonreset.setOnClickListener(v->{
-            ControllerWarpLinearLayout communityanswer_select_warpLinearLayout = mPopupWindowView.findViewById(R.id.communityanswer_select_warpLinearLayout);
-            //将其他置为未选中
-            int childcount = communityanswer_select_warpLinearLayout.getChildCount();
-            for (int i = 0; i < childcount ; i ++){
-                View childView = communityanswer_select_warpLinearLayout.getChildAt(i);
-                if (childView == null){
-                    continue;
-                }
-                TextView communityanswer_selectpop_child_signname1 = childView.findViewById(R.id.communityanswer_selectpop_child_signname);
-                int padding = (int) childView.getResources().getDimension(R.dimen.dp5);
-                if (communityanswer_selectpop_child_signname1.getHint().toString().equals("-1")){
-                    communityanswer_selectpop_child_signname1.setBackground(childView.getResources().getDrawable(R.drawable.textview_style_rect_blue));
-                    communityanswer_selectpop_child_signname1.setTextColor(childView.getResources().getColor(R.color.white));
-                    communityanswer_selectpop_child_signname1.setPadding(padding,padding,padding,padding);
-                } else if (communityanswer_selectpop_child_signname1.getHint().toString().equals(mCommunityAnswerSelectTemp)){ // 如果上个找到上一个选中的id，将其置为未选状态
-                    communityanswer_selectpop_child_signname1.setBackground(childView.getResources().getDrawable(R.drawable.textview_style_rect));
-                    communityanswer_selectpop_child_signname1.setTextColor(childView.getResources().getColor(R.color.grayff999999));
-                    communityanswer_selectpop_child_signname1.setPadding(padding,padding,padding,padding);
-                }
-            }
-            mCommunityAnswerSelectTemp = "-1";
-            mCommunityAnswerSelect = "-1";
-        });
-    }
     /**
    * 设置添加屏幕的背景透明度
    * @param bgAlpha
@@ -2308,88 +2261,13 @@ public class ModelCommunityAnswerActivity extends FragmentActivity {
                             LoadingDialog.getInstance(mThis).dismiss();
                             return;
                         }
-                        //添加搜索标签的搜索接口
-                        ControllerWarpLinearLayout communityanswer_select_warpLinearLayout = mPopupWindowView.findViewById(R.id.communityanswer_select_warpLinearLayout);
-                        communityanswer_select_warpLinearLayout.removeAllViews();
-                        mCommunityAnswerSelectTemp = mCommunityAnswerSelect;
-                        //必须有的标签-全部:默认选中全部
-                        //获取网络数据 给搜索标签赋值刷新页面
-                        {
-                            View view = mThis.getLayoutInflater().inflate(R.layout.model_communityanswer_selectpop_child, null);
-                            TextView communityanswer_selectpop_child_signname = view.findViewById(R.id.communityanswer_selectpop_child_signname);
-                            communityanswer_selectpop_child_signname.setText("全部");
-                            communityanswer_selectpop_child_signname.setHint("-1");
-                            communityanswer_select_warpLinearLayout.addView(view);
-                            view.setOnClickListener(v->{
-                                //将其他置为未选中
-                                String hint = "";
-                                int childcount = communityanswer_select_warpLinearLayout.getChildCount();
-                                for (int i = 0; i < childcount ; i ++){
-                                    View childView = communityanswer_select_warpLinearLayout.getChildAt(i);
-                                    if (childView == null){
-                                        continue;
-                                    }
-                                    TextView communityanswer_selectpop_child_signname1 = childView.findViewById(R.id.communityanswer_selectpop_child_signname);
-                                    if (childView == view){
-                                        communityanswer_selectpop_child_signname1.setBackground(view.getResources().getDrawable(R.drawable.textview_style_rect_blue));
-                                        communityanswer_selectpop_child_signname1.setTextColor(view.getResources().getColor(R.color.white));
-                                        hint = communityanswer_selectpop_child_signname1.getHint().toString();
-                                    } else if (communityanswer_selectpop_child_signname1.getHint().toString().equals(mCommunityAnswerSelectTemp)){ // 如果上个找到上一个选中的id，将其置为未选状态
-                                        communityanswer_selectpop_child_signname1.setBackground(view.getResources().getDrawable(R.drawable.textview_style_rect));
-                                        communityanswer_selectpop_child_signname1.setTextColor(view.getResources().getColor(R.color.grayff999999));
-                                    }
-                                }
-                                //将选中项置为当前选中项id
-                                mCommunityAnswerSelectTemp = hint;
-                            });
-                            if (mCommunityAnswerSelect.equals("-1")) {
-                                communityanswer_selectpop_child_signname.setBackground(view.getResources().getDrawable(R.drawable.textview_style_rect_blue));
-                                communityanswer_selectpop_child_signname.setTextColor(view.getResources().getColor(R.color.white));
-                            }
-                        }
-                        for (int i = 0; i < querytagsBean.data.size(); i ++){
-                            CommunityQuerytagsBean.CommunityissueDataBean communityissueDataBean = querytagsBean.data.get(i);
-                            if (communityissueDataBean == null){
-                                continue;
-                            }
-                            if (communityissueDataBean.pse_id == null){
-                                continue;
-                            }
-                            View view = mThis.getLayoutInflater().inflate(R.layout.model_communityanswer_selectpop_child, null);
-                            TextView communityanswer_selectpop_child_signname = view.findViewById(R.id.communityanswer_selectpop_child_signname);
-                            communityanswer_selectpop_child_signname.setText(communityissueDataBean.modify_name);
-                            communityanswer_select_warpLinearLayout.addView(view);
-                            communityanswer_selectpop_child_signname.setHint(communityissueDataBean.pse_id + "");
-                            view.setOnClickListener(v->{
-                                //将其他置为未选中
-                                String hint = "";
-                                int childcount = communityanswer_select_warpLinearLayout.getChildCount();
-                                for (int num = 0; num < childcount ; num ++){
-                                    View childView = communityanswer_select_warpLinearLayout.getChildAt(num);
-                                    if (childView == null){
-                                        continue;
-                                    }
-                                    TextView communityanswer_selectpop_child_signname1 = childView.findViewById(R.id.communityanswer_selectpop_child_signname);
-                                    int padding = (int) view.getResources().getDimension(R.dimen.dp5);
-                                    if (childView == view){
-                                        communityanswer_selectpop_child_signname1.setBackground(view.getResources().getDrawable(R.drawable.textview_style_rect_blue));
-                                        communityanswer_selectpop_child_signname1.setTextColor(view.getResources().getColor(R.color.white));
-                                        communityanswer_selectpop_child_signname1.setPadding(padding,padding,padding,padding);
-                                        hint = communityanswer_selectpop_child_signname1.getHint().toString();
-                                    } else if (communityanswer_selectpop_child_signname1.getHint().toString().equals(mCommunityAnswerSelectTemp)){ // 如果上个找到上一个选中的id，将其置为未选状态
-                                        communityanswer_selectpop_child_signname1.setBackground(view.getResources().getDrawable(R.drawable.textview_style_rect));
-                                        communityanswer_selectpop_child_signname1.setTextColor(view.getResources().getColor(R.color.grayff999999));
-                                        communityanswer_selectpop_child_signname1.setPadding(padding,padding,padding,padding);
-                                    }
-                                }
-                                //将选中项置为当前选中项id
-                                mCommunityAnswerSelectTemp = hint;
-                            });
-                            if (mCommunityAnswerSelect.equals(communityanswer_selectpop_child_signname.getHint().toString())) {
-                                communityanswer_selectpop_child_signname.setBackground(view.getResources().getDrawable(R.drawable.textview_style_rect_blue));
-                                communityanswer_selectpop_child_signname.setTextColor(view.getResources().getColor(R.color.white));
-                            }
-                        }
+                        adapter.clear();
+                        CommunityQuerytagsBean.CommunityissueDataBean bean = new CommunityQuerytagsBean.CommunityissueDataBean();
+                        bean.pse_id = -1;
+                        bean.modify_name = "全部";
+                        adapter.add(bean);
+                        adapter.addAll(querytagsBean.data);
+                        adapter.notifyDataSetChanged();
                         LoadingDialog.getInstance(mThis).dismiss();
                     }
 
@@ -2715,7 +2593,7 @@ public class ModelCommunityAnswerActivity extends FragmentActivity {
             return data;
         }
 
-        class CommunityissueDataBean {
+        static class CommunityissueDataBean {
             private Integer pse_id;
             private String modify_name;
 

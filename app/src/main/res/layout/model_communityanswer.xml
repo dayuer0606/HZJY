@@ -59,15 +59,30 @@
         android:layout_height="@dimen/dp1"
         android:layout_below="@id/communityanswer_titlelayout"
         android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="@dimen/dp5"
         android:background="#e5e5e5" />
+    <com.android.school.HorizontalListView
+        android:id="@+id/sign_list"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp35"
+        android:layout_marginLeft="@dimen/dp16"
+        android:layout_marginRight="@dimen/dp16"
+        android:layout_marginTop="@dimen/dp20"
+        android:layout_marginBottom="@dimen/dp5"
+        android:layout_below="@id/communityanswer_line1"/>
 
+    <View
+        android:id="@+id/communityanswer_line2"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp1"
+        android:layout_below="@id/sign_list"
+        android:layout_gravity="center_horizontal"
+        android:background="#e5e5e5" />
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/Smart_model_communityanswer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/communityanswer_line1">
+        android:layout_below="@id/communityanswer_line2">
 
         <com.scwang.smartrefresh.header.DeliveryHeader
             android:layout_width="match_parent"

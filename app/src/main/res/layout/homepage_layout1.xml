@@ -3,10 +3,51 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <RelativeLayout
+        android:id="@+id/search_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_32"
+        android:orientation="horizontal">
+        <EditText
+            android:id="@+id/search_edit"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_32"
+            android:background="@drawable/search_edittext"
+            android:hint="快来搜索课程"
+            android:textSize="@dimen/textsize12"
+            android:drawableLeft="@drawable/search"
+            android:drawablePadding="@dimen/dp15"
+            android:paddingLeft="@dimen/dp15"
+            android:layout_marginRight="@dimen/dp13"
+            android:layout_toLeftOf="@+id/search_button"/>
+        <TextView
+            android:id="@+id/search_button"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:text="搜索"
+            android:textSize="@dimen/textsize15"
+            android:textStyle="bold"
+            android:layout_alignParentRight="true"
+            android:textColor="#FF5A30"
+            android:clickable="true"
+            android:onClick="onClickHomepageSearch"/>
+    </RelativeLayout>
+    <com.android.school.HorizontalListView
+        android:id="@+id/functionButton"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp35"
+        android:layout_marginLeft="@dimen/dp16"
+        android:layout_marginRight="@dimen/dp16"
+        android:layout_marginTop="@dimen/dp20"
+        android:layout_marginBottom="@dimen/dp5"
+        android:layout_below="@id/search_layout"/>
+
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/Smart_homepage_layout1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@+id/functionButton">
 
         <com.scwang.smartrefresh.header.DeliveryHeader
             android:layout_width="match_parent"
@@ -26,54 +67,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/dp_32"
-                        android:orientation="horizontal">
-                        <EditText
-                            android:id="@+id/search_edit"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/dp_32"
-                            android:background="@drawable/search_edittext"
-                            android:hint="快来搜索课程"
-                            android:textSize="@dimen/textsize12"
-                            android:drawableLeft="@drawable/search"
-                            android:drawablePadding="@dimen/dp15"
-                            android:paddingLeft="@dimen/dp15"
-                            android:layout_marginRight="@dimen/dp13"
-                            android:layout_toLeftOf="@+id/search_button"/>
-                        <TextView
-                            android:id="@+id/search_button"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:gravity="center_vertical"
-                            android:text="搜索"
-                            android:textSize="@dimen/textsize15"
-                            android:textStyle="bold"
-                            android:layout_alignParentRight="true"
-                            android:textColor="#FF5A30"
-                            android:clickable="true"
-                            android:onClick="onClickHomepageSearch"/>
-                    </RelativeLayout>
-                    <HorizontalScrollView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/dp16"
-                        android:layout_marginRight="@dimen/dp16"
-                        android:layout_marginTop="@dimen/dp20"
-                        android:scrollbars="none">
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent">
-                            <GridView
-                                android:id="@+id/functionButton"
-                                android:layout_width="match_parent"
-                                android:layout_height="@dimen/dp45"
-                                android:scrollbars="none"/>
-                        </LinearLayout>
-                    </HorizontalScrollView>
-
                     <com.android.school.ModelImageSlideshow
                         android:id="@+id/is_gallery"
                         android:layout_width="match_parent"

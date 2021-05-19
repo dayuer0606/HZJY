@@ -170,12 +170,7 @@ public class ModelHomePage extends Fragment{
         }
         if (mIsUseFunctionShow){
             List<Map<String, Object>> FunctionButtonInfoList = initNavigationData();
-            while (FunctionButtonInfoList.size() > 8){ //功能按钮不能多于GridLayout的所创个数
-                FunctionButtonInfoList.remove(FunctionButtonInfoList.size() - 1);
-            }
-            int size = FunctionButtonInfoList.size();
-            GridView mfunctionButton = view.findViewById(R.id.functionButton);
-            changeGridView(size,mfunctionButton);
+            HorizontalListView mfunctionButton = view.findViewById(R.id.functionButton);
             mAdapter = new SimpleAdapter(mMainContext, FunctionButtonInfoList,
                     R.layout.homepage_layout_functionbutton, new String[] {"FunctionalModule","ButtonName"}, new int[] {R.id.TextView_functionbutton,R.id.TextView_functionbuttonname});
             mfunctionButton.setAdapter(mAdapter);
@@ -264,26 +259,6 @@ public class ModelHomePage extends Fragment{
         lineRelativeLayoutLp.height = height / 11;
         line.setLayoutParams(lineRelativeLayoutLp);
         return;
-    }
-
-    /**
-     * 将GridView改成单行横向布局
-     */
-    private void changeGridView(int size,GridView mfunctionButton) {
-        // item宽度
-        int itemWidth = DensityUtil.dip2px(mMainContext, 50);
-        // item之间的间隔
-        int itemPaddingH = DensityUtil.dip2px(mMainContext, 15);
-        // 计算GridView宽度
-        int gridviewWidth = size * (itemWidth + itemPaddingH);
-
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                gridviewWidth, LinearLayout.LayoutParams.MATCH_PARENT);
-        mfunctionButton.setLayoutParams(params);
-        mfunctionButton.setColumnWidth(itemWidth);
-        mfunctionButton.setHorizontalSpacing(itemPaddingH);
-        mfunctionButton.setStretchMode(GridView.NO_STRETCH);
-        mfunctionButton.setNumColumns(size);
     }
 
     /**
