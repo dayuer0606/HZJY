@@ -72,7 +72,7 @@
             android:layout_toRightOf="@id/courseTeacherIcon"
             android:layout_marginRight="@dimen/dp_13"
             android:gravity="left"
-            android:text="hahaha"
+            android:text=""
             android:textColor="#333333"
             android:layout_alignTop="@id/courseTeacherIcon"
             android:textSize="@dimen/textsize12" />

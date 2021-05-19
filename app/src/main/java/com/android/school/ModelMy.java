@@ -1673,6 +1673,9 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                         time = String.valueOf(map.get("time"));
                         modelmy_records_class_start.setText("开始做题");
                         modelmy_records_class_goon.setText("继续做题");
+                        if (name.equals("null")) {
+                            name = "临时试卷";
+                        }
                     } else {
                         name = String.valueOf(map.get("course_name"));
                         time = String.valueOf(map.get("create_time"));
@@ -2069,6 +2072,23 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                         continue;
                     }
                     View view = LayoutInflater.from(mMainContext).inflate(R.layout.model_my_myclass1, null);
+                    //教师url
+                    ControllerCustomRoundAngleImageView courseTeacherIcon = view.findViewById(R.id.courseTeacherIcon);
+                    Glide.with(mMainContext).load(courseListBean.head).listener(new RequestListener<Drawable>() {
+                        @Override
+                        public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                            Log.d("Wain", "加载失败 errorMsg:" + (e != null ? e.getMessage() : "null"));
+                            return false;
+                        }
+
+                        @Override
+                        public boolean onResourceReady(final Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                            Log.d("Wain", "成功  Drawable Name:" + resource.getClass().getCanonicalName());
+                            return false;
+                        }
+                    }).error(mMainContext.getResources().getDrawable(R.drawable.image_teachersdefault)).into(courseTeacherIcon);
+                    TextView courseTeacherName = view.findViewById(R.id.courseTeacherName);
+                    courseTeacherName.setText(courseListBean.true_name);
                     //课程名称
                     TextView modelmy_myclass1_classname = view.findViewById(R.id.modelmy_myclass1_classname);
                     modelmy_myclass1_classname.setText(courseListBean.course_name);
@@ -6743,6 +6763,8 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                 private int buying_base_number;
                 private double price;
                 private double special_price;
+                private String head; //教师头像
+                private String true_name;  //教师名称
 
                 public String getCover() {
                     return cover;
