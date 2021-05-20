@@ -236,7 +236,6 @@ public interface ModelObservableInterface {
     @Headers("Content-Type:application/json;charset=UTF-8")
     Call<ModelNews.ModelNewsBean> queryCoursePackageModelNews(@Body RequestBody body);
 
-
     //新闻详情
     @POST("app/newsAndInformation/queryNewsAndInformationDetails")
     @Headers("Content-Type:application/json;charset=UTF-8")
@@ -301,7 +300,6 @@ public interface ModelObservableInterface {
     @POST("app/homePage/queryCoursePackageInfoByName")
     @Headers("Content-Type:application/json;charset=UTF-8")
     Call<ClassPacket.CoursePacketBean> queryAllCoursePackageSelectName(@Body RequestBody body);
-
 
     //课程包详情
     @POST("app/homePage/coursePackageDetail")

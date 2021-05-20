@@ -10,14 +10,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.aliyun.vodplayerview.utils.DensityUtil;
 import com.android.school.classpacket.ClassPacketDetails;
 import com.android.school.info.CourseInfo;
 import com.android.school.info.CoursePacketInfo;
@@ -65,12 +63,7 @@ public class ModelHomePage extends Fragment{
 
     private ListAdapter mAdapter;
 
-    private class FunctionButtonInfo{
-        String mFunctionalModule; // 1：课程包 2：公开课 3：题库 4：问答 5：课程表 6：新闻资讯 7：课程 8：我的
-        String mButtonName; //按钮名称
-    }
     //要显示的页面
-//    private int FragmentPage;
     public  static  Fragment newInstance(MainActivity content, String context, int iFragmentPage){
         mMainContext = content;
         ModelHomePage myFragment = new ModelHomePage();
@@ -300,6 +293,9 @@ public class ModelHomePage extends Fragment{
             return FunctionButtonInfoList;
         }
         for (int i = 0; i < mHomePageDataBean.allHomeNavigationAndbBottomMenu.size(); i ++) {
+            if (FunctionButtonInfoList.size() == 8){
+                break;
+            }
             HomePageBean.HomePageAllHomeNavigationAndbBottomMenuBean homePageAllHomeNavigationAndbBottomMenuBean = mHomePageDataBean.allHomeNavigationAndbBottomMenu.get(i);
             if (homePageAllHomeNavigationAndbBottomMenuBean == null){
                 continue;
