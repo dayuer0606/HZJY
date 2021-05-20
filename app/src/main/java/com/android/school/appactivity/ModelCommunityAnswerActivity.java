@@ -377,6 +377,7 @@ public class ModelCommunityAnswerActivity extends FragmentActivity {
     }
     //添加----社区问答的列表
     public void CommunityAnswerAddInit(boolean m_isInit){
+        mPage = "add";
         HideAllLayout();
         LinearLayout communityanswer_layout_main = findViewById(R.id.communityanswer_layout_main);
         if (mCommunityAnswerAddView == null) {
@@ -681,6 +682,7 @@ public class ModelCommunityAnswerActivity extends FragmentActivity {
     }
     //选择标签----选择标签
     private void CommunityAnswerChooseSign(){
+        mPage = "ChooseSign";
         HideAllLayout();
         LinearLayout communityanswer_layout_main = findViewById(R.id.communityanswer_layout_main);
         if (mCommunityAnswerChooseSignView == null) {
@@ -735,6 +737,7 @@ public class ModelCommunityAnswerActivity extends FragmentActivity {
                 CommunityAnswerMainShow();
             });
         }
+        mPage = "search";
         communityanswer_layout_main.addView(mCommunityAnswerSelectView);
     }
     //社区子条目详情
@@ -836,9 +839,32 @@ public class ModelCommunityAnswerActivity extends FragmentActivity {
             ActivityManager.getInstance().finish(COMMUNITY_ANSWER_ACTIVITY_ID);
         } else if (mPage.equals("details")) {
             CommunityAnswerMainShow();
+        } else if (mPage.equals("add")) {
+            CommunityAnswerAddReturn();
+        } else if (mPage.equals("ChooseSign")) {
+            CommunityAnswerAddInit(false);
         }
     }
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK ) {
+            if (mPage.equals("main")) {
+                ActivityManager.getInstance().finish(COMMUNITY_ANSWER_ACTIVITY_ID);
+                return true;
+            } else if (mPage.equals("details") || mPage.equals("search")) {
+                CommunityAnswerMainShow();
+                return true;
+            } else if (mPage.equals("add")) {
+                CommunityAnswerAddReturn();
+                return true;
+            } else if (mPage.equals("ChooseSign")) {
+                CommunityAnswerAddInit(false);
+                return true;
+            }
+        }
+        return super.onKeyDown(keyCode, event);
+    }
     public void onCommunityAnswerMainSearch(View view) {
         CommunityAnswerSelectShow();
     }

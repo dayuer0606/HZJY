@@ -1900,42 +1900,6 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
         startActivity(intent);
     }
 
-    //跳转社区问答-搜索界面
-    public void Page_onCommunityAnswerSearch(){
-        mPage = "问答搜索";
-        mBeforePage = "社区问答";
-    }
-
-    //社区问答-返回
-    public void onClickCommunityAnswerReturn(View view) {
-        if (mState.equals("发布问答")){
-            Toast.makeText(this,"正在发布问题，请稍后!",Toast.LENGTH_LONG).show();
-            return ;
-        }
-        if (mPage.equals("社区问答") && mBeforePage.equals("首页")) { //如果当前界面是社区问答，点击返回按钮，应该返回到首页
-            Page_HomePage();
-            mBottomNavigationView.setVisibility(View.VISIBLE);
-        } else if (mPage.equals("问答搜索") && mBeforePage.equals("社区问答")) { //如果当前界面是问答搜索，点击返回按钮，应该返回到社区问答
-            Page_CommunityAnswer();
-        }
-//        else if (mPage.equals("添加问答") && mBeforePage.equals("社区问答")) { //如果当前界面是添加问答，点击返回按钮，应该返回到社区问答
-//            mPage = "社区问答";
-//            mBeforePage = "首页";
-//            if (mModelCommunityAnswer != null) {
-//                ((ModelCommunityAnswer) mModelCommunityAnswer).CommunityAnswerAddReturn();
-//            }
-//        } else if (mPage.equals("选择标签") && mBeforePage.equals("添加问答")) { //如果当前界面是选择标签，点击返回按钮，应该返回到添加问答
-//            if (mModelCommunityAnswer != null) {
-//                ((ModelCommunityAnswer) mModelCommunityAnswer).CommunityAnswerAddInit(false);
-//            }
-//            mPage = "添加问答";
-//            mBeforePage = "社区问答";
-//        }
-        else if (mPage.equals("问答详情") && mBeforePage.equals("社区问答")) { //如果当前界面是问答详情，点击返回按钮，应该返回到社区问答
-            Page_CommunityAnswer();
-        }
-    }
-
     //跳转课程表
     public void Page_ClassCheduleCard(){
         mBottomNavigationView.setVisibility(View.VISIBLE);
