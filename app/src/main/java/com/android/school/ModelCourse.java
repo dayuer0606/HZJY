@@ -171,54 +171,69 @@ public class ModelCourse extends Fragment implements ModelCourseCover.ModelCours
     }
 
     public void SearchAction(String string) {
-        System.out.println("我收到了" + string); //只按照关键字搜索，其他查询条件全部重置
-        mCourseSelectTemp = "-1";
-        mCourseSelect = "-1";
-        //二级搜索
-        mCourseSelectTemp1 = "-1";
-        mCourseSelect1 = "-1";
-        //排序方式搜索
-        mCourseSelectSortTemp = "-1";
-        mCourseSelectSort = "-1";
-        //课程类型搜索
-        mCourseSelectCourseTypeTemp = "-1";
-        mCourseSelectCourseType = "-1";
-        String project_id = "";
-        String subject_id = "";
-        String hour = "1";
-        String fever = "1";
-        String course_type = "";  //全部默认为空
-        if (!mCourseSelect.equals("-1")){
-            project_id = mCourseSelect;
-        }
-        if (!mCourseSelect1.equals("-1")){
-            subject_id = mCourseSelect1;
-        }
-        if (mCourseSelectSort.equals("0")){
-            hour = "0";
-        } else if (mCourseSelectSort.equals("1")){
-            fever = "0";
-        }
-        if (mCourseSelectCourseType.equals("0")){
-            course_type = "直播";
-        } else if (mCourseSelectCourseType.equals("1")){
-            course_type = "录播";
-        } else if (mCourseSelectCourseType.equals("2")){
-            course_type = "直播,录播";
-        }
-        if (mview == null) {
-            return;
-        }
-        HideAllLayout();
-        RelativeLayout course_mainLayout = mview.findViewById(R.id.course_mainLayout);
-        LinearLayout.LayoutParams LP = (LinearLayout.LayoutParams) course_mainLayout.getLayoutParams();
-        LP.width = LinearLayout.LayoutParams.MATCH_PARENT;
-        LP.height = LinearLayout.LayoutParams.MATCH_PARENT;
-        course_mainLayout.setLayoutParams(LP);
-        course_mainLayout.setVisibility(View.VISIBLE);
-        ScrollView course_block_menu_scroll_view = mview.findViewById(R.id.course_block_menu_scroll_view);
-        course_block_menu_scroll_view.scrollTo(0, 0);
-        getCourseDatas(string,project_id,subject_id,hour,fever,course_type);
+        new Thread() {
+            @Override
+            public void run() {
+                while (seque.equals("")) {
+                    Log.e("ModelCourse", "SearchAction: 界面未初始化完成");
+                    try {
+                        sleep(5);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+                System.out.println("我收到了" + string); //只按照关键字搜索，其他查询条件全部重置
+                if (mview == null) {
+                    return;
+                }
+                mview.post(() -> {
+                    HideAllLayout();
+                    RelativeLayout course_mainLayout = mview.findViewById(R.id.course_mainLayout);
+                    LinearLayout.LayoutParams LP = (LinearLayout.LayoutParams) course_mainLayout.getLayoutParams();
+                    LP.width = LinearLayout.LayoutParams.MATCH_PARENT;
+                    LP.height = LinearLayout.LayoutParams.MATCH_PARENT;
+                    course_mainLayout.setLayoutParams(LP);
+                    course_mainLayout.setVisibility(View.VISIBLE);
+                    ScrollView course_block_menu_scroll_view = mview.findViewById(R.id.course_block_menu_scroll_view);
+                    course_block_menu_scroll_view.scrollTo(0, 0);
+                    mCourseSelectTemp = "-1";
+                    mCourseSelect = "-1";
+                    //二级搜索
+                    mCourseSelectTemp1 = "-1";
+                    mCourseSelect1 = "-1";
+                    //排序方式搜索
+                    mCourseSelectSortTemp = "-1";
+                    mCourseSelectSort = "-1";
+                    //课程类型搜索
+                    mCourseSelectCourseTypeTemp = "-1";
+                    mCourseSelectCourseType = "-1";
+                    String project_id = "";
+                    String subject_id = "";
+                    String hour = "1";
+                    String fever = "1";
+                    String course_type = "";  //全部默认为空
+                    if (!mCourseSelect.equals("-1")){
+                        project_id = mCourseSelect;
+                    }
+                    if (!mCourseSelect1.equals("-1")){
+                        subject_id = mCourseSelect1;
+                    }
+                    if (mCourseSelectSort.equals("0")){
+                        hour = "0";
+                    } else if (mCourseSelectSort.equals("1")){
+                        fever = "0";
+                    }
+                    if (mCourseSelectCourseType.equals("0")){
+                        course_type = "直播";
+                    } else if (mCourseSelectCourseType.equals("1")){
+                        course_type = "录播";
+                    } else if (mCourseSelectCourseType.equals("2")){
+                        course_type = "直播,录播";
+                    }
+                    getCourseDatas(string,project_id,subject_id,hour,fever,course_type);
+                });
+            }
+        }.start();
     }
 
     //课程主界面展示
