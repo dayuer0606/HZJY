@@ -699,6 +699,8 @@ public class ModelCommunityAnswerActivity extends FragmentActivity {
                 //点击发布问题
                 if (selPhotosPath.size() == 0 ){ //如果没有图片直接发送内容
                     mIsPublish = true;
+                    //发表标签的网络请求
+                    getCommunityissue();
                     //不要图片   加载网络请求
                 } else if (selPhotosPath != null) {//如果有图片先上传图片在加载网络请求
                     upLoadAnswerImage(name,context);
@@ -842,17 +844,6 @@ public class ModelCommunityAnswerActivity extends FragmentActivity {
     }
 
     /**
-   * 添加新笔记时弹出的popWin关闭的事件，主要是为了将背景透明度改回来
-   *
-   */
-    class popupDismissListener implements PopupWindow.OnDismissListener{
-        @Override
-        public void onDismiss() {
-            backgroundAlpha(1f);
-        }
-    }
-
-    /**
    * 设置添加屏幕的背景透明度
    * @param bgAlpha
    */
@@ -866,16 +857,6 @@ public class ModelCommunityAnswerActivity extends FragmentActivity {
     public static int getScreenHeight() {
         DisplayMetrics dm = mThis.getResources().getDisplayMetrics();
         return dm.heightPixels;
-    }
-
-    //获取状态栏高度
-    private int getStateBar(){
-        int result = 0;
-        int resourceId = this.getResources().getIdentifier("status_bar_height", "dimen", "android");
-        if (resourceId > 0) {
-            result = this.getResources().getDimensionPixelSize(resourceId);
-        }
-        return result;
     }
 
     //社区问答—发布
