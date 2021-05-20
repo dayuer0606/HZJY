@@ -2947,16 +2947,16 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
                 }
                 Bundle extras = data.getExtras();
                 String s = "";
-                if (Build.MANUFACTURER.contains("Xiaomi")){
+//                if (Build.MANUFACTURER.contains("Xiaomi")){
                     if (uritempFile != null){
                         s = uritempFile.getPath();
                     }
-                } else {
-                    if (extras != null){
-                        Bitmap photo = extras.getParcelable("data");
-                        Drawable drawable = new BitmapDrawable(null, photo);
-                    }
-                }
+//                } else {
+//                    if (extras != null){
+//                        Bitmap photo = extras.getParcelable("data");
+//                        Drawable drawable = new BitmapDrawable(null, photo);
+//                    }
+//                }
                 if (s.equals("")){
                     s = picPath;
                 }
