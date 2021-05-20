@@ -76,6 +76,7 @@
         android:layout_height="@dimen/dp1"
         android:layout_below="@id/sign_list"
         android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="@dimen/dp5"
         android:background="#e5e5e5" />
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
