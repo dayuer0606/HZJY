@@ -21,17 +21,6 @@
             android:textColor="#666666"
             android:textSize="19sp" />
 
-
-        <!--        <TextView-->
-        <!--            android:id="@+id/dialog_content"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:text="确定删除所选内容吗？"-->
-        <!--            android:gravity="center"-->
-        <!--            android:layout_below="@+id/tip"-->
-        <!--            android:layout_marginTop="@dimen/dp20"-->
-        <!--            android:textColor="#999999"-->
-        <!--            android:textSize="@dimen/textsize17" />-->
         <WebView
             android:id="@+id/dialog_content"
             android:layout_width="match_parent"

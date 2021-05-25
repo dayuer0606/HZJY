@@ -44,7 +44,9 @@ public class ControlGuideActivity extends Activity implements ViewPager.OnPageCh
         mViewPager.setPageTransformer(true,new ModelDepthPageTransformer());
         mButton = findViewById(R.id.guide_start);
         mButton.setOnClickListener(view->{
-            startActivity(new Intent(ControlGuideActivity.this,MainActivity.class));
+            Intent intent = new Intent(ControlGuideActivity.this,MainActivity.class);
+            intent.putExtra("IsShowPrivate","1");
+            startActivity(intent);
             finish();
         });
     }

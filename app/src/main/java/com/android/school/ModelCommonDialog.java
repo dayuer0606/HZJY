@@ -1,11 +1,18 @@
 package com.android.school;
 
+import android.app.ActionBar;
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 /**
  * Created by dayuer on 19/7/2.
@@ -26,6 +33,10 @@ public class ModelCommonDialog extends Dialog {
      * 显示的消息
      */
     private TextView messageTv ;
+
+    private WebView dialog_content;
+
+    private boolean isWebView = false;
 
     /**
      * 确认和取消按钮
@@ -95,8 +106,37 @@ public class ModelCommonDialog extends Dialog {
         }else {
             titleTv.setVisibility(View.GONE);
         }
-        if (!TextUtils.isEmpty(message)) {
-            messageTv.setText(message);
+        if (isWebView) {
+            LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) messageTv.getLayoutParams();
+            layoutParams.height = 0;
+            messageTv.setLayoutParams(layoutParams);
+            layoutParams = (LinearLayout.LayoutParams) dialog_content.getLayoutParams();
+            layoutParams.height = (int) getContext().getResources().getDimension(R.dimen.dp_300);
+            dialog_content.setLayoutParams(layoutParams);
+            if (!TextUtils.isEmpty(message)) {
+                try {
+                    dialog_content.getSettings().setJavaScriptEnabled(true);
+                    dialog_content.getSettings().setUseWideViewPort(true);
+                    dialog_content.getSettings().setAllowFileAccessFromFileURLs(true);
+                    dialog_content.setWebViewClient(new WebViewClient() {
+                        @Override
+                        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                            view.loadUrl(url);
+                            return true;
+                        }
+                    });
+                    dialog_content.loadUrl(message);
+                } catch (Exception e) {
+                    Log.e("TAG", "refreshView: " + e.getMessage());
+                }
+            }
+        } else {
+            LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) dialog_content.getLayoutParams();
+            layoutParams.height = 0;
+            dialog_content.setLayoutParams(layoutParams);
+            if (!TextUtils.isEmpty(message)) {
+                messageTv.setText(message);
+            }
         }
         //如果设置按钮的文字
         if (!TextUtils.isEmpty(positive)) {
@@ -143,6 +183,7 @@ public class ModelCommonDialog extends Dialog {
         titleTv = findViewById(R.id.title);
         messageTv = findViewById(R.id.message);
 //        imageIv = (ImageView) findViewById(R.id.image);
+        dialog_content = findViewById(R.id.dialog_content);
         columnLineView = findViewById(R.id.column_line);
     }
 
@@ -170,10 +211,16 @@ public class ModelCommonDialog extends Dialog {
     }
 
     public ModelCommonDialog setMessage(String message) {
+        isWebView = false;
         this.message = message;
         return this ;
     }
 
+    public ModelCommonDialog setWebViewContent(String message) {
+        isWebView = true;
+        this.message = message;
+        return this ;
+    }
     public String getTitle() {
         return title;
     }

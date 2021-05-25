@@ -168,7 +168,6 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
     public String mIpadress = PublicCommonUtil.ipadress;
     private Map<String, String> mIpType = new HashMap<>();
     public String mStuId = "";
-
     @Override
     public String getUrl() {
         return mIpadress;
@@ -387,6 +386,25 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
         getAndroidVersion(this);//查询是否为最新版本,若不是最新版本弹出对话框
 //        //初始化播放器
 //        initAliyunPlayerView();
+        String IsShowPrivate = getIntent().getStringExtra("IsShowPrivate");
+        if (IsShowPrivate != null) {
+            final ModelCommonDialog dialog = new ModelCommonDialog(this);
+            dialog.setWebViewContent("http://check.shengsen99.com/yinsi/yinsi.html")
+//                .setImageResId(R.mipmap.ic_launcher)
+                    .setTitle("隐私声明")
+                    .setSingle(false).setOnClickBottomListener(new ModelCommonDialog.OnClickBottomListener() {
+                @Override
+                public void onPositiveClick() {
+                    //确定按钮，清空本地缓存
+                    dialog.dismiss();
+                }
+
+                @Override
+                public void onNegtiveClick() {
+                    dialog.dismiss();
+                }
+            }).show();
+        }
     }
 
     @Override
