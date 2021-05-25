@@ -70,6 +70,7 @@ public class CommunityBean {
         private Integer state;
         private Integer visit_num;
         private Integer huida_num;
+        private Integer collection_status;
         private List<DataBean> huida;
 
         public Integer getHuida_num() {
@@ -174,6 +175,14 @@ public class CommunityBean {
 
         public List<DataBean> getHuida() {
             return huida;
+        }
+
+        public Integer getCollection_status() {
+            return collection_status;
+        }
+
+        public void setCollection_status(Integer collection_status) {
+            this.collection_status = collection_status;
         }
     }
     public static class DataBean {

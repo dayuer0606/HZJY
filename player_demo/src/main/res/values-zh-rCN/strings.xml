@@ -63,7 +63,7 @@
 
     <string name="alivc_checkbox_all_select">全选</string>
     <string name="alivc_download_delete">删除</string>
-    <string name="alivc_download_edit">编辑</string>
+    <string name="alivc_download_edit">管理</string>
 
     <string name="prepare_download_item">准备可下载项</string>
     <string name="add_to_download">添加下载</string>

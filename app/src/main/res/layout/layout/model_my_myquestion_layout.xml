@@ -18,7 +18,7 @@
         android:layout_marginLeft="@dimen/dp13"
         android:layout_marginRight="@dimen/dp13"
         android:layout_marginTop="@dimen/dp15"
-        android:text="哈哈哈哈哈哈哈哈哈哈哈哈哈哈"
+        android:text=""
         android:textColor="#ff000000"
         android:textSize="@dimen/textsize16"
         android:layout_toRightOf="@id/model_my_myquestion_icon"

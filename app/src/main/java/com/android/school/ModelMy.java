@@ -546,9 +546,12 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
     }
 
     //展示我的收藏界面-问答
-    private View MyCollectShow_MyAnswer(LinearLayout modelmy_mycollect_main_content,QueryMyCollectionListBean.DataBean.ListBean listBean) {
+    private View MyCollectShow_MyAnswer(LinearLayout modelmy_mycollect_main_content,Map<String,Object> map) {
         View view = LayoutInflater.from(mMainContext).inflate(R.layout.model_my_myquestion_layout, null);
         modelmy_mycollect_main_content.addView(view);
+        TextView model_my_myquestion_content = view.findViewById(R.id.model_my_myquestion_content);
+        model_my_myquestion_content.setText(map.get("title").toString());
+        model_my_myquestion_content.setHint(map.get("questions_id") + "");
         //布局控件的线
         View model_my_myquestion_line = view.findViewById(R.id.model_my_myquestion_line);
         return model_my_myquestion_line;
@@ -2996,79 +2999,73 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
         paramsMap.put("pageNum", mMyCollectCurrentPage);//第几页
         paramsMap.put("pageSize",mMyCollectPageCount);//每页几条
         paramsMap.put("stu_id", Integer.valueOf(mMainContext.mStuId));//学生id
-        HashMap<String, String> paramsMap1 = new HashMap<>();
-        paramsMap1.put("type", "课程");
         String strEntity = gson.toJson(paramsMap);
-        String strEntity1 = gson.toJson(paramsMap1);
-        strEntity1 = strEntity1.replace("{","");
-        strEntity = strEntity.replace("}","," + strEntity1);
         RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json;charset=UTF-8"), strEntity);
-        Call<QueryMyCollectionListBean> call = modelObservableInterface.queryMyCollectionList(body);
-        call.enqueue(new Callback<QueryMyCollectionListBean>() {
+        Call<com.android.school.ModelObservableInterface.BaseBean> call = modelObservableInterface.queryMyCollectionQuestion(body);
+        call.enqueue(new Callback<com.android.school.ModelObservableInterface.BaseBean>() {
             @Override
-            public void onResponse(Call<QueryMyCollectionListBean> call, Response<QueryMyCollectionListBean> response) {
-                QueryMyCollectionListBean listBean = response.body();
-                if (listBean == null){
-                    if (mSmart_model_my_mycollect != null){
+            public void onResponse(Call<com.android.school.ModelObservableInterface.BaseBean> call, Response<com.android.school.ModelObservableInterface.BaseBean> response) {
+                ModelObservableInterface.BaseBean baseBean = response.body();
+                if (baseBean == null){
+                    if (mSmart_model_my_mycollect != null) {
                         mSmart_model_my_mycollect.finishRefresh();
                     }
                     LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
-                int code = listBean.getCode();
+                int code = baseBean.getErrorCode();
                 if (!HeaderInterceptor.IsErrorCode(code,"")){
+                    if (mSmart_model_my_mycollect != null) {
+                        mSmart_model_my_mycollect.finishRefresh();
+                    }
+                    LoadingDialog.getInstance(mMainContext).dismiss();
+                    return;
+                }
+                if (code != 200 ){
+                    if (mSmart_model_my_mycollect != null) {
+                        mSmart_model_my_mycollect.finishRefresh();
+                    }
+                    LoadingDialog.getInstance(mMainContext).dismiss();
+                    Toast.makeText(mMainContext,"获取我的收藏数据失败",Toast.LENGTH_LONG).show();
+                    return;
+                }
+                Map<String,Object> dataBean = baseBean.getData();
+                if (dataBean == null){
+                    if (mSmart_model_my_mycollect != null) {
+                        mSmart_model_my_mycollect.finishRefresh();
+                    }
+                    LoadingDialog.getInstance(mMainContext).dismiss();
+                    return;
+                }
+                if (dataBean.get("total") != null) {
+                    mMyCollectSum = (int) Double.parseDouble(String.valueOf(dataBean.get("total")));
+                }
+                List<Object> listBeans = (List<Object>) dataBean.get("list");
+                if (listBeans == null){
                     if (mSmart_model_my_mycollect != null){
                         mSmart_model_my_mycollect.finishRefresh();
                     }
                     LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
-                if (code == 200){
-                    QueryMyCollectionListBean.DataBean data = listBean.getData();
-                    if (data != null){
-                        mMyCollectSum = data.getTotal();
-                        List<QueryMyCollectionListBean.DataBean.ListBean> list = data.getList();
-                        if (list != null){
-                            for (int i = 0; i < list.size(); i ++){
-                                QueryMyCollectionListBean.DataBean.ListBean listBean1 = list.get(i);
-                                if (listBean1 == null){
-                                    if (mSmart_model_my_mycollect != null){
-                                        mSmart_model_my_mycollect.finishRefresh();
-                                    }
-                                    continue;
-                                }
-                                MyCollectShow_MyAnswer(modelmy_mycollect_main_content,listBean1);
-                            }
-                        } else {
-                            if (mSmart_model_my_mycollect != null){
-                                mSmart_model_my_mycollect.finishRefresh();
-                            }
-                            LoadingDialog.getInstance(mMainContext).dismiss();
-                            return;
-                        }
-                    } else {
+                for (int i = 0; i < listBeans.size(); i ++){
+                    Map<String,Object> map = (Map<String, Object>) listBeans.get(i);
+                    if (map == null){
                         if (mSmart_model_my_mycollect != null){
                             mSmart_model_my_mycollect.finishRefresh();
                         }
-                        LoadingDialog.getInstance(mMainContext).dismiss();
-                        return;
+                        continue;
                     }
-                    if (mSmart_model_my_mycollect != null){
-                        mSmart_model_my_mycollect.finishRefresh();
-                    }
-                    LoadingDialog.getInstance(mMainContext).dismiss();
-                }else {
-                    if (mSmart_model_my_mycollect != null){
-                        mSmart_model_my_mycollect.finishRefresh();
-                    }
-                    Toast.makeText(mMainContext,"获取我的收藏数据失败",Toast.LENGTH_LONG).show();
-                    LoadingDialog.getInstance(mMainContext).dismiss();
-                    return;
+                    MyCollectShow_MyAnswer(modelmy_mycollect_main_content,map);
                 }
+                if (mSmart_model_my_mycollect != null){
+                    mSmart_model_my_mycollect.finishRefresh();
+                }
+                LoadingDialog.getInstance(mMainContext).dismiss();
             }
 
             @Override
-            public void onFailure(Call<QueryMyCollectionListBean> call, Throwable t) {
+            public void onFailure(Call<com.android.school.ModelObservableInterface.BaseBean> call, Throwable t) {
                 if (mSmart_model_my_mycollect != null){
                     mSmart_model_my_mycollect.finishRefresh();
                 }
@@ -3101,88 +3098,82 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
         paramsMap.put("pageNum", mMyCollectCurrentPage);//第几页
         paramsMap.put("pageSize",mMyCollectPageCount);//每页几条
         paramsMap.put("stu_id", Integer.valueOf(mMainContext.mStuId));//学生id
-        HashMap<String, String> paramsMap1 = new HashMap<>();
-        paramsMap1.put("type", "课程");
         String strEntity = gson.toJson(paramsMap);
-        String strEntity1 = gson.toJson(paramsMap1);
-        strEntity1 = strEntity1.replace("{","");
-        strEntity = strEntity.replace("}","," + strEntity1);
         RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json;charset=UTF-8"), strEntity);
         //queryMyCollectionList
-        modelObservableInterface.queryMyCollectionList(body)
-                .enqueue(new Callback<QueryMyCollectionListBean>() {
-                    @Override
-                    public void onResponse(Call<QueryMyCollectionListBean> call, Response<QueryMyCollectionListBean> response) {
-                        QueryMyCollectionListBean listBean = response.body();
-                        if (listBean == null){
-                            if (mSmart_model_my_mycollect != null){
-                                mSmart_model_my_mycollect.finishLoadMore();
-                            }
-                            LoadingDialog.getInstance(mMainContext).dismiss();
-                            return;
-                        }
-                        int code = listBean.getCode();
-                        if (!HeaderInterceptor.IsErrorCode(code,"")){
-                            if (mSmart_model_my_mycollect != null){
-                                mSmart_model_my_mycollect.finishLoadMore();
-                            }
-                            LoadingDialog.getInstance(mMainContext).dismiss();
-                            return;
-                        }
-                        if (code == 200){
-                            QueryMyCollectionListBean.DataBean data = listBean.getData();
-                            if (data != null){
-                                mMyCollectSum = data.getTotal();
-                                List<QueryMyCollectionListBean.DataBean.ListBean> list = data.getList();
-                                if (list != null){
-                                    for (int i = 0; i < list.size(); i ++){
-                                        QueryMyCollectionListBean.DataBean.ListBean listBean1 = list.get(i);
-                                        if (listBean1 == null){
-                                            if (mSmart_model_my_mycollect != null){
-                                                mSmart_model_my_mycollect.finishLoadMore();
-                                            }
-                                            continue;
-                                        }
-                                        MyCollectShow_MyAnswer(modelmy_mycollect_main_content,listBean1);
-                                    }
-                                    if (mSmart_model_my_mycollect != null){
-                                        mSmart_model_my_mycollect.finishRefresh();
-                                    }
-                                    LoadingDialog.getInstance(mMainContext).dismiss();
-                                } else {
-                                    if (mSmart_model_my_mycollect != null){
-                                        mSmart_model_my_mycollect.finishLoadMore();
-                                    }
-                                    LoadingDialog.getInstance(mMainContext).dismiss();
-                                    return;
-                                }
-                            } else {
-                                if (mSmart_model_my_mycollect != null){
-                                    mSmart_model_my_mycollect.finishLoadMore();
-                                }
-                                LoadingDialog.getInstance(mMainContext).dismiss();
-                                return;
-                            }
-                        } else {
-                            if (mSmart_model_my_mycollect != null){
-                                mSmart_model_my_mycollect.finishLoadMore();
-                            }
-                            Toast.makeText(mMainContext,"获取我的收藏数据失败",Toast.LENGTH_LONG).show();
-                            LoadingDialog.getInstance(mMainContext).dismiss();
-                            return;
-                        }
+        Call<com.android.school.ModelObservableInterface.BaseBean> call = modelObservableInterface.queryMyCollectionQuestion(body);
+        call.enqueue(new Callback<com.android.school.ModelObservableInterface.BaseBean>() {
+            @Override
+            public void onResponse(Call<com.android.school.ModelObservableInterface.BaseBean> call, Response<com.android.school.ModelObservableInterface.BaseBean> response) {
+                ModelObservableInterface.BaseBean baseBean = response.body();
+                if (baseBean == null){
+                    if (mSmart_model_my_mycollect != null) {
+                        mSmart_model_my_mycollect.finishRefresh();
                     }
-
-                    @Override
-                    public void onFailure(Call<QueryMyCollectionListBean> call, Throwable t) {
+                    LoadingDialog.getInstance(mMainContext).dismiss();
+                    return;
+                }
+                int code = baseBean.getErrorCode();
+                if (!HeaderInterceptor.IsErrorCode(code,"")){
+                    if (mSmart_model_my_mycollect != null) {
+                        mSmart_model_my_mycollect.finishRefresh();
+                    }
+                    LoadingDialog.getInstance(mMainContext).dismiss();
+                    return;
+                }
+                if (code != 200 ){
+                    if (mSmart_model_my_mycollect != null) {
+                        mSmart_model_my_mycollect.finishRefresh();
+                    }
+                    LoadingDialog.getInstance(mMainContext).dismiss();
+                    Toast.makeText(mMainContext,"获取我的收藏数据失败",Toast.LENGTH_LONG).show();
+                    return;
+                }
+                Map<String,Object> dataBean = baseBean.getData();
+                if (dataBean == null){
+                    if (mSmart_model_my_mycollect != null) {
+                        mSmart_model_my_mycollect.finishRefresh();
+                    }
+                    LoadingDialog.getInstance(mMainContext).dismiss();
+                    return;
+                }
+                if (dataBean.get("total") != null) {
+                    mMyCollectSum = (int) Double.parseDouble(String.valueOf(dataBean.get("total")));
+                }
+                List<Object> listBeans = (List<Object>) dataBean.get("list");
+                if (listBeans == null){
+                    if (mSmart_model_my_mycollect != null){
+                        mSmart_model_my_mycollect.finishRefresh();
+                    }
+                    LoadingDialog.getInstance(mMainContext).dismiss();
+                    return;
+                }
+                for (int i = 0; i < listBeans.size(); i ++){
+                    Map<String,Object> map = (Map<String, Object>) listBeans.get(i);
+                    if (map == null){
                         if (mSmart_model_my_mycollect != null){
-                            mSmart_model_my_mycollect.finishLoadMore();
+                            mSmart_model_my_mycollect.finishRefresh();
                         }
-                        Log.e(TAG, "onFailure: "+t.getMessage()+"错误是" );
-                        Toast.makeText(mMainContext,"获取我的收藏数据失败",Toast.LENGTH_LONG).show();
-                        LoadingDialog.getInstance(mMainContext).dismiss();
+                        continue;
                     }
-                });
+                    MyCollectShow_MyAnswer(modelmy_mycollect_main_content,map);
+                }
+                if (mSmart_model_my_mycollect != null){
+                    mSmart_model_my_mycollect.finishRefresh();
+                }
+                LoadingDialog.getInstance(mMainContext).dismiss();
+            }
+
+            @Override
+            public void onFailure(Call<com.android.school.ModelObservableInterface.BaseBean> call, Throwable t) {
+                if (mSmart_model_my_mycollect != null){
+                    mSmart_model_my_mycollect.finishRefresh();
+                }
+                Log.e(TAG, "onFailure: "+t.getMessage()+"错误是" );
+                Toast.makeText(mMainContext,"获取我的收藏数据失败",Toast.LENGTH_LONG).show();
+                LoadingDialog.getInstance(mMainContext).dismiss();
+            }
+        });
     }
 
     //我的消息列表--------删除

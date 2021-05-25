@@ -42,6 +42,11 @@ public interface ModelObservableInterface {
     @Headers("Content-Type:application/json;charset=UTF-8")
     Call<CommunityBean> queryAllCoursePackageCommunity(@Body RequestBody body);
 
+    //社区问答-收藏 取消收藏
+    @POST("app/user/addMyCollectionQuestion")
+    @Headers("Content-Type:application/json;charset=UTF-8")
+    Call<BaseBean> addMyCollectionQuestion(@Body RequestBody body);
+
     //社区问答-回复
     @POST("app/user/ReplyQuestion")
     @Headers("Content-Type:application/json;charset=UTF-8")
@@ -223,6 +228,11 @@ public interface ModelObservableInterface {
     @POST("app/my/queryMyCollection")
     @Headers("Content-Type:application/json;charset=UTF-8")
     Call<ModelMy.QueryMyCollectionPacketListBean> queryMyCollectionPacketList(@Body RequestBody body);
+
+    //我的收藏列表（问答）
+    @POST("app/user/queryMyCollectionQuestion")
+    @Headers("Content-Type:application/json;charset=UTF-8")
+    Call<BaseBean> queryMyCollectionQuestion(@Body RequestBody body);
 
     //新闻资讯列表
     @POST("app/newsAndInformation/queryAllNewsAndInformation")

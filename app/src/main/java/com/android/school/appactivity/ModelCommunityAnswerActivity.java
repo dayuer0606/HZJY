@@ -1296,6 +1296,17 @@ public class ModelCommunityAnswerActivity extends FragmentActivity {
                             communityanswer_child_content1.setOnClickListener(v -> {
                                 CommunityAnswerDetailsShow(listDataBean.getQuestions_id());
                             });
+                            if (listDataBean.getCollection_status() == 1) {
+                                ImageView communityanswer_child_like_icon = model_communityanswer_child_view1.findViewById(R.id.communityanswer_child_like_icon);
+                                communityanswer_child_like_icon.setBackground(getResources().getDrawable(R.drawable.button_collect_enable));
+                                TextView communityanswer_child_like = model_communityanswer_child_view1.findViewById(R.id.communityanswer_child_like);
+                                communityanswer_child_like.setTextColor(Color.RED);
+                            }
+                            //点击收藏或取消收藏
+                            RelativeLayout communityanswer_child_like_layout = model_communityanswer_child_view1.findViewById(R.id.communityanswer_child_like_layout);
+                            communityanswer_child_like_layout.setOnClickListener(v->{
+                                sendCollect(listDataBean.getQuestions_id(),listDataBean.getCollection_status());
+                            });
                         }
                         if (smart_model_communityanswer != null) {
                             smart_model_communityanswer.finishRefresh();
@@ -1641,6 +1652,18 @@ public class ModelCommunityAnswerActivity extends FragmentActivity {
                                 communityanswer_child_content1.setOnClickListener(v -> {
                                     CommunityAnswerDetailsShow(listDataBean.getQuestions_id());
                                 });
+
+                                if (listDataBean.getCollection_status() == 1) {
+                                    ImageView communityanswer_child_like_icon = model_communityanswer_child_view1.findViewById(R.id.communityanswer_child_like_icon);
+                                    communityanswer_child_like_icon.setBackground(getResources().getDrawable(R.drawable.button_collect_enable));
+                                    TextView communityanswer_child_like = model_communityanswer_child_view1.findViewById(R.id.communityanswer_child_like);
+                                    communityanswer_child_like.setTextColor(Color.RED);
+                                }
+                                //点击收藏或取消收藏
+                                RelativeLayout communityanswer_child_like_layout = model_communityanswer_child_view1.findViewById(R.id.communityanswer_child_like_layout);
+                                communityanswer_child_like_layout.setOnClickListener(v->{
+                                    sendCollect(listDataBean.getQuestions_id(),listDataBean.getCollection_status());
+                                });
                             }
                             if (smart_model_communityanswer != null) {
                                 smart_model_communityanswer.finishLoadMore();
@@ -1655,6 +1678,68 @@ public class ModelCommunityAnswerActivity extends FragmentActivity {
                         }
                         LoadingDialog.getInstance(mThis).dismiss();
                         return;
+                    }
+                });
+    }
+
+    //收藏、取消收藏
+    public void sendCollect(int questions_id,int isCollect){
+        if (mStuId.equals("")) {
+            Toast.makeText(mThis, "收藏请先登录账号", Toast.LENGTH_SHORT).show();
+            LoadingDialog.getInstance(mThis).dismiss();
+            return;
+        }
+        LoadingDialog.getInstance(mThis).show();
+        Retrofit retrofit = new Retrofit.Builder()
+                .addConverterFactory(GsonConverterFactory.create())
+                .baseUrl(mThis.mIpadress)
+                .client(ModelObservableInterface.client)
+                .build();
+        ModelObservableInterface queryMyCourseList = retrofit.create(ModelObservableInterface.class);
+        Gson gson = new Gson();
+        HashMap<String, Integer> paramsMap = new HashMap<>();
+        paramsMap.put("stu_id", Integer.valueOf(mStuId));
+        paramsMap.put("questions_id", questions_id);
+        if (isCollect == 1) {
+            isCollect = 2;
+        } else {
+            isCollect = 1;
+        }
+        paramsMap.put("collection_status", isCollect);
+        String strEntity = gson.toJson(paramsMap);
+        RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json;charset=UTF-8"), strEntity);
+        //queryMyCommunityQuerytags
+        queryMyCourseList.addMyCollectionQuestion(body)
+                .enqueue(new Callback<ModelObservableInterface.BaseBean>() {
+                    @Override
+                    public void onResponse(Call<ModelObservableInterface.BaseBean> call, Response<ModelObservableInterface.BaseBean> response) {
+                        ModelObservableInterface.BaseBean baseBean = response.body();
+                        if (baseBean == null){
+                            Toast.makeText(mThis,"收藏问题失败",Toast.LENGTH_SHORT).show();
+                            LoadingDialog.getInstance(mThis).dismiss();
+                            return;
+                        }
+                        if (!HeaderInterceptor.IsErrorCode(baseBean.getErrorCode(),baseBean.getErrorMsg())){
+                            mCustomDialog.dismiss();
+                            LoadingDialog.getInstance(mThis).dismiss();
+                            Toast.makeText(mThis,"收藏问题失败",Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                        if (baseBean.getErrorCode() != 200){
+                            Toast.makeText(mThis,"收藏问题失败",Toast.LENGTH_SHORT).show();
+                            LoadingDialog.getInstance(mThis).dismiss();
+                            return;
+                        }
+                        //收藏成功刷新界面
+                        getCommunityData();
+                        LoadingDialog.getInstance(mThis).dismiss();
+                    }
+
+                    @Override
+                    public void onFailure(Call<ModelObservableInterface.BaseBean> call, Throwable t) {
+                        Log.e(TAG, "onFailure: "+t.getMessage() );
+                        Toast.makeText(mThis,"收藏问题失败",Toast.LENGTH_SHORT).show();
+                        LoadingDialog.getInstance(mThis).dismiss();
                     }
                 });
     }
