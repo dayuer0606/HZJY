@@ -1343,51 +1343,6 @@ public class ModelSetting extends Fragment {
                     }
                 });
 
-//        final Observable<AboutUsInfoBean> data =
-//                modelObservableInterface.queryAboutUsInfo();
-//        data.observeOn(AndroidSchedulers.mainThread())
-//                .subscribeOn(Schedulers.io())
-//                .subscribe(new Observer<AboutUsInfoBean>() {
-//                    @Override
-//                    public void onSubscribe(Disposable d) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onNext(AboutUsInfoBean value) {
-//                        //网络请求数据成功
-//                        AboutUsInfoBean.AboutUsInfoDataBean aboutUsInfoDataBean = value.getData();
-//                        if (aboutUsInfoDataBean == null || mview == null){
-//                            LoadingDialog.getInstance(mMainContext).dismiss();
-//                            return;
-//                        }
-//                        if (aboutUsInfoDataBean.newversion != null) {
-//                            TextView aboutus_checknewversion_new_textview = mview.findViewById(R.id.aboutus_checknewversion_new_textview);
-//                            aboutus_checknewversion_new_textview.setText(aboutUsInfoDataBean.newversion);
-//                        }
-//                        if (aboutUsInfoDataBean.sla != null){
-//                            TextView aboutus_agreeTerms = mview.findViewById(R.id.aboutus_agreeTerms);
-//                            aboutus_agreeTerms.setText(aboutUsInfoDataBean.sla);
-//                        }
-//                        if (aboutUsInfoDataBean.privacypolicy != null){
-//                            TextView aboutus_agreeTerms_1 = mview.findViewById(R.id.aboutus_agreeTerms_1);
-//                            aboutus_agreeTerms_1.setText(aboutUsInfoDataBean.privacypolicy);
-//                        }
-//                        LoadingDialog.getInstance(mMainContext).dismiss();
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable e) {
-//                        Log.e("TAG", "onError: "+e.getMessage()+"" + "Http:" + "http://192.168.30.141:8080/app/homePage/queryHomePageInfo/");
-//                        Toast.makeText(mMainContext,"获取关于我们信息超时",Toast.LENGTH_LONG).show();
-//                        LoadingDialog.getInstance(mMainContext).dismiss();
-//                    }
-//
-//                    @Override
-//                    public void onComplete() {
-//
-//                    }
-//                });
     }
 
     //上传头像

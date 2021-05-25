@@ -6,7 +6,6 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
-//import android.icu.text.SimpleDateFormat;
 import java.text.SimpleDateFormat;
 
 import android.os.Bundle;
