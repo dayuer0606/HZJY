@@ -31,7 +31,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * 应用
  */
 public class TFApplication extends Application {
-    private String mIpadress = "http://wangxiao.jianweijiaoyu.com/";
+    private String mIpadress = "http://wangxiaotest.16hz.net/";
     @Override
     public void onCreate() {
         super.onCreate();

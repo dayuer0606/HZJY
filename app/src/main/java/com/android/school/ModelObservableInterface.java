@@ -24,7 +24,6 @@ import retrofit2.http.Query;
  */
 //当POST请求时，@FormUrlEncoded和@Field简单的表单键值对。两个需要结合使用，否则会报错
 public interface ModelObservableInterface {
-//   String urlHead = "http://wangxiaojk.16hz.net/";
 
     OkHttpClient client = new OkHttpClient.Builder()
             .addInterceptor(new HeaderInterceptor()) //这部分

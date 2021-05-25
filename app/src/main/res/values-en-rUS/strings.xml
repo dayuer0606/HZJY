@@ -1,5 +1,5 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="app_name">ZhiKaoWangXiao</string>
+    <string name="app_name">ZhiYeWeiKeTang</string>
     <string name="title_homepage">HomePage</string>
     <string name="title_course">Course</string>
     <string name="title_coursepacket">CoursePacket</string>

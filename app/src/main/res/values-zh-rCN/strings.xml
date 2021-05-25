@@ -68,7 +68,7 @@
     <string name="title_inputyournewpasswordagain">请再一次输入新密码</string>
     <string name="title_functionintroduce">功能介绍</string>
     <string name="title_checkversion">检查新版本</string>
-    <string name="aboutus_agreeTerms"><a href="http://www.baidu.com/">《职考网校软件许可及服务协议》</a></string>
+    <string name="aboutus_agreeTerms"><a href="http://www.baidu.com/">《职考微课堂软件许可及服务协议》</a></string>
     <string name="aboutus_and">和</string>
     <string name="aboutus_privacyprotectionguideline"><a href="http://www.baidu.com/">《隐私保护指引》</a></string>
     <string name="title_details">详情</string>

@@ -1277,7 +1277,7 @@ public class ModelSetting extends Fragment {
         }
         LoadingDialog.getInstance(mMainContext).show();
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://wangxiao.16zige.com/")
+                .baseUrl("http://wangxiaotest.16hz.net/")
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(ModelObservableInterface.client)

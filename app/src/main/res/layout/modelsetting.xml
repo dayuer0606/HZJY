@@ -1286,14 +1286,14 @@
                 android:id="@+id/aboutus_copyrightown"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="职考网校公司 版权所有"
+                android:text="职考微课堂公司 版权所有"
                 android:textSize="14sp"
                 android:gravity="center"/>
             <TextView
                 android:id="@+id/aboutus_copyrightown_english"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Copyright © 2017-2022 zhikaowangxiaoedu."
+                android:text="Copyright © 2017-2022 zhiyeweiketang."
                 android:textSize="14sp"
                 android:gravity="center"/>
             <TextView

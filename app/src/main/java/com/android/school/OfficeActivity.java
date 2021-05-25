@@ -43,11 +43,6 @@ public class OfficeActivity extends AppCompatActivity {
                 }
             }
         });
-//        String url = "https://wangxiao3.oss-cn-shanghai.aliyuncs.com/b4cac181-237d-481c-8e3b-e26a85e5076f1590830663982.pptx";
-//        url = "https://wangxiao3.oss-cn-shanghai.aliyuncs.com/test/1.xlsx";
-//        url = "https://wangxiao3.oss-cn-shanghai.aliyuncs.com/test/2.docx";
-//        url = "https://wangxiao3.oss-cn-shanghai.aliyuncs.com/test/3.doc";
-//        url = "https://wangxiao3.oss-cn-shanghai.aliyuncs.com/test/4.xls";
         webView.loadUrl("https://view.officeapps.live.com/op/view.aspx?src=" + nameString );//使用微软在线浏览方式
     }
 }

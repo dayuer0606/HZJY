@@ -2357,10 +2357,6 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                                 return;
                             }
                             String string  = String.valueOf(text.getHint());
-//                            string = "https://wangxiao3.oss-cn-shanghai.aliyuncs.com/b4cac181-237d-481c-8e3b-e26a85e5076f1590830663982.pptx";
-//                            string = "https://wangxiao3.oss-cn-shanghai.aliyuncs.com/test/2.docx";
-//                            string = "https://wangxiao3.oss-cn-shanghai.aliyuncs.com/test/3.doc";
-//                            string = "https://wangxiao3.oss-cn-shanghai.aliyuncs.com/test/4.xls";
                             //判断文件格式
                             if (string.contains(".pdf")||string.contains(".pdfx")){
                                 Intent intent = new Intent(mMainContext,PDFActivity.class);

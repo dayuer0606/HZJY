@@ -211,11 +211,6 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        mIpType.put("http://wangxiao.jianweijiaoyu.com/","jianwei");
-//        mIpType.put("http://wangxiao.16zige.com/","yixiao");
-//        mIpType.put("http://wangxiao.yixiaojiaoyu.com/","yixiao");
-//        mIpType.put("http://managerwt.16zige.com/","wentao");
-//        mIpType.put("http://manager.jinrongstudy.com/","zhuce");
         //阿里视频播放下载，必须初始化的服务，必须放在最开始的位置
         PrivateService.initService(getApplicationContext(), Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + PublicCommonUtil.encryptedAppPath + "/encryptedApp.dat");
         //拷贝encryptedApp.dat文件到所需位置
@@ -3145,7 +3140,7 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
     private void getAndroidVersion(Context context) {
         LoadingDialog.getInstance(context).show();
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://wangxiao.16zige.com/")
+                .baseUrl("http://wangxiaotest.16hz.net/")
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(ModelObservableInterface.client)
