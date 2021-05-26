@@ -36,7 +36,6 @@ import android.widget.EditText;
 import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -106,10 +105,8 @@ import static com.android.school.appinfo.ActivityIDInfo.COMMUNITY_ANSWER_ACTIVIT
 public class ModelCommunityAnswerActivity extends FragmentActivity {
     //课程问答
     private static ModelCommunityAnswerActivity mThis;
-    private static String mContext="xxxxxxxxxxxxx";
     private static final String TAG = "ModelCommunityAnswer";
     //要显示的页面
-    static private int FragmentPage;
     private View mCommunityAnswerView ,mCommunityAnswerSelectView ,mCommunityAnswerAddView ,mCommunityAnswerChooseSignView
             ,mCommunityAnswerDetailsView;
     //检索条件-默认全部

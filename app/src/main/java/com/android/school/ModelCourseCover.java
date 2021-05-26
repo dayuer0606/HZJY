@@ -69,38 +69,14 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * 课程详情
  */
 public class ModelCourseCover implements View.OnClickListener, ModelOrderDetailsInterface, ControllerOkManagerDownload.IProgress {
-    private View modelCourse, mListView, mDetailsView, mQuestionView, mQuestionViewAdd, mQuestionDetailsView, mDownloadManagerView, mcatalog_chapter_liveview;
-    private RecyclerView mRecyclerView;
-    private ArrayList<ControllerPictureBean> mPictureBeansList;
-    private ControllerPictureAdapter mPictureAdapter;
-    private ArrayList<String> selPhotosPath = null;//选中的图片路径集合
+    private View modelCourse, mListView, mDetailsView, mDownloadManagerView, mcatalog_chapter_liveview;
     private MainActivity mMainContext = null;
     private ModelCourseCoverOnClickListener mModelCourseCoverOnClickListener = null;
     private String mCurrentCatalogTab = "Live"; //当前标签是录播还是直播
     private CourseInfo mCourseInfo;
-    //    private Map<String, View> CourseQuestionViewMap = new HashMap<>();
-//    private Map<String, List<CourseQuestionInfo>> CourseQuestionDetailsViewMap = new HashMap<>();
     private String mPage = "Detail";
-    private boolean mQuestionPublishImage = false; //课程问答是否发布图片
-    private boolean mQuestionPublishTitle = false;//课程问答是否发布标题
-    private boolean mQuestionPublishContent = false;//课程问答是否发布内容
     private ControllerCenterDialog mMyDialog; //居中的对话框
     private ControllerPopDialog mCourseDownloadDialog = null;
-    private ControllerCustomDialog mCustomDialog = null;
-
-    private boolean mIsPublish = true;
-
-    //问答列表-刷新控件
-    private SmartRefreshLayout course_question_layout_refresh = null, course_questiondetails_layout_refresh = null;
-    //问答列表分页
-    private int mCourseQuestionPage = 0;
-    private int mCourseQuestionCount = 8;
-    private int mCourseQuestionSum = 0; //问答总数
-
-    //课程问答详情分页
-    private int mCourseQuestionDetailsPage = 0;
-    private int mCourseQuestionDetailsCount = 8;
-    private int mCourseQuestionDetailsSum = 0; //问答详情总数
 
     //课程目录界面刷新
     private int mCourseCatalogPage = 1;
@@ -1132,8 +1108,6 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
         mCourseDownloadDialog = new ControllerPopDialog(mMainContext, R.style.customdialogstyle, R.layout.modelcoursedetails_download);
         mCourseDownloadDialog.setOnKeyListener(keylistener);
         mCourseDownloadDialog.show();
-//        TextView coursedetails_download_num = mCourseDownloadDialog.getWindow().findViewById(R.id.coursedetails_download_num);
-//        coursedetails_download_num.setText("5");
         LinearLayout coursedetails_download_chapterlist = mCourseDownloadDialog.getWindow().findViewById(R.id.coursedetails_download_chapterlist);
         View view1 = null;
         int count = 0;
@@ -1166,14 +1140,6 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                         ll.width = 0;
                         coursedetails_download1_image.setLayoutParams(ll);
                         int progress = 0;
-//                        try {
-//                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) { //计算下载进度
-////                                progress = Math.toIntExact(Long.valueOf(courseRecordPlayDownloadInfo.mCourseSectionsDownloadSize)
-////                                        / video_len);
-//                            }
-//                        } catch (Exception e){
-//
-//                        }
                         coursedetails_download1_downloadprogress.setProgress(progress);
                         if (progress == 100) {
                             coursedetails_download1_downloadprogress = view.findViewById(R.id.coursedetails_download1_downloadprogress);
@@ -1227,7 +1193,6 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                                 "', '" + time + courseSectionsInfo.getmCourseSectionsName() + "', '" + courseChaptersInfo.getmCourseChaptersId() + "', '" +
                                 courseSectionsInfo.getmCourseSectionsId() + "', '" + "');");
                         //添加一条下载
-//                        downLoad = new ControllerOkManagerDownload(courseSectionsInfo.mCourseSectionsDownloadUrl,this,"com.huozhongedu/download/videodownload");
                     }
                 });
                 coursedetails_download_chapterlist.addView(view);

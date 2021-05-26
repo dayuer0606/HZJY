@@ -76,7 +76,6 @@ public class ClassPacketDetails implements View.OnClickListener, ModelOrderDetai
     private View ClassPacket, mListView, mDetailsView;
     private MainActivity mMainContext = null;
     private ClassPacketDetailsOnClickListener mClassPacketDetailsOnClickListener = null;
-    private int height = 1344;
     private int width = 720;
     private String mCurrentTab = "Details";
     private int lastTabIndex = 1;
@@ -96,7 +95,6 @@ public class ClassPacketDetails implements View.OnClickListener, ModelOrderDetai
         mCoursePacketInfo = new CoursePacketInfo(coursePacketInfo);
 
         DisplayMetrics dm = context.getResources().getDisplayMetrics(); //获取屏幕分辨率
-        height = dm.heightPixels;
         width = dm.widthPixels;
         if (ClassPacket == null) {
             ClassPacket = LayoutInflater.from(context).inflate(R.layout.classpacket_layout, null);
@@ -198,12 +196,6 @@ public class ClassPacketDetails implements View.OnClickListener, ModelOrderDetai
         }
         TextView coursepacketcontentTextView = mListView.findViewById(R.id.coursepacketcontent);
         String content = "";
-//        if (coursePacketInfo.mCoursePacketStageNum != null) {
-//            content = "阶段" + coursePacketInfo.mCoursePacketStageNum;
-//        }
-//        if (coursePacketInfo.mCoursePacketCourseNum != null) {
-//            content = content + "  •  课程" + coursePacketInfo.mCoursePacketCourseNum;
-//        }
         if (coursePacketInfo.mCoursePacketLearnPersonNum != null) {
             content = coursePacketInfo.mCoursePacketLearnPersonNum + "人正在学习";
         }
@@ -906,13 +898,6 @@ public class ClassPacketDetails implements View.OnClickListener, ModelOrderDetai
                 .client(ModelObservableInterface.client)
                 .build();
         ModelObservableInterface modelObservableInterface = retrofit.create(ModelObservableInterface.class);
-//        Gson gson = new Gson();
-//        HashMap<String, Integer> paramsMap = new HashMap<>();
-//        //course_package_id参数id    文件的参数id
-////        paramsMap.put("course_package_id", Integer.valueOf(mCoursePacketInfo.mCoursePacketId));
-//        paramsMap.put("course_package_id", 1);
-//        String strEntity = gson.toJson(paramsMap);
-//        RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json;charset=UTF-8"), strEntity);
         final Observable<CourseTeacherBean> data = modelObservableInterface.queryCoursePackageTeacher(Integer.valueOf(mCoursePacketInfo.mCoursePacketId));
         data.observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
@@ -1033,7 +1018,6 @@ public class ClassPacketDetails implements View.OnClickListener, ModelOrderDetai
                             StageCourseListBean.DataBean.CourseListInfoBean stageListInfoBean = courseListInfo.get(i);
                             int course_id = stageListInfoBean.getCourse_id();
                             String course_name = stageListInfoBean.getCourse_name();
-                            int sort_of_course = stageListInfoBean.getSort_of_course();
                             float special_price = stageListInfoBean.getSpecial_price();
                             int price = stageListInfoBean.getPrice();
                             int stage_id = stageListInfoBean.getStage_id();
@@ -1073,9 +1057,6 @@ public class ClassPacketDetails implements View.OnClickListener, ModelOrderDetai
         if (mCoursePacketInfo == null){
             return;
         }
-//        if (mMainContext.mStuId.equals("")){
-//            return;
-//        }
         LoadingDialog.getInstance(mMainContext).show();
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())

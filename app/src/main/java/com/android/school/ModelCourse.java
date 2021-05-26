@@ -27,7 +27,6 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Random;
 
 import okhttp3.RequestBody;
 import retrofit2.Call;

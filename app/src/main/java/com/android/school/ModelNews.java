@@ -14,7 +14,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-//import android.icu.text.SimpleDateFormat;
 import java.text.SimpleDateFormat;
 
 import com.bumptech.glide.Glide;
@@ -49,8 +48,6 @@ public class ModelNews extends Fragment implements View.OnClickListener {
     //要显示的页面
     static private int FragmentPage;
     private View mview;
-    private int height = 1344;
-    private int width = 720;
     private static final String TAG = "ModelNews";
     private SmartRefreshLayout mSmart_new_layout;
 
@@ -74,9 +71,6 @@ public class ModelNews extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mview = inflater.inflate(FragmentPage, container, false);
-        DisplayMetrics dm = mMainContext.getResources().getDisplayMetrics(); //获取屏幕分辨率
-        height = dm.heightPixels;
-        width = dm.widthPixels;
         NewsMainShow();
         initSmartRefresh();
         return mview;

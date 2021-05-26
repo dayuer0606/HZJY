@@ -4514,33 +4514,30 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
                 alivcDialog.setDialogIcon(com.aliyun.vodplayer.R.drawable.icon_delete_tips);
                 alivcDialog.setMessage(getResources().getString(com.aliyun.vodplayer.R.string.alivc_delete_confirm));
                 alivcDialog.setOnConfirmclickListener(getResources().getString(com.aliyun.vodplayer.R.string.alivc_dialog_sure),
-                        new AlivcDialog.onConfirmClickListener() {
-                            @Override
-                            public void onConfirm() {
-                                alivcDialog.dismiss();
-                                if (alivcDownloadMediaInfos != null && alivcDownloadMediaInfos.size() > 0) {
-                                    downloadView.deleteDownloadInfo();
-                                    if (downloadView != null) {
-                                        for (AlivcDownloadMediaInfo alivcDownloadMediaInfo : alivcDownloadMediaInfos) {
-                                            if (alivcDownloadMediaInfo.isCheckedState()) {
-                                                downloadView.deleteDownloadInfo(alivcDownloadMediaInfo.getAliyunDownloadMediaInfo());
-                                            }
+                        () -> {
+                            alivcDialog.dismiss();
+                            if (alivcDownloadMediaInfos != null && alivcDownloadMediaInfos.size() > 0) {
+                                downloadView.deleteDownloadInfo();
+                                if (downloadView != null) {
+                                    for (AlivcDownloadMediaInfo alivcDownloadMediaInfo : alivcDownloadMediaInfos) {
+                                        if (alivcDownloadMediaInfo.isCheckedState()) {
+                                            downloadView.deleteDownloadInfo(alivcDownloadMediaInfo.getAliyunDownloadMediaInfo());
                                         }
+                                    }
 
-                                    }
-                                    if (dialogDownloadView != null) {
-                                        dialogDownloadView.deleteDownloadInfo();
-                                    }
-                                    if (downloadManager != null) {
-                                        for (AlivcDownloadMediaInfo alivcDownloadMediaInfo : alivcDownloadMediaInfos) {
-                                            downloadManager.deleteFile(alivcDownloadMediaInfo.getAliyunDownloadMediaInfo());
-                                        }
-
-                                    }
-                                    downloadDataProvider.deleteAllDownloadInfo(alivcDownloadMediaInfos);
-                                } else {
-                                    FixedToastUtils.show(MainActivity.this, "没有删除的视频选项...");
                                 }
+                                if (dialogDownloadView != null) {
+                                    dialogDownloadView.deleteDownloadInfo();
+                                }
+                                if (downloadManager != null) {
+                                    for (AlivcDownloadMediaInfo alivcDownloadMediaInfo : alivcDownloadMediaInfos) {
+                                        downloadManager.deleteFile(alivcDownloadMediaInfo.getAliyunDownloadMediaInfo());
+                                    }
+
+                                }
+                                downloadDataProvider.deleteAllDownloadInfo(alivcDownloadMediaInfos);
+                            } else {
+                                FixedToastUtils.show(MainActivity.this, "没有删除的视频选项...");
                             }
                         });
                 alivcDialog.setOnCancelOnclickListener(getResources().getString(com.aliyun.vodplayer.R.string.alivc_dialog_cancle),
