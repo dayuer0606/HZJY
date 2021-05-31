@@ -121,7 +121,7 @@
         android:layout_height="0dp"
         android:visibility="invisible"
         android:id="@+id/course_searchlayout">
-        <com.android.school.ModelSearchView
+        <com.android.weischool.ModelSearchView
             android:id="@+id/course_search_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

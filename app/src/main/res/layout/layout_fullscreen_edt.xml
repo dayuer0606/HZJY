@@ -47,7 +47,7 @@
         android:src="@mipmap/expression_icon" />
 
 
-    <com.android.school.view.ExpressionLayout
+    <com.android.weischool.view.ExpressionLayout
         android:id="@+id/layout_expression"
         android:layout_width="match_parent"
         android:layout_height="90dp"

@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white">
-        <com.android.school.ControllerCustomRoundAngleImageView
+        <com.android.weischool.ControllerCustomRoundAngleImageView
             android:id="@+id/modelmy_mymessage2_cover"
             android:layout_width="@dimen/dp30"
             android:layout_height="@dimen/dp30"

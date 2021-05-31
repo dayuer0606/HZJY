@@ -40,7 +40,7 @@
                     android:layout_marginLeft="@dimen/dp_10"
                     android:visibility="gone"
                     android:src="@mipmap/dialog_otm_input_msg_text" />
-                <com.android.school.view.ClearEditText
+                <com.android.weischool.view.ClearEditText
                     android:id="@+id/edtInput"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_23"
@@ -77,7 +77,7 @@
                     android:textColor="@color/white"
                     android:textSize="@dimen/sp_9" />
             </LinearLayout>
-            <com.android.school.view.ExpressionLayout
+            <com.android.weischool.view.ExpressionLayout
                 android:id="@+id/layout_expression"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_90"

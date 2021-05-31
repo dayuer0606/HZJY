@@ -14,7 +14,7 @@
             android:layout_alignParentBottom="true"
             android:background="@color/white">
 
-            <com.android.school.view.ClearEditText
+            <com.android.weischool.view.ClearEditText
                 android:id="@+id/edit_chat"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

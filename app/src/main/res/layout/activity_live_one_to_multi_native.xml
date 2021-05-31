@@ -50,7 +50,7 @@
                             android:id="@+id/left_oprator_rl"
                             layout="@layout/activity_live_one_to_multi__left_oprator" />
 
-                        <com.android.school.view.MultipleStatusLayout
+                        <com.android.weischool.view.MultipleStatusLayout
                             android:id="@+id/ml_multi_status"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
@@ -78,7 +78,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent" />
                             </FrameLayout>
-                        </com.android.school.view.MultipleStatusLayout>
+                        </com.android.weischool.view.MultipleStatusLayout>
 
                         <include
                             android:id="@+id/right_oprator_rl"

@@ -56,7 +56,7 @@
             android:layout_toRightOf="@id/classchedulecard2_time"
             android:layout_alignBottom="@id/classchedulecard2_timelogo"
             android:layout_marginLeft="@dimen/dp13"/>
-        <com.android.school.ControllerCustomRoundAngleImageView
+        <com.android.weischool.ControllerCustomRoundAngleImageView
             android:id="@+id/classchedulecard2_teachers_headportrait"
             android:layout_width="@dimen/dp30"
             android:layout_height="@dimen/dp30"

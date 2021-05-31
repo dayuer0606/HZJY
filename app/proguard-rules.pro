@@ -275,5 +275,5 @@
 -dontwarn com.alivc.**
 -dontwarn com.aliyun.**
 
--keep class com.android.school.**{*;}
--dontwarn com.android.school.**
+-keep class com.android.weischool.**{*;}
+-dontwarn com.android.weischool.**

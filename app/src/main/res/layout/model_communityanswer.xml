@@ -60,7 +60,7 @@
         android:layout_below="@id/communityanswer_titlelayout"
         android:layout_gravity="center_horizontal"
         android:background="#e5e5e5" />
-    <com.android.school.HorizontalListView
+    <com.android.weischool.HorizontalListView
         android:id="@+id/sign_list"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp35"

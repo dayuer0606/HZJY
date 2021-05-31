@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.android.school">
+    package="com.android.weischool">
 
     <permission
-        android:name="com.android.school.permission.JPUSH_MESSAGE"
+        android:name="com.android.weischool.permission.JPUSH_MESSAGE"
         android:protectionLevel="signature" /> <!-- /** -->
     <!-- * 获取开机启动权限 -->
     <!-- */ -->
@@ -161,7 +161,7 @@
         <!-- </provider> -->
         <provider
             android:name="android.support.v4.content.FileProvider"
-            android:authorities="com.android.school.fileprovider"
+            android:authorities="com.android.weischool.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
@@ -170,7 +170,7 @@
         </provider> <!-- 微信支付 -->
         <provider
             android:name="cn.jpush.android.service.DataProvider"
-            android:authorities="com.android.school.DataProvider"
+            android:authorities="com.android.weischool.DataProvider"
             android:exported="false"
             android:process=":pushcore" /> <!-- Required SDK 核心功能 -->
         <!-- 可配置android:process参数将PushService放在其他进程中 -->
@@ -187,7 +187,7 @@
                 <action android:name="cn.jpush.android.intent.REGISTRATION" />
                 <action android:name="cn.jpush.android.intent.RECEIVE_MESSAGE" />
 
-                <category android:name="com.android.school" />
+                <category android:name="com.android.weischool" />
             </intent-filter>
         </receiver> <!-- Required since 3.0.7 -->
         <!-- 新的 tag/alias 接口结果返回需要开发者配置一个自定的广播 -->

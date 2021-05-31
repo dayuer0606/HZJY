@@ -35,7 +35,7 @@
             android:clickable="true"
             android:onClick="onClickHomepageSearch"/>
     </RelativeLayout>
-    <com.android.school.HorizontalListView
+    <com.android.weischool.HorizontalListView
         android:id="@+id/functionButton"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp35"
@@ -69,7 +69,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
-                    <com.android.school.ModelImageSlideshow
+                    <com.android.weischool.ModelImageSlideshow
                         android:id="@+id/is_gallery"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/dp160"/>

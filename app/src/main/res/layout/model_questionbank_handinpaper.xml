@@ -63,7 +63,7 @@
         android:layout_marginRight="@dimen/dp13"
         android:layout_marginLeft="@dimen/dp13"
         android:gravity="center_horizontal">
-        <com.android.school.ControllerRoundProgressBar
+        <com.android.weischool.ControllerRoundProgressBar
             android:layout_marginTop="@dimen/dp35"
             android:id="@+id/coursedetails_handinpaper_accuracyrateprogress"
             android:layout_width="@dimen/dp_137"

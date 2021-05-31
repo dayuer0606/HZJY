@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:focusableInTouchMode="true">
-    <com.android.school.ControllerCustomRoundAngleImageView
+    <com.android.weischool.ControllerCustomRoundAngleImageView
         android:id="@+id/communityanswer_child_headportrait"
         android:layout_width="@dimen/dp40"
         android:layout_height="@dimen/dp40"

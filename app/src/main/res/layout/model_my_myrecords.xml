@@ -122,7 +122,7 @@
                          android:layout_width="match_parent"
                          android:layout_height="wrap_content"
                          android:orientation="vertical">、
-                         <com.android.school.ControllerListViewForScrollView
+                         <com.android.weischool.ControllerListViewForScrollView
                              android:id="@+id/modelmy_learnrecord_main_listview"
                              android:layout_width="match_parent"
                              android:layout_height="wrap_content"

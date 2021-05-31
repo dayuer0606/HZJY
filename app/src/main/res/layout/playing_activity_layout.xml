@@ -75,7 +75,7 @@
 
             </LinearLayout>
 
-            <com.android.school.view.LiveMessageView
+            <com.android.weischool.view.LiveMessageView
                 android:id="@+id/tab_container"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -89,7 +89,7 @@
                     android:layout_height="match_parent" />-->
         </LinearLayout>
 
-        <com.android.school.view.InputBarView
+        <com.android.weischool.view.InputBarView
             android:id="@+id/inputEdt_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -106,7 +106,7 @@
         android:layout_width="160dp"
         android:layout_height="120dp" />
 
-    <com.android.school.view.DragFloatActionText
+    <com.android.weischool.view.DragFloatActionText
         android:id="@+id/fab_float_window"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

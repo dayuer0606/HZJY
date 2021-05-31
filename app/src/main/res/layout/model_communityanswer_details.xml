@@ -73,7 +73,7 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
-                        <com.android.school.ControllerCustomRoundAngleImageView
+                        <com.android.weischool.ControllerCustomRoundAngleImageView
                             android:id="@+id/communityanswer_datails_headportrait"
                             android:layout_width="@dimen/dp40"
                             android:layout_height="@dimen/dp40"

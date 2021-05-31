@@ -6,7 +6,7 @@
     android:background="@drawable/gradient_bg_bottom">
 
 
-    <com.android.school.view.FullScreenInputBarView
+    <com.android.weischool.view.FullScreenInputBarView
         android:id="@+id/ll_input_fullScreen"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -14,7 +14,7 @@
         android:layout_marginLeft="@dimen/fullScreen_input_marginLeft"
         android:layout_marginRight="@dimen/fullScreen_input_marginRight"
         android:layout_toLeftOf="@+id/ll_bottom_menu"
-       ></com.android.school.view.FullScreenInputBarView>
+       ></com.android.weischool.view.FullScreenInputBarView>
 
     <LinearLayout
         android:id="@+id/ll_bottom_menu"

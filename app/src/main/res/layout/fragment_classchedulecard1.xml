@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:background="#fff"
         app:calendar_padding="10dp"
-        app:month_view="com.android.school.ModelSimpleMonthView"
+        app:month_view="com.android.weischool.ModelSimpleMonthView"
         app:calendar_height="46dp"
         app:current_month_lunar_text_color="#CFCFCF"
         app:current_month_text_color="#999999"
@@ -31,7 +31,7 @@
         app:week_background="#fff"
         app:week_text_color="#999999"
         app:week_text_size="@dimen/textsize10"
-        app:week_view="com.android.school.ModelSimpleWeekView"
+        app:week_view="com.android.weischool.ModelSimpleWeekView"
         app:year_view_day_text_color="#333333"
         app:year_view_day_text_size="@dimen/textsize15"
         app:year_view_month_text_color="#ff0000"
@@ -39,7 +39,7 @@
         app:year_view_scheme_color="#f17706"
         app:week_start_with="mon"/>
 
-    <com.android.school.ModelGroupRecyclerView
+    <com.android.weischool.ModelGroupRecyclerView
         android:id="@+id/recyclerView"
         app:group_background="#ffffff"
         app:group_center="false"
@@ -67,8 +67,8 @@
 <!--        app:scheme_text_color="#333"-->
 <!--        app:scheme_theme_color="#128c4b"-->
 <!--        app:selected_lunar_text_color="#CFCFCF"-->
-<!--        app:month_view="com.android.school.ModelColorfulMonthView"-->
-<!--        app:week_view="com.android.school.ModelColorfulWeekView"-->
+<!--        app:month_view="com.android.weischool.ModelColorfulMonthView"-->
+<!--        app:week_view="com.android.weischool.ModelColorfulWeekView"-->
 <!--        app:selected_text_color="#333"-->
 <!--        app:selected_theme_color="#108cd4"-->
 <!--        app:week_background="#fff"-->

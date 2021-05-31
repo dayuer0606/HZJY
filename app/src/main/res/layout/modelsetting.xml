@@ -516,7 +516,7 @@
                             android:paddingLeft="@dimen/dp13"
                             android:layout_toLeftOf="@+id/setting_allownonwifiplay_go"
                             android:layout_alignParentLeft="true"/>
-                        <com.android.school.ModelSwitchButton
+                        <com.android.weischool.ModelSwitchButton
                             android:id="@+id/setting_allownonwifiplay_go"
                             android:layout_width="@dimen/dp50"
                             android:layout_height="@dimen/dp28"
@@ -1169,7 +1169,7 @@
                 android:textStyle="bold"
                 android:gravity="center"/>
         </RelativeLayout>
-        <com.android.school.ControllerCustomRoundAngleImageView
+        <com.android.weischool.ControllerCustomRoundAngleImageView
             android:id="@+id/aboutus_huozhonglogo"
             android:layout_width="50dp"
             android:layout_height="50dp"

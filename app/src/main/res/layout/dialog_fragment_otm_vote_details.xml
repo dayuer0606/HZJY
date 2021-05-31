@@ -35,7 +35,7 @@
         android:layout_marginTop="@dimen/dp_5">
 
 
-        <com.android.school.view.MultipleStatusLayout
+        <com.android.weischool.view.MultipleStatusLayout
             android:id="@+id/msl__multi_status_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -175,7 +175,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/ll_title"
                     tools:text="选票选项（多选）：" />
 
-                <com.android.school.view.NoScrollListView
+                <com.android.weischool.view.NoScrollListView
                     android:id="@+id/lv_option"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -236,7 +236,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center" />
 
-        </com.android.school.view.MultipleStatusLayout>
+        </com.android.weischool.view.MultipleStatusLayout>
     </ScrollView>
 
 </LinearLayout>

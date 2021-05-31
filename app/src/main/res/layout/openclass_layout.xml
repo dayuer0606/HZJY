@@ -68,7 +68,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
-                    <com.android.school.ControllerGridViewForScrollView
+                    <com.android.weischool.ControllerGridViewForScrollView
                         android:layout_width="match_parent"
                         android:numColumns="2"
                         android:id="@+id/openclass_content"

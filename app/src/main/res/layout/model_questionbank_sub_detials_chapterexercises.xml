@@ -54,7 +54,7 @@
             android:layout_alignParentRight="true"
             android:src="@drawable/button_arrow_down"/>
     </RelativeLayout>
-    <com.android.school.ModelExpandView
+    <com.android.weischool.ModelExpandView
         android:id="@+id/questionbank_sub_details_chapterexercises_expandView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -66,5 +66,5 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"/>
-    </com.android.school.ModelExpandView>
+    </com.android.weischool.ModelExpandView>
 </RelativeLayout>

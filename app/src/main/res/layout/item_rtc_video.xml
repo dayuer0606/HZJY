@@ -9,11 +9,11 @@
 
         <import type="android.view.View"></import>
 
-        <import type="com.android.school.util.DimensionUtils"></import>
+        <import type="com.android.weischool.util.DimensionUtils"></import>
 
         <variable
             name="videoData"
-            type="com.android.school.entity.VideoStatusData" />
+            type="com.android.weischool.entity.VideoStatusData" />
     </data>
 
     <android.support.constraint.ConstraintLayout

@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <com.android.school.ControllerCustomRoundAngleImageView
+    <com.android.weischool.ControllerCustomRoundAngleImageView
         android:id="@+id/modelmy_mycache1_cover"
         android:layout_width="@dimen/dp_130"
         android:layout_height="@dimen/dp_75"

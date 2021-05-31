@@ -7,11 +7,11 @@
 
         <import type="android.view.View"></import>
 
-        <import type="com.android.school.util.TimeUtil"></import>
+        <import type="com.android.weischool.util.TimeUtil"></import>
 
         <import type="android.text.TextUtils"></import>
 
-        <import type="com.android.school.util.ExpressionUtil" />
+        <import type="com.android.weischool.util.ExpressionUtil" />
 
         <variable
             name="memberRole"

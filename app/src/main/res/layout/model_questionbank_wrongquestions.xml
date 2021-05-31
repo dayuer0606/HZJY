@@ -72,7 +72,7 @@
             android:textSize="@dimen/textsize18"
             android:textColor="#666666"/>
     </LinearLayout>
-    <com.android.school.ControllerHorizontalProgressBar
+    <com.android.weischool.ControllerHorizontalProgressBar
         android:layout_marginTop="@dimen/dp10"
         android:id="@+id/questionbank_wrongquestion_progress"
         android:layout_width="match_parent"

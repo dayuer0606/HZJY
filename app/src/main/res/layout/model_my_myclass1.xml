@@ -47,7 +47,7 @@
                 android:textSize="@dimen/textsize12"
                 android:textColor="#999999"/>
         </LinearLayout>
-        <com.android.school.ControllerCustomRoundAngleImageView
+        <com.android.weischool.ControllerCustomRoundAngleImageView
             android:id="@+id/courseTeacherIcon"
             android:layout_width="@dimen/dp_32"
             android:layout_height="@dimen/dp_32"

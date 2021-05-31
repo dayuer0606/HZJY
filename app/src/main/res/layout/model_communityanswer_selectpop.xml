@@ -21,7 +21,7 @@
         android:layout_marginRight="@dimen/dp13"
         android:layout_below="@id/communityanswer_select_signtitle"
         android:layout_above="@+id/communityanswer_select_buttonlayout">
-        <com.android.school.ModelPtrFrameLayout
+        <com.android.weischool.ModelPtrFrameLayout
             android:id="@+id/communityanswer_select_ptr_frame"
             xmlns:cube_ptr="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
@@ -36,7 +36,7 @@
                 android:id="@+id/communityanswer_select_scroll_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                <com.android.school.ControllerWarpLinearLayout
+                <com.android.weischool.ControllerWarpLinearLayout
                     android:id="@+id/communityanswer_select_warpLinearLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -46,7 +46,7 @@
                     app:isFull="false"
                     app:vertical_Space="10dp"/>
             </ScrollView>
-        </com.android.school.ModelPtrFrameLayout>
+        </com.android.weischool.ModelPtrFrameLayout>
     </LinearLayout>
     <View
         android:id="@+id/communityanswer_select_line1"

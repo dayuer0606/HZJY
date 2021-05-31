@@ -34,7 +34,7 @@
             android:background="@drawable/button_notice"
             android:clickable="true"
             android:onClick="onClickMyMessage"/>
-        <com.android.school.ControllerCustomRoundAngleImageView
+        <com.android.weischool.ControllerCustomRoundAngleImageView
             android:id="@+id/headportrait"
             android:layout_width="@dimen/dp_75"
             android:layout_height="@dimen/dp_75"

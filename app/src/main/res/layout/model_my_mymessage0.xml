@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:focusableInTouchMode="true">
-        <com.android.school.ControllerCustomRoundAngleImageView
+        <com.android.weischool.ControllerCustomRoundAngleImageView
             android:id="@+id/modelmy_mymessage_noticecover"
             android:layout_width="@dimen/dp45"
             android:layout_height="@dimen/dp45"
@@ -94,7 +94,7 @@
         android:layout_height="wrap_content"
         android:focusableInTouchMode="true"
         android:id="@+id/modelmy_mymessage_advertise">
-        <com.android.school.ControllerCustomRoundAngleImageView
+        <com.android.weischool.ControllerCustomRoundAngleImageView
             android:id="@+id/modelmy_mymessage_advertisecover"
             android:layout_width="@dimen/dp45"
             android:layout_height="@dimen/dp45"
@@ -173,7 +173,7 @@
             android:layout_marginLeft="@dimen/dp13"
             android:layout_below="@id/modelmy_mymessage_advertisecover" />
     </RelativeLayout>
-    <com.android.school.ControllerListViewForScrollView
+    <com.android.weischool.ControllerListViewForScrollView
         android:id="@+id/modelmy_mymessage_main_contentlistview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
