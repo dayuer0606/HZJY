@@ -1912,6 +1912,7 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
         Intent intent = new Intent(mThis, ModelCommunityAnswerActivity.class);
         intent.putExtra("stu_id", mStuId);
         intent.putExtra("ip",mIpadress);
+        intent.putExtra("token",mToken);
         startActivity(intent);
     }
 

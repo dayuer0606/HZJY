@@ -80,6 +80,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.TimeZone;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
@@ -147,6 +148,7 @@ public class ModelCommunityAnswerActivity extends FragmentActivity {
 
     private String mIpadress = PublicCommonUtil.ipadress;
     private String mStuId = "";
+    private String mToken = "";
     private String mPage = "main";
 
     //评论
@@ -180,6 +182,7 @@ public class ModelCommunityAnswerActivity extends FragmentActivity {
         mThis = this;
         mStuId = getIntent().getStringExtra("stu_id");
         mIpadress = getIntent().getStringExtra("ip");
+        mToken = getIntent().getStringExtra("token");
         IntentFilter filter = new IntentFilter();
         filter.addAction(ACTION_COMMUNITY_ANSWER_PICTURE_ADD);
         LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(mBroadcastReceiver, filter);
@@ -689,6 +692,10 @@ public class ModelCommunityAnswerActivity extends FragmentActivity {
         //                   发表按钮
         TextView communityanswer_choosesign_layout_commit_button1 = mCommunityAnswerChooseSignView.findViewById(R.id.communityanswer_choosesign_layout_commit_button1);
         communityanswer_choosesign_layout_commit_button1.setOnClickListener(v->{
+            if (!mIsPublish){
+                Toast.makeText(mThis,"正在发布问题，请稍后！",Toast.LENGTH_LONG).show();
+                return;
+            }
             //点击发表问答，先判断是否有选择标签，如果没有选择标签，不做处理
             if (mCommunityAnswerChooseSignList.size() != 0){
                 mIsPublish = false;
@@ -963,6 +970,12 @@ public class ModelCommunityAnswerActivity extends FragmentActivity {
 
     //社区问答的列表
     private void getCommunityData() {
+        if (mThis.mStuId.equals("")){
+            if (smart_model_communityanswer != null){
+                smart_model_communityanswer.finishRefresh();
+            }
+            return;
+        }
         LoadingDialog.getInstance(mThis).show();
         LinearLayout communityanswer_linearlayout = mCommunityAnswerView.findViewById(R.id.communityanswer_linearlayout);
         communityanswer_linearlayout.removeAllViews();
@@ -985,6 +998,7 @@ public class ModelCommunityAnswerActivity extends FragmentActivity {
         paramsMap.put("pageNum", mCommunityAnswerCurrentPage);//第几页
         paramsMap.put("pageSize", mCommunityAnswerPageCount);//每页几条
         paramsMap.put("course_type", 1);
+        paramsMap.put("stu_id", Integer.valueOf(mThis.mStuId));
         String strEntity = gson.toJson(paramsMap);
         if (mKey != null) {
             if (!mKey.equals("")) {
@@ -1324,6 +1338,12 @@ public class ModelCommunityAnswerActivity extends FragmentActivity {
 
     //社区问答的列表 - 上拉加载
     private void getCommunityDataMore(){
+        if (mThis.mStuId.equals("")){
+            if (smart_model_communityanswer != null){
+                smart_model_communityanswer.finishRefresh();
+            }
+            return;
+        }
         LoadingDialog.getInstance(mThis).show();
         LinearLayout communityanswer_linearlayout = mCommunityAnswerView.findViewById(R.id.communityanswer_linearlayout);
         Retrofit retrofit = new Retrofit.Builder()
@@ -1343,6 +1363,7 @@ public class ModelCommunityAnswerActivity extends FragmentActivity {
         paramsMap.put("pageNum", mCommunityAnswerCurrentPage);//第几页
         paramsMap.put("pageSize",mCommunityAnswerPageCount);//每页几条
         paramsMap.put("course_type",1);
+        paramsMap.put("stu_id", Integer.valueOf(mThis.mStuId));
         String strEntity = gson.toJson(paramsMap);
         if (mKey != null) {
             if (!mKey.equals("")) {
@@ -2574,19 +2595,35 @@ public class ModelCommunityAnswerActivity extends FragmentActivity {
             Toast.makeText(mThis, "问题发布失败!", Toast.LENGTH_SHORT).show();
             return;
         }
+        if (mThis.mToken == null) {
+            mIsPublish = true;
+            Toast.makeText(mThis, "先登录再发布问题!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (mThis.mToken.equals("")) {
+            mIsPublish = true;
+            Toast.makeText(mThis, "先登录再发布问题!", Toast.LENGTH_SHORT).show();
+            return;
+        }
         LoadingDialog.getInstance(mThis).show();
+        int timeout = 6000;
+        if (selPhotosPath.size() != 0){
+            timeout = timeout * selPhotosPath.size();
+        }
         OkHttpClient httpClient = new OkHttpClient.Builder()
                 .addInterceptor(chain -> {
                     String uu = UUID.randomUUID().toString();
                     Request request = chain.request()
                             .newBuilder()
                             .addHeader("Content-Type", "multipart/form-data; boundary=" + uu)
+                            .addHeader("Stuid", mThis.mStuId)
+                            .addHeader("permissioncode", mThis.mToken)
                             .build();
                     return chain.proceed(request);
                 })
-                .connectTimeout(3600, TimeUnit.SECONDS)
-                .writeTimeout(3600, TimeUnit.SECONDS)
-                .readTimeout(3600, TimeUnit.SECONDS)
+                .connectTimeout(timeout, TimeUnit.SECONDS)
+                .writeTimeout(timeout, TimeUnit.SECONDS)
+                .readTimeout(timeout, TimeUnit.SECONDS)
                 .build();
 
         Retrofit retrofit = new Retrofit.Builder()
@@ -2602,7 +2639,12 @@ public class ModelCommunityAnswerActivity extends FragmentActivity {
             params.put("file\"; filename=\""+ i + "#" + file.getName(), requestBody);
         }
         Call<ModelObservableInterface.BaseBean> call = modelObservableInterface.upLoadImage(params);
-        call.enqueue(new Callback<ModelObservableInterface.BaseBean> () {
+        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
+        formatter.setTimeZone(TimeZone.getTimeZone("GMT+00:00"));
+        String hms = formatter.format(timeout);
+        Toast.makeText(mThis, "正在上传图片，请耐心等候!预计时长：" + hms, Toast.LENGTH_LONG).show();
+        mIsPublish = false;
+        call.enqueue(new Callback<ModelObservableInterface.BaseBean>() {
             @Override
             public void onResponse(Call<ModelObservableInterface.BaseBean> call, Response<ModelObservableInterface.BaseBean> response) {
                 if (response == null){
@@ -2614,10 +2656,13 @@ public class ModelCommunityAnswerActivity extends FragmentActivity {
                 if (response.body() == null){
                     mIsPublish = true;
                     Toast.makeText(mThis, "问题发布时上传图像失败!", Toast.LENGTH_SHORT).show();
+                    LoadingDialog.getInstance(mThis).dismiss();
                     return;
                 }
-                if (response.body().getErrorCode() != 200){
+
+                if (response.code() != 200){
                     mIsPublish = true;
+                    Log.d("Tag：onFailure", response.message());
                     Toast.makeText(mThis, "问题发布时上传图像失败!", Toast.LENGTH_SHORT).show();
                     LoadingDialog.getInstance(mThis).dismiss();
                     return;
@@ -2643,7 +2688,7 @@ public class ModelCommunityAnswerActivity extends FragmentActivity {
             @Override
             public void onFailure(Call<ModelObservableInterface.BaseBean> call, Throwable t) {
                 if (t.getMessage() != null) {
-                    Log.d("Tag", t.getMessage().toString());
+                    Log.d("Tag：onFailure", t.getMessage().toString());
                 }
                 mIsPublish = true;
                 LoadingDialog.getInstance(mThis).dismiss();

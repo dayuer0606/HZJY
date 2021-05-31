@@ -344,6 +344,24 @@ public interface ModelObservableInterface {
     Call<ClassPacket.CoursePacketBean> queryAllcoursePackageSearchBox(@Body RequestBody body);
 
     /**
+     * 我的界面 查询数量（学习记录、我的收藏、是否有未读、我的问答）
+     *
+     * @param body 请求体
+     **/
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST("app/user/queryMyPageNum")
+    Call<ModelMy.MyMsgBean> queryMyPageNum(@Body RequestBody body);
+
+    /**
+     * 我的界面（是否有未读）
+     *
+     * @param body 请求体
+     **/
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST("app/user/queryMyMsg")
+    Call<BaseBean1> queryMyMsg(@Body RequestBody body);
+
+    /**
      * 查询个人信息详情（我的界面）
      *
      * @param body 请求体（token：用户标识)
@@ -647,6 +665,7 @@ public interface ModelObservableInterface {
         private String data;
         private int code;
         private String message;
+        private String msg;
 
         public String getData() {
             return data;
@@ -670,6 +689,14 @@ public interface ModelObservableInterface {
 
         public void setErrorMsg(String message) {
             this.message = message;
+        }
+
+        public String getMsg() {
+            return msg;
+        }
+
+        public void setMsg(String msg) {
+            this.msg = msg;
         }
     }
 

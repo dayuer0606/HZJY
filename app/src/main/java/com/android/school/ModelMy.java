@@ -46,6 +46,8 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
+import org.w3c.dom.Text;
+
 import java.io.File;
 import java.lang.reflect.Field;
 import java.text.ParseException;
@@ -245,6 +247,9 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                 }
             }).error(mMainContext.getResources().getDrawable(R.drawable.modelmy_myheaddefault)).into(headportraitImageView);
         }
+
+        getQueryMyPageNum();
+        getQueryMyMsg();
     }
 
     //展示我的课程界面
@@ -1937,6 +1942,110 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
         });
     }
 
+    private void getQueryMyPageNum() {
+        if (mMainContext.mStuId.equals("")){
+            return;
+        }
+        LoadingDialog.getInstance(mMainContext).show();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(mMainContext.mIpadress)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(ModelObservableInterface.client)
+                .build();
+
+        ModelObservableInterface modelObservableInterface = retrofit.create(ModelObservableInterface.class);
+
+        Gson gson = new Gson();
+
+        HashMap<String, Integer> paramsMap = new HashMap<>();
+        paramsMap.put("stu_id", Integer.valueOf(mMainContext.mStuId));
+        String strEntity = gson.toJson(paramsMap);
+        RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json;charset=UTF-8"), strEntity);
+        Call<MyMsgBean> call = modelObservableInterface.queryMyPageNum(body);
+        call.enqueue(new Callback<MyMsgBean>() {
+            @Override
+            public void onResponse(Call<MyMsgBean> call, Response<MyMsgBean> response) {
+                MyMsgBean myMsgBean = response.body();
+                if (myMsgBean == null) {
+                    Toast.makeText(mMainContext, "获取信息失败", Toast.LENGTH_LONG).show();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
+                    return;
+                }
+                if (!HeaderInterceptor.IsErrorCode(myMsgBean.getCode(),myMsgBean.getMsg())){
+                    LoadingDialog.getInstance(mMainContext).dismiss();
+                    return;
+                }
+                //网络请求数据成功
+                int collect_num = myMsgBean.coursePackageNUM +
+                        myMsgBean.courseNUM + myMsgBean.myCollectionQuestionNUM;
+                int my_question = myMsgBean.questionWENnum;
+                int learn_num = myMsgBean.itemBankNUM + myMsgBean.recordingNUM;
+                TextView mycollect_num = mMyView.findViewById(R.id.mycollect_num);
+                mycollect_num.setText(collect_num + "");
+                TextView myanswer_num = mMyView.findViewById(R.id.myanswer_num);
+                myanswer_num.setText(my_question + "");
+                TextView my_learn_record_num = mMyView.findViewById(R.id.my_learn_record_num);
+                my_learn_record_num.setText(learn_num + "");
+                LoadingDialog.getInstance(mMainContext).dismiss();
+            }
+
+            @Override
+            public void onFailure(Call<MyMsgBean> call, Throwable t) {
+                Toast.makeText(mMainContext, "获取信息失败", Toast.LENGTH_LONG).show();
+                LoadingDialog.getInstance(mMainContext).dismiss();
+            }
+        });
+    }
+
+    private void getQueryMyMsg() {
+        if (mMainContext.mStuId.equals("")){
+            return;
+        }
+        LoadingDialog.getInstance(mMainContext).show();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(mMainContext.mIpadress)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(ModelObservableInterface.client)
+                .build();
+
+        ModelObservableInterface modelObservableInterface = retrofit.create(ModelObservableInterface.class);
+
+        Gson gson = new Gson();
+
+        HashMap<String, Integer> paramsMap = new HashMap<>();
+        paramsMap.put("stu_id", Integer.valueOf(mMainContext.mStuId));
+        String strEntity = gson.toJson(paramsMap);
+        RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json;charset=UTF-8"), strEntity);
+        Call<ModelObservableInterface.BaseBean1> call = modelObservableInterface.queryMyMsg(body);
+        call.enqueue(new Callback<ModelObservableInterface.BaseBean1>() {
+            @Override
+            public void onResponse(Call<ModelObservableInterface.BaseBean1> call, Response<ModelObservableInterface.BaseBean1> response) {
+                ModelObservableInterface.BaseBean1 baseBean = response.body();
+                if (baseBean == null) {
+                    Toast.makeText(mMainContext, "获取信息失败", Toast.LENGTH_LONG).show();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
+                    return;
+                }
+                if (!HeaderInterceptor.IsErrorCode(baseBean.getErrorCode(),baseBean.getMsg())){
+                    LoadingDialog.getInstance(mMainContext).dismiss();
+                    return;
+                }
+                int hava_msg = Integer.parseInt(baseBean.getData());
+                if (hava_msg != 0) {
+                    ImageView notice = mMyView.findViewById(R.id.notice);
+                    notice.setBackground(getResources().getDrawable(R.drawable.button_notice_have));
+                }
+                LoadingDialog.getInstance(mMainContext).dismiss();
+            }
+
+            @Override
+            public void onFailure(Call<ModelObservableInterface.BaseBean1> call, Throwable t) {
+                Toast.makeText(mMainContext, "获取信息失败", Toast.LENGTH_LONG).show();
+                LoadingDialog.getInstance(mMainContext).dismiss();
+            }
+        });
+    }
+
     @Override
     public void onRecive() {
 
@@ -1981,6 +2090,81 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
             private String login_number;    //账号
             private String ID_number;       //身份证号码
             private String email;           //邮箱
+        }
+    }
+
+    public static class MyMsgBean {
+        private int code;
+        private String msg;
+        private int coursePackageNUM;
+        private int itemBankNUM;
+        private int courseNUM;
+        private int questionWENnum;
+        private int myCollectionQuestionNUM;
+        private int recordingNUM;
+
+        public int getCode() {
+            return code;
+        }
+
+        public void setCode(int code) {
+            this.code = code;
+        }
+
+        public String getMsg() {
+            return msg;
+        }
+
+        public void setMsg(String msg) {
+            this.msg = msg;
+        }
+
+        public int getCoursePackageNUM() {
+            return coursePackageNUM;
+        }
+
+        public void setCoursePackageNUM(int coursePackageNUM) {
+            this.coursePackageNUM = coursePackageNUM;
+        }
+
+        public int getItemBankNUM() {
+            return itemBankNUM;
+        }
+
+        public void setItemBankNUM(int itemBankNUM) {
+            this.itemBankNUM = itemBankNUM;
+        }
+
+        public int getCourseNUM() {
+            return courseNUM;
+        }
+
+        public void setCourseNUM(int courseNUM) {
+            this.courseNUM = courseNUM;
+        }
+
+        public int getQuestionWENnum() {
+            return questionWENnum;
+        }
+
+        public void setQuestionWENnum(int questionWENnum) {
+            this.questionWENnum = questionWENnum;
+        }
+
+        public int getMyCollectionQuestionNUM() {
+            return myCollectionQuestionNUM;
+        }
+
+        public void setMyCollectionQuestionNUM(int myCollectionQuestionNUM) {
+            this.myCollectionQuestionNUM = myCollectionQuestionNUM;
+        }
+
+        public int getRecordingNUM() {
+            return recordingNUM;
+        }
+
+        public void setRecordingNUM(int recordingNUM) {
+            this.recordingNUM = recordingNUM;
         }
     }
 
