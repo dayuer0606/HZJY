@@ -531,9 +531,10 @@ public class ModelSetting extends Fragment {
             dialog.setCancelable(false);
             TextView button_cancel = dialog.findViewById(R.id.button_cancel);
             button_cancel.setOnClickListener(v1->{dialog.dismiss();});
-            // 确认更新
+            // 提交意见反馈
             dialog.findViewById(R.id.button_sure).setOnClickListener(v1 -> {
-                Toast.makeText(mMainContext,"意见已提交",Toast.LENGTH_SHORT).show();
+                EditText dialog_content = dialog.findViewById(R.id.dialog_content);
+                setSaveIdea(mPersonalInfoDataBean.stu_name,dialog_content.getText().toString());
                 dialog.dismiss();
             });
             dialog.show();
@@ -1133,6 +1134,61 @@ public class ModelSetting extends Fragment {
             }
         });
     }
+
+    //设置-提交意见反馈
+    private void setSaveIdea(String username, String idea) {
+        LoadingDialog.getInstance(mMainContext).show();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(mMainContext.mIpadress)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(ModelObservableInterface.client)
+                .build();
+
+        ModelObservableInterface modelObservableInterface = retrofit.create(ModelObservableInterface.class);
+
+        Gson gson = new Gson();
+
+        HashMap<String,String> paramsMap = new HashMap<>();
+        paramsMap.put("idea",idea);
+        paramsMap.put("name",username);
+        String strEntity = gson.toJson(paramsMap);
+        RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json;charset=UTF-8"),strEntity);
+        Call<ModelObservableInterface.BaseBean> call = modelObservableInterface.setSaveIdea(body);
+        call.enqueue(new Callback<ModelObservableInterface.BaseBean>() {
+            @Override
+            public void onResponse(Call<ModelObservableInterface.BaseBean> call, Response<ModelObservableInterface.BaseBean> response) {
+                if (response.code() != 200){
+                    Toast.makeText(mMainContext,"意见提交失败",Toast.LENGTH_LONG).show();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
+                    return;
+                }
+                ModelObservableInterface.BaseBean loginBean = response.body();//得到解析后的LoginBean对象
+                if (loginBean == null){
+                    Toast.makeText(mMainContext,"意见提交失败",Toast.LENGTH_LONG).show();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
+                    return;
+                }
+                if (!HeaderInterceptor.IsErrorCode(loginBean.getErrorCode(),loginBean.getErrorMsg())){
+                    LoadingDialog.getInstance(mMainContext).dismiss();
+                    return;
+                }
+                if (loginBean.getErrorCode() != 200 ){
+                    Toast.makeText(mMainContext,"意见提交失败",Toast.LENGTH_LONG).show();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
+                    return;
+                }
+                Toast.makeText(mMainContext,"意见已提交",Toast.LENGTH_LONG).show();
+                LoadingDialog.getInstance(mMainContext).dismiss();
+            }
+
+            @Override
+            public void onFailure(Call<ModelObservableInterface.BaseBean> call, Throwable t) {
+                Toast.makeText(mMainContext,"意见提交失败",Toast.LENGTH_LONG).show();
+                LoadingDialog.getInstance(mMainContext).dismiss();
+            }
+        });
+    }
+
 
     //设置-设置个人信息
     private void setPersonalInfoDatas(String nickname, String username, String user_sign, String phone, String email, String idCardNum) {

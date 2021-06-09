@@ -1288,6 +1288,18 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
         //isEnable 是否允许在非WiFi网络播放和缓存视频
     }
 
+    public void onClickSettingAboutUs(View view) {
+        //隐藏所有的底部按钮
+        mBottomNavigationView.setVisibility(View.INVISIBLE);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        hideAllFragment(transaction);
+        if (mModelSetting != null) {
+            mPage = "关于我们";
+            mBeforePage = "设置";
+            ((ModelSetting) mModelSetting).SettingAboutUsShow();
+        }
+    }
+
     //点击设置界面的关于我们-返回(取消修改，无需保存)
     public void onClickSettingAboutUsReturn(View view) {
         //隐藏所有的底部按钮
