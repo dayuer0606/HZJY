@@ -48,14 +48,14 @@ public class ModelHtmlUtils {
                 text.setText(resource);
                 return;
             }
-            text.setText(Html.fromHtml(resource, Html.FROM_HTML_MODE_COMPACT, imageGetter, null));
+            text.setText(span);
         } else {
             Spanned span = Html.fromHtml(resource, imageGetter, null);
             if (span.toString().equals("")){
                 text.setText(resource);
                 return;
             }
-            text.setText(Html.fromHtml(resource, imageGetter, null));
+            text.setText(span);
         }
     }
     Html.ImageGetter imageGetter = new Html.ImageGetter() {
@@ -88,7 +88,7 @@ public class ModelHtmlUtils {
                                 float picW = drawable.getIntrinsicWidth();
                                 float picH = drawable.getIntrinsicHeight();
                                 int width = outMetrics.widthPixels;
-                                drawable.setBounds(0,0,(int)picW,(int)picH);
+                                drawable.setBounds(0,0,width,(int)((picH/picW)*width));
                                 pic = drawable;
                                 if (Build.VERSION.SDK_INT >= 24) {
                                     Spanned span = Html.fromHtml(resource, Html.FROM_HTML_MODE_COMPACT, imageGetter, null);
@@ -96,21 +96,21 @@ public class ModelHtmlUtils {
                                         text.setText(resource);
                                         return;
                                     }
-                                    text.setText(Html.fromHtml(resource, Html.FROM_HTML_MODE_COMPACT, imageGetter, null));
+                                    text.setText(span);
                                 } else {
                                     Spanned span = Html.fromHtml(resource, imageGetter, null);
                                     if (span.toString().equals("")){
                                         text.setText(resource);
                                         return;
                                     }
-                                    text.setText(Html.fromHtml(resource, imageGetter, null));
+                                    text.setText(span);
                                 }
                             }
                         });
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-            });
+            }).start();
     }
 
     public static Bitmap readBitMap(Context context, int resId) {
