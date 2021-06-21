@@ -6,6 +6,8 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
+
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 
 import android.os.Bundle;
@@ -527,7 +529,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
             coursePacketInfo.mCoursePacketPrice = String.valueOf(listBean.favorable_price);//总价格
             coursePacketInfo.mCoursePacketCourseNum = String.valueOf(listBean.courseNum);
             coursePacketInfo.mCoursePacketPriceOld = String.valueOf(listBean.total_price);//数据原来的价格
-            coursePacketInfo.mCoursePacketLearnPersonNum= String.valueOf(listBean.buying_base_number);//购买人数
+            coursePacketInfo.mCoursePacketLearnPersonNum= String.valueOf(listBean.stuNum);//购买人数
             //跳转课程包详情
             ClassPacketDetails ClassPacketDetails = new ClassPacketDetails();
             View ClassPacketView = ClassPacketDetails.ClassPacketDetails(mMainContext, coursePacketInfo);
@@ -2526,8 +2528,14 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                     TextView modelmy_myclasspacket1_learnpersoncount = view.findViewById(R.id.modelmy_myclasspacket1_learnpersoncount);
                     modelmy_myclasspacket1_learnpersoncount.setText(coursePacketListBean.stuNum + "");
                     //学习进度
+                    NumberFormat nf = NumberFormat.getNumberInstance();
+                    nf.setMaximumFractionDigits(2);
                     TextView modelmy_myclasspacket1_learnprogresscount = view.findViewById(R.id.modelmy_myclasspacket1_learnprogresscount);
-                    modelmy_myclasspacket1_learnprogresscount.setText(coursePacketListBean.rateOfLearning * 100 + "%");
+                    if (coursePacketListBean.rateOfLearning == null) {
+                        modelmy_myclasspacket1_learnprogresscount.setText(0 + "%");
+                    } else {
+                        modelmy_myclasspacket1_learnprogresscount.setText(nf.format(coursePacketListBean.rateOfLearning * 100) + "%");
+                    }
                     modelmy_myclasspacket_main_content.addView(view);
                     TextView modelmy_myclasspacket1_golearn = view.findViewById(R.id.modelmy_myclasspacket1_golearn);
                     //添加每个课程包的监听，点击跳转到课程包详情
@@ -2540,7 +2548,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                         coursePacketInfo.mCoursePacketPrice = String.valueOf(coursePacketListBean.favorable_price);//总价格
                         coursePacketInfo.mCoursePacketCourseNum = String.valueOf(coursePacketListBean.courseNum);
                         coursePacketInfo.mCoursePacketPriceOld = String.valueOf(coursePacketListBean.total_price);//数据原来的价格
-                        coursePacketInfo.mCoursePacketLearnPersonNum= String.valueOf(coursePacketListBean.buying_base_number);//购买人数
+                        coursePacketInfo.mCoursePacketLearnPersonNum= String.valueOf(coursePacketListBean.stuNum);//购买人数
                         //跳转课程包详情
                         ClassPacketDetails ClassPacketDetails = new ClassPacketDetails();
                         View ClassPacketView = ClassPacketDetails.ClassPacketDetails(mMainContext, coursePacketInfo);
@@ -2675,7 +2683,9 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                     if (coursePacketListBean.rateOfLearning == null){
                         modelmy_myclasspacket1_learnprogresscount.setText(0 + "%");
                     } else {
-                        modelmy_myclasspacket1_learnprogresscount.setText(coursePacketListBean.rateOfLearning * 100 + "%");
+                        NumberFormat nf = NumberFormat.getNumberInstance();
+                        nf.setMaximumFractionDigits(2);
+                        modelmy_myclasspacket1_learnprogresscount.setText(nf.format(coursePacketListBean.rateOfLearning * 100) + "%");
                     }
                     modelmy_myclasspacket_main_content.addView(view);
                     TextView modelmy_myclasspacket1_golearn = view.findViewById(R.id.modelmy_myclasspacket1_golearn);
@@ -2689,7 +2699,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                         coursePacketInfo.mCoursePacketPrice = String.valueOf(coursePacketListBean.favorable_price);//总价格
                         coursePacketInfo.mCoursePacketCourseNum = String.valueOf(coursePacketListBean.courseNum);
                         coursePacketInfo.mCoursePacketPriceOld = String.valueOf(coursePacketListBean.total_price);//数据原来的价格
-                        coursePacketInfo.mCoursePacketLearnPersonNum= String.valueOf(coursePacketListBean.buying_base_number);//购买人数
+                        coursePacketInfo.mCoursePacketLearnPersonNum= String.valueOf(coursePacketListBean.stuNum);//购买人数
                         //跳转课程包详情
                         ClassPacketDetails ClassPacketDetails = new ClassPacketDetails();
                         View ClassPacketView = ClassPacketDetails.ClassPacketDetails(mMainContext, coursePacketInfo);

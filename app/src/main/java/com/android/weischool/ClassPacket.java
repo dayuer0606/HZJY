@@ -1259,7 +1259,7 @@ public class ClassPacket extends Fragment implements ClassPacketDetails.ClassPac
             private Integer courseNum;    //课程数量
             private String cp_name;     //	课程包名字
             private Double favorable_price;    //优惠价格
-            private Double buying_base_number;  //优惠价格
+            private Integer buying_base_number;  //购买人数
 
             public void setStageNum(Integer stageNum) {
                 this.stageNum = stageNum;
@@ -1285,7 +1285,7 @@ public class ClassPacket extends Fragment implements ClassPacketDetails.ClassPac
                 this.favorable_price = favorable_price;
             }
 
-            public void setBuying_base_number(Double buying_base_number) {
+            public void setBuying_base_number(Integer buying_base_number) {
                 this.buying_base_number = buying_base_number;
             }
 
