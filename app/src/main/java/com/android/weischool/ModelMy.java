@@ -22,6 +22,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
+import android.widget.EditText;
 import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -1378,7 +1379,12 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                 TextView button_sure = view.findViewById(R.id.button_sure);
                 button_sure.setOnClickListener(View -> {
                     //开始兑换优惠码
-                    mMyCouponDialog.cancel();
+                    EditText dialog_content = view.findViewById(R.id.dialog_content);
+                    if (dialog_content.getText().toString().equals("")){
+                        Toast.makeText(mMainContext,"兑换码不允许为空",Toast.LENGTH_LONG).show();
+                        return;
+                    }
+                    CheckBeforeExchangingCoupons(dialog_content.getText().toString());
                 });
             });
         }
@@ -8278,6 +8284,130 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                         LoadingDialog.getInstance(mMainContext).dismiss();
                     }
                 });
+    }
+
+    private void CheckBeforeExchangingCoupons(String coupon) {
+        LoadingDialog.getInstance(mMainContext).show();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(mMainContext.mIpadress)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(ModelObservableInterface.client)
+                .build();
+
+        ModelObservableInterface modelObservableInterface = retrofit.create(ModelObservableInterface.class);
+
+        Gson gson = new Gson();
+        HashMap<String,Integer> paramsMap = new HashMap<>();
+        paramsMap.put("stu_id", Integer.valueOf(mMainContext.mStuId));
+        String strEntity = gson.toJson(paramsMap);
+        HashMap<String,String> paramsMap1 = new HashMap<>();
+        paramsMap1.put("discount_code_value", coupon);
+        String strEntity1 = gson.toJson(paramsMap1);
+        strEntity1 = strEntity1.replace("{","");
+        strEntity = strEntity.replace("}","," + strEntity1);
+        RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json;charset=UTF-8"),strEntity);
+        Call<ModelObservableInterface.BaseBean> call = modelObservableInterface.checkBeforeExchangingCoupons(body);
+        call.enqueue(new Callback<ModelObservableInterface.BaseBean>() {
+            @Override
+            public void onResponse(Call<ModelObservableInterface.BaseBean> call, Response<ModelObservableInterface.BaseBean> response) {
+                int code = response.code();
+                if (code != 200){
+                    Log.e("TAG", "CheckBeforeExchangingCoupons  onErrorCode: " + code);
+                    Toast.makeText(mMainContext,"该优惠码不可用",Toast.LENGTH_LONG).show();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
+                    return;
+                }
+                if (response.body() == null){
+                    Log.e("TAG", "CheckBeforeExchangingCoupons  onErrorCode: " + code);
+                    Toast.makeText(mMainContext,"该优惠码不可用",Toast.LENGTH_LONG).show();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
+                    return;
+                }
+                if (!HeaderInterceptor.IsErrorCode(response.body().getErrorCode(),response.body().getErrorMsg())){
+                    LoadingDialog.getInstance(mMainContext).dismiss();
+                    return;
+                }
+                String message = response.body().getErrorMsg();
+                if (message == null){
+                    Log.e("TAG", "CheckBeforeExchangingCoupons  onErrorCode: " + code);
+                    Toast.makeText(mMainContext,"该优惠码不可用",Toast.LENGTH_LONG).show();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
+                    return;
+                }
+                if (message.equals("ok")) {
+                    redeemCoupons(coupon);
+                    LoadingDialog.getInstance(mMainContext).dismiss();
+                } else {
+                    Log.e("TAG", "CheckBeforeExchangingCoupons  onErrorCode: " + code);
+                    Toast.makeText(mMainContext,"该优惠码不可用",Toast.LENGTH_LONG).show();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
+                    return;
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ModelObservableInterface.BaseBean> call, Throwable t) {
+                Log.e("TAG", "onError: " + t.getMessage()+"" );
+                Toast.makeText(mMainContext,"兑换优惠券失败",Toast.LENGTH_LONG).show();
+                LoadingDialog.getInstance(mMainContext).dismiss();
+            }
+        });
+    }
+
+    private void redeemCoupons(String coupon) {
+        LoadingDialog.getInstance(mMainContext).show();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(mMainContext.mIpadress)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(ModelObservableInterface.client)
+                .build();
+
+        ModelObservableInterface modelObservableInterface = retrofit.create(ModelObservableInterface.class);
+
+        Gson gson = new Gson();
+        HashMap<String,Integer> paramsMap = new HashMap<>();
+        paramsMap.put("stu_id", Integer.valueOf(mMainContext.mStuId));
+        String strEntity = gson.toJson(paramsMap);
+        HashMap<String,String> paramsMap1 = new HashMap<>();
+        paramsMap1.put("discount_code_value", coupon);
+        String strEntity1 = gson.toJson(paramsMap1);
+        strEntity1 = strEntity1.replace("{","");
+        strEntity = strEntity.replace("}","," + strEntity1);
+        RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json;charset=UTF-8"),strEntity);
+        Call<ModelObservableInterface.BaseBean> call = modelObservableInterface.redeemCoupons(body);
+        call.enqueue(new Callback<ModelObservableInterface.BaseBean>() {
+            @Override
+            public void onResponse(Call<ModelObservableInterface.BaseBean> call, Response<ModelObservableInterface.BaseBean> response) {
+                int code = response.code();
+                if (code != 200){
+                    Log.e("TAG", "redeemCoupons  onErrorCode: " + code);
+                    Toast.makeText(mMainContext,"该优惠码已失效",Toast.LENGTH_LONG).show();
+                    LoadingDialog.getInstance(mMainContext).dismiss();
+                    return;
+                }
+                if (response.body() == null){
+                    LoadingDialog.getInstance(mMainContext).dismiss();
+                    return;
+                }
+                if (!HeaderInterceptor.IsErrorCode(response.body().getErrorCode(),response.body().getErrorMsg())){
+                    LoadingDialog.getInstance(mMainContext).dismiss();
+                    return;
+                }
+                Toast.makeText(mMainContext,"优惠码兑换成功",Toast.LENGTH_LONG).show();
+                if (mMyCouponDialog != null) {
+                    mMyCouponDialog.cancel();
+                }
+                mSmart_model_my_mycoupon.autoRefresh();
+                LoadingDialog.getInstance(mMainContext).dismiss();
+            }
+
+            @Override
+            public void onFailure(Call<ModelObservableInterface.BaseBean> call, Throwable t) {
+                Log.e("TAG", "onError: " + t.getMessage()+"" );
+                Toast.makeText(mMainContext,"兑换优惠券失败",Toast.LENGTH_LONG).show();
+                LoadingDialog.getInstance(mMainContext).dismiss();
+            }
+        });
     }
 
     //我的优惠券列表
