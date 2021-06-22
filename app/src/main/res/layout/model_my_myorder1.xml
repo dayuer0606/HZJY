@@ -13,8 +13,8 @@
         android:background="@drawable/textview_style_rect_black">
         <ImageView
             android:id="@+id/modelmy_myorder1_orderimage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/dp18"
+            android:layout_height="@dimen/dp18"
             android:layout_marginTop="@dimen/dp15"
             android:layout_marginLeft="@dimen/dp13"
             android:background="@drawable/my_order_pay_success"/>
@@ -86,9 +86,8 @@
             android:textColor="#8D8D8D"
             android:singleLine="true"
             android:ellipsize="end"
-            android:maxLength="20"
-            android:layout_marginTop="@dimen/dp15"
-            android:layout_marginLeft="@dimen/dp13"
+            android:maxLength="23"
+            android:layout_marginTop="@dimen/dp8"
             android:layout_toRightOf="@id/modelmy_myorder1_ordernumbertitle"
             android:layout_below="@id/modelmy_myorder1_orderstate"
             android:layout_marginBottom="@dimen/dp_20"/>
@@ -126,6 +125,7 @@
             android:textColor="#8D8D8D"
             android:layout_marginTop="@dimen/dp8"
             android:layout_marginLeft="@dimen/dp13"
+            android:layout_marginBottom="@dimen/dp13"
             android:layout_alignParentLeft="true"
             android:layout_below="@id/modelmy_myorder1_ordermoneytitle"/>
 
