@@ -1,5 +1,6 @@
 package com.android.weischool;
 
+import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
 import android.content.ClipData;
 import android.content.ClipboardManager;
@@ -1035,6 +1036,27 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
 
     //展示我的订单-子集合
     private void MyOrderShow_MyOrder(LinearLayout modelmy_myorder_main_content,MyOrderlistBean.DataBean.ListBean listBean) {
+        Date date = null;
+        String invalid_date_date = "";
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        try {
+            date = df.parse(listBean.order_time);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        if (date != null) {
+            SimpleDateFormat df1 = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", Locale.UK);
+            Date date1 = null;
+            try {
+                date1 = df1.parse(date.toString());
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            if (date1 != null) {
+                SimpleDateFormat df2 = new SimpleDateFormat("yyyy-MM-dd");
+                invalid_date_date = df2.format(date1);
+            }
+        }
         //MyOrderShow_MyOrder_view3支付需要控制订单是否取消和是否重新支付
         if (listBean.order_status.equals("未支付")) {
             //全部订单的网络数据
@@ -1042,9 +1064,12 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
             View MyOrderShow_MyOrder_view1 = LayoutInflater.from(mMainContext).inflate(R.layout.model_my_myorder1, null);
             TextView modelmy_myorder1_ordername1 = MyOrderShow_MyOrder_view1.findViewById(R.id.modelmy_myorder1_ordername);
             modelmy_myorder1_ordername1.setText(listBean.product_name);
+            TextView modelmy_myorder1_orderdate = MyOrderShow_MyOrder_view1.findViewById(R.id.modelmy_myorder1_orderdate);
+            modelmy_myorder1_orderdate.setText(invalid_date_date);
             TextView modelmy_myorder1_orderstate1 = MyOrderShow_MyOrder_view1.findViewById(R.id.modelmy_myorder1_orderstate);
-            modelmy_myorder1_orderstate1.setText("待支付");
-            modelmy_myorder1_orderstate1.setTextColor(MyOrderShow_MyOrder_view1.getResources().getColor(R.color.text_orange1));
+            modelmy_myorder1_orderstate1.setText("支付状态：待支付");
+            ImageView modelmy_myorder1_orderimage = MyOrderShow_MyOrder_view1.findViewById(R.id.modelmy_myorder1_orderimage);
+            modelmy_myorder1_orderimage.setBackground(getResources().getDrawable(R.drawable.my_order_pay_fail));
             TextView modelmy_myorder1_ordernumber1 = MyOrderShow_MyOrder_view1.findViewById(R.id.modelmy_myorder1_ordernumber);
             modelmy_myorder1_ordernumber1.setText(listBean.order_num);
             TextView modelmy_myorder1_ordermoney1 = MyOrderShow_MyOrder_view1.findViewById(R.id.modelmy_myorder1_ordermoney);
@@ -1068,9 +1093,10 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
             View MyOrderShow_MyOrder_view3 = LayoutInflater.from(mMainContext).inflate(R.layout.model_my_myorder1, null);
             TextView modelmy_myorder1_ordername = MyOrderShow_MyOrder_view3.findViewById(R.id.modelmy_myorder1_ordername);
             modelmy_myorder1_ordername.setText(listBean.product_name);
+            TextView modelmy_myorder1_orderdate = MyOrderShow_MyOrder_view3.findViewById(R.id.modelmy_myorder1_orderdate);
+            modelmy_myorder1_orderdate.setText(invalid_date_date);
             TextView modelmy_myorder1_orderstate = MyOrderShow_MyOrder_view3.findViewById(R.id.modelmy_myorder1_orderstate);
-            modelmy_myorder1_orderstate.setText("支付成功");
-//            modelmy_myorder1_orderstate.setTextColor(MyOrderShow_MyOrder_view3.getResources().getColor(R.color.green1));
+            modelmy_myorder1_orderstate.setText("支付状态：支付成功");
             TextView modelmy_myorder1_ordernumber = MyOrderShow_MyOrder_view3.findViewById(R.id.modelmy_myorder1_ordernumber);
             modelmy_myorder1_ordernumber.setText(listBean.order_num);
             TextView modelmy_myorder1_ordermoney = MyOrderShow_MyOrder_view3.findViewById(R.id.modelmy_myorder1_ordermoney);
@@ -1089,9 +1115,12 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
             View MyOrderShow_MyOrder_view2 = LayoutInflater.from(mMainContext).inflate(R.layout.model_my_myorder1, null);
             TextView modelmy_myorder1_ordername = MyOrderShow_MyOrder_view2.findViewById(R.id.modelmy_myorder1_ordername);
             modelmy_myorder1_ordername.setText(listBean.product_name);
+            TextView modelmy_myorder1_orderdate = MyOrderShow_MyOrder_view2.findViewById(R.id.modelmy_myorder1_orderdate);
+            modelmy_myorder1_orderdate.setText(invalid_date_date);
             TextView modelmy_myorder1_orderstate = MyOrderShow_MyOrder_view2.findViewById(R.id.modelmy_myorder1_orderstate);
-            modelmy_myorder1_orderstate.setText(listBean.order_status);
-            modelmy_myorder1_orderstate.setTextColor(MyOrderShow_MyOrder_view2.getResources().getColor(R.color.holo_red_dark));
+            modelmy_myorder1_orderstate.setText("支付状态：" + listBean.order_status);
+            ImageView modelmy_myorder1_orderimage = MyOrderShow_MyOrder_view2.findViewById(R.id.modelmy_myorder1_orderimage);
+            modelmy_myorder1_orderimage.setBackground(getResources().getDrawable(R.drawable.my_order_pay_fail));
             TextView modelmy_myorder1_ordernumber = MyOrderShow_MyOrder_view2.findViewById(R.id.modelmy_myorder1_ordernumber);
             modelmy_myorder1_ordernumber.setText(listBean.order_num);
             TextView modelmy_myorder1_ordermoney = MyOrderShow_MyOrder_view2.findViewById(R.id.modelmy_myorder1_ordermoney);
@@ -1110,9 +1139,10 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
             View MyOrderShow_MyOrder_view3 = LayoutInflater.from(mMainContext).inflate(R.layout.model_my_myorder1, null);
             TextView modelmy_myorder1_ordername = MyOrderShow_MyOrder_view3.findViewById(R.id.modelmy_myorder1_ordername);
             modelmy_myorder1_ordername.setText(listBean.product_name);
+            TextView modelmy_myorder1_orderdate = MyOrderShow_MyOrder_view3.findViewById(R.id.modelmy_myorder1_orderdate);
+            modelmy_myorder1_orderdate.setText(invalid_date_date);
             TextView modelmy_myorder1_orderstate = MyOrderShow_MyOrder_view3.findViewById(R.id.modelmy_myorder1_orderstate);
-            modelmy_myorder1_orderstate.setText("汇款确认中");
-            modelmy_myorder1_orderstate.setTextColor(MyOrderShow_MyOrder_view3.getResources().getColor(R.color.holo_red_dark));
+            modelmy_myorder1_orderstate.setText("支付状态：汇款确认中");
             TextView modelmy_myorder1_ordernumber = MyOrderShow_MyOrder_view3.findViewById(R.id.modelmy_myorder1_ordernumber);
             modelmy_myorder1_ordernumber.setText(listBean.order_num);
             TextView modelmy_myorder1_ordermoney = MyOrderShow_MyOrder_view3.findViewById(R.id.modelmy_myorder1_ordermoney);
@@ -1128,42 +1158,6 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
             modelmy_myorder1_orderfunction.setLayoutParams(rl);
         }
     }
-//       //订单待支付
-//    private void initOrderAll() {
-//        TextView modelmy_myorder1_ordername = MyOrderShow_MyOrder_view2.findViewById(R.id.modelmy_myorder1_ordername);
-//        modelmy_myorder1_ordername.setText(mMyOrderListBean.product_name);
-//        TextView modelmy_myorder1_orderstate = MyOrderShow_MyOrder_view2.findViewById(R.id.modelmy_myorder1_orderstate);
-//        modelmy_myorder1_orderstate.setText(mMyOrderListBean.order_status);
-//        modelmy_myorder1_orderstate.setTextColor(MyOrderShow_MyOrder_view2.getResources().getColor(R.color.holo_red_dark));
-//        TextView modelmy_myorder1_ordernumber = MyOrderShow_MyOrder_view2.findViewById(R.id.modelmy_myorder1_ordernumber);
-//        modelmy_myorder1_ordernumber.setText(mMyOrderListBean.order_num);
-//        TextView modelmy_myorder1_ordermoney = MyOrderShow_MyOrder_view2.findViewById(R.id.modelmy_myorder1_ordermoney);
-//        modelmy_myorder1_ordermoney.setText(mMyOrderListBean.product_price+"");
-//    }
-//         //订单支付成功
-//    private void initOrderFinish() {
-//        TextView modelmy_myorder1_ordername = MyOrderShow_MyOrder_view2.findViewById(R.id.modelmy_myorder1_ordername);
-//        modelmy_myorder1_ordername.setText(mMyOrderListBean.product_name);
-//        TextView modelmy_myorder1_orderstate = MyOrderShow_MyOrder_view2.findViewById(R.id.modelmy_myorder1_orderstate);
-//        modelmy_myorder1_orderstate.setText(mMyOrderListBean.order_status);
-//        modelmy_myorder1_orderstate.setTextColor(MyOrderShow_MyOrder_view2.getResources().getColor(R.color.holo_red_dark));
-//        TextView modelmy_myorder1_ordernumber = MyOrderShow_MyOrder_view2.findViewById(R.id.modelmy_myorder1_ordernumber);
-//        modelmy_myorder1_ordernumber.setText(mMyOrderListBean.order_num);
-//        TextView modelmy_myorder1_ordermoney = MyOrderShow_MyOrder_view2.findViewById(R.id.modelmy_myorder1_ordermoney);
-//        modelmy_myorder1_ordermoney.setText(mMyOrderListBean.product_price+"");
-//    }
-//    //订单支付不成功
-//        private void initOrderUnFinish() {
-//        TextView modelmy_myorder1_ordername = MyOrderShow_MyOrder_view2.findViewById(R.id.modelmy_myorder1_ordername);
-//        modelmy_myorder1_ordername.setText(mMyOrderListBean.product_name);
-//        TextView modelmy_myorder1_orderstate = MyOrderShow_MyOrder_view2.findViewById(R.id.modelmy_myorder1_orderstate);
-//        modelmy_myorder1_orderstate.setText(mMyOrderListBean.order_status);
-//        modelmy_myorder1_orderstate.setTextColor(MyOrderShow_MyOrder_view2.getResources().getColor(R.color.holo_red_dark));
-//        TextView modelmy_myorder1_ordernumber = MyOrderShow_MyOrder_view2.findViewById(R.id.modelmy_myorder1_ordernumber);
-//        modelmy_myorder1_ordernumber.setText(mMyOrderListBean.order_num);
-//        TextView modelmy_myorder1_ordermoney = MyOrderShow_MyOrder_view2.findViewById(R.id.modelmy_myorder1_ordermoney);
-//        modelmy_myorder1_ordermoney.setText(mMyOrderListBean.product_price+"");
-//    }
     //订单详情
     private void MyOrderShow_OrderDetails(MyOrderDetailsBean.DataBean dataBean,String state) {
         if (mview == null || dataBean == null) {
@@ -5754,7 +5748,7 @@ public class ModelMy extends Fragment implements ModelOrderDetailsInterface{
                         if (MyOrderShow_MyOrder_view1 != null) {
                             TextView modelmy_myorder1_orderstate1 = MyOrderShow_MyOrder_view1.findViewById(R.id.modelmy_myorder1_orderstate);
                             //取消支付，将此订单设置为失效
-                            modelmy_myorder1_orderstate1.setText("支付失败");
+                            modelmy_myorder1_orderstate1.setText("支付状态：支付失败");
                             RelativeLayout modelmy_myorder1_orderfunction2 = MyOrderShow_MyOrder_view1.findViewById(R.id.modelmy_myorder1_orderfunction);
                             RelativeLayout.LayoutParams r2 = (RelativeLayout.LayoutParams) modelmy_myorder1_orderfunction2.getLayoutParams();
                             r2.height = 0;

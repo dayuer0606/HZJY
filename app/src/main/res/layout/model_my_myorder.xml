@@ -105,13 +105,13 @@
             android:background="#FF6740"
             android:scaleType="matrix" />
 
-        <View
-            android:id="@+id/modelmy_myorder_line2"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp1"
-            android:layout_below="@id/modelmy_myorder_cursor1"
-            android:layout_gravity="center_horizontal"
-            android:background="#e5e5e5" />
+<!--        <View-->
+<!--            android:id="@+id/modelmy_myorder_line2"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="@dimen/dp1"-->
+<!--            android:layout_below="@id/modelmy_myorder_cursor1"-->
+<!--            android:layout_gravity="center_horizontal"-->
+<!--            android:background="#e5e5e5" />-->
 
 
         <com.scwang.smartrefresh.layout.SmartRefreshLayout

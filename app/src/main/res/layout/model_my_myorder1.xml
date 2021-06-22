@@ -8,87 +8,132 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dp15"
-        android:background="@color/white">
+        android:layout_marginLeft="@dimen/dp13"
+        android:layout_marginRight="@dimen/dp13"
+        android:background="@drawable/textview_style_rect_black">
+        <ImageView
+            android:id="@+id/modelmy_myorder1_orderimage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp15"
+            android:layout_marginLeft="@dimen/dp13"
+            android:background="@drawable/my_order_pay_success"/>
         <TextView
             android:id="@+id/modelmy_myorder1_ordername"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=""
-            android:textSize="@dimen/textsize17"
-            android:textColor="#333333"
+            android:textSize="@dimen/textsize16"
+            android:textColor="#212832"
             android:singleLine="true"
             android:ellipsize="end"
+            android:textStyle="bold"
             android:maxLength="13"
+            android:layout_toRightOf="@id/modelmy_myorder1_orderimage"
             android:layout_marginTop="@dimen/dp15"
-            android:layout_marginLeft="@dimen/dp13"/>
+            android:layout_marginLeft="@dimen/dp9"/>
+
+        <TextView
+            android:id="@+id/modelmy_myorder1_orderdate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textColor="#B8B8B8"
+            android:textSize="@dimen/textsize12"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/dp13"
+            android:layout_alignBottom="@id/modelmy_myorder1_ordername"/>
+        <View
+            android:id="@+id/modelmy_myorder1_view1"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp0_5"
+            android:background="@color/grayccbab9b9"
+            android:layout_marginTop="@dimen/dp8"
+            android:layout_marginLeft="@dimen/dp13"
+            android:layout_marginRight="@dimen/dp13"
+            android:layout_below="@id/modelmy_myorder1_ordername"/>
+
         <TextView
             android:id="@+id/modelmy_myorder1_orderstate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="支付成功"
-            android:textColor="#0fca79"
-            android:textSize="@dimen/textsize15"
-            android:layout_alignParentRight="true"
+            android:text="支付状态："
+            android:textColor="#8D8D8D"
+            android:textSize="@dimen/textsize13"
+            android:layout_alignParentLeft="true"
             android:layout_marginRight="@dimen/dp13"
-            android:layout_alignBottom="@id/modelmy_myorder1_ordername"/>
+            android:layout_marginTop="@dimen/dp8"
+            android:layout_marginLeft="@dimen/dp13"
+            android:layout_below="@id/modelmy_myorder1_view1"/>
         <TextView
             android:id="@+id/modelmy_myorder1_ordernumbertitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="订单编号："
-            android:textSize="@dimen/textsize15"
-            android:textColor="#999999"
+            android:textSize="@dimen/textsize13"
+            android:textColor="#8D8D8D"
             android:singleLine="true"
             android:ellipsize="end"
-            android:layout_marginTop="@dimen/dp15"
+            android:layout_marginTop="@dimen/dp8"
             android:layout_marginLeft="@dimen/dp13"
-            android:layout_below="@id/modelmy_myorder1_ordername"/>
+            android:layout_below="@id/modelmy_myorder1_orderstate"/>
         <TextView
             android:id="@+id/modelmy_myorder1_ordernumber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=""
-            android:textSize="@dimen/textsize15"
-            android:textColor="#999999"
+            android:textSize="@dimen/textsize13"
+            android:textColor="#8D8D8D"
             android:singleLine="true"
             android:ellipsize="end"
             android:maxLength="20"
             android:layout_marginTop="@dimen/dp15"
             android:layout_marginLeft="@dimen/dp13"
             android:layout_toRightOf="@id/modelmy_myorder1_ordernumbertitle"
-            android:layout_below="@id/modelmy_myorder1_ordername"
+            android:layout_below="@id/modelmy_myorder1_orderstate"
             android:layout_marginBottom="@dimen/dp_20"/>
         <TextView
             android:id="@+id/modelmy_myorder1_ordermoneytitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="¥ "
-            android:textSize="@dimen/textsize16"
-            android:textColor="#999999"
-            android:layout_marginTop="@dimen/dp15"
+            android:text="实付款："
+            android:textSize="@dimen/textsize13"
+            android:textColor="#8D8D8D"
+            android:layout_marginTop="@dimen/dp8"
             android:layout_marginLeft="@dimen/dp13"
-            android:layout_toLeftOf="@+id/modelmy_myorder1_ordermoney"
-            android:layout_alignBottom="@id/modelmy_myorder1_ordernumbertitle"
-            android:layout_below="@id/modelmy_myorder1_ordername"/>
+            android:layout_alignParentLeft="true"
+            android:layout_below="@id/modelmy_myorder1_ordernumbertitle"/>
         <TextView
             android:id="@+id/modelmy_myorder1_ordermoney"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=""
-            android:textSize="@dimen/textsize16"
-            android:textColor="#999999"
+            android:textSize="@dimen/textsize13"
+            android:textColor="#8D8D8D"
             android:singleLine="true"
             android:ellipsize="end"
-            android:layout_marginTop="@dimen/dp15"
+            android:layout_marginTop="@dimen/dp8"
             android:layout_marginRight="@dimen/dp13"
-            android:layout_alignParentRight="true"
-            android:layout_alignBottom="@id/modelmy_myorder1_ordernumbertitle"
-            android:layout_below="@id/modelmy_myorder1_ordername"/>
+            android:layout_toRightOf="@id/modelmy_myorder1_ordermoneytitle"
+            android:layout_below="@id/modelmy_myorder1_ordernumbertitle"/>
+
+        <TextView
+            android:id="@+id/modelmy_myorder1_orderpaystyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="支付方式："
+            android:textSize="@dimen/textsize13"
+            android:textColor="#8D8D8D"
+            android:layout_marginTop="@dimen/dp8"
+            android:layout_marginLeft="@dimen/dp13"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@id/modelmy_myorder1_ordermoneytitle"/>
+
         <RelativeLayout
             android:id="@+id/modelmy_myorder1_orderfunction"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/modelmy_myorder1_ordernumber">
+            android:layout_below="@id/modelmy_myorder1_orderpaystyle">
             <View
                 android:id="@+id/modelmy_myorder1_line1"
                 android:layout_width="match_parent"

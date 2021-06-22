@@ -249,7 +249,10 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
             if (i3 - i7 < -1){
                 mBottomNavigationView.setVisibility(View.INVISIBLE);
             }else {
-                mBottomNavigationView.setVisibility(View.VISIBLE);
+                if (mPage.equals("首页") || mPage.equals("课程") || mPage.equals("课程包")
+                        || mPage.equals("课程表") || mPage.equals("我的")) {
+                    mBottomNavigationView.setVisibility(View.VISIBLE);
+                }
             }
         });
         //判断底部菜单使用哪些菜单
@@ -1386,12 +1389,6 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
         if (mClassPacket != null){
             ((ClassPacket)mClassPacket).CoursePacketMainSearchConditionShow();
         }
-    }
-
-    //点击课程主界面的返回按钮
-    public void onClickCourseMainReturn(View view){
-        Page_HomePage();
-        mBottomNavigationView.setVisibility(View.VISIBLE);
     }
 
     //点击课程主界面查询按钮
