@@ -2204,25 +2204,27 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
                     onClickLearnRecord(null);
                     return true;
                 } else if (beforePageS[beforePageS.length - 1].equals("我的缓存") && mPage.equals("我的缓存播放")){ //说明上个界面是我的界面
-                    if (mAliyunVodPlayerView != null) {
-                        mAliyunVodPlayerView.onStop();
-                        int time1 = mAliyunVodPlayerView.getVideoPostion();
-//                        String videoId = mAliyunVodPlayerView.VideoIdGet();
-                        String SectionsId = mAliyunVodPlayerView.SectionsIdGet();
-                        mAliyunVodPlayerView.onDestroy();
-                        mAliyunVodPlayerView = null;
-                        if (!SectionsId.equals("")) {
-                            SetCourseVideoDuration(Integer.valueOf(SectionsId),time1);
-                        }
-                    }
-                    mPage = "我的缓存";
-                    mBeforePage = "我的";
-                    if(mModelMy != null){
-                        if (downloadView == null){
-                            downloadView = new DownloadView(this);
-                        }
-                        ((ModelMy) mModelMy).MyCacheShow(downloadView);
-                    }
+
+                    onReturn();
+                    //                    if (mAliyunVodPlayerView != null) {
+//                        mAliyunVodPlayerView.onStop();
+//                        int time1 = mAliyunVodPlayerView.getVideoPostion();
+////                        String videoId = mAliyunVodPlayerView.VideoIdGet();
+//                        String SectionsId = mAliyunVodPlayerView.SectionsIdGet();
+//                        mAliyunVodPlayerView.onDestroy();
+//                        mAliyunVodPlayerView = null;
+//                        if (!SectionsId.equals("")) {
+//                            SetCourseVideoDuration(Integer.valueOf(SectionsId),time1);
+//                        }
+//                    }
+//                    mPage = "我的缓存";
+//                    mBeforePage = "我的";
+//                    if(mModelMy != null){
+//                        if (downloadView == null){
+//                            downloadView = new DownloadView(this);
+//                        }
+//                        ((ModelMy) mModelMy).MyCacheShow(downloadView);
+//                    }
                 } else if (beforePageS[beforePageS.length - 1].equals("首页") && mPage.equals("课程")){ //说明上个界面是首页界面
                     Page_HomePage();
                     return true;
@@ -3509,35 +3511,35 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
         }
     }
     private int currentVideoPosition;
-    /**
-     * 播放下一个视频
-     */
-    private void onNext() {
-        if (currentError == ErrorInfo.UnConnectInternet) {
-            // 此处需要判断网络和播放类型
-            // 网络资源, 播放完自动波下一个, 无网状态提示ErrorTipsView
-            // 本地资源, 播放完需要重播, 显示Replay, 此处不需要处理
-            if ("vidsts".equals(PlayParameter.PLAY_PARAM_TYPE)) {
-                mAliyunVodPlayerView.showErrorTipView(4014, "-1", "当前网络不可用");
-            }
-            return;
-        }
-
-        if (alivcVideoInfos != null) {
-            currentVideoPosition++;
-            if (currentVideoPosition > alivcVideoInfos.size() - 1) {
-                //列表循环播放，如发现播放完成了从列表的第一个开始重新播放
-                currentVideoPosition = 0;
-            }
-
-            if (alivcVideoInfos.size() > 0) {
-                AlivcVideoInfo.DataBean.VideoListBean video = alivcVideoInfos.get(currentVideoPosition);
-                if (video != null) {
-                    changePlayVidSource(video);
-                }
-            }
-        }
-    }
+//    /**
+//     * 播放下一个视频
+//     */
+//    private void onNext() {
+//        if (currentError == ErrorInfo.UnConnectInternet) {
+//            // 此处需要判断网络和播放类型
+//            // 网络资源, 播放完自动波下一个, 无网状态提示ErrorTipsView
+//            // 本地资源, 播放完需要重播, 显示Replay, 此处不需要处理
+//            if ("vidsts".equals(PlayParameter.PLAY_PARAM_TYPE)) {
+//                mAliyunVodPlayerView.showErrorTipView(4014, "-1", "当前网络不可用");
+//            }
+//            return;
+//        }
+//
+//        if (alivcVideoInfos != null) {
+//            currentVideoPosition++;
+//            if (currentVideoPosition > alivcVideoInfos.size() - 1) {
+//                //列表循环播放，如发现播放完成了从列表的第一个开始重新播放
+//                currentVideoPosition = 0;
+//            }
+//
+//            if (alivcVideoInfos.size() > 0) {
+//                AlivcVideoInfo.DataBean.VideoListBean video = alivcVideoInfos.get(currentVideoPosition);
+//                if (video != null) {
+//                    changePlayVidSource(video);
+//                }
+//            }
+//        }
+//    }
     /**
      * 播放本地资源
      */
@@ -3548,34 +3550,34 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
         mAliyunVodPlayerView.setLocalSource(urlSource);
     }
 
-    /**
-     * 切换播放vid资源
-     *
-     * @param video 要切换的资源
-     */
-    private void changePlayVidSource(AlivcVideoInfo.DataBean.VideoListBean video) {
-        mDownloadInPrepare = true;
-        VidSts vidSts = new VidSts();
-        PlayParameter.PLAY_PARAM_VID = video.getVideoId();
-        mAliyunVodPlayerView.setAutoPlay(!mIsInBackground);
-        //切换资源重置下载flag
-        mDownloadInPrepare = false;
-        /**
-         * 如果是鉴权过期
-         */
-        if (mIsTimeExpired) {
-            onTimExpiredError();
-        } else {
-            vidSts.setVid(PlayParameter.PLAY_PARAM_VID);
-            vidSts.setRegion(PlayParameter.PLAY_PARAM_REGION);
-            vidSts.setAccessKeyId(PlayParameter.PLAY_PARAM_AK_ID);
-            vidSts.setAccessKeySecret(PlayParameter.PLAY_PARAM_AK_SECRE);
-            vidSts.setSecurityToken(PlayParameter.PLAY_PARAM_SCU_TOKEN);
-            vidSts.setTitle(video.getTitle());
-            mAliyunVodPlayerView.setVidSts(vidSts);
-        }
-
-    }
+//    /**
+//     * 切换播放vid资源
+//     *
+//     * @param video 要切换的资源
+//     */
+//    private void changePlayVidSource(AlivcVideoInfo.DataBean.VideoListBean video) {
+//        mDownloadInPrepare = true;
+//        VidSts vidSts = new VidSts();
+//        PlayParameter.PLAY_PARAM_VID = video.getVideoId();
+//        mAliyunVodPlayerView.setAutoPlay(!mIsInBackground);
+//        //切换资源重置下载flag
+//        mDownloadInPrepare = false;
+//        /**
+//         * 如果是鉴权过期
+//         */
+//        if (mIsTimeExpired) {
+//            onTimExpiredError();
+//        } else {
+//            vidSts.setVid(PlayParameter.PLAY_PARAM_VID);
+//            vidSts.setRegion(PlayParameter.PLAY_PARAM_REGION);
+//            vidSts.setAccessKeyId(PlayParameter.PLAY_PARAM_AK_ID);
+//            vidSts.setAccessKeySecret(PlayParameter.PLAY_PARAM_AK_SECRE);
+//            vidSts.setSecurityToken(PlayParameter.PLAY_PARAM_SCU_TOKEN);
+//            vidSts.setTitle(video.getTitle());
+//            mAliyunVodPlayerView.setVidSts(vidSts);
+//        }
+//
+//    }
 
     public static class MyOnTimeExpiredErrorListener implements AliyunVodPlayerView.OnTimeExpiredErrorListener {
 
