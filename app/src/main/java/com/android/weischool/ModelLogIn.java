@@ -45,6 +45,7 @@ public class ModelLogIn extends Fragment {
     private boolean mLoginIsOpenEye = false;
     private CountDownTimer mRegisterSMSCodeCountDownTimer = null;
     private CountDownTimer mLoginSMSCodeCountDownTimer = null;
+    private String mProjectId = "";
 
     public  static Fragment newInstance(MainActivity context,int iFragmentPage){
         mMainContext = context;
@@ -402,7 +403,7 @@ public class ModelLogIn extends Fragment {
                 String token = String.valueOf(loginBean.getData().get("token"));
                 String stu_id = String.valueOf(loginBean.getData().get("stu_id"));
                 if (!stu_id.equals("")) {
-                    mMainContext.LogInSuccess(token,stu_id);
+                    mMainContext.LogInSuccess(mProjectId,token,stu_id);
                 } else {
                     Toast.makeText(mMainContext,"登录失败",Toast.LENGTH_LONG).show();
                 }
@@ -488,7 +489,7 @@ public class ModelLogIn extends Fragment {
                     String token = String.valueOf(loginBean.getData().get("token"));
                     String stu_id = String.valueOf(loginBean.getData().get("stu_id"));
                     if (!stu_id.equals("")) {
-                        mMainContext.LogInSuccess(token,stu_id);
+                        mMainContext.LogInSuccess(mProjectId,token,stu_id);
                     } else {
                         Toast.makeText(mMainContext,"登录失败",Toast.LENGTH_LONG).show();
                     }
@@ -558,6 +559,7 @@ public class ModelLogIn extends Fragment {
         String strEntity = gson.toJson(paramsMap);
         RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json;charset=UTF-8"),strEntity);
         Call<ModelObservableInterface.BaseBean> call = modelObservableInterface.GetHostName(body);
+        String finalProject_id = project_id;
         call.enqueue(new Callback<ModelObservableInterface.BaseBean>() {
             @Override
             public void onResponse(Call<ModelObservableInterface.BaseBean> call, Response<ModelObservableInterface.BaseBean> response) {
@@ -585,6 +587,7 @@ public class ModelLogIn extends Fragment {
                     LoadingDialog.getInstance(mMainContext).dismiss();
                     return;
                 }
+                mProjectId = finalProject_id;
                 mMainContext.mIpadress = loginBean.getHost_name();
                 if (type == 1) { //验证码登录
                     VerLogin();

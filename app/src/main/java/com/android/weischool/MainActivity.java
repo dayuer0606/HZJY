@@ -210,12 +210,6 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //阿里视频播放下载，必须初始化的服务，必须放在最开始的位置
-        PrivateService.initService(getApplicationContext(), Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + PublicCommonUtil.encryptedAppPath + "/encryptedApp.dat");
-        //拷贝encryptedApp.dat文件到所需位置
-        copyAssets();
-        //阿里云视频播放数据库初始化
-        DatabaseManager.getInstance().createDataBase(this);
         //修改状态栏颜色
         ModelStatusBarUtil.setStatusBarColor(this,R.color.white);
 //        ModelViewUtils.setImmersionStateMode(this);
@@ -227,21 +221,24 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
         Cursor cursor = ModelSearchRecordSQLiteOpenHelper.getReadableDatabase(mThis).rawQuery(
                 "select * from token_table ", null);
         HeaderInterceptor.context = this;
+        String projectid = "";
         if (cursor != null) {
             while (cursor.moveToNext()) {
                 int tokenIndex = cursor.getColumnIndex("token");
                 int stu_idIndex = cursor.getColumnIndex("stu_id");
                 int ipadressIndex = cursor.getColumnIndex("ipadress");
+                int projectidIndex = cursor.getColumnIndex("projectid");
                 mIpadress = cursor.getString(ipadressIndex);
                 mToken = cursor.getString(tokenIndex);
                 mStuId = cursor.getString(stu_idIndex);
+                projectid = cursor.getString(projectidIndex);
                 HeaderInterceptor.stuId = mStuId;
                 HeaderInterceptor.permissioncode = mToken;
                 break;
             }
             cursor.close();
         }
-        PlayParameter.STS_GET_URL = mIpadress + PlayParameter.STS_GET_URL;
+        initAliPlay(projectid);
         mThis = this;
         mBottomNavigationView = findViewById(R.id.nav_view);
         mBottomNavigationView.setLabelVisibilityMode(LabelVisibilityMode.LABEL_VISIBILITY_LABELED); //同时显示底部菜单的图标和文字
@@ -460,6 +457,19 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
             }
         }
         return super.dispatchTouchEvent(ev);
+    }
+
+    private void initAliPlay(String project_id) {
+        if (project_id.equals("")) {
+            project_id = "000001";
+        }
+        //阿里视频播放下载，必须初始化的服务，必须放在最开始的位置
+        PrivateService.initService(getApplicationContext(), Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + PublicCommonUtil.encryptedAppPath + "/" + project_id + "encryptedApp.dat");
+        //拷贝000001encryptedApp.dat文件到所需位置
+        copyAssets();
+        //阿里云视频播放数据库初始化
+        DatabaseManager.getInstance().createDataBase(this);
+        PlayParameter.STS_GET_URL = mIpadress + PlayParameter.STS_GET_URL;
     }
     /**
       * 根据EditText所在坐标和用户点击的坐标相对比，来判断是否隐藏键盘，因为当用户点击EditText时没必要隐藏
@@ -708,7 +718,7 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
     }
 
     //登录成功的回调，存储token和学生id
-    public void LogInSuccess(String token,String stu_id){
+    public void LogInSuccess(String projectId,String token,String stu_id){
         mToken = token;
         mStuId = stu_id;
         HeaderInterceptor.stuId = mStuId;
@@ -716,7 +726,9 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
         String type = mIpType.get(mIpadress);
         JPushInterface.setAlias(this.getApplicationContext(),1,type + mStuId);
         ModelSearchRecordSQLiteOpenHelper.getWritableDatabase(this).execSQL("delete from token_table");
-        ModelSearchRecordSQLiteOpenHelper.getWritableDatabase(this).execSQL("insert into token_table(token,ipadress,stu_id) values('" + token + "','" + mIpadress + "','" + stu_id + "')");
+        ModelSearchRecordSQLiteOpenHelper.getWritableDatabase(this)
+                .execSQL("insert into token_table(projectid,token,ipadress,stu_id) values('" + projectId + "','" + token + "','" + mIpadress + "','" + stu_id + "')");
+        initAliPlay(projectId);
         Page_My();
     }
 
@@ -4425,7 +4437,7 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
         return strangePhone;
     }
 
-    //拷贝encryptedApp.dat文件到所需位置
+    //拷贝000001encryptedApp.dat文件到所需位置
     private void copyAssets() {
         commenUtils = Common.getInstance(getApplicationContext()).copyAssetsToSD("encrypt", PublicCommonUtil.encryptedAppPath);
         commenUtils.setFileOperateCallback(
@@ -4440,7 +4452,7 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
 
                         // 获取AliyunDownloadManager对象
                         downloadManager = AliyunDownloadManager.getInstance(getApplicationContext(),mThis);
-                        downloadManager.setEncryptFilePath(Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + PublicCommonUtil.encryptedAppPath + "/encryptedApp.dat");
+                        downloadManager.setEncryptFilePath(Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + PublicCommonUtil.encryptedAppPath + "/000001encryptedApp.dat");
                         downloadManager.setDownloadDir(file.getAbsolutePath());
                         //设置同时下载个数
                         downloadManager.setMaxNum(4);

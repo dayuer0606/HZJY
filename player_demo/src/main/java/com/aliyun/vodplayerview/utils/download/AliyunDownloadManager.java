@@ -59,7 +59,7 @@ public class AliyunDownloadManager {
     /**
      * 加密文件路径
      */
-    private String encryptFilePath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + PublicCommonUtil.encryptedAppPath + "/encryptedApp.dat";
+    private String encryptFilePath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + PublicCommonUtil.encryptedAppPath + "/000001encryptedApp.dat";
 
     /**
      * AliyunDownloadManager 单例

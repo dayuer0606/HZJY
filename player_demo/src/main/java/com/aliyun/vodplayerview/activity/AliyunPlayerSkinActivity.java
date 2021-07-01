@@ -210,40 +210,40 @@ public class AliyunPlayerSkinActivity extends BaseActivity {
         window.setAttributes(lp);
     }
 
-    private void copyAssets() {
-        commenUtils = Common.getInstance(getApplicationContext()).copyAssetsToSD("encrypt", "aliyun");
-        commenUtils.setFileOperateCallback(
-
-                new Common.FileOperateCallback() {
-                    @Override
-                    public void onSuccess() {
-                        File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/test_save/");
-                        if (!file.exists()) {
-                            file.mkdir();
-                        }
-
-                        // 获取AliyunDownloadManager对象
-//                        downloadManager = AliyunDownloadManager.getInstance(getApplicationContext());
-                        downloadManager.setEncryptFilePath(Environment.getExternalStorageDirectory().getAbsolutePath() + "/aliyun/encryptedApp.dat");
-                        PrivateService.initService(getApplicationContext(), Environment.getExternalStorageDirectory().getAbsolutePath() + "/aliyun/encryptedApp.dat");
-                        downloadManager.setDownloadDir(file.getAbsolutePath());
-                        //设置同时下载个数
-                        downloadManager.setMaxNum(3);
-
-//                        downloadDataProvider = DownloadDataProvider.getSingleton(getApplicationContext());
-                        // 更新sts回调
-//                        downloadManager.setRefreshStsCallback(new MyRefreshStsCallback());
+//    private void copyAssets() {
+//        commenUtils = Common.getInstance(getApplicationContext()).copyAssetsToSD("encrypt", "aliyun");
+//        commenUtils.setFileOperateCallback(
 //
-                        // 视频下载的回调
-                        downloadManager.setDownloadInfoListener(new MyDownloadInfoListener(AliyunPlayerSkinActivity.this));
-//                        downloadViewSetting(downloadView);
-                    }
-
-                    @Override
-                    public void onFailed(String error) {
-                    }
-                });
-    }
+//                new Common.FileOperateCallback() {
+//                    @Override
+//                    public void onSuccess() {
+//                        File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/test_save/");
+//                        if (!file.exists()) {
+//                            file.mkdir();
+//                        }
+//
+//                        // 获取AliyunDownloadManager对象
+////                        downloadManager = AliyunDownloadManager.getInstance(getApplicationContext());
+//                        downloadManager.setEncryptFilePath(Environment.getExternalStorageDirectory().getAbsolutePath() + "/aliyun/000001encryptedApp.dat");
+//                        PrivateService.initService(getApplicationContext(), Environment.getExternalStorageDirectory().getAbsolutePath() + "/aliyun/000001encryptedApp.dat");
+//                        downloadManager.setDownloadDir(file.getAbsolutePath());
+//                        //设置同时下载个数
+//                        downloadManager.setMaxNum(3);
+//
+////                        downloadDataProvider = DownloadDataProvider.getSingleton(getApplicationContext());
+//                        // 更新sts回调
+////                        downloadManager.setRefreshStsCallback(new MyRefreshStsCallback());
+////
+//                        // 视频下载的回调
+//                        downloadManager.setDownloadInfoListener(new MyDownloadInfoListener(AliyunPlayerSkinActivity.this));
+////                        downloadViewSetting(downloadView);
+//                    }
+//
+//                    @Override
+//                    public void onFailed(String error) {
+//                    }
+//                });
+//    }
 
     private void initAliyunPlayerView() {
         mAliyunVodPlayerView = (AliyunVodPlayerView) findViewById(R.id.video_view);
