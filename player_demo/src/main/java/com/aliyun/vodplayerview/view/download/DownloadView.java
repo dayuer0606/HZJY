@@ -284,7 +284,7 @@ public class DownloadView extends FrameLayout implements OnClickListener, Compou
         //        }
         //    }
         //});
-
+        alivcDownloadMediaInfos.clear();
         for (AliyunDownloadMediaInfo downloadMediaInfo : alldownloadMediaInfos) {
             String tag = downloadMediaInfo.getStatus() == AliyunDownloadMediaInfo.Status.Complete ? DOWNLOADED_TAG : DOWNLOADING_TAG;
             String title = downloadMediaInfo.getStatus() == AliyunDownloadMediaInfo.Status.Complete ? getResources().getString(

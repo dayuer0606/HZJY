@@ -1,7 +1,9 @@
 package com.android.weischool;
 import android.Manifest;
 import android.app.Activity;
+import android.app.AlarmManager;
 import android.app.Dialog;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -238,7 +240,7 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
             }
             cursor.close();
         }
-        initAliPlay(projectid);
+        initAliPlay(projectid + mStuId);
         mThis = this;
         mBottomNavigationView = findViewById(R.id.nav_view);
         mBottomNavigationView.setLabelVisibilityMode(LabelVisibilityMode.LABEL_VISIBILITY_LABELED); //同时显示底部菜单的图标和文字
@@ -461,12 +463,12 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
 
     private void initAliPlay(String project_id) {
         if (project_id.equals("")) {
-            project_id = "000001";
+            project_id = "000001" + mStuId;
         }
         //阿里视频播放下载，必须初始化的服务，必须放在最开始的位置
         PrivateService.initService(getApplicationContext(), Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + PublicCommonUtil.encryptedAppPath + "/" + project_id + "encryptedApp.dat");
         //拷贝000001encryptedApp.dat文件到所需位置
-        copyAssets();
+        copyAssets(project_id);
         //阿里云视频播放数据库初始化
         DatabaseManager.getInstance().createDataBase(this);
         PlayParameter.STS_GET_URL = mIpadress + PlayParameter.STS_GET_URL;
@@ -728,7 +730,7 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
         ModelSearchRecordSQLiteOpenHelper.getWritableDatabase(this).execSQL("delete from token_table");
         ModelSearchRecordSQLiteOpenHelper.getWritableDatabase(this)
                 .execSQL("insert into token_table(projectid,token,ipadress,stu_id) values('" + projectId + "','" + token + "','" + mIpadress + "','" + stu_id + "')");
-        initAliPlay(projectId);
+        initAliPlay(projectId + mStuId);
         Page_My();
     }
 
@@ -4440,21 +4442,21 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
     }
 
     //拷贝000001encryptedApp.dat文件到所需位置
-    private void copyAssets() {
+    private void copyAssets(String project_id) {
         commenUtils = Common.getInstance(getApplicationContext()).copyAssetsToSD("encrypt", PublicCommonUtil.encryptedAppPath);
         commenUtils.setFileOperateCallback(
 
                 new Common.FileOperateCallback() {
                     @Override
                     public void onSuccess() {
-                        File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + PublicCommonUtil.dowmloadVideoSavePath);
+                        File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + PublicCommonUtil.dowmloadVideoSavePath + "/" + project_id + "/");
                         if (!file.exists()) {
                             file.mkdir();
                         }
 
                         // 获取AliyunDownloadManager对象
                         downloadManager = AliyunDownloadManager.getInstance(getApplicationContext(),mThis);
-                        downloadManager.setEncryptFilePath(Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + PublicCommonUtil.encryptedAppPath + "/000001encryptedApp.dat");
+                        downloadManager.setEncryptFilePath(Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + PublicCommonUtil.encryptedAppPath + "/" + project_id + "encryptedApp.dat");
                         downloadManager.setDownloadDir(file.getAbsolutePath());
                         //设置同时下载个数
                         downloadManager.setMaxNum(4);
@@ -4509,12 +4511,9 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
      * 所以在此进行抽取 AliyunPlayerSkinActivity.class#showAddDownloadView(DownloadVie view)中使用
      */
     private void downloadViewSetting(final DownloadView downloadView) {
-        downloadDataProvider.restoreMediaInfo(new LoadDbDatasListener() {
-            @Override
-            public void onLoadSuccess(List<AliyunDownloadMediaInfo> dataList) {
-                if (downloadView != null) {
-                    downloadView.addAllDownloadMediaInfo(dataList);
-                }
+        downloadDataProvider.restoreMediaInfo(dataList -> {
+            if (downloadView != null) {
+                downloadView.addAllDownloadMediaInfo(dataList);
             }
         });
 
@@ -4799,7 +4798,7 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
         }
 
         @Override
-        public void onDeleteAll() {
+        public void onDeleteAll(String pid) {
 //            mPlayerDownloadAdapter.clearAll();
         }
 
@@ -4886,21 +4885,18 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
             downloadDialog.setCanceledOnTouchOutside(true);
 
             if (screenMode == AliyunScreenMode.Full) {
-                contentView.setOnShowVideoListLisener(new AddDownloadView.OnShowNativeVideoBtnClickListener() {
-                    @Override
-                    public void onShowVideo() {
-                        if (downloadDataProvider != null) {
-                            downloadDataProvider.restoreMediaInfo(new LoadDbDatasListener() {
-                                @Override
-                                public void onLoadSuccess(List<AliyunDownloadMediaInfo> dataList) {
-                                    if (dialogDownloadView != null) {
-                                        dialogDownloadView.addAllDownloadMediaInfo(dataList);
-                                    }
+                contentView.setOnShowVideoListLisener(() -> {
+                    if (downloadDataProvider != null) {
+                        downloadDataProvider.restoreMediaInfo(new LoadDbDatasListener() {
+                            @Override
+                            public void onLoadSuccess(List<AliyunDownloadMediaInfo> dataList) {
+                                if (dialogDownloadView != null) {
+                                    dialogDownloadView.addAllDownloadMediaInfo(dataList);
                                 }
-                            });
-                        }
-                        downloadDialog.setContentView(inflate);
+                            }
+                        });
                     }
+                    downloadDialog.setContentView(inflate);
                 });
 
                 dialogDownloadView.setOnDownloadViewListener(new DownloadView.OnDownloadViewListener() {

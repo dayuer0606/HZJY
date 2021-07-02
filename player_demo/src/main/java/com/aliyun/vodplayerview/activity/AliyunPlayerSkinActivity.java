@@ -1187,7 +1187,7 @@ public class AliyunPlayerSkinActivity extends BaseActivity {
         }
 
         @Override
-        public void onDeleteAll() {
+        public void onDeleteAll(String path) {
 //            mPlayerDownloadAdapter.clearAll();
         }
 

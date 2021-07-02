@@ -24,7 +24,7 @@ public interface AliyunDownloadInfoListener {
 
     public void onDelete(AliyunDownloadMediaInfo info);
 
-    public void onDeleteAll();
+    public void onDeleteAll(String path);
 
     public void onFileProgress(AliyunDownloadMediaInfo info);
 

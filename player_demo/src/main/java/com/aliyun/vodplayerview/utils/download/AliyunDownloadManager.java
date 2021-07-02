@@ -55,7 +55,7 @@ public class AliyunDownloadManager {
     /**
      * 下载路径
      */
-    private String downloadDir = Environment.getExternalStorageDirectory().getAbsolutePath() + PublicCommonUtil.dowmloadVideoSavePath;
+    private String downloadDir = Environment.getExternalStorageDirectory().getAbsolutePath() + PublicCommonUtil.dowmloadVideoSavePath + "000001/";
     /**
      * 加密文件路径
      */
@@ -137,7 +137,7 @@ public class AliyunDownloadManager {
                 @Override
                 public void run() {
                     prepareMediaInfo(info);
-                    List<AliyunDownloadMediaInfo> downloadMediaInfos = mDatabaseManager.selectAll();
+                    List<AliyunDownloadMediaInfo> downloadMediaInfos = mDatabaseManager.selectAll(downloadDir);
                     if (downloadMediaInfos.contains(info)) {
                         mDatabaseManager.update(info);
                     } else {
@@ -164,7 +164,7 @@ public class AliyunDownloadManager {
             ThreadUtils.runOnSubThread(new Runnable() {
                 @Override
                 public void run() {
-                    List<AliyunDownloadMediaInfo> downloadMediaInfos = mDatabaseManager.selectAll();
+                    List<AliyunDownloadMediaInfo> downloadMediaInfos = mDatabaseManager.selectAll(downloadDir);
                     boolean hasContains = false;
                     for (AliyunDownloadMediaInfo downloadMediaInfo : downloadMediaInfos) {
                         hasContains = judgeEquals(downloadMediaInfo, info);
@@ -258,14 +258,14 @@ public class AliyunDownloadManager {
         }
 
         @Override
-        public void onDeleteAll() {
+        public void onDeleteAll(final String path) {
             deleteAllMediaInfo();
-            mDatabaseManager.deleteAll();
+            mDatabaseManager.deleteAll(path);
             ThreadUtils.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
                     for (AliyunDownloadInfoListener aliyunDownloadInfoListener : outListenerList) {
-                        aliyunDownloadInfoListener.onDeleteAll();
+                        aliyunDownloadInfoListener.onDeleteAll(path);
                     }
                 }
             });
@@ -1133,19 +1133,19 @@ public class AliyunDownloadManager {
     /**
      * 从数据库查询数据
      */
-    public void findDatasByDb(final LoadDbDatasListener listener) {
+    public void findDatasByDb(final String path,final LoadDbDatasListener listener) {
         if (mDatabaseManager != null) {
             ThreadUtils.runOnSubThread(new Runnable() {
                 @Override
                 public void run() {
                     //查询所有准备完成状态的数据,用于展示
-                    List<AliyunDownloadMediaInfo> selectPreparedList = mDatabaseManager.selectPreparedList();
+                    List<AliyunDownloadMediaInfo> selectPreparedList = mDatabaseManager.selectPreparedList(path);
                     //查询所有等待状态的数据,用于展示
-                    final List<AliyunDownloadMediaInfo> selectStopedList = mDatabaseManager.selectStopedList();
+                    final List<AliyunDownloadMediaInfo> selectStopedList = mDatabaseManager.selectStopedList(path);
                     //查询所有完成状态的数据,用于展示
-                    final List<AliyunDownloadMediaInfo> selectCompletedList = mDatabaseManager.selectCompletedList();
+                    final List<AliyunDownloadMediaInfo> selectCompletedList = mDatabaseManager.selectCompletedList(path);
                     //查询所有下载状态中的数据
-                    final List<AliyunDownloadMediaInfo> selectDownloadingList = mDatabaseManager.selectDownloadingList();
+                    final List<AliyunDownloadMediaInfo> selectDownloadingList = mDatabaseManager.selectDownloadingList(path);
                     final List<AliyunDownloadMediaInfo> dataList = new ArrayList<>();
                     if (selectPreparedList != null) {
                         for (AliyunDownloadMediaInfo mediaInfo : selectPreparedList) {
@@ -1181,6 +1181,7 @@ public class AliyunDownloadManager {
                     }
 
                     if (stopedList != null) {
+                        stopedList.clear();
                         if (selectDownloadingList != null) {
                             stopedList.addAll(selectDownloadingList);
                         }
@@ -1192,6 +1193,7 @@ public class AliyunDownloadManager {
                         }
                     }
                     if (completedList != null) {
+                        completedList.clear();
                         if (selectCompletedList != null) {
                             completedList.addAll(selectCompletedList);
                         }

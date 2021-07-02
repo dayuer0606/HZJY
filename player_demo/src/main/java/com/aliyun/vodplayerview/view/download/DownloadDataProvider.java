@@ -52,9 +52,10 @@ public class DownloadDataProvider {
      */
     public void restoreMediaInfo(final LoadDbDatasListener loadDbDatasListener){
         aliyunDownloadMediaInfos = new ArrayList<>();
-        downloadManager.findDatasByDb(new LoadDbDatasListener() {
+        downloadManager.findDatasByDb(downloadManager.getDownloadDir(),new LoadDbDatasListener() {
             @Override
             public void onLoadSuccess(List<AliyunDownloadMediaInfo> dataList) {
+                aliyunDownloadMediaInfos.clear();
                 aliyunDownloadMediaInfos.addAll(dataList);
                 deleteDumpData();
                 loadDbDatasListener.onLoadSuccess(aliyunDownloadMediaInfos);

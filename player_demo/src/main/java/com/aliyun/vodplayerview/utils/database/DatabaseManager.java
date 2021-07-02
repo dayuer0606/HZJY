@@ -65,7 +65,7 @@ public class DatabaseManager {
     /**
      * 查询所有语句
      */
-    private static final String SELECT_ALL_SQL = "select * from " + DatabaseManager.TABLE_NAME;
+    private static final String SELECT_ALL_SQL = "select * from " + DatabaseManager.TABLE_NAME + "";
 
     /**
      * 根据状态查询数据
@@ -133,6 +133,15 @@ public class DatabaseManager {
     }
 
     public long insert(AliyunDownloadMediaInfo mediaInfo) {
+        Cursor cursor = mSqliteDatabase.rawQuery("select * from " + DatabaseManager.TABLE_NAME + " where " + VID + "=?"
+                ,new String[]{mediaInfo.getVid()});
+        if(cursor != null){
+            if(cursor.getCount() > 0){
+                cursor.close();
+                return 0;
+            }
+            cursor.close();
+        }
         ContentValues contentValues = new ContentValues();
         contentValues.put(VID, mediaInfo.getVid());
         contentValues.put(QUALITY, mediaInfo.getQuality());
@@ -172,11 +181,11 @@ public class DatabaseManager {
     /**
      * 删除所有数据
      */
-    public void deleteAll(){
+    public void deleteAll(String pid){
         if(!mSqliteDatabase.isOpen()){
             mSqliteDatabase = databaseHelper.getWritableDatabase();
         }
-        mSqliteDatabase.delete(TABLE_NAME,"",new String[]{});
+        mSqliteDatabase.delete(TABLE_NAME,"pid=?",new String[]{pid});
     }
 
     /**
@@ -192,7 +201,7 @@ public class DatabaseManager {
     /**
      * 查询所有下载中状态的数据
      */
-    public List<AliyunDownloadMediaInfo> selectDownloadingList(){
+    public List<AliyunDownloadMediaInfo> selectDownloadingList(String path){
         if(!mSqliteDatabase.isOpen()){
             mSqliteDatabase = databaseHelper.getWritableDatabase();
         }
@@ -255,7 +264,9 @@ public class DatabaseManager {
                     mediaInfo.setStatus(AliyunDownloadMediaInfo.Status.Idle);
                     break;
             }
-            queryLists.add(mediaInfo);
+            if (mediaInfo.getmSavePath().contains(path)) {
+                queryLists.add(mediaInfo);
+            }
 
         }
         cursor.close();
@@ -265,7 +276,7 @@ public class DatabaseManager {
     /**
      * 查询处于等待状态的数据
      */
-    public List<AliyunDownloadMediaInfo> selectStopedList(){
+    public List<AliyunDownloadMediaInfo> selectStopedList(String path){
         if(!mSqliteDatabase.isOpen()){
             mSqliteDatabase = databaseHelper.getWritableDatabase();
         }
@@ -329,7 +340,9 @@ public class DatabaseManager {
                     mediaInfo.setStatus(AliyunDownloadMediaInfo.Status.Idle);
                     break;
             }
-            queryLists.add(mediaInfo);
+            if (mediaInfo.getmSavePath().contains(path)) {
+                queryLists.add(mediaInfo);
+            }
 
         }
         cursor.close();
@@ -339,7 +352,7 @@ public class DatabaseManager {
     /**
      * 查询所有完成状态的数据
      */
-    public List<AliyunDownloadMediaInfo> selectCompletedList(){
+    public List<AliyunDownloadMediaInfo> selectCompletedList(String path){
         Cursor cursor = mSqliteDatabase.rawQuery(SELECT_WITH_STATUS_SQL,new String[]{COMPLETED_STATE+""});
         List<AliyunDownloadMediaInfo> queryLists = new ArrayList<>();
         if(cursor == null || cursor.getCount() <= 0){
@@ -399,7 +412,9 @@ public class DatabaseManager {
                     mediaInfo.setStatus(AliyunDownloadMediaInfo.Status.Idle);
                     break;
             }
-            queryLists.add(mediaInfo);
+            if (mediaInfo.getmSavePath().contains(path)) {
+                queryLists.add(mediaInfo);
+            }
 
         }
         cursor.close();
@@ -409,7 +424,7 @@ public class DatabaseManager {
     /**
      * 查询所有准备状态的数据
      */
-    public List<AliyunDownloadMediaInfo> selectPreparedList(){
+    public List<AliyunDownloadMediaInfo> selectPreparedList(String path){
         if(!mSqliteDatabase.isOpen()){
             mSqliteDatabase = databaseHelper.getWritableDatabase();
         }
@@ -471,8 +486,9 @@ public class DatabaseManager {
                     mediaInfo.setStatus(AliyunDownloadMediaInfo.Status.Idle);
                     break;
             }
-            queryLists.add(mediaInfo);
-
+            if (mediaInfo.getmSavePath().contains(path)) {
+                queryLists.add(mediaInfo);
+            }
         }
         cursor.close();
         return queryLists;
@@ -481,7 +497,7 @@ public class DatabaseManager {
     /**
      * 查询所有
      */
-    public List<AliyunDownloadMediaInfo> selectAll() {
+    public List<AliyunDownloadMediaInfo> selectAll(String path) {
         List<AliyunDownloadMediaInfo> queryLists = new ArrayList<>();
         if (mSqliteDatabase == null){
             return queryLists;
@@ -544,7 +560,9 @@ public class DatabaseManager {
                     mediaInfo.setStatus(AliyunDownloadMediaInfo.Status.Idle);
                     break;
             }
-            queryLists.add(mediaInfo);
+            if (mediaInfo.getmSavePath().contains(path)) {
+                queryLists.add(mediaInfo);
+            }
         }
         cursor.close();
         return queryLists;
