@@ -71,7 +71,7 @@
                 android:textSize="@dimen/alivc_common_font_14"
                 android:textColor="@color/alivc_common_font_cyan_light"
                 android:layout_alignParentLeft="true"
-                android:text=" Stats "/>
+                android:text=""/>
 
             <TextView
                 android:id="@+id/tv_download_video_current_speed"

@@ -264,8 +264,10 @@ public class DatabaseManager {
                     mediaInfo.setStatus(AliyunDownloadMediaInfo.Status.Idle);
                     break;
             }
-            if (mediaInfo.getmSavePath().contains(path)) {
-                queryLists.add(mediaInfo);
+            if (mediaInfo.getmSavePath() != null) {
+                if (mediaInfo.getmSavePath().contains(path)) {
+                    queryLists.add(mediaInfo);
+                }
             }
 
         }
@@ -340,8 +342,10 @@ public class DatabaseManager {
                     mediaInfo.setStatus(AliyunDownloadMediaInfo.Status.Idle);
                     break;
             }
-            if (mediaInfo.getmSavePath().contains(path)) {
-                queryLists.add(mediaInfo);
+            if (mediaInfo.getmSavePath() != null) {
+                if (mediaInfo.getmSavePath().contains(path)) {
+                    queryLists.add(mediaInfo);
+                }
             }
 
         }
@@ -412,8 +416,10 @@ public class DatabaseManager {
                     mediaInfo.setStatus(AliyunDownloadMediaInfo.Status.Idle);
                     break;
             }
-            if (mediaInfo.getmSavePath().contains(path)) {
-                queryLists.add(mediaInfo);
+            if (mediaInfo.getmSavePath() != null) {
+                if (mediaInfo.getmSavePath().contains(path)) {
+                    queryLists.add(mediaInfo);
+                }
             }
 
         }
@@ -486,8 +492,10 @@ public class DatabaseManager {
                     mediaInfo.setStatus(AliyunDownloadMediaInfo.Status.Idle);
                     break;
             }
-            if (mediaInfo.getmSavePath().contains(path)) {
-                queryLists.add(mediaInfo);
+            if (mediaInfo.getmSavePath() != null) {
+                if (mediaInfo.getmSavePath().contains(path)) {
+                    queryLists.add(mediaInfo);
+                }
             }
         }
         cursor.close();
@@ -560,8 +568,10 @@ public class DatabaseManager {
                     mediaInfo.setStatus(AliyunDownloadMediaInfo.Status.Idle);
                     break;
             }
-            if (mediaInfo.getmSavePath().contains(path)) {
-                queryLists.add(mediaInfo);
+            if (mediaInfo.getmSavePath() != null) {
+                if (mediaInfo.getmSavePath().contains(path)) {
+                    queryLists.add(mediaInfo);
+                }
             }
         }
         cursor.close();

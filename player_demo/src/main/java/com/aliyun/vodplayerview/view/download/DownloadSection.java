@@ -122,6 +122,14 @@ public class DownloadSection extends StatelessSection {
             itemViewHolder.tvDownloadVideoStats.setText(context.get().getResources().getString(R.string.download_error));
             itemViewHolder.ivVideoState.setVisibility(View.VISIBLE);
             itemViewHolder.ivVideoState.setBackgroundResource(R.drawable.alivc_download_downloading);
+        } else {
+            //complete
+            itemViewHolder.tvDownloadVideoStats.setVisibility(View.GONE);
+            itemViewHolder.ivVideoState.setVisibility(View.GONE);
+            itemViewHolder.progressDownloadVideo.setVisibility(View.GONE);
+            RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+            lp.addRule(RelativeLayout.ALIGN_PARENT_LEFT, RelativeLayout.TRUE);
+            itemViewHolder.tvDownloadVideoTotalSize.setLayoutParams(lp);
         }
 
         itemViewHolder.progressDownloadVideo.setProgress(mediaInfo.getProgress());

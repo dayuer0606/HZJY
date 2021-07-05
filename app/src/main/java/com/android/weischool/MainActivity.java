@@ -240,7 +240,7 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
             }
             cursor.close();
         }
-        initAliPlay(projectid + mStuId);
+        initAliPlay(projectid);
         mThis = this;
         mBottomNavigationView = findViewById(R.id.nav_view);
         mBottomNavigationView.setLabelVisibilityMode(LabelVisibilityMode.LABEL_VISIBILITY_LABELED); //同时显示底部菜单的图标和文字
@@ -463,7 +463,7 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
 
     private void initAliPlay(String project_id) {
         if (project_id.equals("")) {
-            project_id = "000001" + mStuId;
+            project_id = "000001";
         }
         //阿里视频播放下载，必须初始化的服务，必须放在最开始的位置
         PrivateService.initService(getApplicationContext(), Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + PublicCommonUtil.encryptedAppPath + "/" + project_id + "encryptedApp.dat");
@@ -730,7 +730,7 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
         ModelSearchRecordSQLiteOpenHelper.getWritableDatabase(this).execSQL("delete from token_table");
         ModelSearchRecordSQLiteOpenHelper.getWritableDatabase(this)
                 .execSQL("insert into token_table(projectid,token,ipadress,stu_id) values('" + projectId + "','" + token + "','" + mIpadress + "','" + stu_id + "')");
-        initAliPlay(projectId + mStuId);
+        initAliPlay(projectId);
         Page_My();
     }
 
@@ -4254,17 +4254,55 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
     private void onReturn(){
         //录播返回
         if (mAliyunVodPlayerView != null) {
+
             mAliyunVodPlayerView.onStop();
-            int time1 = mAliyunVodPlayerView.getVideoPostion();
+            new Handler().postDelayed(() -> {
+
+                /**
+                 * 延时执行的代码
+                 */
+                int time1 = mAliyunVodPlayerView.getVideoPostion();
 //                        String videoId = mAliyunVodPlayerView.VideoIdGet();
-            String SectionsId = mAliyunVodPlayerView.SectionsIdGet();
-            mAliyunVodPlayerView.onDestroy();
-            mAliyunVodPlayerView = null;
-            if (!SectionsId.equals("")) {
-                SetCourseVideoDuration(Integer.valueOf(SectionsId),time1);
-            }
-        }
-        String beforePageS[] = mBeforePage.split("/");
+                String SectionsId = mAliyunVodPlayerView.SectionsIdGet();
+                mAliyunVodPlayerView.onDestroy();
+                mAliyunVodPlayerView = null;
+                if (!SectionsId.equals("")) {
+                    SetCourseVideoDuration(Integer.valueOf(SectionsId),time1);
+                }
+
+                String beforePageS[] = mBeforePage.split("/");
+                if (beforePageS.length <= 0){
+                    return;
+                }
+                if (beforePageS[beforePageS.length - 1].equals("课程")){ //说明上个界面是课程界面
+                    Page_Course();
+                } else if (beforePageS[beforePageS.length - 1].equals("首页")){ //说明上个界面是首页界面
+                    Page_HomePage();
+                } else if (beforePageS[beforePageS.length - 1].equals("我的课程")){//说明上个界面是我的课程界面
+                    mPage = "我的课程";
+                    mBeforePage = "我的";
+                    if(mModelMy != null){
+                        ((ModelMy) mModelMy).MyClassShow();
+                    }
+                } else if (beforePageS[beforePageS.length - 1].equals("我的收藏")){ //说明上个界面是我的收藏界面
+                    mPage = "我的收藏";
+                    mBeforePage = "我的";
+                    if(mModelMy != null){
+                        ((ModelMy) mModelMy).MyCollectShow();
+                    }
+                } else if (beforePageS[beforePageS.length - 1].equals("我的缓存") && mPage.equals("我的缓存播放")){ //说明上个界面是我的界面
+                    mPage = "我的缓存";
+                    mBeforePage = "我的";
+                    if(mModelMy != null){
+                        if (downloadView == null){
+                            downloadView = new DownloadView(mThis);
+                        }
+                        ((ModelMy) mModelMy).MyCacheShow(downloadView);
+                    }
+                }
+            },1000); // 延时1秒
+        } else {
+            String beforePageS[] = mBeforePage.split("/");
         if (beforePageS.length <= 0){
             return;
         }
@@ -4293,6 +4331,7 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
                 }
                 ((ModelMy) mModelMy).MyCacheShow(downloadView);
             }
+        }
         }
     }
 
@@ -4449,7 +4488,7 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
                 new Common.FileOperateCallback() {
                     @Override
                     public void onSuccess() {
-                        File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + PublicCommonUtil.dowmloadVideoSavePath + "/" + project_id + "/");
+                        File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + PublicCommonUtil.dowmloadVideoSavePath + "/" + project_id + mStuId + "/");
                         if (!file.exists()) {
                             file.mkdir();
                         }
