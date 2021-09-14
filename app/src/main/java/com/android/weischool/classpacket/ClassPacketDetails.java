@@ -1121,7 +1121,7 @@ public class ClassPacketDetails implements View.OnClickListener, ModelOrderDetai
                 mCoursePacketInfo.mCoursePacketMessage = dataPacketDetailsBean.data.getDescribe();//课程包详情
                 mCoursePacketInfo.mEffictive_date = dataPacketDetailsBean.data.effictive_date;
                 mCoursePacketInfo.mEffictive_days_type = dataPacketDetailsBean.data.effictive_days_type;
-                mCoursePacketInfo.mInvalid_date_date = dataPacketDetailsBean.data.invalid_date_date;
+                mCoursePacketInfo.mInvalid_date_date = dataPacketDetailsBean.data.invalid_date;
                 //        刷新详情界面的方法
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 //                    if (mCurrentTab.equals("Details")){
@@ -1438,7 +1438,7 @@ public class ClassPacketDetails implements View.OnClickListener, ModelOrderDetai
             private String describe;
             private Integer purchase_stauts; //购买状态
             private String effictive_date; //有效天数
-            private String invalid_date_date;//有效期
+            private String invalid_date;//有效期
             private String effictive_days_type; //有效类型
 
             public int getCollection_status() {
@@ -1490,11 +1490,11 @@ public class ClassPacketDetails implements View.OnClickListener, ModelOrderDetai
             }
 
             public String getInvalid_date_date() {
-                return invalid_date_date;
+                return invalid_date;
             }
 
             public void setInvalid_date_date(String invalid_date_date) {
-                this.invalid_date_date = invalid_date_date;
+                this.invalid_date = invalid_date_date;
             }
 
             public String getEffictive_days_type() {

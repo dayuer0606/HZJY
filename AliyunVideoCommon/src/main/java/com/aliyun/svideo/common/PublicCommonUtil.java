@@ -1,7 +1,8 @@
 package com.aliyun.svideo.common;
 public class PublicCommonUtil {
     //添加新项目时，修改此处
-    public static String ipadress = "http://manager1.xingkeyunzhou.cn/";
+//    public static String ipadress = "http://manager1.xingkeyunzhou.cn/";
+    public static String ipadress = "http://wangxiaotest.16hz.net/";
     public static String fileProvider = "com.android.weischool.fileprovider"; // 使用相机时的文件路径
     public static String encryptedAppPath = "zhiyeweiketang";        //阿里加密文件的存放路径
     public static String dowmloadVideoSavePath = "zhiyeweiketang_save/"; //下载视频文件的存储路径

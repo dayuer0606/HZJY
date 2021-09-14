@@ -219,11 +219,11 @@ public class ModelLogIn extends Fragment {
         }
         EditText login_register_username_edittext = mview.findViewById(R.id.login_register_username_edittext);
         String tel = login_register_username_edittext.getText().toString();
-        //判断手机号格式是否正确
-        if (!mMainContext.isTelNumber(tel)){
-            Toast.makeText(mMainContext,"手机号码格式不正确，请检查后重试！",Toast.LENGTH_LONG).show();
-            return;
-        }
+//        //判断手机号格式是否正确
+//        if (!mMainContext.isTelNumber(tel)){
+//            Toast.makeText(mMainContext,"手机号码格式不正确，请检查后重试！",Toast.LENGTH_LONG).show();
+//            return;
+//        }
         TextView register_getsmscode = mview.findViewById(R.id.register_getsmscode);
         EditText login_register_smscode_edittext = mview.findViewById(R.id.login_register_smscode_edittext);
         login_register_smscode_edittext.setText("");
@@ -658,8 +658,11 @@ public class ModelLogIn extends Fragment {
                         mRegisterSMSCodeCountDownTimer = null;
                     }
                 } else {
-                    HeaderInterceptor.cookie = response.headers().get("set-cookie");
-                    Log.e("NetWork=>headers", HeaderInterceptor.cookie);
+//                    HeaderInterceptor.cookie = response.headers().get("set-cookie");
+                    if (loginBean.getData().get("cid") != null) {
+                        HeaderInterceptor.cId = String.valueOf(loginBean.getData().get("cid"));
+                    }
+//                    Log.e("NetWork=>headers", HeaderInterceptor.cookie);
                 }
                 LoadingDialog.getInstance(mMainContext).dismiss();
             }

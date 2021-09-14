@@ -1719,7 +1719,7 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                     mMainContext.onClickCourseDetailsReturn(mDetailsView);
                     return;
                 }
-                String invalid_date_date = String.valueOf(courseDataBean.get("invalid_date_date"));
+                String invalid_date = String.valueOf(courseDataBean.get("invalid_date"));
                 mCourseInfo.setmCourseDetails(String.valueOf(courseDataBean.get("details")));
                 Map<String, String> stuCourseStatusInfo = (Map<String, String>) courseDataBean.get("stuCourseStatusInfo");
                 Object rateOfLearningO = courseDataBean.get("rateOfLearning");
@@ -1752,7 +1752,7 @@ public class ModelCourseCover implements View.OnClickListener, ModelOrderDetails
                         }
                     }
                 }
-                mCourseInfo.setmCourseValidityPeriod(invalid_date_date);
+                mCourseInfo.setmCourseValidityPeriod(invalid_date);
                 //课程详情界面
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     CourseDetailsInit(mCourseInfo);

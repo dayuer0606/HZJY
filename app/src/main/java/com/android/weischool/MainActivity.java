@@ -1154,12 +1154,12 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
         hideAllFragment(transaction);
         if (mModelSetting != null) {
             String telNumber = ((ModelSetting)mModelSetting).TelNumberGet();
-            if (!telNumber.equals("")){ //如果电话号码不为空的时候，判断电话号码是否正确
-                if (!isTelNumber(telNumber)){
-                    Toast.makeText(this,"电话号码不正确，请重新输入！",Toast.LENGTH_LONG).show();
-                    return;
-                }
-            }
+//            if (!telNumber.equals("")){ //如果电话号码不为空的时候，判断电话号码是否正确
+//                if (!isTelNumber(telNumber)){
+//                    Toast.makeText(this,"电话号码不正确，请重新输入！",Toast.LENGTH_LONG).show();
+//                    return;
+//                }
+//            }
             //将telNumber 存储与本地和服务器
             ((ModelSetting)mModelSetting).UpdataPersonInfo("telnumber");
             mPage = "基本信息";
@@ -1344,14 +1344,7 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
 
     //点击设置界面的退出登录，重置token和学生id
     public void onClickLogout(View view) {
-        mToken = "";
-        mStuId = "";
-        HeaderInterceptor.stuId = null;
-        HeaderInterceptor.permissioncode = null;
-        String type = mIpType.get(mIpadress);
-        JPushInterface.setAlias(this.getApplicationContext(),1,type + "0");
-        ModelSearchRecordSQLiteOpenHelper.getWritableDatabase(this).execSQL("delete from token_table");
-        Page_My();
+        logout();
     }
 
     public static void onClickLogout() {
@@ -1362,6 +1355,54 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
         String type = mThis.mIpType.get(mThis.mIpadress);
         JPushInterface.setAlias(mThis.getApplicationContext(),1,type + "0");
         ModelSearchRecordSQLiteOpenHelper.getWritableDatabase(mThis).execSQL("delete from token_table");
+    }
+
+    private void logout(){
+        LoadingDialog.getInstance(mThis).show();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(mThis.mIpadress)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(ModelObservableInterface.client)
+                .build();
+        ModelObservableInterface modelObservableInterface = retrofit.create(ModelObservableInterface.class);
+        RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json;charset=UTF-8"),"");
+        Call<ModelObservableInterface.BaseBean> call = modelObservableInterface.Logout(body);
+        call.enqueue(new Callback<ModelObservableInterface.BaseBean>() {
+            @Override
+            public void onResponse(Call<ModelObservableInterface.BaseBean> call, Response<ModelObservableInterface.BaseBean> response) {
+                ModelObservableInterface.BaseBean loginBean = response.body();//得到解析后的LoginBean对象
+                if (loginBean == null){
+                    Toast.makeText(mThis,"退出登录错误",Toast.LENGTH_LONG).show();
+                    LoadingDialog.getInstance(mThis).dismiss();
+                    return;
+                }
+//                if (!HeaderInterceptor.IsErrorCode(loginBean.getErrorCode(),loginBean.getErrorMsg())){
+//                    LoadingDialog.getInstance(mThis).dismiss();
+//                    return;
+//                }
+//                //网络请求数据成功
+//                int code = loginBean.getErrorCode();
+//                //如果注册成功，跳转到登录界面
+//                if (code != 200 ) {
+//                    Toast.makeText(mThis,"退出登录错误",Toast.LENGTH_LONG).show();
+//                }
+                LoadingDialog.getInstance(mThis).dismiss();
+                mThis.mToken = "";
+                mThis.mStuId = "";
+                HeaderInterceptor.stuId = null;
+                HeaderInterceptor.permissioncode = null;
+                String type = mThis.mIpType.get(mThis.mIpadress);
+                JPushInterface.setAlias(mThis.getApplicationContext(),1,type + "0");
+                ModelSearchRecordSQLiteOpenHelper.getWritableDatabase(mThis).execSQL("delete from token_table");
+                Page_My();
+            }
+
+            @Override
+            public void onFailure(Call<ModelObservableInterface.BaseBean> call, Throwable t) {
+                Toast.makeText(mThis,"退出登录超时",Toast.LENGTH_LONG).show();
+                LoadingDialog.getInstance(mThis).dismiss();
+            }
+        });
     }
 
     //点击打开照相机

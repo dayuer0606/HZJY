@@ -459,6 +459,15 @@ public interface ModelObservableInterface {
     Call<BaseBean> getVerifyPhoneNumber(@Body RequestBody body);
 
     /**
+     * 退出登录
+     *
+     * @param body 请求体（tel：用户名；stu_pass：密码）
+     **/
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST("stu/exitStu")
+    Call<BaseBean> Logout(@Body RequestBody body);
+
+    /**
      * 关于我们
      **/
     @POST("api/about/")

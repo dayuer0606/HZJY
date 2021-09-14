@@ -17,9 +17,10 @@ import okhttp3.Response;
  */
 public class HeaderInterceptor implements Interceptor {
     //保存cookie
-    public static String cookie = null;
+//    public static String cookie = null;
 
     public static String stuId = null;
+    public static String cId = null;
     public static String permissioncode = null;
 
     public static MainActivity context = null;
@@ -27,14 +28,14 @@ public class HeaderInterceptor implements Interceptor {
     public Response intercept(Chain chain) throws IOException {
         Request request = chain.request();
         Request.Builder builder = request.newBuilder();
-        if(cookie != null) {
-            builder.addHeader("Cookie", cookie);
-            if (Build.VERSION.SDK != null && Build.VERSION.SDK_INT > 13) {
-                builder.addHeader("Connection", "close");
-            }
-        } else{
-            Log.e("Cookie","Cookie not found");
-        }
+//        if(cookie != null) {
+//            builder.addHeader("Cookie", cookie);
+//            if (Build.VERSION.SDK != null && Build.VERSION.SDK_INT > 13) {
+//                builder.addHeader("Connection", "close");
+//            }
+//        } else{
+//            Log.e("Cookie","Cookie not found");
+//        }
         if (stuId != null){
             builder.addHeader("Stuid", stuId);
             if (Build.VERSION.SDK != null && Build.VERSION.SDK_INT > 13) {
@@ -42,6 +43,14 @@ public class HeaderInterceptor implements Interceptor {
             }
         } else{
             Log.e("stuId","stuId not found");
+        }
+        if (cId != null){
+            builder.addHeader("cId", cId);
+            if (Build.VERSION.SDK != null && Build.VERSION.SDK_INT > 13) {
+                builder.addHeader("Connection", "close");
+            }
+        } else{
+            Log.e("cId","cId not found");
         }
         if (permissioncode != null){
             builder.addHeader("permissioncode", permissioncode);
